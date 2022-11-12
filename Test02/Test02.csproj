@@ -120,8 +120,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\GiaoHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Test01Controller.cs" />
+    <Compile Include="Controllers\KinhDoanhController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -261,13 +262,27 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Test01\Layout\_LayoutPage1.cshtml" />
+    <Content Include="Views\Shared\_LayoutPage1.cshtml" />
     <Content Include="Views\Test01\Test02.cshtml" />
     <Content Include="Views\Test01\QuanLyDL.cshtml" />
+    <Content Include="Views\KinhDoanh\Layout\LayoutKD.cshtml" />
+    <Content Include="Views\KinhDoanh\TrangChu.cshtml" />
+    <Content Include="Views\KinhDoanh\QuanLyDL.cshtml" />
+    <Content Include="Views\KinhDoanh\QuanLyDH.cshtml" />
+    <Content Include="Views\KinhDoanh\QuanLyHD.cshtml" />
+    <Content Include="Views\KinhDoanh\QuanLySP.cshtml" />
+    <Content Include="Views\KinhDoanh\QuanLyKho.cshtml" />
+    <Content Include="Views\KinhDoanh\BaoCao.cshtml" />
+    <Content Include="Views\GiaoHang\Layout\LayoutGH.cshtml" />
+    <Content Include="Views\GiaoHang\TrangChu.cshtml" />
+    <Content Include="Views\GiaoHang\DanhSachHD.cshtml" />
+    <Content Include="Views\GiaoHang\TiepNhanDH.cshtml" />
+    <Content Include="Views\GiaoHang\BaoCao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Test01\Layout\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

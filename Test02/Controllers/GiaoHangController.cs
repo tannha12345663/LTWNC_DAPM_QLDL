@@ -6,18 +6,22 @@ using System.Web.Mvc;
 
 namespace Test02.Controllers
 {
-    public class Test01Controller : Controller
+    public class GiaoHangController : Controller
     {
-        // GET: Test01
-        public ActionResult Index()
+        // GET: GiaoHang
+        public ActionResult TrangChu()
         {
             return View();
         }
-        public ActionResult Test02()
+        public ActionResult DanhSachHD()
         {
             return View();
         }
-        public ActionResult QuanLyDL()
+        public ActionResult TiepNhanDH()
+        {
+            return View();
+        }
+        public ActionResult BaoCao()
         {
             return View();
         }
