@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Test02.DaiLy>
 @{
     ViewBag.Title = "QuanLyDL";
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
@@ -65,8 +65,7 @@
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa chỉ</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 101px;">Số điện thoại</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa chỉ email</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 101px;">Ngày tiếp nhận</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 101px;">Chức năng</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Ngày tiếp nhận</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -79,15 +78,42 @@
                                         <td>0908455325</td>
                                         <td>abc@gmail.com</td>
                                         <td>24/02/2022</td>
-                                        <td class="table-td-center">
-                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-primary btn-sm trash" type="button" title="Xóa" onclick="myFunction(this)">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </td>
+                                       
                                     </tr>
+                                    @foreach (var item in Model)
+                                    {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaDL)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaLoaiDL)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenDL)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DiaChi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SDT)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NgayTiepNhan)
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <a class="btn btn-primary btn-sm trash" title="Xóa" href="#">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>

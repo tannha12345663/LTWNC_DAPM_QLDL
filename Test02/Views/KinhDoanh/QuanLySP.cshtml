@@ -1,10 +1,60 @@
-﻿
+﻿@model IEnumerable<Test02.SanPham>
 @{
     ViewBag.Title = "QuanLySP";
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
-    ViewBag.sp= "active";
+    ViewBag.sp = "active";
     ViewBag.nd = "Danh sách sản phẩm";
 }
 
-<h2>QuanLySP</h2>
+<table class="table">
+    <tr>
+        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 80px;">
+            Mã Sản phẩm
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TenSP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DonViTinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HanSH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayXuat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GiaSP)
+        </th>
+        <th></th>
+    </tr>
 
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaSP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenSP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonViTinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HanSH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayXuat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaSP)
+            </td>
+            <td>
+                @Html.ActionLink("Chỉnh sửa", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Xóa sản phẩm", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>

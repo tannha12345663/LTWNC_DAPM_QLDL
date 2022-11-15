@@ -8,6 +8,7 @@ namespace Test02.Controllers
 {
     public class KinhDoanhController : Controller
     {
+        QuanLyDLEntities database = new QuanLyDLEntities();
         // GET: KinhDoanh
         public ActionResult TrangChu()
         {
@@ -15,7 +16,7 @@ namespace Test02.Controllers
         }
         public ActionResult QuanLyDL()
         {
-            return View();
+            return View(database.DaiLies.ToList());
         }
         public ActionResult QuanLyDH()
         {
@@ -27,7 +28,7 @@ namespace Test02.Controllers
         }
         public ActionResult QuanLySP()
         {
-            return View();
+            return View(database.SanPhams.ToList());
         }
         public ActionResult QuanLyKho()
         {
@@ -36,6 +37,10 @@ namespace Test02.Controllers
         public ActionResult BaoCao()
         {
             return View();
+        }
+        public ActionResult Test01()
+        {
+            return View(database.DaiLies.ToList());
         }
     }
 }
