@@ -7,20 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Test02
+namespace Test02.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Kho
+    public partial class ChiTietDonHang
     {
-        public string MaKho { get; set; }
-        public string MaNV { get; set; }
+        public string MaChiTietDH { get; set; }
         public string MaSP { get; set; }
-        public string TenKho { get; set; }
-        public string DiaChi { get; set; }
+        public string MaDH { get; set; }
+        public Nullable<int> SoLuong { get; set; }
+        public Nullable<int> DonGiaApDung { get; set; }
+        public Nullable<int> ThanhTien { get; set; }
     
-        public virtual NhanVien NhanVien { get; set; }
+        public virtual DonHang DonHang { get; set; }
         public virtual SanPham SanPham { get; set; }
     }
 }

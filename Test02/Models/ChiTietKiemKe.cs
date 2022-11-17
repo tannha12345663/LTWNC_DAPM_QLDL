@@ -7,21 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Test02
+namespace Test02.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class ChiTietDonHangBan
+    public partial class ChiTietKiemKe
     {
-        public string MaChiTietDH { get; set; }
+        public string MaCTKK { get; set; }
         public string MaSP { get; set; }
-        public string MaDH { get; set; }
-        public Nullable<int> SoLuong { get; set; }
-        public Nullable<int> DonGiaApDung { get; set; }
-        public Nullable<int> ThanhTien { get; set; }
+        public Nullable<int> SLTon { get; set; }
+        public Nullable<int> SLThucTe { get; set; }
+        public Nullable<int> ChenhLech { get; set; }
+        public string LyDo { get; set; }
+        public string MaKK { get; set; }
     
-        public virtual DonHang DonHang { get; set; }
+        public virtual BanKiemKe BanKiemKe { get; set; }
         public virtual SanPham SanPham { get; set; }
     }
 }

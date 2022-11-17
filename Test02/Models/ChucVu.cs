@@ -7,28 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Test02
+namespace Test02.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class ThongKe
+    public partial class ChucVu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ThongKe()
+        public ChucVu()
         {
-            this.BaoCaos = new HashSet<BaoCao>();
+            this.NhanViens = new HashSet<NhanVien>();
         }
     
-        public string MaThongKe { get; set; }
-        public string MaDH { get; set; }
-        public Nullable<System.DateTime> NgayLap { get; set; }
-        public Nullable<int> DonGia { get; set; }
-        public string SoLuong { get; set; }
-        public string TongTien { get; set; }
+        public string IdChucVu { get; set; }
+        public string ChucVu1 { get; set; }
+        public string ViTri { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BaoCao> BaoCaos { get; set; }
-        public virtual DonHang DonHang { get; set; }
+        public virtual ICollection<NhanVien> NhanViens { get; set; }
     }
 }

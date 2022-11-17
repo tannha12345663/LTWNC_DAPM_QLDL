@@ -7,21 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Test02
+namespace Test02.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class BaoCao
+    public partial class sysdiagram
     {
-        public string MaBC { get; set; }
-        public string MaNV { get; set; }
-        public string MaThongKe { get; set; }
-        public string LoaiBC { get; set; }
-        public Nullable<System.DateTime> NgayGioBC { get; set; }
-        public string NoiDungBC { get; set; }
-    
-        public virtual NhanVien NhanVien { get; set; }
-        public virtual ThongKe ThongKe { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

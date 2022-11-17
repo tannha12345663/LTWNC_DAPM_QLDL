@@ -7,27 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Test02
+namespace Test02.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class BanKiemKe
+    public partial class LoaiDL
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BanKiemKe()
+        public LoaiDL()
         {
-            this.ChiTietKiemKes = new HashSet<ChiTietKiemKe>();
+            this.DaiLies = new HashSet<DaiLy>();
         }
     
-        public string MaKK { get; set; }
-        public string MaNV { get; set; }
-        public string TenKK { get; set; }
-        public Nullable<int> ChenhLech { get; set; }
-        public Nullable<System.DateTime> NgayLap { get; set; }
+        public string MaLoaiDL { get; set; }
+        public string TenDaiLy { get; set; }
     
-        public virtual NhanVien NhanVien { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietKiemKe> ChiTietKiemKes { get; set; }
+        public virtual ICollection<DaiLy> DaiLies { get; set; }
     }
 }

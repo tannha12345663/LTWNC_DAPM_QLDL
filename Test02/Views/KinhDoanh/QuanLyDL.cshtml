@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Test02.DaiLy>
+﻿@model IEnumerable<Test02.Models.DaiLy>
 @{
     ViewBag.Title = "QuanLyDL";
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
@@ -13,7 +13,7 @@
 
                 <div class="row element-button">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm nhap-tu-file"><i class="fas fa-file-upload"></i> Thêm mới hồ sơ</a>
+                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDL"><i class="fas fa-file-upload"></i> Thêm mới hồ sơ</a>
                     </div>
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDL"><i class="fas fa-copy"></i> Làm mới danh sách</a>
@@ -59,13 +59,13 @@
                                 <thead>
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 50px;">STT</th>
-                                        <th width="150" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Họ và tên: activate to sort column ascending" style="width: 150px;">Mã hồ sơ</th>
                                         <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 150px;">Tên đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Loại đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa chỉ</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 101px;">Số điện thoại</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa chỉ email</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Ngày tiếp nhận</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,46 +73,41 @@
                                         <td>01</td>
                                         <td>HSG01</td>
                                         <td>Tấn Nhã</td>
-                                        <td>01 </td>
                                         <td>123 Phan Xích Long, P.24,Q.Bình Thạnh</td>
                                         <td>0908455325</td>
                                         <td>abc@gmail.com</td>
                                         <td>24/02/2022</td>
-                                       
+
                                     </tr>
                                     @foreach (var item in Model)
                                     {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MaDL)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MaLoaiDL)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TenDL)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DiaChi)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SDT)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Email)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NgayTiepNhan)
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <a class="btn btn-primary btn-sm trash" title="Xóa" href="#">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaDL)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaLoaiDL)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TenDL)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DiaChi)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SDT)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Email)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NgayTiepNhan)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Chỉnh sửa", "ChinhSuaDL", new { id = item.MaDL }, new { htmlAttributes = new { @class = "fas fa-edit" } }) |
+                                                @Html.ActionLink("Xóa", "Delete", new { id = item.MaDL }, new { htmlAttributes = new { @class = "btn btn-primary btn-sm trash" } })
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

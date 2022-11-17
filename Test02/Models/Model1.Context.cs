@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Test02
+namespace Test02.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QuanLyDLEntities : DbContext
+    public partial class QuanLyDLEntities1 : DbContext
     {
-        public QuanLyDLEntities()
-            : base("name=QuanLyDLEntities")
+        public QuanLyDLEntities1()
+            : base("name=QuanLyDLEntities1")
         {
         }
     
@@ -27,7 +27,7 @@ namespace Test02
     
         public virtual DbSet<BanKiemKe> BanKiemKes { get; set; }
         public virtual DbSet<BaoCao> BaoCaos { get; set; }
-        public virtual DbSet<ChiTietDonHangBan> ChiTietDonHangBans { get; set; }
+        public virtual DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public virtual DbSet<ChiTietKiemKe> ChiTietKiemKes { get; set; }
         public virtual DbSet<ChucVu> ChucVus { get; set; }
         public virtual DbSet<DaiLy> DaiLies { get; set; }
