@@ -131,6 +131,7 @@
     <Compile Include="Controllers\GiaoHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KinhDoanhController.cs" />
+    <Compile Include="Controllers\SanPhamsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -186,9 +187,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SanPham.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ThongKe.cs">
@@ -367,6 +365,9 @@
     <Content Include="Views\KinhDoanh\ThemDL.cshtml" />
     <Content Include="Views\KinhDoanh\Delete.cshtml" />
     <Content Include="Views\KinhDoanh\ChinhSuaDL.cshtml" />
+    <Content Include="Views\KinhDoanh\ThemSP.cshtml" />
+    <Content Include="Views\KinhDoanh\ChinhSuaSP.cshtml" />
+    <Content Include="Views\KinhDoanh\XoaSP.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

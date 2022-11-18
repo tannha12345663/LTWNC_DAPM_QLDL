@@ -18,7 +18,6 @@
         <EntityTypeShape EntityType="QuanLyDLModel1.NhanVien" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel1.PhieuCongNo" Width="1.5" PointX="3" PointY="16.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel1.SanPham" Width="1.5" PointX="6" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel1.sysdiagram" Width="1.5" PointX="9.75" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel1.ThongKe" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
         <AssociationConnector Association="QuanLyDLModel1.FK_BanKiemKe_NhanVien" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel1.FK_ChiTietKiemKe_BanKiemKe" ManuallyRouted="false" />

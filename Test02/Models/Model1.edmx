@@ -23,7 +23,7 @@
           <Property Name="MaNV" Type="varchar" MaxLength="10" />
           <Property Name="MaThongKe" Type="varchar" MaxLength="10" />
           <Property Name="LoaiBC" Type="nvarchar" MaxLength="50" />
-          <Property Name="NgayGioBC" Type="datetime" />
+          <Property Name="NgayGioBC" Type="date" />
           <Property Name="NoiDungBC" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ChiTietDonHang">
@@ -144,16 +144,6 @@
           <Property Name="Gia" Type="int" />
           <Property Name="HanSH" Type="datetime" />
           <Property Name="NgayXuat" Type="datetime" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="ThongKe">
           <Key>
@@ -404,7 +394,6 @@
           <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhieuCongNo" EntityType="Self.PhieuCongNo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ThongKe" EntityType="Self.ThongKe" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BanKiemKe_NhanVien" Association="Self.FK_BanKiemKe_NhanVien">
             <End Role="NhanVien" EntitySet="NhanVien" />
@@ -495,7 +484,7 @@
           <Property Name="MaNV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MaThongKe" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="LoaiBC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NgayGioBC" Type="DateTime" Precision="3" />
+          <Property Name="NgayGioBC" Type="DateTime" Precision="0" />
           <Property Name="NoiDungBC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="NhanVien" Relationship="Self.FK_BaoCao_NhanVien" FromRole="BaoCao" ToRole="NhanVien" />
           <NavigationProperty Name="ThongKe" Relationship="Self.FK_BaoCao_ThongKe" FromRole="BaoCao" ToRole="ThongKe" />
@@ -644,16 +633,6 @@
           <NavigationProperty Name="ChiTietDonHangs" Relationship="Self.FK_ChiTietDonHang_SanPham" FromRole="SanPham" ToRole="ChiTietDonHang" />
           <NavigationProperty Name="ChiTietKiemKes" Relationship="Self.FK_ChiTietKiemKe_SanPham" FromRole="SanPham" ToRole="ChiTietKiemKe" />
           <NavigationProperty Name="Khoes" Relationship="Self.FK_Kho_SanPham" FromRole="SanPham" ToRole="Kho" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="ThongKe">
           <Key>
@@ -906,7 +885,6 @@
           <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
           <EntitySet Name="PhieuCongNoes" EntityType="Self.PhieuCongNo" />
           <EntitySet Name="SanPhams" EntityType="Self.SanPham" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="ThongKes" EntityType="Self.ThongKe" />
           <AssociationSet Name="FK_BanKiemKe_NhanVien" Association="Self.FK_BanKiemKe_NhanVien">
             <End Role="NhanVien" EntitySet="NhanViens" />
@@ -1129,17 +1107,6 @@
                 <ScalarProperty Name="Gia" ColumnName="Gia" />
                 <ScalarProperty Name="HanSH" ColumnName="HanSH" />
                 <ScalarProperty Name="NgayXuat" ColumnName="NgayXuat" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="QuanLyDLModel1.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

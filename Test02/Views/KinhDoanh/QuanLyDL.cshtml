@@ -104,18 +104,22 @@
                                                 @Html.DisplayFor(modelItem => item.NgayTiepNhan)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Chỉnh sửa", "ChinhSuaDL", new { id = item.MaDL }, new { htmlAttributes = new { @class = "fas fa-edit" } }) |
-                                                @Html.ActionLink("Xóa", "Delete", new { id = item.MaDL }, new { htmlAttributes = new { @class = "btn btn-primary btn-sm trash" } })
+                                                <a href="/KinhDoanh/ChinhSuaDL/@item.MaDL" class="btn btn-primary btn-sm edit">
+                                                    Chỉnh sửa
+                                                </a>||
+                                                <a href="/KinhDoanh/Delete/@item.MaDL" class="btn btn-primary btn-sm deleted">
+                                                    Xóa đại lý
+                                                </a>
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
                         </div>
-                    </div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="sampleTable_info" role="status" aria-live="polite">Hiện 1 đến 7 của 7 danh mục</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="sampleTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="sampleTable_previous"><a href="#" aria-controls="sampleTable" data-dt-idx="0" tabindex="0" class="page-link">Lùi</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="sampleTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item next disabled" id="sampleTable_next"><a href="#" aria-controls="sampleTable" data-dt-idx="2" tabindex="0" class="page-link">Tiếp</a></li></ul></div></div></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+    </div>
 

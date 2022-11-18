@@ -99,10 +99,112 @@ namespace Test02.Controllers
         {
             return View();
         }
+
         public ActionResult QuanLySP()
         {
             return View(database.SanPhams.ToList());
         }
+
+        public ActionResult ThongTinSP(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            SanPham sanPham = database.SanPhams.Find(id);
+            if (sanPham == null)
+            {
+                return HttpNotFound();
+            }
+            return View(sanPham);
+        }
+
+        // GET: SanPhams/Create
+        public ActionResult ThemSP()
+        {
+            return View();
+        }
+
+        // POST: SanPhams/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ThemSP(SanPham sanPham)
+        {
+            if (ModelState.IsValid)
+            {
+                database.SanPhams.Add(sanPham);
+                database.SaveChanges();
+                return RedirectToAction("QuanLySP");
+            }
+
+            return View(sanPham);
+        }
+
+        // GET: SanPhams/Edit/5
+        public ActionResult ChinhSuaSP(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            SanPham sanPham = database.SanPhams.Find(id);
+            if (sanPham == null)
+            {
+                return HttpNotFound();
+            }
+            return View(sanPham);
+        }
+
+        // POST: SanPhams/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChinhSuaSP(SanPham sanPham)
+        {
+            if (ModelState.IsValid)
+            {
+                database.Entry(sanPham).State = EntityState.Modified;
+                database.SaveChanges();
+                return RedirectToAction("QuanLySP");
+            }
+            return View(sanPham);
+        }
+
+        // GET: SanPhams/Delete/5
+        public ActionResult XoaSP(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            SanPham sanPham = database.SanPhams.Find(id);
+            if (sanPham == null)
+            {
+                return HttpNotFound();
+            }
+            return View(sanPham);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult xoasp(string id)
+        {
+            try
+            {
+                SanPham sanPham = database.SanPhams.Find(id);
+                database.SanPhams.Remove(sanPham);
+                database.SaveChanges();
+                return RedirectToAction("QuanLySP");
+            }
+            catch
+            {
+                return Content("Không xóa được dữ liệu");
+            };
+
+        }
+
         public ActionResult QuanLyKho()
         {
             return View();

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Test02.SanPham>
+﻿@model IEnumerable<Test02.Models.SanPham>
 @{
     ViewBag.Title = "QuanLySP";
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
@@ -24,7 +24,7 @@
             @Html.DisplayNameFor(model => model.NgayXuat)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GiaSP)
+            @Html.DisplayNameFor(model => model.Gia)
         </th>
         <th></th>
     </tr>
@@ -48,11 +48,15 @@
                 @Html.DisplayFor(modelItem => item.NgayXuat)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GiaSP)
+                @Html.DisplayFor(modelItem => item.Gia)
             </td>
             <td>
-                @Html.ActionLink("Chỉnh sửa", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Xóa sản phẩm", "Delete", new { /* id=item.PrimaryKey */ })
+                <a href="/KinhDoanh/ChinhSuaSP/@item.MaSP" class="btn btn-primary btn-sm edit">
+                    Chỉnh sửa
+                </a> ||
+                <a href="/KinhDoanh/XoaSP/@item.MaSP" class="btn btn-primary btn-sm deleted">
+                    Xóa sản phẩm
+                </a>
             </td>
         </tr>
     }
