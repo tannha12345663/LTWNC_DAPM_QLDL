@@ -12,7 +12,7 @@ namespace Test02.Controllers
 {
     public class SanPhamsController : Controller
     {
-        private QuanLyDLEntities1 db = new QuanLyDLEntities1();
+        private QuanLyDLEntities2 db = new QuanLyDLEntities2();
 
         // GET: SanPhams
         public ActionResult Index()

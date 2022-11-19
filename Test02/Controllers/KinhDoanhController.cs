@@ -10,7 +10,7 @@ namespace Test02.Controllers
 {
     public class KinhDoanhController : Controller
     {
-        QuanLyDLEntities1 database = new QuanLyDLEntities1();
+        QuanLyDLEntities2 database = new QuanLyDLEntities2();
         // GET: KinhDoanh
         public ActionResult TrangChu()
         {

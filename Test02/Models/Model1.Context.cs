@@ -13,10 +13,10 @@ namespace Test02.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QuanLyDLEntities1 : DbContext
+    public partial class QuanLyDLEntities2 : DbContext
     {
-        public QuanLyDLEntities1()
-            : base("name=QuanLyDLEntities1")
+        public QuanLyDLEntities2()
+            : base("name=QuanLyDLEntities2")
         {
         }
     
