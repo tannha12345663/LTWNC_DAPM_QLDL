@@ -1,7 +1,6 @@
-Create Database [QuanLyDL]
 USE [QuanLyDL]
 GO
-/****** Object:  Table [dbo].[BanKiemKe]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[BanKiemKe]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -18,7 +17,7 @@ CREATE TABLE [dbo].[BanKiemKe](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[BaoCao]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[BaoCao]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -36,7 +35,7 @@ CREATE TABLE [dbo].[BaoCao](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ChiTietDonHang]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[ChiTietDonHang]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -54,7 +53,7 @@ CREATE TABLE [dbo].[ChiTietDonHang](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ChiTietKiemKe]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[ChiTietKiemKe]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -73,7 +72,7 @@ CREATE TABLE [dbo].[ChiTietKiemKe](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ChucVu]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[ChucVu]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -88,7 +87,7 @@ CREATE TABLE [dbo].[ChucVu](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[DaiLy]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[DaiLy]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -109,7 +108,7 @@ CREATE TABLE [dbo].[DaiLy](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[DonHang]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[DonHang]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -126,7 +125,7 @@ CREATE TABLE [dbo].[DonHang](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[GiaoHang]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[GiaoHang]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -146,7 +145,7 @@ CREATE TABLE [dbo].[GiaoHang](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Kho]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[Kho]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -164,7 +163,7 @@ CREATE TABLE [dbo].[Kho](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[LoaiDL]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[LoaiDL]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -178,7 +177,7 @@ CREATE TABLE [dbo].[LoaiDL](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[NhanVien]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[NhanVien]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -198,7 +197,7 @@ CREATE TABLE [dbo].[NhanVien](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PhieuCongNo]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[PhieuCongNo]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -214,7 +213,7 @@ CREATE TABLE [dbo].[PhieuCongNo](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SanPham]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[SanPham]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -232,7 +231,7 @@ CREATE TABLE [dbo].[SanPham](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ThongKe]    Script Date: 11/18/2022 8:17:55 AM ******/
+/****** Object:  Table [dbo].[ThongKe]    Script Date: 11/19/2022 8:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -249,6 +248,25 @@ CREATE TABLE [dbo].[ThongKe](
 	[MaThongKe] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+INSERT [dbo].[ChucVu] ([IdChucVu], [ChucVu], [ViTri]) VALUES (N'NVGH', N'Nhân Viên', N'Giao Hàng')
+INSERT [dbo].[ChucVu] ([IdChucVu], [ChucVu], [ViTri]) VALUES (N'NVK', N'Nhân Viên ', N'Kho')
+INSERT [dbo].[ChucVu] ([IdChucVu], [ChucVu], [ViTri]) VALUES (N'NVKD', N'Nhân Viên', N'Kinh doanh')
+INSERT [dbo].[ChucVu] ([IdChucVu], [ChucVu], [ViTri]) VALUES (N'NVKT', N'Nhân Viên', N'Kế Toán')
+GO
+INSERT [dbo].[DaiLy] ([MaDL], [MaLoaiDL], [UserName], [Password], [TenDL], [SDT], [DiaChi], [Email], [NgayTiepNhan]) VALUES (N'DL0045', N'DL01', NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2022-11-18T00:00:00.000' AS DateTime))
+INSERT [dbo].[DaiLy] ([MaDL], [MaLoaiDL], [UserName], [Password], [TenDL], [SDT], [DiaChi], [Email], [NgayTiepNhan]) VALUES (N'DL10', N'DL01', N'Tannha', N'23', N'Trương Tấn Nhã 01', N'0902509292dsad', N'123a, Phan Đình Phùng, P17, Q.Bình Thạnh', N'NhaTruong@gmail.com', CAST(N'2022-11-08T00:00:00.000' AS DateTime))
+INSERT [dbo].[DaiLy] ([MaDL], [MaLoaiDL], [UserName], [Password], [TenDL], [SDT], [DiaChi], [Email], [NgayTiepNhan]) VALUES (N'DL18', N'DL02', N'Tannha123456', N'123456789', N'Trương Tấn Nhã 01', N'0902509292', N'123a, Phan Đình Phùng, P17, Q.Bình Thạnh', N'NhaTruong@gmail.com', NULL)
+GO
+INSERT [dbo].[LoaiDL] ([MaLoaiDL], [TenDaiLy]) VALUES (N'DL01', N'Đại lý lớn')
+INSERT [dbo].[LoaiDL] ([MaLoaiDL], [TenDaiLy]) VALUES (N'DL02', N'Đại lý bé')
+INSERT [dbo].[LoaiDL] ([MaLoaiDL], [TenDaiLy]) VALUES (N'DL03', N'Đại lý vừa')
+INSERT [dbo].[LoaiDL] ([MaLoaiDL], [TenDaiLy]) VALUES (N'DL04', N'Đại lý trung bình')
+GO
+INSERT [dbo].[NhanVien] ([MaNV], [IdChucVu], [UserName], [Password], [TenNV], [SDT], [DiaChi], [Email]) VALUES (N'NV01', N'NVKD', N'user01', N'123456', N'Tấn Nhã', N'0908455325', N'84a, Phan Đình Phụng, P01, Q.Bình Thạnh', N'abc@gmail.com')
+INSERT [dbo].[NhanVien] ([MaNV], [IdChucVu], [UserName], [Password], [TenNV], [SDT], [DiaChi], [Email]) VALUES (N'NV02', N'NVK', N'user02', N'123456', N'Diễm Khang', N'0123456789', N'123, Trần Hưng Đạo', N'abv2@gmail.com')
+INSERT [dbo].[NhanVien] ([MaNV], [IdChucVu], [UserName], [Password], [TenNV], [SDT], [DiaChi], [Email]) VALUES (N'NV03', N'NVKT', N'user03', N'123456', N'Diễm Quỳnh', N'0123456789', N'112, Bùi Đình Túy, P05, Q.Bình Chánh', N'diemquynh@gmail.com')
+INSERT [dbo].[NhanVien] ([MaNV], [IdChucVu], [UserName], [Password], [TenNV], [SDT], [DiaChi], [Email]) VALUES (N'NV04', N'NVGH', N'user04', N'123456', N'Tấn Nhã giao hàng', N'01237418529', N'99, Lê lợi, P.15,Q.01', N'tannha@gmail.com')
 GO
 ALTER TABLE [dbo].[BanKiemKe]  WITH CHECK ADD  CONSTRAINT [FK_BanKiemKe_NhanVien] FOREIGN KEY([MaNV])
 REFERENCES [dbo].[NhanVien] ([MaNV])
