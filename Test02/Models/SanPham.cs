@@ -17,8 +17,8 @@ namespace Test02.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SanPham()
         {
-            this.ChiTietDonHangs = new HashSet<ChiTietDonHang>();
-            this.ChiTietKiemKes = new HashSet<ChiTietKiemKe>();
+            this.BanKiemKes = new HashSet<BanKiemKe>();
+            this.DonHangs = new HashSet<DonHang>();
             this.Khoes = new HashSet<Kho>();
         }
     
@@ -26,13 +26,13 @@ namespace Test02.Models
         public string TenSP { get; set; }
         public string DonViTinh { get; set; }
         public Nullable<int> Gia { get; set; }
-        public Nullable<System.DateTime> HanSH { get; set; }
+        public Nullable<System.DateTime> HanSD { get; set; }
         public Nullable<System.DateTime> NgayXuat { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
+        public virtual ICollection<BanKiemKe> BanKiemKes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietKiemKe> ChiTietKiemKes { get; set; }
+        public virtual ICollection<DonHang> DonHangs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Kho> Khoes { get; set; }
     }

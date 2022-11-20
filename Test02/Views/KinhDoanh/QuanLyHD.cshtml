@@ -1,10 +1,100 @@
-﻿
+﻿@model IEnumerable<Test02.Models.DonHang>
+@using Test02.Models; 
 @{
     ViewBag.Title = "QuanLyHD";
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.hd = "active";
-    ViewBag.nd = "Danh sách hóa đơn ";
+    ViewBag.nd = "Danh sách hóa đơn";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    List<SanPham> sanpham = db.SanPhams.ToList();
 }
 
-<h2>QuanLyHD</h2>
+<h2>Danh sách hóa đơn</h2>
 
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+
+                <div class="row element-button">
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDH"><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                    </div>
+
+                </div>
+                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                    <div class="row">
+
+
+                        <div class="col-md-1">
+                            <div id="sampleTable_filter" class="dataTables_filter">
+                                <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                @*//Phần render từng dòng trong C#*@
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Ngày lập</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 100px;">Mã sản phẩm</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Tên sản phẩm</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Số lượng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var total = 0;}
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaDH)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaDL)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NgayLap)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaSP)
+                                            </td>
+                                            <td>
+                                                @{var tensp = db.SanPhams.Find(item.MaSP);
+                                                }
+                                                @Html.DisplayFor(modelItem => tensp.TenSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SoLuong)
+                                            </td>
+                                            <td>
+                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
+                                                @Html.DisplayFor(modelItem => ThanhTien)
+                                                @{ total += Convert.ToInt32(item.ThanhTien);}
+                                            </td>
+                                        </tr>
+
+                                    }
+                                    <tr>
+                                        <th colspan="6">Tổng cộng:</th>
+                                        @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                        <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

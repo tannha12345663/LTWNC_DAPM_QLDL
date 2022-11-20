@@ -19,7 +19,8 @@ namespace Test02.Models
         {
             this.BanKiemKes = new HashSet<BanKiemKe>();
             this.BaoCaos = new HashSet<BaoCao>();
-            this.GiaoHangs = new HashSet<GiaoHang>();
+            this.DanhSachGiaoHangs = new HashSet<DanhSachGiaoHang>();
+            this.DonHangs = new HashSet<DonHang>();
             this.Khoes = new HashSet<Kho>();
         }
     
@@ -38,7 +39,9 @@ namespace Test02.Models
         public virtual ICollection<BaoCao> BaoCaos { get; set; }
         public virtual ChucVu ChucVu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GiaoHang> GiaoHangs { get; set; }
+        public virtual ICollection<DanhSachGiaoHang> DanhSachGiaoHangs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DonHang> DonHangs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Kho> Khoes { get; set; }
     }

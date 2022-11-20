@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
+    ViewBag.sp = "active";
+    ViewBag.nd = "Chỉnh sửa sản phẩm";
 }
 
 <h2>Edit</h2>
@@ -43,17 +45,17 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.HanSH, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.HanSD, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class="form-control text-box single-line" data-val="true" data-val-date="The field HanSH must be a date." id="HanSH" name="HanSH" type="Date" value="">
-                @Html.ValidationMessageFor(model => model.HanSH, "", new { @class = "text-danger" })
+                <input class="form-control text-box single-line" data-val="true" data-val-date="The field HanSH must be a date." id="HanSD" name="HanSD" type="Date" value="@DateTime.Now">
+                @Html.ValidationMessageFor(model => model.HanSD, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.NgayXuat, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayXuat must be a date." id="NgayXuat" name="NgayXuat" type="Date" value="">
+                <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayXuat must be a date." id="NgayXuat" name="NgayXuat" type="Date" value="@DateTime.Now">
                 @Html.ValidationMessageFor(model => model.NgayXuat, "", new { @class = "text-danger" })
             </div>
         </div>

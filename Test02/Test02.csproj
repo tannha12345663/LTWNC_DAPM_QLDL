@@ -128,11 +128,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DonHangsController.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KinhDoanhController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
-    <Compile Include="Controllers\SanPhamsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -142,22 +142,16 @@
     <Compile Include="Models\BaoCao.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChiTietDonHang.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ChiTietKiemKe.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ChucVu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DaiLy.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DonHang.cs">
+    <Compile Include="Models\DanhSachGiaoHang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GiaoHang.cs">
+    <Compile Include="Models\DonHang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Kho.cs">
@@ -246,6 +240,7 @@
     <Content Include="Content\bootstrap\js\bootstrap.esm.min.js" />
     <Content Include="Content\bootstrap\js\bootstrap.js" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\ckeditor.js" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\util.css" />
@@ -258,8 +253,24 @@
     <Content Include="Content\images\hay.jpg" />
     <Content Include="Content\images\team.jpg" />
     <Content Include="Content\Img\135017829_1026004181228801_2637032699560275_n.jpg" />
-    <Content Include="Content\js\footable.js" />
+    <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\jquery-3.2.1.min.js" />
     <Content Include="Content\js\main.js" />
+    <Content Include="Content\js\plugins\bootstrap-datepicker.min.js" />
+    <Content Include="Content\js\plugins\bootstrap-notify.min.js" />
+    <Content Include="Content\js\plugins\chart.js" />
+    <Content Include="Content\js\plugins\dataTables.bootstrap.min.js" />
+    <Content Include="Content\js\plugins\fullcalendar.min.js" />
+    <Content Include="Content\js\plugins\jquery-ui.custom.min.js" />
+    <Content Include="Content\js\plugins\jquery.dataTables.min.js" />
+    <Content Include="Content\js\plugins\jquery.vmap.min.js" />
+    <Content Include="Content\js\plugins\jquery.vmap.sampledata.js" />
+    <Content Include="Content\js\plugins\jquery.vmap.world.js" />
+    <Content Include="Content\js\plugins\moment.min.js" />
+    <Content Include="Content\js\plugins\pace.min.js" />
+    <Content Include="Content\js\plugins\select2.min.js" />
+    <Content Include="Content\js\plugins\sweetalert.min.js" />
+    <Content Include="Content\js\popper.min.js" />
     <Content Include="Content\soft-ui-dashboard.css" />
     <Content Include="Content\Test01\all.min.css" />
     <Content Include="Content\Test01\main.css" />
@@ -426,8 +437,6 @@
     <Content Include="Views\KinhDoanh\QuanLyDH.cshtml" />
     <Content Include="Views\KinhDoanh\QuanLyHD.cshtml" />
     <Content Include="Views\KinhDoanh\QuanLySP.cshtml" />
-    <Content Include="Views\KinhDoanh\QuanLyKho.cshtml" />
-    <Content Include="Views\KinhDoanh\BaoCao.cshtml" />
     <Content Include="Views\GiaoHang\Layout\LayoutGH.cshtml" />
     <Content Include="Views\GiaoHang\TrangChu.cshtml" />
     <Content Include="Views\GiaoHang\DanhSachHD.cshtml" />
@@ -441,6 +450,10 @@
     <Content Include="Views\KinhDoanh\ChinhSuaSP.cshtml" />
     <Content Include="Views\KinhDoanh\XoaSP.cshtml" />
     <Content Include="Views\LoginUser\Login.cshtml" />
+    <Content Include="Views\KinhDoanh\ThemDH.cshtml" />
+    <Content Include="Views\KinhDoanh\ChinhSuaDH.cshtml" />
+    <Content Include="Views\KinhDoanh\XoaDH.cshtml" />
+    <Content Include="Views\KinhDoanh\BaoCao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

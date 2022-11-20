@@ -17,23 +17,29 @@ namespace Test02.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DonHang()
         {
-            this.ChiTietDonHangs = new HashSet<ChiTietDonHang>();
-            this.GiaoHangs = new HashSet<GiaoHang>();
+            this.DanhSachGiaoHangs = new HashSet<DanhSachGiaoHang>();
             this.PhieuCongNoes = new HashSet<PhieuCongNo>();
             this.ThongKes = new HashSet<ThongKe>();
         }
     
         public string MaDH { get; set; }
+        public string MaSP { get; set; }
         public string MaDL { get; set; }
+        public string MaNV { get; set; }
+        public Nullable<int> SoLuong { get; set; }
+        public Nullable<int> DonGiaApDung { get; set; }
+        public Nullable<int> ThanhTien { get; set; }
         public Nullable<System.DateTime> NgayLap { get; set; }
         public string TrangThai { get; set; }
-        public Nullable<int> TongTien { get; set; }
+        public string DiemGiao { get; set; }
+        public string TenNV { get; set; }
+        public string TinhTrangThanhToan { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public virtual DaiLy DaiLy { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GiaoHang> GiaoHangs { get; set; }
+        public virtual ICollection<DanhSachGiaoHang> DanhSachGiaoHangs { get; set; }
+        public virtual NhanVien NhanVien { get; set; }
+        public virtual SanPham SanPham { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhieuCongNo> PhieuCongNoes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

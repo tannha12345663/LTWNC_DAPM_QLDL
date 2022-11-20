@@ -16,12 +16,10 @@ namespace Test02.Models
     {
         public string MaBC { get; set; }
         public string MaNV { get; set; }
-        public string MaThongKe { get; set; }
         public string LoaiBC { get; set; }
         public Nullable<System.DateTime> NgayGioBC { get; set; }
         public string NoiDungBC { get; set; }
     
         public virtual NhanVien NhanVien { get; set; }
-        public virtual ThongKe ThongKe { get; set; }
     }
 }

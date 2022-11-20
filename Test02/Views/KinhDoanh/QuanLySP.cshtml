@@ -5,7 +5,9 @@
     ViewBag.sp = "active";
     ViewBag.nd = "Danh sách sản phẩm";
 }
-
+<p>
+    @Html.ActionLink("Create New", "ThemSP")
+</p>
 <table class="table">
     <tr>
         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 80px;">
@@ -18,7 +20,7 @@
             @Html.DisplayNameFor(model => model.DonViTinh)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.HanSH)
+            @Html.DisplayNameFor(model => model.HanSD)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.NgayXuat)
@@ -42,7 +44,7 @@
                 @Html.DisplayFor(modelItem => item.DonViTinh)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HanSH)
+                @Html.DisplayFor(modelItem => item.HanSD)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NgayXuat)

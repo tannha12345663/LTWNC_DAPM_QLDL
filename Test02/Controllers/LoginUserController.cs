@@ -47,7 +47,7 @@ namespace Test02.Controllers
                     return RedirectToAction("TrangChu", "GiaoHang");
                 }
             }
-            ViewBag.ErrorInfo = "Sai thông tin";
+            ViewBag.error = "Sai thông tin";
             return View("Login");
         }
 

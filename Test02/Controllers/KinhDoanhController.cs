@@ -93,12 +93,85 @@ namespace Test02.Controllers
         }
         public ActionResult QuanLyDH()
         {
-            return View();
+            
+            return View(database.DonHangs.ToList());
         }
-        public ActionResult QuanLyHD()
+        public ActionResult ThemDH()
         {
+            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL");
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ThemDH([Bind(Include = "MaDH,MaSP,MaDL,MaNV,SoLuong,DonGiaApDung,ThanhTien,NgayLap,TrangThai,DiemGiao,TenNV,TinhTrangThanhToan")] DonHang donHang)
+        {
+            if (ModelState.IsValid)
+            {
+                database.DonHangs.Add(donHang);
+                database.SaveChanges();
+                return RedirectToAction("QuanLyDH");
+            }
+
+            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL", donHang.MaDL);
+            ViewBag.MaNV = new SelectList(database.NhanViens, "MaNV", "MaNV", donHang.MaNV);
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", donHang.MaSP);
+            return View(donHang);
+        }
+        public ActionResult ChinhSuaDH(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            DonHang donHang = database.DonHangs.Find(id);
+            if (donHang == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL", donHang.MaDL);
+            ViewBag.MaNV = new SelectList(database.NhanViens, "MaNV", "MaNV", donHang.MaNV);
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", donHang.MaSP);
+            return View(donHang);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChinhSuaDH(DonHang donHang)
+        {
+            if (ModelState.IsValid)
+            {
+                database.Entry(donHang).State = EntityState.Modified;
+                database.SaveChanges();
+                return RedirectToAction("QuanLyDH");
+            }
+            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL", donHang.MaDL);
+            ViewBag.MaNV = new SelectList(database.NhanViens, "MaNV", "IdChucVu", donHang.MaNV);
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", donHang.MaSP);
+            return View(donHang);
+        }
+        public ActionResult XoaDH(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            DonHang donHang = database.DonHangs.Find(id);
+            if (donHang == null)
+            {
+                return HttpNotFound();
+            }
+            return View(donHang);
+        }
+        [HttpPost, ActionName("XoaDH")]
+        [ValidateAntiForgeryToken]
+        public ActionResult XoaDHConfirm(string id)
+        {
+            DonHang donHang = database.DonHangs.Find(id);
+            database.DonHangs.Remove(donHang);
+            database.SaveChanges();
+            return RedirectToAction("QuanLyDH");
+        }
+        
 
         public ActionResult QuanLySP()
         {
@@ -204,18 +277,33 @@ namespace Test02.Controllers
             };
 
         }
-
+        public ActionResult QuanLyHD()
+        {
+            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL");
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
+            return View(database.DonHangs.ToList());
+        }
         public ActionResult QuanLyKho()
         {
             return View();
         }
         public ActionResult BaoCao()
         {
+            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL");
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
             return View();
         }
-        public ActionResult Test01()
+        [HttpPost]
+        public ActionResult BaoCao(BaoCao baocao)
         {
-            return View(database.DaiLies.ToList());
+            if (ModelState.IsValid)
+            {
+                database.BaoCaos.Add(baocao);
+                database.SaveChanges();
+                return RedirectToAction("TrangChu");
+            }
+
+            return View(baocao);
         }
     }
 }

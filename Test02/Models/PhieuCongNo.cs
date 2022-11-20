@@ -14,7 +14,8 @@ namespace Test02.Models
     
     public partial class PhieuCongNo
     {
-        public string MaCongNo { get; set; }
+        public int MaCongNo { get; set; }
+        public string MaDL { get; set; }
         public string MaDH { get; set; }
         public Nullable<int> TienNo { get; set; }
         public Nullable<System.DateTime> HanTra { get; set; }

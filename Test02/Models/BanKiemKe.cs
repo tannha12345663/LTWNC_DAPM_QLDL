@@ -14,20 +14,18 @@ namespace Test02.Models
     
     public partial class BanKiemKe
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BanKiemKe()
-        {
-            this.ChiTietKiemKes = new HashSet<ChiTietKiemKe>();
-        }
-    
         public string MaKK { get; set; }
+        public string MaSP { get; set; }
         public string MaNV { get; set; }
-        public string TenKK { get; set; }
-        public Nullable<int> ChenhLech { get; set; }
+        public string MaKho { get; set; }
+        public string TenNV { get; set; }
         public Nullable<System.DateTime> NgayLap { get; set; }
+        public Nullable<int> SLTon { get; set; }
+        public Nullable<int> SLThucTe { get; set; }
+        public Nullable<int> ChenhLech { get; set; }
+        public string LyDo { get; set; }
     
         public virtual NhanVien NhanVien { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietKiemKe> ChiTietKiemKes { get; set; }
+        public virtual SanPham SanPham { get; set; }
     }
 }

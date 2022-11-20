@@ -14,21 +14,14 @@ namespace Test02.Models
     
     public partial class ThongKe
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ThongKe()
-        {
-            this.BaoCaos = new HashSet<BaoCao>();
-        }
-    
-        public string MaThongKe { get; set; }
+        public Nullable<System.DateTime> Ngay { get; set; }
         public string MaDH { get; set; }
         public Nullable<System.DateTime> NgayLap { get; set; }
         public Nullable<int> DonGia { get; set; }
         public Nullable<int> SoLuong { get; set; }
         public Nullable<int> TongTien { get; set; }
+        public int MaThongKe { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BaoCao> BaoCaos { get; set; }
         public virtual DonHang DonHang { get; set; }
     }
 }
