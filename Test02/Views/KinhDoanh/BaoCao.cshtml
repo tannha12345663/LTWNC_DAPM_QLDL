@@ -6,6 +6,7 @@
     ViewBag.baocao = "active";
     ViewBag.nd = "Báo cáo";
 }
+<script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
 <script type="text/javascript" src="~Content/ckeditor.js"></script>
 <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
 <script>
@@ -67,10 +68,7 @@
 
                 <div class="row element-button">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDH"><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/BaoCao"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/BaoCao"><i class="fas fa-copy"></i> Làm mới báo cáo</a>
                     </div>
 
                 </div>
@@ -88,9 +86,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-md-2" for="MaNV">Mã nhân viên</label>
+                                @Html.LabelFor(model => model.MaNV, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayTiepNhan must be a date." id="MaNV" name="MaNV" type="text" value="@Session["MaNV"].ToString()">
+                                    @Html.EditorFor(model => model.MaNV, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -109,12 +107,14 @@
                                     @Html.ValidationMessageFor(model => model.NgayGioBC, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-10">
                                 <label class="control-label">Mô tả báo cáo</label>
-                                <textarea class="form-control" name="NoiDungBC" id="NoiDungBC"></textarea>
-                                <script>CKEDITOR.replace('mota');</script>
+                                @Html.TextAreaFor(model => model.NoiDungBC, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.NoiDungBC, "", new { @class = "text-danger" })
                             </div>
-
+                            <script>
+                                CKEDITOR.replace("NoiDungBC");
+                            </script>
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
                                     <input type="submit" value="Gửi báo cáo" class="btn btn-default" />
@@ -122,7 +122,7 @@
                             </div>
                         </div>
                     }
-                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -136,24 +136,4 @@
 <script src="~/Content/js/bootstrap.min.js"></script>
 <script src="~/Content/js/main.js"></script>
 <script src="~/Content/js/plugins/pace.min.js"></script>
-<script>
-    const inpFile = document.getElementById("inpFile");
-    const loadFile = document.getElementById("loadFile");
-    const previewContainer = document.getElementById("imagePreview");
-    const previewContainer = document.getElementById("imagePreview");
-    const previewImage = previewContainer.querySelector(".image-preview__image");
-    const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
-    inpFile.addEventListener("change", function () {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            previewDefaultText.style.display = "none";
-            previewImage.style.display = "block";
-            reader.addEventListener("load", function () {
-                previewImage.setAttribute("src", this.result);
-            });
-            reader.readAsDataURL(file);
-        }
-    });
-
-</script>
+<script src="~/Content/ckeditor/ckeditor.js"></script>

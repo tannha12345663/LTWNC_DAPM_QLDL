@@ -14,12 +14,19 @@ namespace Test02.Models
     
     public partial class BaoCao
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public BaoCao()
+        {
+            this.NhanViens = new HashSet<NhanVien>();
+        }
+    
         public string MaBC { get; set; }
         public string MaNV { get; set; }
         public string LoaiBC { get; set; }
         public Nullable<System.DateTime> NgayGioBC { get; set; }
         public string NoiDungBC { get; set; }
     
-        public virtual NhanVien NhanVien { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NhanVien> NhanViens { get; set; }
     }
 }

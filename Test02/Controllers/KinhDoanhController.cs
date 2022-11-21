@@ -5,11 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Test02.Models;
+using Test02.App_Start;
 
 namespace Test02.Controllers
 {
+    [Authentication]
     public class KinhDoanhController : Controller
     {
+        
         QuanLyDLEntities2 database = new QuanLyDLEntities2();
         // GET: KinhDoanh
         public ActionResult TrangChu()
@@ -18,6 +21,7 @@ namespace Test02.Controllers
         }
         public ActionResult QuanLyDL()
         {
+
             return View(database.DaiLies.ToList());
         }
         public ActionResult ThemDL()
@@ -289,8 +293,6 @@ namespace Test02.Controllers
         }
         public ActionResult BaoCao()
         {
-            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL");
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
             return View();
         }
         [HttpPost]

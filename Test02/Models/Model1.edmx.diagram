@@ -4,22 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ba1909e406be43a28a963898844c38e8" Name="Diagram1">
-        <EntityTypeShape EntityType="QuanLyDLModel.BanKiemKe" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.BaoCao" Width="1.5" PointX="5.25" PointY="16.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.ChucVu" Width="1.5" PointX="0.75" PointY="12.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.DaiLy" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.DanhSachGiaoHang" Width="1.5" PointX="8.25" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.DonHang" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.Kho" Width="1.5" PointX="8.25" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.LoaiDL" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.NhanVien" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.PhieuCongNo" Width="1.5" PointX="7.5" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.SanPham" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.ThongKe" Width="1.5" PointX="7.5" PointY="16.375" IsExpanded="true" />
+      <Diagram DiagramId="396c138692ba4ef6859f675fd0a9f8d7" Name="Diagram1">
+        <EntityTypeShape EntityType="QuanLyDLModel.BanKiemKe" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.BaoCao" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.ChucVu" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.DaiLy" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.DanhSachGiaoHang" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.DonHang" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.Kho" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.LoaiDL" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.NhanVien" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.PhieuCongNo" Width="1.5" PointX="7.5" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.SanPham" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.ThongKe" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
         <AssociationConnector Association="QuanLyDLModel.FK_BanKiemKe_NhanVien" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_BanKiemKe_SanPham" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDLModel.FK_BaoCao_NhanVien" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDLModel.FK_NhanVien_BaoCao" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_NhanVien_ChucVu" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_DaiLy_LoaiDL" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_DonHang_DaiLy" ManuallyRouted="false" />

@@ -14,6 +14,7 @@ namespace Test02.Models
     
     public partial class Kho
     {
+
         public string MaKho { get; set; }
         public string MaNV { get; set; }
         public string MaSP { get; set; }

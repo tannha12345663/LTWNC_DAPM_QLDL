@@ -40,7 +40,9 @@
             <img class="app-sidebar__user-avatar" src="~/Content/Img/135017829_1026004181228801_2637032699560275_n.jpg" width="50px"
                  alt="User Image">
             <div>
-                <p class="app-sidebar__user-name"><b>@Session["TenNV"].ToString()</b></p>
+                <p class="app-sidebar__user-name"><b>@{
+                        var user =(Test02.Models.NhanVien) HttpContext.Current.Session["user"];
+                        @user.TenNV}</b></p>
                 <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
             </div>
         </div>

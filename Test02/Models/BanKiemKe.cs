@@ -11,7 +11,8 @@ namespace Test02.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class BanKiemKe
     {
         public string MaKK { get; set; }
