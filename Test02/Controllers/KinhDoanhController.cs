@@ -102,7 +102,8 @@ namespace Test02.Controllers
         }
         public ActionResult ThemDH()
         {
-            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL");
+            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaDL");
+            ViewBag.MaNV = new SelectList(database.NhanViens, "MaNV", "MaNV");
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
             return View();
         }
