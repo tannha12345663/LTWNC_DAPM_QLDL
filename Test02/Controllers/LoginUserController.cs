@@ -76,6 +76,9 @@ namespace Test02.Controllers
             }
             return byte2String;
         }
-
+        public ActionResult QuenMK()
+        {
+            return View();
+        }
     }
 }

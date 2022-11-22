@@ -219,6 +219,7 @@
     <Content Include="Content\bootstrap-5.0.2-dist\js\bootstrap.js" />
     <Content Include="Content\bootstrap-5.0.2-dist\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap-icons\bootstrap-icons.css" />
+    <Content Include="Content\bootstrap-icons\fonts\font-awesome.min.css" />
     <Content Include="Content\bootstrap-icons\index.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -280,8 +281,13 @@
     <Content Include="Content\QLHoadon.css" />
     <Content Include="Content\soft-ui-dashboard.css" />
     <Content Include="Content\Test01\all.min.css" />
+    <Content Include="Content\Test01\animate.css" />
+    <Content Include="Content\Test01\hamburgers.min.css" />
     <Content Include="Content\Test01\main.css" />
+    <Content Include="Content\Test01\mainLogin.css" />
     <Content Include="Content\Test01\sb-admin-2.min.css" />
+    <Content Include="Content\Test01\select2.min.js" />
+    <Content Include="Content\Test01\util.css" />
     <Content Include="Content\vendor\animate\animate.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
@@ -481,6 +487,8 @@
     <Content Include="Views\KeToan\QLHoaDon.cshtml" />
     <Content Include="Views\KeToan\TrangChuKeToan.cshtml" />
     <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
+    <Content Include="Views\LoginUser\Layout\QuenMatKhau.cshtml" />
+    <Content Include="Views\LoginUser\QuenMK.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
