@@ -134,8 +134,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KeToanController.cs" />
+    <Compile Include="Controllers\KhachHangController.cs" />
     <Compile Include="Controllers\KinhDoanhController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
+    <Compile Include="Controllers\PhongKhoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -274,6 +277,7 @@
     <Content Include="Content\js\plugins\select2.min.js" />
     <Content Include="Content\js\plugins\sweetalert.min.js" />
     <Content Include="Content\js\popper.min.js" />
+    <Content Include="Content\QLHoadon.css" />
     <Content Include="Content\soft-ui-dashboard.css" />
     <Content Include="Content\Test01\all.min.css" />
     <Content Include="Content\Test01\main.css" />
@@ -457,6 +461,27 @@
     <Content Include="Views\KinhDoanh\ChinhSuaDH.cshtml" />
     <Content Include="Views\KinhDoanh\XoaDH.cshtml" />
     <Content Include="Views\KinhDoanh\BaoCao.cshtml" />
+    <Content Include="Views\PhongKho\BaoCao.cshtml" />
+    <Content Include="Views\PhongKho\GiaiQuyetTonKho.cshtml" />
+    <Content Include="Views\PhongKho\Layout\_LayoutLogIn.cshtml" />
+    <Content Include="Views\PhongKho\Layout\_LayoutPage1.cshtml" />
+    <Content Include="Views\PhongKho\NhapKho.cshtml" />
+    <Content Include="Views\PhongKho\QuanLyDL.cshtml" />
+    <Content Include="Views\PhongKho\TaoPhieuNhapKho.cshtml" />
+    <Content Include="Views\PhongKho\TaoPhieuXuatKho.cshtml" />
+    <Content Include="Views\PhongKho\Test02.cshtml" />
+    <Content Include="Views\PhongKho\ThemSanPham.cshtml" />
+    <Content Include="Views\PhongKho\TonKho.cshtml" />
+    <Content Include="Views\PhongKho\XuatKho.cshtml" />
+    <Content Include="Views\KhachHang\Layout\_LayoutKhachHang.cshtml" />
+    <Content Include="Views\KhachHang\PageSanPham.cshtml" />
+    <Content Include="Views\KeToan\CreateCongno.cshtml" />
+    <Content Include="Views\KeToan\Doanhthu.cshtml" />
+    <Content Include="Views\KeToan\LoiNhuan.cshtml" />
+    <Content Include="Views\KeToan\QLCongno.cshtml" />
+    <Content Include="Views\KeToan\QLHoaDon.cshtml" />
+    <Content Include="Views\KeToan\TrangChuKeToan.cshtml" />
+    <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

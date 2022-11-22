@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "TaoPhieuNhapKho";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+    ViewBag.aQLNV = "active";
+    ViewBag.Name = "Tạo phiếu nhập kho";
+}
+
+<div class="tile">
+    <div class="tile-body">
+        <h3 style="text-align:center">PHIẾU NHẬP KHO</h3>
+        <form style="text-align:center">
+            <label for="date">Ngày:</label>
+            <input type="date" id="clock" class="date" name="ngay"><br>
+            <label for="number">Mã số:</label>
+            <input type="number" id="number" name="maso"> <br>
+        </form>
+        <form class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label">Họ tên người tạo phiếu: </label>
+                <input class="form-control" type="text">
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label">Theo hóa đơn số: </label>
+                <input class="form-control" type="text" required>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label">Nhập tại kho:</label>
+                <input class="form-control" type="text" required>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label">Địa điểm:</label>
+                <input class="form-control" type="text" required>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label">Danh sách sản phẩm cần nhập:</label>
+                <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Đơn vị tính</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input class="form-control" type="text" placeholder="1" required></td>
+                            <td><input class="form-control" type="text" placeholder="CL89937" required></td>
+                            <td><input class="form-control" type="text" placeholder="Coca Cola" required></td>
+                            <td><input class="form-control" type="text" placeholder="Lon" required></td>
+                            <td><input class="form-control" type="text" placeholder="9023" required></td>
+                            <td><input class="form-control" type="text" placeholder="70.000" required></td>
+                            <td><input class="form-control" type="text" placeholder="3.000.000" required></td>
+                        </tr>
+                        <tr>
+                            <td><input class="form-control" type="text" placeholder="2" required></td>
+                            <td><input class="form-control" type="text" placeholder="CL89937" required></td>
+                            <td><input class="form-control" type="text" placeholder="Coca Cola" required></td>
+                            <td><input class="form-control" type="text" placeholder="Lon" required></td>
+                            <td><input class="form-control" type="text" placeholder="9023" required></td>
+                            <td><input class="form-control" type="text" placeholder="70.000" required></td>
+                            <td><input class="form-control" type="text" placeholder="3.000.000" required></td>
+                        </tr>
+                        <tr>
+                            <td><input class="form-control" type="text" placeholder="3" required></td>
+                            <td><input class="form-control" type="text" placeholder="CL89937" required></td>
+                            <td><input class="form-control" type="text" placeholder="Coca Cola" required></td>
+                            <td><input class="form-control" type="text" placeholder="Lon" required></td>
+                            <td><input class="form-control" type="text" placeholder="9023" required></td>
+                            <td><input class="form-control" type="text" placeholder="70.000" required></td>
+                            <td><input class="form-control" type="text" placeholder="3.000.000" required></td>
+                        </tr>
+                        <tr>
+                            <td><input class="form-control" type="text" placeholder="4" required></td>
+                            <td><input class="form-control" type="text" placeholder="CL89937" required></td>
+                            <td><input class="form-control" type="text" placeholder="Coca Cola" required></td>
+                            <td><input class="form-control" type="text" placeholder="Lon" required></td>
+                            <td><input class="form-control" type="text" placeholder="9023" required></td>
+                            <td><input class="form-control" type="text" placeholder="70.000" required></td>
+                            <td><input class="form-control" type="text" placeholder="3.000.000" required></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group  col-md-12">
+                <label class="control-label">Tổng số tiền (viết bằng chữ):</label>
+                <input class="form-control" type="text" required>
+            </div>
+        </form>
+        <button class="btn btn-save" type="button">Lưu phiếu</button>
+        <a class="btn btn-cancel" href="NhapKho">Hủy bỏ</a>
+    </div>
+</div>

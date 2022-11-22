@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "GiaiQuyetTonKho";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+    ViewBag.aQLNV = "active";
+    ViewBag.Name = "Giải quyết tồn kho";
+}
+
+<div class="tile">
+    <div class="tile-body">
+        <h3 style="text-align:center">PHIẾU ĐỀ NGHỊ XUẤT KHO</h3>
+        <form style="text-align:center">
+            <label for="date">Ngày:</label>
+            <input type="date" id="clock" class="date" name="ngay"><br>
+            <label for="number">Mã số:</label>
+            <input type="number" id="number" name="maso"> <br>
+        </form>
+        <form class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label">Kính gửi: </label>
+                <input class="form-control" type="text">
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label">Nội dung: </label>
+                <input class="form-control" type="text" required>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label">Họ tên người làm phiếu:</label>
+                <input class="form-control" type="text" required>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="control-label">Danh sách sản phẩm tồn kho cần giải quyết:</label>
+                <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Đơn vị tính</th>
+                            <th>Số lượng</th>
+                            <th>Ngày sản xuất</th>
+                            <th>Hạn sử dụng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>#CD12837</td>
+                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
+                            <td>Coca Cola</td>
+                            <td>Lon</td>
+                            <td>3249</td>
+                            <td>22/10/2021</td>
+                            <td>22/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>#CD12837</td>
+                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
+                            <td>Coca Cola</td>
+                            <td>Lon</td>
+                            <td>3249</td>
+                            <td>22/10/2021</td>
+                            <td>22/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>#CD12837</td>
+                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
+                            <td>Coca Cola</td>
+                            <td>Lon</td>
+                            <td>3249</td>
+                            <td>22/10/2021</td>
+                            <td>22/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>#CD12837</td>
+                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
+                            <td>Coca Cola</td>
+                            <td>Lon</td>
+                            <td>3249</td>
+                            <td>22/10/2021</td>
+                            <td>22/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>#CD12837</td>
+                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
+                            <td>Coca Cola</td>
+                            <td>Lon</td>
+                            <td>3249</td>
+                            <td>22/10/2021</td>
+                            <td>22/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>#CD12837</td>
+                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
+                            <td>Coca Cola</td>
+                            <td>Lon</td>
+                            <td>3249</td>
+                            <td>22/10/2021</td>
+                            <td>22/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>#CD12837</td>
+                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
+                            <td>Coca Cola</td>
+                            <td>Lon</td>
+                            <td>3249</td>
+                            <td>22/10/2021</td>
+                            <td>22/10/2025</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+        <button class="btn btn-save" type="button">Lưu và gửi</button>
+        <a class="btn btn-cancel" href="TonKho">Hủy bỏ</a>
+    </div>
+</div>
