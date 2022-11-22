@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewBag.Title = "NhapKho";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+    ViewBag.aQLNV = "active";
+    ViewBag.Name = "Nhập kho";
+}
+
+<div class="row element-button">
+    <div class="col-sm-2">
+        <a class="btn btn-add btn-sm" href="TaoPhieuNhapKho" title="Thêm">
+            <i class="fas fa-plus"></i>
+            Tạo Phiếu nhập kho
+        </a>
+    </div>
+
+    <div class="col-sm-2">
+        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+            <i class="fas fa-print"></i> In tất cả
+        </a>
+    </div>
+
+    <div class="col-sm-2">
+        <a class="btn btn-delete btn-sm pdf-file" type="button" title="In" onclick="myFunction(this)">
+            <i class="fas fa-file-pdf"></i> Xuất PDF
+        </a>
+    </div>
+    <div class="col-sm-2">
+        <a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)">
+            <i class="fas fa-trash-alt"></i> Xóa tất cả
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div>
+                <h3 class="tile-title">DANH SÁCH PHIẾU ĐÃ LƯU</h3>
+            </div>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" id="sampleTable">
+                    <thead>
+                        <tr>
+                            <th>Mã phiếu</th>
+                            <th>Ngày</th>
+                            <th>Giờ</th>
+                            <th>Tính năng</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>83826226</td>
+                            <td>22/10/2022</td>
+                            <td>22:10</td>
+                            <td class="table-td-center">
+                                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
+                                        onclick="myFunction(this)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                <button class="btn btn-primary btn-sm edit" type="button" title="In"
+                                        data-toggle="modal" data-target="#ModalUP">
+                                    <i class="fas fa-print"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>83235413</td>
+                            <td>22/11/2022</td>
+                            <td>16:10</td>
+                            <td class="table-td-center">
+                                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
+                                        onclick="myFunction(this)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                <button class="btn btn-primary btn-sm edit" type="button" title="In"
+                                        data-toggle="modal" data-target="#ModalUP">
+                                    <i class="fas fa-print"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>93847212</td>
+                            <td>12/10/2021</td>
+                            <td>02:33</td>
+                            <td class="table-td-center">
+                                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
+                                        onclick="myFunction(this)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                <button class="btn btn-primary btn-sm edit" type="button" title="In"
+                                        data-toggle="modal" data-target="#ModalUP">
+                                    <i class="fas fa-print"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-md-block">
+    <div class="tile">
+        <h3 class="tile-title">DỮ LIỆU NHẬP KHO 6 THÁNG ĐẦU NĂM</h3>
+        <div class="embed-responsive embed-responsive-16by9">
+            <canvas class="embed-responsive-item" id="lineChartDemo" width="292" height="163" style="width: 234px; height: 131px;"></canvas>
+        </div>
+    </div>
+</div>
+@*<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>*@
+<!-- The javascript plugin to display page loading on top-->
+<script src="~/Scripts/pace.min.js"></script>
+<!-- Page specific javascripts-->
+<script type="text/javascript" src="~/Scripts/chart.js"></script>
+<script type="text/javascript">
+    var data = {
+      labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+      datasets: [{
+          label: "Dữ liệu đầu tiên",
+          fillColor: "rgba(255, 255, 255, 0.158)",
+          strokeColor: "black",
+          pointColor: "rgb(220, 64, 59)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "green",
+          data: [20, 59, 90, 51, 56, 100, 40, 60, 78, 53, 33, 81]
+        },
+        {
+          label: "Dữ liệu kế tiếp",
+          fillColor: "rgba(255, 255, 255, 0.158)",
+          strokeColor: "rgb(220, 64, 59)",
+          pointColor: "black",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "green",
+          data: [48, 48, 49, 39, 86, 10, 50, 70, 60, 70, 75, 90]
+        }
+      ]
+    };
+
+
+        var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+        var lineChart = new Chart(ctxl).Line(data);
+
+        var ctxb = $("#barChartDemo").get(0).getContext("2d");
+        var barChart = new Chart(ctxb).Bar(data);
+</script>
+<!-- Google analytics script-->
+<script type="text/javascript">
+        if (document.location.hostname == 'pratikborsadiya.in') {
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-72504830-1', 'auto');
+            ga('send', 'pageview');
+        }
+</script>

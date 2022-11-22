@@ -1,0 +1,248 @@
+﻿
+@{
+    ViewBag.Title = "Test02";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+    ViewBag.Name = "Tổng quan";
+    ViewBag.adk = "active";
+}
+
+<div class="row">
+    <!--Left-->
+    <div class="col-md-12 col-lg-6">
+        <div class="row">
+            <!-- col-6 -->
+            <div class="col-md-12">
+                <div class="widget-small primary coloured-icon">
+                    <i class='icon bx bxs-user-account fa-3x'></i>
+                    <div class="info">
+                        <h4>Thông tin kho</h4>
+                        <p><b>Tổng 150 sản phẩm được quản lý</b></p>
+                        <p class="info-tong">Chịu trách nhiệm quản lý kho hàng: nhập xuất, kiểm kê, báo cáo hàng hóa.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- col-6 -->
+            <div class="col-md-12">
+                <div class="widget-small danger coloured-icon">
+                    <i class='icon bx bxs-error-alt fa-3x'></i>
+                    <div class="info">
+                        <h4>Sắp hết hàng</h4>
+                        <p><b>4 sản phẩm</b></p>
+                        <p class="info-tong">Số sản phẩm cảnh báo hết cần nhập thêm.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- col-12 -->
+            <div class="col-md-12">
+                <div class="tile">
+                    <h3 class="tile-title">Tình trạng kho hàng</h3>
+                    <div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mã sản phẩm</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Đơn vị tính</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CC3947</td>
+                                    <td>Coca Cola</td>
+                                    <td>
+                                        Lon
+                                    </td>
+                                    <td><span class="badge bg-info">Còn hàng</span></td>
+                                </tr>
+                                <tr>
+                                    <td>PS3835</td>
+                                    <td>Pepsi</td>
+                                    <td>
+                                        Lon
+                                    </td>
+                                    <td><span class="badge bg-warning">Sắp hết hàng</span></td>
+                                </tr>
+                                <tr>
+                                    <td>SP0837</td>
+                                    <td>Sprite</td>
+                                    <td>
+                                        Chai
+                                    </td>
+                                    <td><span class="badge bg-success">Đang nhập hàng</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MD9835</td>
+                                    <td>Mirinda</td>
+                                    <td>
+                                        Lon
+                                    </td>
+                                    <td><span class="badge bg-danger">Hết hàng</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- / div trống-->
+                </div>
+            </div>
+            <!-- / col-12 -->
+            <!-- col-12 -->
+            <div class="col-md-12">
+                <div class="tile">
+                    <h3 class="tile-title">Sản phẩm mới nhập</h3>
+                    <div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Mã sản phẩm</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Đơn vị tính</th>
+                                    <th>Số lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>SU2210</td>
+                                    <td>Seven Up</td>
+                                    <td>Chai</td>
+                                    <td><span class="tag tag-success">3075</span></td>
+                                </tr>
+                                <tr>
+                                    <td>ST5681</td>
+                                    <td>Sting</td>
+                                    <td>Chai</td>
+                                    <td><span class="tag tag-warning">962</span></td>
+                                </tr>
+                                <tr>
+                                    <td>FC4361</td>
+                                    <td>Fanta C</td>
+                                    <td>Lon</td>
+                                    <td><span class="tag tag-primary">6654</span></td>
+                                </tr>
+                                <tr>
+                                    <td>TX3389</td>
+                                    <td>Trà xanh không độ</td>
+                                    <td>Chai</td>
+                                    <td><span class="tag tag-danger">6763</span></td>
+                                </tr>
+                                <tr>
+                                    <td>LT3389</td>
+                                    <td>Lipton</td>
+                                    <td>Lon</td>
+                                    <td><span class="tag tag-danger">9763</span></td>
+                                </tr>
+                                <tr>
+                                    <td>TX3389</td>
+                                    <td>Redpull</td>
+                                    <td>Lon</td>
+                                    <td><span class="tag tag-danger">5367</span></td>
+                                </tr>
+                                <tr>
+                                    <td>TX3389</td>
+                                    <td>Tango</td>
+                                    <td>Lon</td>
+                                    <td><span class="tag tag-danger">6343</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <!-- / col-12 -->
+        </div>
+        
+    </div>
+    <!--END left-->
+    
+    <!--Right-->
+    <div class="col-md-12 col-lg-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tile">
+                        <h3 class="tile-title">Dữ liệu 6 tháng đầu vào</h3>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="tile">
+                        <h3 class="tile-title">Biểu đồ nhập xuất</h3>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    <!--END right-->
+</div>
+@*<div class="d-md-block">
+    <div class="tile">
+        <h3 class="tile-title">BIỂU ĐỒ NHẬP XUẤT</h3>
+        <div class="embed-responsive embed-responsive-16by9">
+            <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
+        </div>
+    </div>
+</div>*@
+<script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+<!-- The javascript plugin to display page loading on top-->
+<script src="~/Scripts/pace.min.js"></script>
+<!-- Page specific javascripts-->
+<script type="text/javascript" src="~/Scripts/chart.js"></script>
+<script type="text/javascript">
+    var data = {
+      labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+      datasets: [{
+          label: "Dữ liệu đầu tiên",
+          fillColor: "rgba(255, 255, 255, 0.158)",
+          strokeColor: "black",
+          pointColor: "rgb(220, 64, 59)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "green",
+          data: [20, 59, 90, 51, 56, 100, 40, 60, 78, 53, 33, 81]
+        },
+        {
+          label: "Dữ liệu kế tiếp",
+          fillColor: "rgba(255, 255, 255, 0.158)",
+          strokeColor: "rgb(220, 64, 59)",
+          pointColor: "black",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "green",
+          data: [48, 48, 49, 39, 86, 10, 50, 70, 60, 70, 75, 90]
+        }
+      ]
+    };
+
+
+        var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+        var lineChart = new Chart(ctxl).Line(data);
+
+        var ctxb = $("#barChartDemo").get(0).getContext("2d");
+        var barChart = new Chart(ctxb).Bar(data);
+</script>
+<!-- Google analytics script-->
+<script type="text/javascript">
+        if (document.location.hostname == 'pratikborsadiya.in') {
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-72504830-1', 'auto');
+            ga('send', 'pageview');
+        }
+</script>

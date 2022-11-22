@@ -134,8 +134,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KhachHangController.cs" />
     <Compile Include="Controllers\KinhDoanhController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
+    <Compile Include="Controllers\PhongKhoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -457,6 +459,20 @@
     <Content Include="Views\KinhDoanh\ChinhSuaDH.cshtml" />
     <Content Include="Views\KinhDoanh\XoaDH.cshtml" />
     <Content Include="Views\KinhDoanh\BaoCao.cshtml" />
+    <Content Include="Views\PhongKho\BaoCao.cshtml" />
+    <Content Include="Views\PhongKho\GiaiQuyetTonKho.cshtml" />
+    <Content Include="Views\PhongKho\Layout\_LayoutLogIn.cshtml" />
+    <Content Include="Views\PhongKho\Layout\_LayoutPage1.cshtml" />
+    <Content Include="Views\PhongKho\NhapKho.cshtml" />
+    <Content Include="Views\PhongKho\QuanLyDL.cshtml" />
+    <Content Include="Views\PhongKho\TaoPhieuNhapKho.cshtml" />
+    <Content Include="Views\PhongKho\TaoPhieuXuatKho.cshtml" />
+    <Content Include="Views\PhongKho\Test02.cshtml" />
+    <Content Include="Views\PhongKho\ThemSanPham.cshtml" />
+    <Content Include="Views\PhongKho\TonKho.cshtml" />
+    <Content Include="Views\PhongKho\XuatKho.cshtml" />
+    <Content Include="Views\KhachHang\Layout\_LayoutKhachHang.cshtml" />
+    <Content Include="Views\KhachHang\PageSanPham.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
