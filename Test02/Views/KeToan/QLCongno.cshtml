@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "QLCongno";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.cn = "active";
+    ViewBag.nd = "Danh sách Công nợ";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+
+                <div class="row element-button">
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/CreateCongno"><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                    </div>
+
+                </div>
+                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                 
+                        <div class="col-md-1">
+                            <div id="sampleTable_filter" class="dataTables_filter">
+                                <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                @*//Phần render từng dòng trong C#*@
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="STT: activate to sort column ascending" style="width: 50px;">STT</th>
+                                        <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã công nợ: activate to sort column ascending" style="width: 150px;">Mã Công nợ</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý: activate to sort column ascending" style="width: 160px;">Tên đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Loại: activate to sort column ascending" style="width: 160px;">Loại đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng nợ: activate to sort column ascending" style="width: 124px;">Tổng nợ</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 101px;">Ngày lập</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Ngày thu</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row" class="odd">
+                                        <td>01</td>
+                                        <td>CN01</td>
+                                        <td>Diễm Khang</td>
+                                        <td>Đại lý loại 2</td>
+                                        <td>10.000.000</td>
+                                        <td>19/11/2022</td>
+                                        <td></td>
+                                        <td>
+                                            <a href="L" class="btn btn-primary btn-sm edit">
+                                                Chỉnh sửa
+                                            </a>
+                                            <a href="" class="btn btn-primary btn-sm deleted">
+                                                Xóa đại lý
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                
+                                        
+                                        
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

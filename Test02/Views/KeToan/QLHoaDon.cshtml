@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "QLHoaDon";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.qlhd = "active";
+    ViewBag.nd = "Danh sách hóa đơn";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/QLHoadon.css">
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+
+                <div class="row element-button">
+                    <div class="col-sm-3">
+                            <button onclick="myFunction()" class="dropbtn">Thêm hóa đơn</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <a href="#GTGT">Hóa đơn GTGT</a>
+                                <a href="#Banhang">Hóa đơn bán hàng</a>
+                                <a href="#HDKho">Hóa đơn kho</a>
+                            
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                    </div>
+
+                </div>
+                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                    <div class="row">
+                      
+                        <div class="col-md-1">
+                            <div id="sampleTable_filter" class="dataTables_filter">
+                                <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                @*//Phần render từng dòng trong C#*@
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="STT: activate to sort column ascending" style="width: 50px;">STT</th>
+                                        <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã HD: activate to sort column ascending" style="width: 150px;">Mã HD</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 160px;">Ngày lập</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên Đại lý: activate to sort column ascending" style="width: 124px;">Tên Đại lý</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng hóa đơn: activate to sort column ascending" style="width: 101px;">Tổng hóa đơn</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ghi chú: activate to sort column ascending" style="width: 124px;">Ghi chú</th>                                  
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row" class="odd">
+                                        <td>01</td>
+                                        <td>HD101</td>
+                                        <td>19/20/2022</td>
+                                        <td>Tấn Nhã</td>
+                                        <td>12.000.000</td>
+                                        <td></td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary btn-sm edit">
+                                                Chỉnh sửa
+                                            </a>
+                                            <a href="#" class="btn btn-primary btn-sm deleted">
+                                                Xóa hóa đơn
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                           
+                                        </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+
+
+
+
+
+
