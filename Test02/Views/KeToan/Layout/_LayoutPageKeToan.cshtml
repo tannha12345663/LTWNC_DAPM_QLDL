@@ -42,12 +42,20 @@
                  alt="User Image">
             <div>
                 
-                <p class="app-sidebar__user-name"><b></b>Penguin</p>
+                <p class="app-sidebar__user-name"><b>@{
+                            var user = (Test02.Models.NhanVien)HttpContext.Current.Session["user"];
+                            @user.TenNV}</b></p>
                 <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
             </div>
         </div>
         <hr>
         <ul class="app-menu">
+            <li>
+                <a class="app-menu__item haha" href="#">
+                    <i class='app-menu__icon bx bx-cart-alt'></i>
+                    <span class="">PHÒNG KẾ TOÁN</span>
+                </a>
+            </li>
             <li>
                 <a class="app-menu__item @ViewBag.homekt" href="~/KeToan/TrangChuKeToan">
                     <i class='app-menu__icon bx bx-tachometer'></i>
@@ -74,7 +82,7 @@
                     <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lợi Nhuận</span>
                 </a>
             </li>
-           
+
         </ul>
     </aside>
     <main class="app-content">

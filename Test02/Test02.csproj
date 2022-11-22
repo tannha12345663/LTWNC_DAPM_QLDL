@@ -463,7 +463,6 @@
     <Content Include="Views\KinhDoanh\BaoCao.cshtml" />
     <Content Include="Views\PhongKho\BaoCao.cshtml" />
     <Content Include="Views\PhongKho\GiaiQuyetTonKho.cshtml" />
-    <Content Include="Views\PhongKho\Layout\_LayoutLogIn.cshtml" />
     <Content Include="Views\PhongKho\Layout\_LayoutPage1.cshtml" />
     <Content Include="Views\PhongKho\NhapKho.cshtml" />
     <Content Include="Views\PhongKho\QuanLyDL.cshtml" />

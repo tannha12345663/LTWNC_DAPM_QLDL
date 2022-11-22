@@ -43,7 +43,7 @@ namespace Test02.Controllers
                 }
                 else if (data.IdChucVu.ToString() == kt)
                 {
-                    return RedirectToAction("TrangChu", "KeToan");
+                    return RedirectToAction("TrangChuKeToan", "KeToan");
                 }
                 else if (data.IdChucVu.ToString() == gh)
                 {

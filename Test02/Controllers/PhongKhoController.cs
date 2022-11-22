@@ -7,6 +7,7 @@ using Test02.App_Start;
 
 namespace Test02.Controllers
 {
+    [Authentication]
     public class PhongKhoController : Controller
     {
         [Authentication]

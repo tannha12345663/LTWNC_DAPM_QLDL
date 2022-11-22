@@ -34,7 +34,7 @@
         <ul class="app-nav">
             <!-- User Menu-->
             <li>
-                <a class="app-nav__item" href="~/LoginUser/Login"><i class='bx bx-log-out bx-rotate-180'></i> </a>
+                <a class="app-nav__item" href="~/LoginUser/Logout"><i class='bx bx-log-out bx-rotate-180'></i> </a>
             </li>
 
         </ul>
@@ -46,7 +46,9 @@
             <img class="app-sidebar__user-avatar" src="~/Content/Img/135017829_1026004181228801_2637032699560275_n.jpg" width="50px"
                  alt="User Image">
             <div>
-                <p class="app-sidebar__user-name"><b>Diễm Khang</b></p>
+                <p class="app-sidebar__user-name"><b>@{
+                            var user = (Test02.Models.NhanVien)HttpContext.Current.Session["user"];
+                            @user.TenNV}</b></p>
                 <p class="app-sidebar__user-designation app-menu__label">Chào mừng bạn trở lại</p>
             </div>
         </div>
@@ -59,35 +61,35 @@
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href="Test02">
+                <a class="app-menu__item @ViewBag.tq" href="Test02">
                     <i class='app-menu__icon bx bx-tachometer'></i>
                     <span class="app-menu__label">Tổng quan</span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href="QuanLyDL">
+                <a class="app-menu__item @ViewBag.hh" href="QuanLyDL">
                     <i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý hàng hóa</span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href="NhapKho">
+                <a class="app-menu__item @ViewBag.nk" href="NhapKho">
                     <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Nhập kho</span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href="XuatKho">
+                <a class="app-menu__item @ViewBag.xk" href="XuatKho">
                     <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Xuất kho</span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href="TonKho">
+                <a class="app-menu__item @ViewBag.tk" href="TonKho">
                     <i class='app-menu__icon bx bx-run'></i><span class="app-menu__label">
                         Tồn kho
                     </span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href="BaoCao">
+                <a class="app-menu__item @ViewBag.bc" href="BaoCao">
                     <i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Báo cáo kho hàng</span>
                 </a>
             </li>
