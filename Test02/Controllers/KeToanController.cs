@@ -6,11 +6,13 @@ using System.Web.Mvc;
 using Test02.App_Start;
 using Test02.Models;
 
+
 namespace Test02.Controllers
 {
+    [Authentication]
     public class KeToanController : Controller
     {
-        //[Authentication]
+        
 
         QuanLyDLEntities2 database = new QuanLyDLEntities2();
         // GET: KeToan
@@ -25,6 +27,15 @@ namespace Test02.Controllers
         }
 
         public ActionResult QLHoaDon()
+        {
+            return View();
+        }
+        public ActionResult createHDGTGT()
+        {
+            return View ();
+        }
+
+        public ActionResult createHDBH()
         {
             return View();
         }
@@ -43,6 +54,7 @@ namespace Test02.Controllers
         {
             return View();
         }
+
 
         public ActionResult CreateDoanhThu()
         {
