@@ -113,7 +113,6 @@
           <Property Name="SDT" Type="nvarchar" MaxLength="50" />
           <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="MaBC" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="PhieuCongNo">
           <Key>
@@ -173,6 +172,20 @@
             </Principal>
             <Dependent Role="BanKiemKe">
               <PropertyRef Name="MaSP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaoCao_NhanVien">
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BaoCao" Type="Self.BaoCao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhanVien">
+              <PropertyRef Name="MaNV" />
+            </Principal>
+            <Dependent Role="BaoCao">
+              <PropertyRef Name="MaNV" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -286,20 +299,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NhanVien_BaoCao">
-          <End Role="BaoCao" Type="Self.BaoCao" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BaoCao">
-              <PropertyRef Name="MaBC" />
-            </Principal>
-            <Dependent Role="NhanVien">
-              <PropertyRef Name="MaBC" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_NhanVien_ChucVu">
           <End Role="ChucVu" Type="Self.ChucVu" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -363,6 +362,10 @@
             <End Role="SanPham" EntitySet="SanPham" />
             <End Role="BanKiemKe" EntitySet="BanKiemKe" />
           </AssociationSet>
+          <AssociationSet Name="FK_BaoCao_NhanVien" Association="Self.FK_BaoCao_NhanVien">
+            <End Role="NhanVien" EntitySet="NhanVien" />
+            <End Role="BaoCao" EntitySet="BaoCao" />
+          </AssociationSet>
           <AssociationSet Name="FK_DaiLy_LoaiDL" Association="Self.FK_DaiLy_LoaiDL">
             <End Role="LoaiDL" EntitySet="LoaiDL" />
             <End Role="DaiLy" EntitySet="DaiLy" />
@@ -394,10 +397,6 @@
           <AssociationSet Name="FK_Kho_SanPham" Association="Self.FK_Kho_SanPham">
             <End Role="SanPham" EntitySet="SanPham" />
             <End Role="Kho" EntitySet="Kho" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NhanVien_BaoCao" Association="Self.FK_NhanVien_BaoCao">
-            <End Role="BaoCao" EntitySet="BaoCao" />
-            <End Role="NhanVien" EntitySet="NhanVien" />
           </AssociationSet>
           <AssociationSet Name="FK_NhanVien_ChucVu" Association="Self.FK_NhanVien_ChucVu">
             <End Role="ChucVu" EntitySet="ChucVu" />
@@ -443,7 +442,7 @@
           <Property Name="LoaiBC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NgayGioBC" Type="DateTime" Precision="3" />
           <Property Name="NoiDungBC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NhanViens" Relationship="Self.FK_NhanVien_BaoCao" FromRole="BaoCao" ToRole="NhanVien" />
+          <NavigationProperty Name="NhanVien" Relationship="Self.FK_BaoCao_NhanVien" FromRole="BaoCao" ToRole="NhanVien" />
         </EntityType>
         <EntityType Name="ChucVu">
           <Key>
@@ -542,9 +541,8 @@
           <Property Name="SDT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MaBC" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="BanKiemKes" Relationship="Self.FK_BanKiemKe_NhanVien" FromRole="NhanVien" ToRole="BanKiemKe" />
-          <NavigationProperty Name="BaoCao" Relationship="Self.FK_NhanVien_BaoCao" FromRole="NhanVien" ToRole="BaoCao" />
+          <NavigationProperty Name="BaoCaos" Relationship="Self.FK_BaoCao_NhanVien" FromRole="NhanVien" ToRole="BaoCao" />
           <NavigationProperty Name="ChucVu" Relationship="Self.FK_NhanVien_ChucVu" FromRole="NhanVien" ToRole="ChucVu" />
           <NavigationProperty Name="DanhSachGiaoHangs" Relationship="Self.FK_DanhSachGiaoHang_NhanVien" FromRole="NhanVien" ToRole="DanhSachGiaoHang" />
           <NavigationProperty Name="DonHangs" Relationship="Self.FK_DonHang_NhanVien" FromRole="NhanVien" ToRole="DonHang" />
@@ -616,17 +614,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NhanVien_BaoCao">
-          <End Role="BaoCao" Type="Self.BaoCao" Multiplicity="0..1">
+        <Association Name="FK_BaoCao_NhanVien">
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="*" />
+          <End Role="BaoCao" Type="Self.BaoCao" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="BaoCao">
-              <PropertyRef Name="MaBC" />
+            <Principal Role="NhanVien">
+              <PropertyRef Name="MaNV" />
             </Principal>
-            <Dependent Role="NhanVien">
-              <PropertyRef Name="MaBC" />
+            <Dependent Role="BaoCao">
+              <PropertyRef Name="MaNV" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -803,9 +801,9 @@
             <End Role="SanPham" EntitySet="SanPhams" />
             <End Role="BanKiemKe" EntitySet="BanKiemKes" />
           </AssociationSet>
-          <AssociationSet Name="FK_NhanVien_BaoCao" Association="Self.FK_NhanVien_BaoCao">
-            <End Role="BaoCao" EntitySet="BaoCaos" />
+          <AssociationSet Name="FK_BaoCao_NhanVien" Association="Self.FK_BaoCao_NhanVien">
             <End Role="NhanVien" EntitySet="NhanViens" />
+            <End Role="BaoCao" EntitySet="BaoCaos" />
           </AssociationSet>
           <AssociationSet Name="FK_NhanVien_ChucVu" Association="Self.FK_NhanVien_ChucVu">
             <End Role="ChucVu" EntitySet="ChucVus" />
@@ -973,7 +971,6 @@
                 <ScalarProperty Name="SDT" ColumnName="SDT" />
                 <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="MaBC" ColumnName="MaBC" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
