@@ -28,7 +28,6 @@ namespace Test02.Models
         public string SDT { get; set; }
         public string DiaChi { get; set; }
         public string Email { get; set; }
-        [DisplayName("Ngày tạo")]
         public Nullable<System.DateTime> NgayTao { get; set; }
     
         public virtual LoaiDL LoaiDL { get; set; }

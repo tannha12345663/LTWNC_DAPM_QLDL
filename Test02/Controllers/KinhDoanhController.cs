@@ -12,7 +12,7 @@ namespace Test02.Controllers
     [Authentication]
     public class KinhDoanhController : Controller
     {
-        
+
         QuanLyDLEntities2 database = new QuanLyDLEntities2();
         // GET: KinhDoanh
         public ActionResult TrangChu()
@@ -22,7 +22,7 @@ namespace Test02.Controllers
         public ActionResult QuanLyDL()
         {
 
-            return View(database.DaiLies.ToList());
+            return View(database.DaiLies.ToList().OrderByDescending(s=> s.NgayTao));
         }
         public ActionResult ThemDL()
         {
@@ -58,10 +58,13 @@ namespace Test02.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemDL([Bind(Include = "MaDL,MaLoaiDL,UserName,Password,TenDL,SDT,DiaChi,Email,NgayTao")] DaiLy daiLy)
+        public ActionResult ThemDL([Bind(Include = "MaLoaiDL,UserName,Password,TenDL,SDT,DiaChi,Email,NgayTao")] DaiLy daiLy)
         {
             if (ModelState.IsValid)
             {
+                Random rd = new Random();
+                var madl = "DL" + rd.Next(1, 1000);
+                daiLy.MaDL = madl;
                 database.DaiLies.Add(daiLy);
                 database.SaveChanges();
                 return RedirectToAction("QuanLyDL");
@@ -97,8 +100,8 @@ namespace Test02.Controllers
         }
         public ActionResult QuanLyDH()
         {
-            
-            return View(database.DonHangs.ToList());
+
+            return View(database.DonHangs.ToList().OrderByDescending(s => s.NgayLap));
         }
         public ActionResult ThemDH()
         {
@@ -109,10 +112,17 @@ namespace Test02.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemDH([Bind(Include = "MaDH,MaSP,MaDL,MaNV,SoLuong,DonGiaApDung,ThanhTien,NgayLap,TrangThai,DiemGiao,TenNV,TinhTrangThanhToan")] DonHang donHang)
+        public ActionResult ThemDH([Bind(Include = "MaSP,MaDL,MaNV,SoLuong,DonGiaApDung,ThanhTien,NgayLap,DiemGiao,TenNV,")] DonHang donHang)
         {
             if (ModelState.IsValid)
             {
+                var user = (Test02.Models.NhanVien)Session["user"];
+                Random rd = new Random();
+                var madh = "DH" + rd.Next(1, 1000);
+                donHang.MaDH = madh;
+                donHang.MaNV = user.MaNV;
+                donHang.TinhTrangThanhToan = "Chưa thanh toán";
+                donHang.TrangThai = "Chưa xử lý";
                 database.DonHangs.Add(donHang);
                 database.SaveChanges();
                 return RedirectToAction("QuanLyDH");
@@ -176,11 +186,11 @@ namespace Test02.Controllers
             database.SaveChanges();
             return RedirectToAction("QuanLyDH");
         }
-        
+
 
         public ActionResult QuanLySP()
         {
-            return View(database.SanPhams.ToList());
+            return View(database.SanPhams.ToList().OrderByDescending(s=> s.NgayXuat));
         }
 
         public ActionResult ThongTinSP(string id)
@@ -286,7 +296,7 @@ namespace Test02.Controllers
         {
             ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL");
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
-            return View(database.DonHangs.ToList());
+            return View(database.DonHangs.ToList().OrderByDescending(s=>s.NgayLap));
         }
         public ActionResult QuanLyKho()
         {
@@ -307,6 +317,10 @@ namespace Test02.Controllers
             }
 
             return View(baocao);
+        }
+        public void Hamrandom( )
+        {
+
         }
     }
 }
