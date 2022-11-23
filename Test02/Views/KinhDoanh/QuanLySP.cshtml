@@ -15,6 +15,11 @@
                         <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemSP"><i class="fas fa-file-upload"></i> Thêm mới sản phẩm</a>
                     </div>
                     <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+                            <i class="fas fa-print"></i> In dữ liệu
+                        </a>
+                    </div>
+                    <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLySP"><i class="fas fa-copy"></i> Làm mới danh sách</a>
                     </div>
 
@@ -31,7 +36,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <table class="table">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 <tr>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 80px;">
                                         Mã Sản phẩm
@@ -94,3 +99,15 @@
         </div>
     </div>
 </div>
+<script>
+    //In dữ liệu
+    var myApp = new function () {
+        this.printTable = function () {
+            var tab = document.getElementById('sampleTable');
+            var win = window.open('', '', 'height=700,width=700');
+            win.document.write(tab.outerHTML);
+            win.document.close();
+            win.print();
+        }
+    }
+</script>

@@ -33,6 +33,7 @@ namespace Test02.Models
         [DisplayName("Địa chỉ")]
         public string DiaChi { get; set; }
         public string Email { get; set; }
+        [DisplayName("Ngày tạo")]
         public Nullable<System.DateTime> NgayTao { get; set; }
     
         public virtual LoaiDL LoaiDL { get; set; }

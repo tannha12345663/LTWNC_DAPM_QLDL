@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<Test02.Models.DaiLy>
+@using Test02.Models
 @{
     ViewBag.Title = "QuanLyDL";
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.dl = "active";
     ViewBag.nd = "Danh sách đại lý";
+    QuanLyDLEntities2 database = new QuanLyDLEntities2();
+    List<LoaiDL> LoaiDL = database.LoaiDLs.ToList();
 }
 
 <div class="row">
@@ -14,6 +17,11 @@
                 <div class="row element-button">
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDL"><i class="fas fa-file-upload"></i> Thêm mới hồ sơ</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+                            <i class="fas fa-print"></i> In dữ liệu
+                        </a>
                     </div>
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDL"><i class="fas fa-copy"></i> Làm mới danh sách</a>
@@ -43,7 +51,7 @@
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 101px;">Số điện thoại</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa chỉ email</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Ngày tiếp nhận</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                        <th width="100" class="sorting" tabindex="0"  rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,16 +68,18 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>
+                                            <td style="width: 150px;">
                                                 @Html.DisplayFor(modelItem => item.MaDL)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.MaLoaiDL)
+                                                @{var tenldk = database.LoaiDLs.Find(item.MaLoaiDL);
+                                                }
+                                                @Html.DisplayFor(modelItem => tenldk.TenDaiLy)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.TenDL)
                                             </td>
-                                            <td>
+                                            <td style="width:250px;">
                                                 @Html.DisplayFor(modelItem => item.DiaChi)
                                             </td>
                                             <td>
@@ -100,4 +110,15 @@
     </div>
 </div>
     </div>
-
+<script>
+    //In dữ liệu
+    var myApp = new function () {
+        this.printTable = function () {
+            var tab = document.getElementById('sampleTable');
+            var win = window.open('', '', 'height=800px,width=1200px');
+            win.document.write(tab.outerHTML);
+            win.document.close();
+            win.print();
+        }
+    }
+</script>
