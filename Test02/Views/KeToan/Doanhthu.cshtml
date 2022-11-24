@@ -13,10 +13,12 @@
 
                 <div class="row element-button">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm nhap-tu-file" href=""><i class="fas fa-file-upload"></i> Thêm báo cáo doanh thu</a>
+                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/CreateDoanhThu"><i class="fas fa-file-upload"></i> Thêm báo cáo doanh thu</a>
                     </div>
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+                            <i class="fas fa-print"></i> In dữ liệu
+                        </a>
                     </div>
 
                 </div>
@@ -49,13 +51,15 @@
                                     <td>12.000.000</td>
                                     <td>2.000.000</td>
                                     <td>10.000.000</td>
-                                    <td>
-                                        <a href="L" class="btn btn-primary btn-sm edit">
-                                            Chỉnh sửa
-                                        </a>
-                                        <a href="" class="btn btn-primary btn-sm deleted">
-                                            Xóa 
-                                        </a>
+                                    <td class="table-td-center">
+                                        <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
+                                                onclick="myFunction(this)">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                        <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
+                                                data-toggle="modal" data-target="#ModalUP">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
                                     </td>
 
                                 </tr>
@@ -71,4 +75,44 @@
     </div>
 </div>
 </div>
+<script>
+    function deleteRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("myTable").deleteRow(i);
+    }
+    jQuery(function () {
+        jQuery(".trash").click(function () {
+            swal({
+                title: "Cảnh báo",
+
+                text: "Bạn có chắc chắn là muốn xóa sản phẩm?",
+                buttons: ["Hủy bỏ", "Đồng ý"],
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Đã xóa thành công.!", {
+
+                        });
+                    }
+                });
+        });
+    });
+    oTable = $('#sampleTable').dataTable();
+    $('#all').click(function (e) {
+        $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
+        e.stopImmediatePropagation();
+    });
+
+    //In dữ liệu
+    var myApp = new function () {
+        this.printTable = function () {
+            var tab = document.getElementById('sampleTable');
+            var win = window.open('', '', 'height=700,width=700');
+            win.document.write(tab.outerHTML);
+            win.document.close();
+            win.print();
+        }
+    }
+
+    </script>
 

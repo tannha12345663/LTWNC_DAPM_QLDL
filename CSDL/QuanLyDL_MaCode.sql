@@ -1,3 +1,4 @@
+
 USE [QuanLyDL]
 GO
 /****** Object:  Table [dbo].[BanKiemKe]    Script Date: 11/21/2022 12:02:56 AM ******/
