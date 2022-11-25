@@ -25,17 +25,21 @@ namespace Test02.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<BanKiemKe> BanKiemKes { get; set; }
         public virtual DbSet<BaoCao> BaoCaos { get; set; }
+        public virtual DbSet<BienBangKiemKe> BienBangKiemKes { get; set; }
+        public virtual DbSet<ChiTietBienBang> ChiTietBienBangs { get; set; }
+        public virtual DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
+        public virtual DbSet<ChiTietKho> ChiTietKhoes { get; set; }
         public virtual DbSet<ChucVu> ChucVus { get; set; }
         public virtual DbSet<DaiLy> DaiLies { get; set; }
         public virtual DbSet<DanhSachGiaoHang> DanhSachGiaoHangs { get; set; }
+        public virtual DbSet<DoanhSo> DoanhSoes { get; set; }
         public virtual DbSet<DonHang> DonHangs { get; set; }
+        public virtual DbSet<HoaDon> HoaDons { get; set; }
         public virtual DbSet<Kho> Khoes { get; set; }
         public virtual DbSet<LoaiDL> LoaiDLs { get; set; }
         public virtual DbSet<NhanVien> NhanViens { get; set; }
         public virtual DbSet<PhieuCongNo> PhieuCongNoes { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
-        public virtual DbSet<ThongKe> ThongKes { get; set; }
     }
 }

@@ -12,14 +12,14 @@ namespace Test02.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BaoCao
+    public partial class HoaDon
     {
-        public string MaBC { get; set; }
-        public string MaNV { get; set; }
-        public string LoaiBC { get; set; }
-        public Nullable<System.DateTime> NgayLapBC { get; set; }
-        public string NoiDungBC { get; set; }
+        public string MaHD { get; set; }
+        public string MaDH { get; set; }
+        public string TenDVTiepNhan { get; set; }
+        public Nullable<double> TongTien { get; set; }
+        public string GhiChu { get; set; }
     
-        public virtual NhanVien NhanVien { get; set; }
+        public virtual DonHang DonHang { get; set; }
     }
 }

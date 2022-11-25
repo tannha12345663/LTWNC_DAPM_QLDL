@@ -33,19 +33,19 @@ namespace Test02.Controllers
                 //add session
                 database.Configuration.ValidateOnSaveEnabled = false;
                 Session["user"] = taikhoan;
-                if (data.IdChucVu.ToString() == kd)
+                if (data.MaChucVu.ToString() == kd)
                 {
                     return RedirectToAction("TrangChu", "KinhDoanh");
                 }
-                else if (data.IdChucVu.ToString() == kho)
+                else if (data.MaChucVu.ToString() == kho)
                 {
                     return RedirectToAction("Test02", "PhongKho");
                 }
-                else if (data.IdChucVu.ToString() == kt)
+                else if (data.MaChucVu.ToString() == kt)
                 {
                     return RedirectToAction("TrangChuKeToan", "KeToan");
                 }
-                else if (data.IdChucVu.ToString() == gh)
+                else if (data.MaChucVu.ToString() == gh)
                 {
                     return RedirectToAction("TrangChu", "GiaoHang");
                 }

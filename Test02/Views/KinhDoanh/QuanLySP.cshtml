@@ -45,17 +45,20 @@
                                         @Html.DisplayNameFor(model => model.TenSP)
                                     </th>
                                     <th>
+                                        @Html.DisplayNameFor(model => model.Gia)
+                                    </th>
+                                    <th>
                                         @Html.DisplayNameFor(model => model.DonViTinh)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.NgaySX)
                                     </th>
                                     <th>
                                         @Html.DisplayNameFor(model => model.HanSD)
                                     </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.NgayXuat)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Gia)
-                                    </th>
+
+
                                     <th></th>
                                 </tr>
 
@@ -69,22 +72,24 @@
                                             @Html.DisplayFor(modelItem => item.TenSP)
                                         </td>
                                         <td>
+                                            @Html.DisplayFor(modelItem => item.Gia)
+                                        </td>
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.DonViTinh)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NgaySX)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.HanSD)
                                         </td>
+
+
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.NgayXuat)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Gia)
-                                        </td>
-                                        <td>
-                                            <a href="/KinhDoanh/ChinhSuaSP/@item.MaSP" class="btn btn-primary btn-sm edit">
-                                                Chỉnh sửa
-                                            </a> ||
-                                            <a href="/KinhDoanh/XoaSP/@item.MaSP" class="btn btn-primary btn-sm deleted">
+                                            <a href="/KinhDoanh/ChinhSuaSP/@item.MaSP" class="btn btn-primary btn-sm edit" > Chỉnh sửa</a>
+
+                                            ||
+                                            <a href="/KinhDoanh/XoaSP/@item.MaSP"  class="btn btn-primary btn-sm deleted">
                                                 Xóa sản phẩm
                                             </a>
                                         </td>
@@ -99,6 +104,7 @@
         </div>
     </div>
 </div>
+
 <script>
     //In dữ liệu
     var myApp = new function () {
@@ -111,3 +117,17 @@
         }
     }
 </script>
+<!-- Essential javascripts for application to work-->
+<script src="~/Content/js/jquery-3.2.1.min.js"></script>
+<script src="~/Content/js/popper.min.js"></script>
+<script src="~/Content/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="src/jquery.table2excel.js"></script>
+<script src="~/Content/js/main.js"></script>
+<!-- The javascript plugin to display page loading on top-->
+<script src="~/Content/js/plugins/pace.min.js"></script>
+<!-- Page specific javascripts-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<!-- Data table plugin-->
+<script type="text/javascript" src="~/Content/js/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="~/Content/js/plugins/dataTables.bootstrap.min.js"></script>

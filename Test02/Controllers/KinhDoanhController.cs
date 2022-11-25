@@ -45,7 +45,7 @@ namespace Test02.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChinhSuaDL(String id, DaiLy daiLy)
+        public ActionResult ChinhSuaDL([Bind(Include = "MaDL,MaLoaiDL,UserName,Password,TenDL,SDT,DiaChi,Email,NgayTao")] DaiLy daiLy)
         {
             if (ModelState.IsValid)
             {
@@ -58,13 +58,14 @@ namespace Test02.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemDL([Bind(Include = "MaLoaiDL,UserName,Password,TenDL,SDT,DiaChi,Email,NgayTao")] DaiLy daiLy)
+        public ActionResult ThemDL([Bind(Include = "MaLoaiDL,UserName,Password,TenDL,SDT,DiaChi,Email")] DaiLy daiLy)
         {
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
                 var madl = "DL" + rd.Next(1, 1000);
                 daiLy.MaDL = madl;
+                daiLy.NgayTao = System.DateTime.Now;
                 database.DaiLies.Add(daiLy);
                 database.SaveChanges();
                 return RedirectToAction("QuanLyDL");
@@ -98,21 +99,20 @@ namespace Test02.Controllers
             database.SaveChanges();
             return RedirectToAction("QuanLyDL");
         }
+        //Quản lý đơn hàng
         public ActionResult QuanLyDH()
         {
-
             return View(database.DonHangs.ToList().OrderByDescending(s => s.NgayLap));
         }
+        //Thêm mới đơn hàng
         public ActionResult ThemDH()
         {
             ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaDL");
-            ViewBag.MaNV = new SelectList(database.NhanViens, "MaNV", "MaNV");
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemDH([Bind(Include = "MaSP,MaDL,MaNV,SoLuong,DonGiaApDung,ThanhTien,NgayLap,DiemGiao,TenNV,")] DonHang donHang)
+        public ActionResult ThemDH([Bind(Include = "MaDH,MaDL,NgayLap,DiemGiao")] DonHang donHang)
         {
             if (ModelState.IsValid)
             {
@@ -120,19 +120,54 @@ namespace Test02.Controllers
                 Random rd = new Random();
                 var madh = "DH" + rd.Next(1, 1000);
                 donHang.MaDH = madh;
-                donHang.MaNV = user.MaNV;
+                Session["tempdata"] = madh;
+                Session["diemgiao"] = donHang.DiemGiao;
+                donHang.NgayLap = System.DateTime.Now;
+                donHang.MaNVLap = user.MaNV;
                 donHang.TinhTrangThanhToan = "Chưa thanh toán";
                 donHang.TrangThai = "Chưa xử lý";
                 database.DonHangs.Add(donHang);
                 database.SaveChanges();
-                return RedirectToAction("QuanLyDH");
+                return RedirectToAction("ThemCTHD");
             }
 
-            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL", donHang.MaDL);
-            ViewBag.MaNV = new SelectList(database.NhanViens, "MaNV", "MaNV", donHang.MaNV);
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", donHang.MaSP);
             return View(donHang);
         }
+        //Thêm mới chi tiết đơn hàng bán tự động
+        public ActionResult ThemCTHD()
+        {
+
+            ViewBag.MaDH = new SelectList(database.DonHangs, "MaDH", "MaDL");
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ThemCTHD([Bind(Include = "MaSP,SoLuong,DonGia,DiemGiao")] ChiTietDonHang chiTietDonHang)
+        {
+            if (ModelState.IsValid)
+            {
+                chiTietDonHang.MaDH = (string)Session["tempdata"];
+                if (chiTietDonHang.ChietKhau ==null)
+                {
+                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia);
+                }
+                else
+                {
+                    
+                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia) * (chiTietDonHang.ChietKhau);
+                }
+                chiTietDonHang.DiemGiao = (string)Session["diemgiao"];
+                database.ChiTietDonHangs.Add(chiTietDonHang);
+                database.SaveChanges();
+                return RedirectToAction("QuanLyDH");
+                
+            }
+
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
+            return View(chiTietDonHang);
+        }
+        //Chỉnh sửa thông tin đơn hàng
         public ActionResult ChinhSuaDH(string id)
         {
             if (id == null)
@@ -144,9 +179,6 @@ namespace Test02.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL", donHang.MaDL);
-            ViewBag.MaNV = new SelectList(database.NhanViens, "MaNV", "MaNV", donHang.MaNV);
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", donHang.MaSP);
             return View(donHang);
         }
         [HttpPost]
@@ -159,11 +191,9 @@ namespace Test02.Controllers
                 database.SaveChanges();
                 return RedirectToAction("QuanLyDH");
             }
-            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL", donHang.MaDL);
-            ViewBag.MaNV = new SelectList(database.NhanViens, "MaNV", "IdChucVu", donHang.MaNV);
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", donHang.MaSP);
             return View(donHang);
         }
+        //Xóa đơn hàng
         public ActionResult XoaDH(string id)
         {
             if (id == null)
@@ -190,7 +220,7 @@ namespace Test02.Controllers
 
         public ActionResult QuanLySP()
         {
-            return View(database.SanPhams.ToList().OrderByDescending(s=> s.NgayXuat));
+            return View(database.SanPhams.ToList().OrderByDescending(s=> s.NgaySX));
         }
 
         public ActionResult ThongTinSP(string id)
@@ -218,10 +248,13 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemSP(SanPham sanPham)
+        public ActionResult ThemSP([Bind(Include = "TenSP,DonViTinh,Gia,HanSD,NgaySX")] SanPham sanPham)
         {
             if (ModelState.IsValid)
             {
+                Random rd = new Random();
+                var themSP = "SP" + rd.Next(1, 100);
+                sanPham.MaSP = themSP;
                 database.SanPhams.Add(sanPham);
                 database.SaveChanges();
                 return RedirectToAction("QuanLySP");
