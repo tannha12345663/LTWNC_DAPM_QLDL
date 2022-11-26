@@ -1,5 +1,5 @@
-﻿@model IEnumerable<Test02.Models.DonHang>
-@using Test02.Models; 
+﻿@model IEnumerable<Test02.Models.HoaDon>
+@using Test02.Models;
 @{
     ViewBag.Title = "QuanLyHD";
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
@@ -44,13 +44,11 @@
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Ngày lập</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 100px;">Mã sản phẩm</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Tên sản phẩm</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Số lượng</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Thành tiền</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã hóa đơn</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Tên đơn vị tiếp nhận</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 100px;">Tổng tiền</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Ghi chú</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,30 +57,23 @@
                                     {
                                         <tr>
                                             <td>
+                                                @Html.DisplayFor(modelItem => item.MaHD)
+                                            </td>
+                                            <td>
                                                 @Html.DisplayFor(modelItem => item.MaDH)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.MaDL)
+                                                @Html.DisplayFor(modelItem => item.TenDVTiepNhan)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NgayLap)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MaSP)
-                                            </td>
-                                            <td>
-                                                @{var tensp = db.SanPhams.Find(item.MaSP);
-                                                }
-                                                @Html.DisplayFor(modelItem => tensp.TenSP)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.SoLuong)
-                                            </td>
-                                            <td>
-                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
+                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                                 @Html.DisplayFor(modelItem => ThanhTien)
-                                                @{ total += Convert.ToInt32(item.ThanhTien);}
+                                                @{ total += Convert.ToInt32(ThanhTien);}
                                             </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.GhiChu)
+                                            </td>
+                                            <td>
                                         </tr>
 
                                     }

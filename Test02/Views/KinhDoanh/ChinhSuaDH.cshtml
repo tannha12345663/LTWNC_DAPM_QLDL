@@ -5,6 +5,7 @@
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.dh = "active";
     ViewBag.nd = "Chỉnh sửa danh sách đơn hàng";
+
 }
 
 
@@ -30,6 +31,7 @@
                     @Html.LabelFor(model => model.TrangThai, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         <select class="form-control" id="TrangThai" name="TrangThai">
+                            <option selected="@Model.TrangThai">@Model.TrangThai</option>
                             <option>Chưa xét duyệt</option>
                             <option>Đã xét duyệt</option>
                             <option>Delayed</option>
@@ -52,6 +54,7 @@
                     @Html.LabelFor(model => model.TinhTrangThanhToan, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         <select class="form-control" id="TinhTrangThanhToan" name="TinhTrangThanhToan">
+                            <option selected="@Model.TinhTrangThanhToan">@Model.TinhTrangThanhToan</option>
                             <option>Chưa thanh toán</option>
                             <option>Đã thanh toán</option>
                             <option>Cọc trước</option>
@@ -62,12 +65,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
+                        <input type="submit" value="Lưu đơn hàng @Model.MaDH" class="btn btn-default" />
                     </div>
                 </div>
             </div>

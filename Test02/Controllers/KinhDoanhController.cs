@@ -143,7 +143,7 @@ namespace Test02.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemCTHD([Bind(Include = "MaSP,SoLuong,DonGia,DiemGiao")] ChiTietDonHang chiTietDonHang)
+        public ActionResult ThemCTHD([Bind(Include = "MaSP,SoLuong,DonGia,DiemGiao,DonViTinh")] ChiTietDonHang chiTietDonHang)
         {
             if (ModelState.IsValid)
             {
@@ -164,6 +164,50 @@ namespace Test02.Controllers
                 
             }
 
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
+            return View(chiTietDonHang);
+        }
+        //Chỉnh sửa chi tiết đơn hàng
+        // GET: ChiTietDonHangs/Edit/5
+        public ActionResult ChinhSuaCTDH(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            var madh = database.ChiTietDonHangs.Where(s => s.MaDH == id).FirstOrDefault();
+            if (madh == null)
+            {
+                return HttpNotFound();
+            }
+            Session["MaCTDH"] = madh.MaCTDH;
+            Session["madh"] = madh.MaDH;
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
+            return View(madh);
+        }
+        // POST: ChiTietDonHangs/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChinhSuaCTDH([Bind(Include = "MaSP,SoLuong,DonGia,DiemGiao,DonViTinh")] ChiTietDonHang chiTietDonHang)
+        {
+            if (ModelState.IsValid)
+            {
+                chiTietDonHang.MaCTDH = (int)Session["MaCTDH"];
+                if (chiTietDonHang.ChietKhau == null)
+                {
+                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia);
+                }
+                else
+                {
+                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia) * (chiTietDonHang.ChietKhau);
+                }
+                chiTietDonHang.MaDH = (string)Session["madh"];
+                database.Entry(chiTietDonHang).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
+                return RedirectToAction("QuanLyDH");
+            }
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
             return View(chiTietDonHang);
         }
@@ -327,9 +371,7 @@ namespace Test02.Controllers
         }
         public ActionResult QuanLyHD()
         {
-            ViewBag.MaDL = new SelectList(database.DaiLies, "MaDL", "MaLoaiDL");
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
-            return View(database.DonHangs.ToList().OrderByDescending(s=>s.NgayLap));
+            return View(database.HoaDons.ToList().OrderByDescending(s=>s.TongTien));
         }
         public ActionResult QuanLyKho()
         {
