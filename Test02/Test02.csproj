@@ -524,6 +524,8 @@
     <Content Include="Views\ChiTietDonHangs\Edit.cshtml" />
     <Content Include="Views\ChiTietDonHangs\Index.cshtml" />
     <Content Include="Views\KinhDoanh\ThemCTHD.cshtml" />
+    <Content Include="Views\KeToan\QLyDonHangKeToan.cshtml" />
+    <Content Include="Views\KeToan\Taohdbh.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

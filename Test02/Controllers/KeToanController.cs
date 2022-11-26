@@ -35,9 +35,15 @@ namespace Test02.Controllers
             return View ();
         }
 
-        public ActionResult createHDBH()
+        //public ActionResult createHDBH()
+        //{
+        //    return View();
+        //}
+        public ActionResult Taohdbh( String id)
         {
-            return View();
+            var madh = database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault();
+
+            return View(madh);
         }
 
         public ActionResult QLCongno()
@@ -64,6 +70,10 @@ namespace Test02.Controllers
        public ActionResult LoiNhuan()
         {
             return View();
+        }
+        public ActionResult QLyDonHangKeToan()
+        {
+            return View(database.DonHangs.ToList().OrderByDescending(s => s.NgayLap));
         }
     }
 }
