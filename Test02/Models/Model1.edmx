@@ -118,6 +118,7 @@
           <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
           <Property Name="TinhTrangThanhToan" Type="nvarchar" MaxLength="50" />
           <Property Name="DiemGiao" Type="nvarchar" MaxLength="50" />
+          <Property Name="TongTien" Type="float" />
         </EntityType>
         <EntityType Name="HoaDon">
           <Key>
@@ -618,6 +619,7 @@
           <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TinhTrangThanhToan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DiemGiao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TongTien" Type="Double" />
           <NavigationProperty Name="ChiTietDonHangs" Relationship="Self.FK_ChiTietDonHang_DonHang" FromRole="DonHang" ToRole="ChiTietDonHang" />
           <NavigationProperty Name="DaiLy" Relationship="Self.FK_DonHang_DaiLy" FromRole="DonHang" ToRole="DaiLy" />
           <NavigationProperty Name="DanhSachGiaoHangs" Relationship="Self.FK_DanhSachGiaoHang_DonHang" FromRole="DonHang" ToRole="DanhSachGiaoHang" />
@@ -1128,6 +1130,7 @@
                 <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
                 <ScalarProperty Name="TinhTrangThanhToan" ColumnName="TinhTrangThanhToan" />
                 <ScalarProperty Name="DiemGiao" ColumnName="DiemGiao" />
+                <ScalarProperty Name="TongTien" ColumnName="TongTien" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

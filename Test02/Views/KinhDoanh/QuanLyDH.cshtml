@@ -83,18 +83,12 @@
                                                 @Html.DisplayFor(modelItem => item.TrangThai)
                                             </td>
                                             <td>
-                                                @{var diemgiao = db.ChiTietDonHangs
-                                                                    .Where(s => s.MaDH == item.MaDH)
-                                                                    .FirstOrDefault();
+                                                @{var diemgiao = db.ChiTietDonHangs.Where(s => s.MaDH == item.MaDH) .FirstOrDefault();
                                                 }
                                                     @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
                                                 </td>
                                             <td>
-                                                @{var madh = db.ChiTietDonHangs
-                                                              .Where(s => s.MaDH == item.MaDH)
-                                                              .FirstOrDefault();
-                                                }
-                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", madh.ThanhTien);}
+                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                                 @Html.DisplayFor(modelItem => ThanhTien)
                                             </td>
                                             <td>
@@ -103,14 +97,16 @@
                                             <td>
                                                 <a href="/KinhDoanh/ChinhSuaDH/@item.MaDH" class="btn btn-primary btn-sm edit">
                                                     <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="/KinhDoanh/ChinhSuaCTDH/@item.MaDH" class="btn btn-outline-primary btn-sm edit">
+                                                </a> ||
+                                                @*<a href="/KinhDoanh/ChinhSuaCTDH/@item.MaDH" class="btn btn-outline-primary btn-sm edit">
                                                     <i class="fas fa-edit"></i>
-                                                </a>
+                                                </a> ||*@
                                                 <a href="/KinhDoanh/XoaDH/@item.MaDH" class="btn btn-primary btn-sm trash">
                                                     <i class="fas fa-trash-alt"></i>
+                                                </a> ||
+                                                <a href="/KinhDoanh/DanhSachCTDH/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                    <i class="fas fa-train"></i>
                                                 </a>
-
                                             </td>
                                         </tr>
                                     }

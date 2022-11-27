@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using Test02.Models;
 using Test02.App_Start;
+using System.Data;
+using System.Net;
 
 namespace Test02.Controllers
 {
@@ -114,8 +116,28 @@ namespace Test02.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ThemDH([Bind(Include = "MaDH,MaDL,NgayLap,DiemGiao")] DonHang donHang)
         {
+            DataTable dh = new DataTable();
+            if (Session["DonHang"] == null)
+            {
+                dh.Columns.Add("MaDH");
+                dh.Columns.Add("MaDL");
+                dh.Columns.Add("MaNVLap");
+                dh.Columns.Add("NgayLap");
+                dh.Columns.Add("TrangThai");
+                dh.Columns.Add("TinhTrangThanhToan");
+                dh.Columns.Add("DiemGiao");
+                //Tạo xong lưu lại Session
+                Session["DonHang"] = dh;
+            }
+            else
+            {
+                //Lấy thông tin từ Session
+                dh = Session["DonHang"] as DataTable;
+            }
             if (ModelState.IsValid)
             {
+                
+
                 var user = (Test02.Models.NhanVien)Session["user"];
                 Random rd = new Random();
                 var madh = "DH" + rd.Next(1, 1000);
@@ -126,8 +148,19 @@ namespace Test02.Controllers
                 donHang.MaNVLap = user.MaNV;
                 donHang.TinhTrangThanhToan = "Chưa thanh toán";
                 donHang.TrangThai = "Chưa xử lý";
-                database.DonHangs.Add(donHang);
-                database.SaveChanges();
+                //Lưu thông tin đơn hàng vào bảng DataTable
+                DataRow dr = dh.NewRow();
+                dr["MaDH"] = donHang.MaDH;
+                dr["MaDL"] = donHang.MaDL;
+                dr["MaNVLap"] = donHang.MaNVLap;
+                dr["NgayLap"] = donHang.NgayLap;
+                dr["TrangThai"] = donHang.TrangThai;
+                dr["TinhTrangThanhToan"] = donHang.TinhTrangThanhToan;
+                dr["DiemGiao"] = donHang.DiemGiao;
+                dh.Rows.Add(dr);
+
+                //database.DonHangs.Add(donHang);
+                //database.SaveChanges();
                 return RedirectToAction("ThemCTHD");
             }
 
@@ -147,19 +180,25 @@ namespace Test02.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Thêm thông tin đơn hàng sau khi đã điền chi tiết đơn hàng
+                LuudhvaoDB();
+
+                //Thêm chi tiết đơn hàng
+
                 chiTietDonHang.MaDH = (string)Session["tempdata"];
-                if (chiTietDonHang.ChietKhau ==null)
+                if (chiTietDonHang.ChietKhau == null)
                 {
                     chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia);
                 }
                 else
                 {
-                    
+
                     chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia) * (chiTietDonHang.ChietKhau);
                 }
                 chiTietDonHang.DiemGiao = (string)Session["diemgiao"];
                 database.ChiTietDonHangs.Add(chiTietDonHang);
                 database.SaveChanges();
+                
                 return RedirectToAction("QuanLyDH");
                 
             }
@@ -167,6 +206,49 @@ namespace Test02.Controllers
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
             return View(chiTietDonHang);
         }
+        public void LuudhvaoDB()
+        {
+            DonHang donHang = new DonHang();
+            DataTable dh = Session["DonHang"] as DataTable;
+            foreach (DataRow dr in dh.Rows)
+            {
+                donHang.MaDH = dr["MaDH"].ToString();
+                donHang.MaDL = dr["MaDL"].ToString();
+                donHang.MaNVLap = dr["MaNVLap"].ToString();
+                var date = Convert.ToDateTime(dr["NgayLap"]);
+                donHang.NgayLap = date;
+                donHang.TrangThai = dr["TrangThai"].ToString();
+                donHang.TinhTrangThanhToan = dr["TinhTrangThanhToan"].ToString();
+                donHang.DiemGiao = dr["DiemGiao"].ToString();
+                
+            }
+            database.DonHangs.Add(donHang);
+            database.SaveChanges();
+        }
+        //public ActionResult DatThemCTDH()
+        //{
+
+        //    ChiTietDonHang prodouct = (ChiTietDonHang)database.ChiTietDonHangs.Where(s=>s.MaDH==id).FirstOrDefault();  // tim sp theo sanPhamID
+        //    if (prodouct == null)
+        //    {
+        //        LuudhvaoDB();
+        //    }
+        //    ChiTietDonHang newItem = new ChiTietDonHang()
+        //    {
+        //        MaDH = id,
+        //        MaSP = prodouct.MaSP,
+        //        SoLuong = prodouct.SoLuong,
+        //        DonGia = prodouct.DonGia,
+        //        ChietKhau = prodouct.ChietKhau,
+        //        ThanhTien = (prodouct.DonGia * prodouct.SoLuong),
+        //        DiemGiao = prodouct.DiemGiao,
+        //        DonViTinh = prodouct.DonViTinh
+        //    };
+        //    database.ChiTietDonHangs.Add(newItem);
+        //    database.SaveChanges();
+        //    // Action này sẽ chuyển hướng về trang chi tiết sp khi khách hàng đặt vào giỏ thành công. Bạn có thể chuyển về chính trang khách hàng vừa đứng bằng lệnh return Redirect(Request.UrlReferrer.ToString()); nếu muốn.
+        //    return RedirectToAction("ThemCTHD");
+        //}
         //Chỉnh sửa chi tiết đơn hàng
         // GET: ChiTietDonHangs/Edit/5
         public ActionResult ChinhSuaCTDH(string id)
@@ -211,6 +293,46 @@ namespace Test02.Controllers
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
             return View(chiTietDonHang);
         }
+        //Hiển thị danh sách CTDH
+        public ActionResult DanhSachCTDH(string id)
+        {
+            TempData["madh"] = id;
+            return View(database.ChiTietDonHangs.ToList().Where(s=>s.MaDH == id));
+        }
+        public ActionResult ThemCTHD1()
+        {
+
+            ViewBag.MaDH = new SelectList(database.DonHangs, "MaDH", "MaDL");
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ThemCTHD1([Bind(Include = "MaSP,SoLuong,DonGia,DiemGiao,DonViTinh")] ChiTietDonHang chiTietDonHang)
+        {
+            if (ModelState.IsValid)
+            {
+                //Thêm chi tiết đơn hàng
+                chiTietDonHang.MaDH = (string)Session["mdh1"];
+                if (chiTietDonHang.ChietKhau == null)
+                {
+                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia);
+                }
+                else
+                {
+
+                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia) * (chiTietDonHang.ChietKhau);
+                }
+                chiTietDonHang.DiemGiao = (string)Session["diemgiao"];
+                database.ChiTietDonHangs.Add(chiTietDonHang);
+                database.SaveChanges();
+                return RedirectToAction("QuanLyDH");
+
+            }
+
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
+            return View(chiTietDonHang);
+        }
         //Chỉnh sửa thông tin đơn hàng
         public ActionResult ChinhSuaDH(string id)
         {
@@ -225,17 +347,46 @@ namespace Test02.Controllers
             }
             return View(donHang);
         }
-        [HttpPost]
+        [HttpPost,ActionName("ChinhSuaDH")]
         [ValidateAntiForgeryToken]
         public ActionResult ChinhSuaDH(DonHang donHang)
         {
+            ChiTietDonHang ct = new ChiTietDonHang();
             if (ModelState.IsValid)
             {
-                database.Entry(donHang).State = EntityState.Modified;
+                var madh = database.ChiTietDonHangs.Where(s => s.MaDH == donHang.MaDH).ToList();
+                var total = 0;
+                foreach (var item in madh)
+                {
+                    total += Convert.ToInt32(item.ThanhTien);
+                };
+                donHang.TongTien = total;
+                database.Entry(donHang).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();
                 return RedirectToAction("QuanLyDH");
             }
             return View(donHang);
+        }
+        //Xóa chi tiết đơn hàng
+        // GET: ChiTietDonHangs/Delete/5
+        public ActionResult XoaCTDH(string id)
+        {
+            var madh = database.ChiTietDonHangs.Where(s => s.MaDH == id).FirstOrDefault();
+            if (madh == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(madh);
+        }
+        // POST: ChiTietDonHangs/Delete/5
+        [HttpPost, ActionName("XoaCTDH")]
+        [ValidateAntiForgeryToken]
+        public ActionResult XoaCTDH1(string id)
+        {
+            var madh = database.ChiTietDonHangs.Where(s => s.MaDH == id).FirstOrDefault();
+            database.ChiTietDonHangs.Remove(madh);
+            database.SaveChanges();
+            return RedirectToAction("QuanLyDH");
         }
         //Xóa đơn hàng
         public ActionResult XoaDH(string id)
@@ -331,7 +482,7 @@ namespace Test02.Controllers
         {
             if (ModelState.IsValid)
             {
-                database.Entry(sanPham).State = EntityState.Modified;
+                database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();
                 return RedirectToAction("QuanLySP");
             }
@@ -371,7 +522,7 @@ namespace Test02.Controllers
         }
         public ActionResult QuanLyHD()
         {
-            return View(database.HoaDons.ToList().OrderByDescending(s=>s.TongTien));
+            return View(database.DonHangs.ToList().OrderByDescending(s=>s.NgayLap));
         }
         public ActionResult QuanLyKho()
         {

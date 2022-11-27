@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Test02.Models.HoaDon>
+﻿@model IEnumerable<Test02.Models.DonHang>
 @using Test02.Models;
 @{
     ViewBag.Title = "QuanLyHD";
@@ -6,9 +6,7 @@
     ViewBag.hd = "active";
     ViewBag.nd = "Danh sách hóa đơn";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    List<SanPham> sanpham = db.SanPhams.ToList();
 }
-
 <h2>Danh sách hóa đơn</h2>
 
 
@@ -44,41 +42,50 @@
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã hóa đơn</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Tên đơn vị tiếp nhận</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 100px;">Mã nhân viên lập</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Điểm giao hàng</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 100px;">Tổng tiền</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Ghi chú</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @{ var total = 0;}
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MaHD)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MaDH)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TenDVTiepNhan)
-                                            </td>
-                                            <td>
-                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
-                                                @Html.DisplayFor(modelItem => ThanhTien)
-                                                @{ total += Convert.ToInt32(ThanhTien);}
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.GhiChu)
-                                            </td>
-                                            <td>
-                                        </tr>
+                                        if (item.TinhTrangThanhToan == "Đã thanh toán")
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaDH)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaDL)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaNVLap)
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.NgayLap)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                </td>
+                                                <td>
+                                                    @{ total += Convert.ToInt32(item.TongTien);}
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                    @Html.DisplayFor(modelItem => ThanhTien)
+
+                                                </td>
+                                            </tr>
+                                        }
+
 
                                     }
                                     <tr>
-                                        <th colspan="6">Tổng cộng:</th>
+                                        <th colspan="5">Tổng cộng hóa đơn :</th>
                                         @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
                                         <td>@Html.DisplayFor(modelItem => TongCong)</td>
                                     </tr>
