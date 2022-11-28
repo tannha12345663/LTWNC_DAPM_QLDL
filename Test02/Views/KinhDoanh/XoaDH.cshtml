@@ -1,39 +1,39 @@
 ﻿@model Test02.Models.DonHang
-
+@using Test02.Models
 @{
     ViewBag.Title = "XoaDH";
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    ViewBag.dh = "active";
+    ViewBag.nd = "Xóa đơn hàng ";
 }
 
-<h2>XoaDH</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>Bạn có muốn xóa đơn hàng @Model.MaDH này ?</h3>
 <div>
-    <h4>DonHang</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.SoLuong)
+            @Html.DisplayNameFor(model => model.MaDH)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SoLuong)
+            @Html.DisplayFor(model => model.MaDH)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DonGiaApDung)
+            @Html.DisplayNameFor(model => model.MaDL)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DonGiaApDung)
+            @Html.DisplayFor(model => model.MaDL)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ThanhTien)
+            @Html.DisplayNameFor(model => model.MaNVLap)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ThanhTien)
+            @Html.DisplayFor(model => model.MaNVLap)
         </dd>
 
         <dt>
@@ -53,22 +53,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DiemGiao)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DiemGiao)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TenNV)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TenNV)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.TinhTrangThanhToan)
         </dt>
 
@@ -77,27 +61,13 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DaiLy.MaLoaiDL)
+            @{ var diemgiao = db.ChiTietDonHangs .Where(s => s.MaDH == Model.MaDH).FirstOrDefault();
+                }
+            @Html.DisplayNameFor(model => diemgiao.DiemGiao)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DaiLy.MaLoaiDL)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NhanVien.IdChucVu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NhanVien.IdChucVu)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SanPham.TenSP)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SanPham.TenSP)
+            @Html.DisplayFor(model => model.DiemGiao)
         </dd>
 
     </dl>

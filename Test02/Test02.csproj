@@ -523,9 +523,12 @@
     <Content Include="Views\ChiTietDonHangs\Details.cshtml" />
     <Content Include="Views\ChiTietDonHangs\Edit.cshtml" />
     <Content Include="Views\ChiTietDonHangs\Index.cshtml" />
+    <Content Include="Views\KinhDoanh\ChinhSuaCTDH.cshtml" />
+    <Content Include="Views\KinhDoanh\ThemCTHD_1.cshtml" />
     <Content Include="Views\KinhDoanh\ThemCTHD.cshtml" />
-    <Content Include="Views\KeToan\QLyDonHangKeToan.cshtml" />
-    <Content Include="Views\KeToan\Taohdbh.cshtml" />
+    <Content Include="Views\KinhDoanh\DanhSachCTDH.cshtml" />
+    <Content Include="Views\KinhDoanh\ThemCTHD1.cshtml" />
+    <Content Include="Views\KinhDoanh\XoaCTDH.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

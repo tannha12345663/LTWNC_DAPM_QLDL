@@ -101,10 +101,10 @@
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.NgayGioBC, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.NgayLapBC, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayTiepNhan must be a date." id="NgayGioBC" name="NgayGioBC" type="Date" value="">
-                                    @Html.ValidationMessageFor(model => model.NgayGioBC, "", new { @class = "text-danger" })
+                                    <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayTiepNhan must be a date." id="NgayLapBC" name="NgayLapBC" type="datetime" value="">
+                                    @Html.ValidationMessageFor(model => model.NgayLapBC, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group col-md-10">

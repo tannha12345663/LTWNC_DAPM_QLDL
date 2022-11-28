@@ -29,6 +29,7 @@ namespace Test02.Models
         public string TrangThai { get; set; }
         public string TinhTrangThanhToan { get; set; }
         public string DiemGiao { get; set; }
+        public Nullable<double> TongTien { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
