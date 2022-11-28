@@ -6,7 +6,7 @@
     ViewBag.dh = "active";
     ViewBag.nd = "Danh sách đơn hàng";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    List<SanPham> sanpham = db.SanPhams.ToList();
+    List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
 }
 
 <div class="row">
@@ -25,8 +25,8 @@
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
-                       
-                        
+
+
                         <div class="col-md-1">
                             <div id="sampleTable_filter" class="dataTables_filter">
                                 <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
@@ -41,68 +41,83 @@
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Ngày lập</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Mã sản phẩm</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Tên sản phẩm</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Số lượng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Thành tiền</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Trạng thái</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Trạng thái thanh toán</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Mã nhân viên lập</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Trạng thái đơn hàng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa điểm giao hàng</th>
+
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tổng tiền</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng thanh toán</th>
+
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaDH)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaDL)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NgayLap)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaSP)
-                                        </td>
-                                        <td>
-                                            @{var tensp = db.SanPhams.Find(item.MaSP);
-                                            }
-                                            @Html.DisplayFor(modelItem => tensp.TenSP)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.SoLuong)
-                                        </td>
-                                        <td>
-                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
-                                            @Html.DisplayFor(modelItem => ThanhTien)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TrangThai)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
-                                        </td>
-                                        <td>
-                                            <a href="/KinhDoanh/ChinhSuaDH/@item.MaDH" class="btn btn-primary btn-sm edit">
-                                                <i class="fa fa-edit"></i>
-                                            </a> 
-                                            <a href="/KinhDoanh/XoaDH/@item.MaDH" class="btn btn-primary btn-sm trash">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaDH)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaDL)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaNVLap)
+                                            </td>
+                                            @*<td>
+                                                    @{var tensp = db.SanPhams.Find(item.MaSP);
+                                                    }
+                                                    @Html.DisplayFor(modelItem => tensp.TenSP)
+                                                </td>*@
+                                            @*<td>
+                                                    @{var madh = db.ChiTietDonHangs.Find(item.MaDH);
+                                                    }
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", madh.ThanhTien);}
+                                                    @Html.DisplayFor(modelItem => ThanhTien)
+                                                </td>*@
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NgayLap)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TrangThai)
+                                            </td>
+                                            <td>
+                                                @{var diemgiao = db.ChiTietDonHangs.Where(s => s.MaDH == item.MaDH) .FirstOrDefault();
+                                                }
+                                                    @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
+                                                </td>
+                                            <td>
+                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                @Html.DisplayFor(modelItem => ThanhTien)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                            </td>
+                                            <td>
+                                                <a href="/KinhDoanh/ChinhSuaDH/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                    <i class="fa fa-edit"></i>
+                                                </a> ||
+                                                @*<a href="/KinhDoanh/ChinhSuaCTDH/@item.MaDH" class="btn btn-outline-primary btn-sm edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a> ||*@
+                                                <a href="/KinhDoanh/XoaDH/@item.MaDH" class="btn btn-primary btn-sm trash">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a> ||
+                                                <a href="/KinhDoanh/DanhSachCTDH/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                    <i class="fas fa-train"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-    </div>
 
 

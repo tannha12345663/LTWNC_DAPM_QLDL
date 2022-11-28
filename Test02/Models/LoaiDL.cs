@@ -22,6 +22,7 @@ namespace Test02.Models
     
         public string MaLoaiDL { get; set; }
         public string TenDaiLy { get; set; }
+        public Nullable<double> ChietKhau { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DaiLy> DaiLies { get; set; }

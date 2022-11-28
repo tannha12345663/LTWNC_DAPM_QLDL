@@ -14,12 +14,12 @@ namespace Test02.Models
     
     public partial class PhieuCongNo
     {
-        public int MaCongNo { get; set; }
+        public string MaCongNo { get; set; }
         public string MaDL { get; set; }
-        public string MaDH { get; set; }
-        public Nullable<int> TienNo { get; set; }
+        public Nullable<double> TienNo { get; set; }
         public Nullable<System.DateTime> HanTra { get; set; }
+        public string TrangThai { get; set; }
     
-        public virtual DonHang DonHang { get; set; }
+        public virtual DaiLy DaiLy { get; set; }
     }
 }

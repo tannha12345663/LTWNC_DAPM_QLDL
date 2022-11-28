@@ -20,7 +20,7 @@ namespace Test02.Models
             this.NhanViens = new HashSet<NhanVien>();
         }
     
-        public string IdChucVu { get; set; }
+        public string MaChucVu { get; set; }
         public string ChucVu1 { get; set; }
         public string ViTri { get; set; }
     

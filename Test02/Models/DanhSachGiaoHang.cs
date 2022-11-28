@@ -14,17 +14,16 @@ namespace Test02.Models
     
     public partial class DanhSachGiaoHang
     {
-        public int MaGH { get; set; }
+        public string MaGH { get; set; }
         public string MaDH { get; set; }
         public string MaNV { get; set; }
+        public string TenNV { get; set; }
         public string DiemGiao { get; set; }
         public string TrangThai { get; set; }
         public Nullable<System.DateTime> NgayGiao { get; set; }
-        public Nullable<int> TienThu { get; set; }
-        public string TenNV { get; set; }
+        public Nullable<double> TienThu { get; set; }
         public string XacNhan { get; set; }
     
         public virtual DonHang DonHang { get; set; }
-        public virtual NhanVien NhanVien { get; set; }
     }
 }

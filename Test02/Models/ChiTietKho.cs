@@ -12,19 +12,17 @@ namespace Test02.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Kho
+    public partial class ChiTietKho
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Kho()
-        {
-            this.ChiTietKhoes = new HashSet<ChiTietKho>();
-        }
-    
+        public string MaCTKho { get; set; }
+        public string MaSP { get; set; }
         public string MaKho { get; set; }
-        public string TenKho { get; set; }
-        public string DiaChi { get; set; }
+        public Nullable<System.DateTime> NgayNhap { get; set; }
+        public Nullable<System.DateTime> NgayXuat { get; set; }
+        public Nullable<int> SoLuong { get; set; }
+        public string TinhTrang { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietKho> ChiTietKhoes { get; set; }
+        public virtual Kho Kho { get; set; }
+        public virtual SanPham SanPham { get; set; }
     }
 }

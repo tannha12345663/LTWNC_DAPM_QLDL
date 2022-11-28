@@ -3,87 +3,90 @@
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
+    ViewBag.nd = "Xóa đại lý";
+    ViewBag.dl = "active";
 }
 
-<h2>Delete</h2>
+<div class="tile">
+    <h3 class="tile-title">Bạn có chắc chắn muốn xóa đại lý @Model.MaDL</h3>
+    <div class="tile-body">
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>DaiLy</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Password)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Password)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.TenDL)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TenDL)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.TenDL)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.TenDL)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.SDT)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SDT)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SDT)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.SDT)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.DiaChi)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DiaChi)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.DiaChi)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.DiaChi)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.NgayTao)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayTao)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.NgayTao)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.NgayTao)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.LoaiDL.TenDaiLy)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LoaiDL.TenDaiLy)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.LoaiDL.TenDaiLy)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.LoaiDL.TenDaiLy)
-        </dd>
+            </dl>
 
-    </dl>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "QuanLyDL")
+                <div class="form-actions no-color">
+                    <input type="submit" value="Xóa đại lý" class="btn btn-default" /> |
+                    @Html.ActionLink("Quay lại danh sách đại lý", "QuanLyDL")
+                </div>
+            }
         </div>
-    }
+    </div>
 </div>
