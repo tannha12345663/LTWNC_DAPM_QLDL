@@ -57,7 +57,9 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.HanSD)
                                     </th>
-
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.TongTon)
+                                    </th>
 
                                     <th></th>
                                 </tr>
@@ -83,7 +85,9 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.HanSD)
                                         </td>
-
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TongTon)
+                                        </td>
 
                                         <td>
                                             <a href="/KinhDoanh/ChinhSuaSP/@item.MaSP" class="btn btn-primary btn-sm edit" > Chỉnh sửa</a>
