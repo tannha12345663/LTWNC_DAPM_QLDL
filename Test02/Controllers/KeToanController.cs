@@ -23,7 +23,7 @@ namespace Test02.Controllers
 
         public ActionResult TrangChuKeToan()
         {
-            return View();
+            return View(database.HoaDons.ToList().OrderByDescending(s => s.MaHD));
         }
         //chu y
         public ActionResult QLyDonHangKeToan(String id,DonHang dh)
@@ -46,11 +46,14 @@ namespace Test02.Controllers
 
        public ActionResult TaoHD(String id)
         {
+
             return View(database.ChiTietDonHangs.Where(s => s.MaDH == id).FirstOrDefault());
         }
         [HttpPost]
         public ActionResult TaoHD(String id,ChiTietDonHang ct,HoaDon hoaDon)
         {
+            var user = (Test02.Models.NhanVien)Session["user"];
+
             ct = database.ChiTietDonHangs.Where(s => s.MaDH == id).FirstOrDefault();
 
             Random rd = new Random();
@@ -58,12 +61,13 @@ namespace Test02.Controllers
             hoaDon.MaHD = maHD;
             hoaDon.MaDH = ct.MaDH;
             hoaDon.TongTien = ct.ThanhTien;
+            hoaDon.TenDVTiepNhan = user.MaNV;
 
 
 
             database.HoaDons.Add(hoaDon);
                 database.SaveChanges();
-                return RedirectToAction("QLCongno");
+                return RedirectToAction("QLHoaDon");
             
         }
 
@@ -85,9 +89,18 @@ namespace Test02.Controllers
             return View(database.HoaDons.ToList().OrderByDescending(s => s.MaHD));
         }
 
-        public ActionResult ChinhsuHD()
+        public ActionResult ChinhsuaHD(String id)
         {
-            return View();
+            return View(database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault());
+        }
+
+        [HttpPost]
+
+        public ActionResult ChinhsuaHD(DonHang ct)
+        {
+            database.Entry(ct).State = System.Data.Entity.EntityState.Modified;
+            database.SaveChanges();
+            return RedirectToAction("QLHoaDon");
         }
 
 
@@ -171,6 +184,8 @@ namespace Test02.Controllers
             }
             
         }
+
+        
 
         public ActionResult Doanhthu()
         {

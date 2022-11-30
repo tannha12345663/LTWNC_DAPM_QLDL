@@ -4,6 +4,8 @@
 @{
     ViewBag.Title = "XuatHDBH";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.qlhd = "active";
+    ViewBag.nd = "Xuất hóa đơn";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ct = db.ChiTietDonHangs.ToList();
 }
@@ -15,17 +17,6 @@
 
                 <h3 style="text-align:center">HÓA ĐƠN BÁN HÀNG</h3>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-
-
-                    @*@for (int i = 0; i < ct.Count;i++)
-        {
-            if(ct[i].MaDH=)
-                <p> <strong>@Html.DisplayNameFor(model => model.MaDH) </strong>@Html.DisplayFor(model => ct[i].MaDH)</p>
-                <p> <strong>@Html.DisplayNameFor(model => model.MaCTDH) </strong>@Html.DisplayFor(model => ct[i].MaCTDH)</p>
-                <p> <strong>@Html.DisplayNameFor(model => model.ThanhTien) </strong>@Html.DisplayFor(model => ct[i].ThanhTien)</p>
-
-        }*@
-
 
                     @foreach (var item in Model)
                     {
@@ -39,12 +30,6 @@
                             </p>
                             <p><strong>Địa điểm giao:</strong>@Html.DisplayFor(modelItem => item.DiemGiao)</p>
                                         break;
-
-
-
-
-
-
 
                                     }
 

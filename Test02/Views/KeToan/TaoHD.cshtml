@@ -1,13 +1,17 @@
 ﻿@model Test02.Models.ChiTietDonHang
-
+@using Test02.Models;
 @{
     ViewBag.Title = "TaoHD";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.qldonhangkt = "active";
+    ViewBag.nd = "Tạo hóa đơn";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+
 }
 <div class="row">
     <div class="col-md-12">
-        <div class="tile">
-            <h2 style="text-align:center">TẠO HÓA ĐƠN</h2>
+        <div class="tile" style="padding:30dp">
+            <h3 style="text-align:center">TẠO HÓA ĐƠN</h3>
 
             @using (Html.BeginForm())
             {
@@ -16,26 +20,32 @@
         <div class="form-horizontal">
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <p> <strong>@Html.DisplayNameFor(model => model.MaDH) </strong>@Html.DisplayFor(model => model.MaDH)</p>
-            <p> <strong>@Html.DisplayNameFor(model => model.MaCTDH) </strong>@Html.DisplayFor(model => model.MaCTDH)</p>
-            <p> <strong>@Html.DisplayNameFor(model => model.ThanhTien) </strong>@Html.DisplayFor(model => model.ThanhTien)</p>
-            @*<p> <strong>@Html.DisplayNameFor(model => model.ThanhTien) </strong>@Html.DisplayFor(model => model.ThanhTien)</p>*@
 
+            <p> <strong>Mã đơn hàng: </strong>@Html.DisplayFor(model => model.MaDH)</p>
 
+            @{ var mahd = db.HoaDons.Where(s => s.MaDH == Model.MaDH).FirstOrDefault(); ;
 
+            }
+            <p><strong>Mã hóa đơn:</strong> @mahd.MaHD</p>
 
+            @{ var mahd1 = db.DonHangs.Where(s => s.MaDH == Model.MaDH).FirstOrDefault(); ;
+            }
+            <p><strong>Mã đại lý:</strong> @mahd1.MaDL</p>
 
+            @{ var madh = db.DonHangs.Where(s => s.MaDH == Model.MaDH).FirstOrDefault(); ;
+                var tendl = db.DaiLies.Where(s => s.MaDL == madh.MaDL).FirstOrDefault();
+            }
+            <p><strong>Tên đại lý:</strong> @tendl.TenDL</p>
+            <p><strong>Ngày lập đơn hàng: </strong> @mahd1.NgayLap</p>
 
-
-
-
-
+            @{ var tongien = string.Format("{0:0,0 vnđ}", Model.ThanhTien);}
+            <p> <strong>Thành tiền: </strong>@Html.DisplayFor(model => tongien)</p>
 
 
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Thêm hóa đơn" class="btn btn-default" />
                 </div>
             </div>
         </div>

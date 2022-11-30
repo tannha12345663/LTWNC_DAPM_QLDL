@@ -14,15 +14,6 @@
         <div class="tile">
             <div class="tile-body">
 
-                @*<div class="row element-button">
-                        <div class="col-sm-2">
-                            <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDH"><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
-                        </div>
-                        <div class="col-sm-2">
-                            <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
-                        </div>
-
-                    </div>*@
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
 
@@ -39,13 +30,14 @@
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã hóa đơn: activate to sort column ascending" style="width: 100px;">Mã hóa đơn</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đại lý: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý: activate to sort column ascending" style="width: 160px;">Tên đại lý</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng tiền: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 120px;">Ngày lập</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Chức năng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã hóa đơn: activate to sort column ascending" style="width: 80px;">Mã hóa đơn</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đại lý: activate to sort column ascending" style="width: 80px;">Mã đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý: activate to sort column ascending" style="width: 140px;">Tên đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng tiền: activate to sort column ascending" style="width: 100px;">Tổng hóa đơn</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 100px;">Mã nhân viên</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Trạng thái: activate to sort column ascending" style="width: 150px;">Trạng thái</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 120px;">Chức năng</th>
 
                                     </tr>
                                 </thead>
@@ -56,9 +48,7 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.MaHD)
                                         </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaDH)
-                                        </td>
+
                                         <td>
                                             @{var madl = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
 
@@ -77,9 +67,20 @@
                                             @Html.DisplayFor(modelItem => ThanhTien)
                                         </td>
                                         <td>
+                                            @Html.DisplayFor(modelItem => item.TenDVTiepNhan)
                                         </td>
                                         <td>
-                                            <a href="#Edit" class="btn btn-primary btn-sm edit">
+                                            @{var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+
+                                            }
+                                            @Html.DisplayFor(modelItem => dh.TinhTrangThanhToan)
+                                        </td>
+                                        <td>
+                                            Ngay lập
+                                        </td>
+
+                                        <td>
+                                            <a href="/KeToan/ChinhsuaHD/@item.MaDH" class="btn btn-primary btn-sm edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a href="/KeToan/XoaHD/@item.MaHD" class="btn btn-primary btn-sm trash">
