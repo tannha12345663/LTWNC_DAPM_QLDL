@@ -45,11 +45,8 @@
           <Property Name="MaDH" Type="varchar" MaxLength="10" />
           <Property Name="MaSP" Type="varchar" MaxLength="10" />
           <Property Name="SoLuong" Type="int" />
-          <Property Name="DonGia" Type="int" />
           <Property Name="ChietKhau" Type="float" />
           <Property Name="ThanhTien" Type="float" />
-          <Property Name="DiemGiao" Type="nvarchar" MaxLength="50" />
-          <Property Name="DonViTinh" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ChiTietKho">
           <Key>
@@ -128,7 +125,7 @@
           <Property Name="MaDH" Type="varchar" MaxLength="10" />
           <Property Name="TenDVTiepNhan" Type="nvarchar" MaxLength="50" />
           <Property Name="TongTien" Type="float" />
-          <Property Name="GhiChu" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgayLap" Type="datetime" />
         </EntityType>
         <EntityType Name="Kho">
           <Key>
@@ -179,6 +176,7 @@
           <Property Name="Gia" Type="int" />
           <Property Name="HanSD" Type="datetime" />
           <Property Name="NgaySX" Type="datetime" />
+          <Property Name="TongTon" Type="int" />
         </EntityType>
         <Association Name="FK_BaoCao_NhanVien">
           <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1">
@@ -536,11 +534,8 @@
           <Property Name="MaDH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MaSP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="SoLuong" Type="Int32" />
-          <Property Name="DonGia" Type="Int32" />
           <Property Name="ChietKhau" Type="Double" />
           <Property Name="ThanhTien" Type="Double" />
-          <Property Name="DiemGiao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DonViTinh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DonHang" Relationship="Self.FK_ChiTietDonHang_DonHang" FromRole="ChiTietDonHang" ToRole="DonHang" />
           <NavigationProperty Name="SanPham" Relationship="Self.FK_ChiTietDonHang_SanPham" FromRole="ChiTietDonHang" ToRole="SanPham" />
         </EntityType>
@@ -635,7 +630,7 @@
           <Property Name="MaDH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TenDVTiepNhan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TongTien" Type="Double" />
-          <Property Name="GhiChu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgayLap" Type="DateTime" Precision="3" />
           <NavigationProperty Name="DonHang" Relationship="Self.FK_HoaDon_DonHang" FromRole="HoaDon" ToRole="DonHang" />
         </EntityType>
         <EntityType Name="Kho">
@@ -694,6 +689,7 @@
           <Property Name="Gia" Type="Int32" />
           <Property Name="HanSD" Type="DateTime" Precision="3" />
           <Property Name="NgaySX" Type="DateTime" Precision="3" />
+          <Property Name="TongTon" Type="Int32" />
           <NavigationProperty Name="BienBangKiemKes" Relationship="Self.FK_BienBangKiemKe_SanPham" FromRole="SanPham" ToRole="BienBangKiemKe" />
           <NavigationProperty Name="ChiTietDonHangs" Relationship="Self.FK_ChiTietDonHang_SanPham" FromRole="SanPham" ToRole="ChiTietDonHang" />
           <NavigationProperty Name="ChiTietKhoes" Relationship="Self.FK_ChiTietKho_SanPham" FromRole="SanPham" ToRole="ChiTietKho" />
@@ -1052,11 +1048,8 @@
                 <ScalarProperty Name="MaDH" ColumnName="MaDH" />
                 <ScalarProperty Name="MaSP" ColumnName="MaSP" />
                 <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
-                <ScalarProperty Name="DonGia" ColumnName="DonGia" />
                 <ScalarProperty Name="ChietKhau" ColumnName="ChietKhau" />
                 <ScalarProperty Name="ThanhTien" ColumnName="ThanhTien" />
-                <ScalarProperty Name="DiemGiao" ColumnName="DiemGiao" />
-                <ScalarProperty Name="DonViTinh" ColumnName="DonViTinh" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1142,7 +1135,7 @@
                 <ScalarProperty Name="MaDH" ColumnName="MaDH" />
                 <ScalarProperty Name="TenDVTiepNhan" ColumnName="TenDVTiepNhan" />
                 <ScalarProperty Name="TongTien" ColumnName="TongTien" />
-                <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+                <ScalarProperty Name="NgayLap" ColumnName="NgayLap" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1198,6 +1191,7 @@
                 <ScalarProperty Name="Gia" ColumnName="Gia" />
                 <ScalarProperty Name="HanSD" ColumnName="HanSD" />
                 <ScalarProperty Name="NgaySX" ColumnName="NgaySX" />
+                <ScalarProperty Name="TongTon" ColumnName="TongTon" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

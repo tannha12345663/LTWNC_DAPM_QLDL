@@ -13,7 +13,7 @@
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-body">
-
+               
                 <div class="row element-button">
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/TaoCongno "><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
@@ -52,46 +52,45 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
                             </tbody>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MaCongNo)
-                                    </td>
-                                    <td>
-                                        @{var tendl = db.DaiLies.Find(item.MaDL);
-                                        }
-                                        @Html.DisplayFor(modelItem => tendl.TenDL)
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaCongNo)
+                                        </td>
+                                        <td>
+                                            @{var tendl = db.DaiLies.Find(item.MaDL);
+                                            }
+                                            @Html.DisplayFor(modelItem => tendl.TenDL)
 
-                                    </td>
-                                    <td>
-                                        @{var loaidly = db.DaiLies.Find(item.MaDL);
-                                        }
-                                        @Html.DisplayFor(modelItem => loaidly.MaLoaiDL)
-                                    </td>
+                                        </td>
+                                        <td>
+                                            @{var loaidly = db.DaiLies.Find(item.MaDL);
+                                            }
+                                            @Html.DisplayFor(modelItem => loaidly.MaLoaiDL)
+                                        </td>
 
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TienNo)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.HanTra)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TrangThai)
-                                    </td>
-                                    <td>
-                                        <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-primary btn-sm edit">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a href="/KeToan/XoaCN/@item.MaCongNo" class="btn btn-primary btn-sm trash">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TienNo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.HanTra)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TrangThai)
+                                        </td>
+                                        <td>
+                                            <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-primary btn-sm edit">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="/KeToan/XoaCN/@item.MaCongNo" class="btn btn-primary btn-sm trash">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
 
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

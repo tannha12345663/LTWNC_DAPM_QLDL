@@ -46,7 +46,6 @@ namespace Test02.Controllers
 
        public ActionResult TaoHD(String id)
         {
-
             return View(database.ChiTietDonHangs.Where(s => s.MaDH == id).FirstOrDefault());
         }
         [HttpPost]
@@ -55,7 +54,6 @@ namespace Test02.Controllers
             var user = (Test02.Models.NhanVien)Session["user"];
 
             ct = database.ChiTietDonHangs.Where(s => s.MaDH == id).FirstOrDefault();
-
             Random rd = new Random();
             var maHD = "HD" + rd.Next(1, 1000);
             hoaDon.MaHD = maHD;
@@ -63,7 +61,7 @@ namespace Test02.Controllers
             hoaDon.TongTien = ct.ThanhTien;
             hoaDon.TenDVTiepNhan = user.MaNV;
 
-
+            
 
             database.HoaDons.Add(hoaDon);
                 database.SaveChanges();
@@ -83,6 +81,12 @@ namespace Test02.Controllers
             database.SaveChanges();
             return RedirectToAction("QLHoaDon");
         }
+
+        public ActionResult recyclebin()
+        {
+            return View();
+        }
+
 
         public ActionResult QLHoaDon()
         {
@@ -106,10 +110,7 @@ namespace Test02.Controllers
 
         public ActionResult XuatHDBH(String id)
         {
-            
             return View(database.ChiTietDonHangs.ToList().Where(s => s.MaDH == id));
-
-
         }
 
 
@@ -134,10 +135,11 @@ namespace Test02.Controllers
             
             try
             {
+                TempData["AlerMessage"] = "haha";
                 Random rd = new Random();
                 var macn = "CN" + rd.Next(1, 1000);
                 phieuCongNo.MaCongNo = macn;
-                //   daiLy.NgayTao = System.DateTime.Now;
+              
                 phieuCongNo.TrangThai = "Chưa thanh toán";
                 database.PhieuCongNoes.Add(phieuCongNo);
                 database.SaveChanges();
@@ -189,14 +191,11 @@ namespace Test02.Controllers
 
         public ActionResult Doanhthu()
         {
-            return View();
+            return View(database.DonHangs.ToList());
         }
 
 
-        public ActionResult CreateDoanhThu()
-        {
-            return View();
-        }
+       
 
        public ActionResult LoiNhuan()
         {

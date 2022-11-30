@@ -39,6 +39,7 @@
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
+                                        <th></th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Mã nhân viên lập</th>
@@ -55,55 +56,58 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MaDH)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MaDL)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MaNVLap)
-                                            </td>
-                                            @*<td>
-                                                    @{var tensp = db.SanPhams.Find(item.MaSP);
-                                                    }
-                                                    @Html.DisplayFor(modelItem => tensp.TenSP)
-                                                </td>*@
-                                            @*<td>
-                                                    @{var madh = db.ChiTietDonHangs.Find(item.MaDH);
-                                                    }
-                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", madh.ThanhTien);}
-                                                    @Html.DisplayFor(modelItem => ThanhTien)
-                                                </td>*@
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NgayLap)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TrangThai)
-                                            </td>
-                                            <td>
-                                                @{var diemgiao = db.ChiTietDonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
-                                                }
-                                                @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
-                                            </td>
-                                            <td>
-                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
-                                                @Html.DisplayFor(modelItem => ThanhTien)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
-                                            </td>
-                                            <td>
-                                                
-                                                <a href="/KeToan/TaoHD/@item.MaDH" class="btn btn-primary btn-sm edit">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                
+                                    <tr>
+                                        <td width="10">
+                                        <input type="checkbox" id="all">
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaDH)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaDL)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaNVLap)
+                                        </td>
+                                        @*<td>
+            @{var tensp = db.SanPhams.Find(item.MaSP);
+            }
+            @Html.DisplayFor(modelItem => tensp.TenSP)
+        </td>*@
+                                        @*<td>
+            @{var madh = db.ChiTietDonHangs.Find(item.MaDH);
+            }
+            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", madh.ThanhTien);}
+            @Html.DisplayFor(modelItem => ThanhTien)
+        </td>*@
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NgayLap)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TrangThai)
+                                        </td>
+                                        <td>
+                                            @{var diemgiao = db.ChiTietDonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+                                            }
+                                            @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
+                                        </td>
+                                        <td>
+                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                            @Html.DisplayFor(modelItem => ThanhTien)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                        </td>
+                                        <td>
+
+                                            <a href="/KeToan/TaoHD/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
 
 
-                                            </td>
-                                        </tr>
+
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

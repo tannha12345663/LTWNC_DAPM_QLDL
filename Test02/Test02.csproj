@@ -314,6 +314,8 @@
     <Content Include="Content\Test01\sb-admin-2.min.css" />
     <Content Include="Content\Test01\select2.min.js" />
     <Content Include="Content\Test01\util.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="Content\vendor\animate\animate.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
@@ -435,6 +437,8 @@
     <Content Include="Content\fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
     <Content Include="Content\fonts\font-awesome-4.7.0\scss\_stacked.scss" />
     <Content Include="Content\fonts\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -506,7 +510,6 @@
     <Content Include="Views\PhongKho\XuatKho.cshtml" />
     <Content Include="Views\KhachHang\Layout\_LayoutKhachHang.cshtml" />
     <Content Include="Views\KhachHang\PageSanPham.cshtml" />
-    <Content Include="Views\KeToan\Doanhthu.cshtml" />
     <Content Include="Views\KeToan\LoiNhuan.cshtml" />
     <Content Include="Views\KeToan\QLCongno.cshtml" />
     <Content Include="Views\KeToan\TrangChuKeToan.cshtml" />
@@ -545,6 +548,7 @@
     <Content Include="Views\KeToan\XuatHDBH.cshtml" />
     <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
     <Content Include="Views\KeToan\CongnoDL.cshtml" />
+    <Content Include="Views\KeToan\Doanhthu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
