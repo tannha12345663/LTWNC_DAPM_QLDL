@@ -1,0 +1,37 @@
+﻿@model Test02.Models.HoaDon
+
+@{
+    ViewBag.Title = "XoaHD";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.nd = "Xóa hóa đơn";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+
+
+            <div>
+                <h4 style="align-content:center">HÓA ĐƠN BÁN HÀNG @Model.MaHD</h4>
+                <hr />
+                <p> <strong>@Html.DisplayNameFor(model => model.MaHD): </strong>@Html.DisplayFor(model => model.MaHD)</p>
+                <p> <strong>@Html.DisplayNameFor(model => model.MaDH): </strong>@Html.DisplayFor(model => model.MaDH)</p>
+                <p> <strong>@Html.DisplayNameFor(model => model.TenDVTiepNhan): </strong>@Html.DisplayFor(model => model.TenDVTiepNhan)</p>
+                <p> <strong>@Html.DisplayNameFor(model => model.TongTien): </strong>@Html.DisplayFor(model => model.TongTien)</p>
+
+
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Xóa" class="btn btn-default" /> |
+                        @Html.ActionLink("Quay lại danh sách hóa đơn", "QLHoaDon")
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

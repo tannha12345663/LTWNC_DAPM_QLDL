@@ -20,7 +20,7 @@ namespace Test02.Controllers
         [HttpPost]
         public ActionResult Login(string username, string password)
         {
-            var kd = "NVKD"; var kho = "NVK";var kt = "NVKT";var gh = "NVGH";
+            var kd = "NVKD"; var kho = "NVK";var kt = "NVKT";var gh = "NVGH"; var qtv = "QTHT";
             var data = database.NhanViens.Where(s => s.UserName == username && s.Password == password).FirstOrDefault();
             var taikhoan = database.NhanViens.SingleOrDefault(s => s.UserName == username && s.Password == password);
             if(data == null)
@@ -48,6 +48,10 @@ namespace Test02.Controllers
                 else if (data.MaChucVu.ToString() == gh)
                 {
                     return RedirectToAction("TrangChu", "GiaoHang");
+                }
+                else if (data.MaChucVu.ToString() == qtv)
+                {
+                    return RedirectToAction("QLNhanVien", "QTV");
                 }
             }
             return View();

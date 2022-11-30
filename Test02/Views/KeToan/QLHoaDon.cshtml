@@ -1,44 +1,32 @@
-﻿
+﻿@model IEnumerable<Test02.Models.HoaDon>
+@using Test02.Models;
 @{
     ViewBag.Title = "QLHoaDon";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     ViewBag.qlhd = "active";
     ViewBag.nd = "Danh sách hóa đơn";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
 }
-
 
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-body">
 
-                <div class="row element-button">
-                    <div class="col-sm-2">
+                @*<div class="row element-button">
+                        <div class="col-sm-2">
+                            <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDH"><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
+                        </div>
+                        <div class="col-sm-2">
+                            <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                        </div>
 
-                        <a class="btn btn-add btn-sm" href="~/KeToan/createHDGTGT" title="Thêm">
-                            <i class="fas fa-plus"></i>
-                            Tạo hóa đơn GTGT
-                        </a>
-                    </div>
-                    <div class="col-sm-2">
-
-                        <a class="btn btn-add btn-sm" href="~/KeToan/createHDBH" title="Thêm">
-                            <i class="fas fa-plus"></i>
-                            Tạo hóa đơn xuất hàng tới đại lý
-                        </a>
-                    </div>
-                   
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
-                            <i class="fas fa-print"></i> In dữ liệu
-                        </a>
-                    </div>
-
-                          
-                </div>
+                    </div>*@
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
-                      
+
+
                         <div class="col-md-1">
                             <div id="sampleTable_filter" class="dataTables_filter">
                                 <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
@@ -51,38 +39,62 @@
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="STT: activate to sort column ascending" style="width: 50px;">STT</th>
-                                        <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã HD: activate to sort column ascending" style="width: 150px;">Mã HD</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 160px;">Ngày lập</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên Đại lý: activate to sort column ascending" style="width: 124px;">Tên Đại lý</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng hóa đơn: activate to sort column ascending" style="width: 101px;">Tổng hóa đơn</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ghi chú: activate to sort column ascending" style="width: 124px;">Ghi chú</th>                                  
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã hóa đơn: activate to sort column ascending" style="width: 100px;">Mã hóa đơn</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đại lý: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý: activate to sort column ascending" style="width: 160px;">Tên đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng tiền: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 120px;">Ngày lập</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Chức năng</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr role="row" class="odd">
-                                        <td>01</td>
-                                        <td>HD101</td>
-                                        <td>19/20/2022</td>
-                                        <td>Tấn Nhã</td>
-                                        <td>12.000.000</td>
-                                        <td></td>
-                                        <td class="table-td-center">
-                                            <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
-                                                    onclick="myFunction(this)">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                                    data-toggle="modal" data-target="#ModalUP">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaHD)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaDH)
+                                        </td>
+                                        <td>
+                                            @{var madl = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+
+                                            }
+                                            @Html.DisplayFor(modelItem => madl.MaDL)
+                                        </td>
+                                        <td>
+                                            @{var madh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+                                                var tendl = db.DaiLies.Where(s => s.MaDL == madh.MaDL).FirstOrDefault();
+                                            }
+                                            @Html.DisplayFor(modelItem => tendl.TenDL)
                                         </td>
 
+                                        <td>
+                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                            @Html.DisplayFor(modelItem => ThanhTien)
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <a href="#Edit" class="btn btn-primary btn-sm edit">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="/KeToan/XoaHD/@item.MaHD" class="btn btn-primary btn-sm trash">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                            <a href="/KeToan/XuatHDBH/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                <i class="fas fa-train"></i>
+                                            </a>
+                                        </td>
+
+
+
+
                                     </tr>
-                                           
-                                        </tr>
-                                    
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -92,42 +104,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    function deleteRow(r) {
-        var i = r.parentNode.parentNode.rowIndex;
-        document.getElementById("myTable").deleteRow(i);
-    }
-    jQuery(function () {
-        jQuery(".trash").click(function () {
-            swal({
-                title: "Cảnh báo",
-
-                text: "Bạn có chắc chắn là muốn xóa sản phẩm?",
-                buttons: ["Hủy bỏ", "Đồng ý"],
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        swal("Đã xóa thành công.!", {
-
-                        });
-                    }
-                });
-        });
-    });
-    oTable = $('#sampleTable').dataTable();
-    $('#all').click(function (e) {
-        $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
-        e.stopImmediatePropagation();
-    });
-
-   
-
-
-
-
-
-
-
-
 

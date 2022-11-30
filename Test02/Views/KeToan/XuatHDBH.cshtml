@@ -1,0 +1,133 @@
+﻿@model IEnumerable<Test02.Models.ChiTietDonHang>
+
+@using Test02.Models;
+@{
+    ViewBag.Title = "XuatHDBH";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    List<ChiTietDonHang> ct = db.ChiTietDonHangs.ToList();
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+
+                <h3 style="text-align:center">HÓA ĐƠN BÁN HÀNG</h3>
+                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+
+
+                    @*@for (int i = 0; i < ct.Count;i++)
+        {
+            if(ct[i].MaDH=)
+                <p> <strong>@Html.DisplayNameFor(model => model.MaDH) </strong>@Html.DisplayFor(model => ct[i].MaDH)</p>
+                <p> <strong>@Html.DisplayNameFor(model => model.MaCTDH) </strong>@Html.DisplayFor(model => ct[i].MaCTDH)</p>
+                <p> <strong>@Html.DisplayNameFor(model => model.ThanhTien) </strong>@Html.DisplayFor(model => ct[i].ThanhTien)</p>
+
+        }*@
+
+
+                    @foreach (var item in Model)
+                    {
+                        
+                            <p style="text-align:right"><strong>Mã CTDH: </strong>@Html.DisplayFor(modelItem => item.MaCTDH)</p>
+
+                            <p>
+                                <strong>Tên Đại lý: </strong> @{ var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+                                    var tendly = db.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();}
+                                @Html.DisplayFor(modelItem => tendly.TenDL)
+                            </p>
+                            <p><strong>Địa điểm giao:</strong>@Html.DisplayFor(modelItem => item.DiemGiao)</p>
+                                        break;
+
+
+
+
+
+
+
+                                    }
+
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                @*//Phần render từng dòng trong C#*@
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã sản phẩm: activate to sort column ascending" style="width: 100px;">Mã sản phẩm</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên sản phẩm: activate to sort column ascending" style="width: 100px;">Tên sản phẩm</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Số lượng: activate to sort column ascending" style="width: 100px;">Số lượng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Đơn vị tính: activate to sort column ascending" style="width: 100px;">Đơn vị tính</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Đơn giá: activate to sort column ascending" style="width: 100px;">Đơn giá</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Thành tiền: activate to sort column ascending" style="width: 120px;">Thành tiền</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var total = 0;
+                                        int stt = 0;}
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaSP)
+                                            </td>
+                                            <td>
+                                                @{ var tensp = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
+                                                @Html.DisplayFor(modelItem => tensp.TenSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SoLuong)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DonViTinh)
+                                            </td>
+                                            <td>
+                                                @{ var chuyendoi = string.Format("{0:0,0 vnđ}", item.DonGia);}
+                                                @Html.DisplayFor(modelItem => chuyendoi)
+                                            </td>
+
+                                            <td>
+                                                @{ total += Convert.ToInt32(item.ThanhTien);}
+                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
+                                                @Html.DisplayFor(modelItem => ThanhTien)
+                                            </td>
+
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <th colspan="6">Tổng cộng hóa đơn:</th>
+                                        @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                        <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                    </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
+                    <i class="fas fa-print"></i> In dữ liệu
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //In dữ liệu
+    var myApp = new function () {
+        this.printTable = function () {
+            var tab = document.getElementById('sampleTable');
+            var win = window.open('', '', 'height=800px,width=1200px');
+            win.document.write(tab.outerHTML);
+            win.document.close();
+            win.print();
+        }
+    }
+</script>
+

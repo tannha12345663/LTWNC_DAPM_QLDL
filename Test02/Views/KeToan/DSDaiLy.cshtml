@@ -1,0 +1,117 @@
+﻿@model IEnumerable<Test02.Models.DaiLy>
+@using Test02.Models
+@{
+    ViewBag.Title = "DSDaiLy";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.dsdl = "active";
+    ViewBag.nd = "Danh sách đại lý";
+    QuanLyDLEntities2 database = new QuanLyDLEntities2();
+    List<LoaiDL> LoaiDL = database.LoaiDLs.ToList();
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+
+                <div class="row element-button">
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDL"><i class="fas fa-file-upload"></i> Thêm mới hồ sơ</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
+                            <i class="fas fa-print"></i> In dữ liệu
+                        </a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDL"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                    </div>
+
+                </div>
+                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                    <div class="row">
+
+
+                        <div class="col-md-1">
+                            <div id="sampleTable_filter" class="dataTables_filter">
+                                <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                @*//Phần render từng dòng trong C#*@
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 50px;">Mã đại lý</th>
+                                        <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 150px;">Tên đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Loại đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa chỉ</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Tổng công nợ</th>
+                                        <th width="100" class="sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row" class="odd">
+                                        <td>01</td>
+                                        <td>HSG01</td>
+                                        <td>Demo</td>
+                                        <td>123 Phan Xích Long, P.24,Q.Bình Thạnh</td>
+                                        <td>0908455325</td>
+                                        <td>abc@gmail.com</td>
+                                        <td>24/02/2022</td>
+
+                                    </tr>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td style="width: 150px;">
+                                                @Html.DisplayFor(modelItem => item.MaDL)
+                                            </td>
+                                            <td>
+                                                @{var tenldk = database.LoaiDLs.Find(item.MaLoaiDL);
+                                                }
+                                                @Html.DisplayFor(modelItem => tenldk.TenDaiLy)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TenDL)
+                                            </td>
+                                            <td style="width:250px;">
+                                                @Html.DisplayFor(modelItem => item.DiaChi)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SDT)
+                                            </td>
+                                           
+                                            <td>
+                                                <a href="#EditTongcongno" class="btn btn-primary btn-sm edit">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //In dữ liệu
+    var myApp = new function () {
+        this.printTable = function () {
+            var tab = document.getElementById('sampleTable');
+            var win = window.open('', '', 'height=800px,width=1200px');
+            win.document.write(tab.outerHTML);
+            win.document.close();
+            win.print();
+        }
+    }
+</script>
+
+

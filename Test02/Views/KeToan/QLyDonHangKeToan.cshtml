@@ -9,23 +9,20 @@
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
 }
 
-
-
-
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-body">
 
                 @*<div class="row element-button">
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDH"><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
-                    </div>
+                        <div class="col-sm-2">
+                            <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDH"><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
+                        </div>
+                        <div class="col-sm-2">
+                            <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                        </div>
 
-                </div>*@
+                    </div>*@
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
 
@@ -50,8 +47,6 @@
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa điểm giao hàng</th>
 
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tổng tiền</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tổng tiền</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tổng tiền</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng thanh toán</th>
 
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
@@ -69,47 +64,44 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.MaNVLap)
-                                            @*</td>
-                                            
-                                                <td>
-                                                    @{var tensp = db.SanPhams.find(item.masp);
+                                            </td>
+                                            @*<td>
+                                                    @{var tensp = db.SanPhams.Find(item.MaSP);
                                                     }
-                                                    @html.displayfor(modelitem => tensp.tensp)
-                                                </td>
-                                           
-                                                <td>
-                                                    @{var madh = db.chitietdonhangs.find(item.madh);
+                                                    @Html.DisplayFor(modelItem => tensp.TenSP)
+                                                </td>*@
+                                            @*<td>
+                                                    @{var madh = db.ChiTietDonHangs.Find(item.MaDH);
                                                     }
-                                                    @{ var thanhtien = string.format("{0:0,0 vnđ}", madh.thanhtien);}
-                                                    @html.displayfor(modelitem => thanhtien)
-                                                </td>
-                                            <td>*@
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", madh.ThanhTien);}
+                                                    @Html.DisplayFor(modelItem => ThanhTien)
+                                                </td>*@
+                                            <td>
                                                 @Html.DisplayFor(modelItem => item.NgayLap)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.TrangThai)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                @{var diemgiao = db.ChiTietDonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+                                                }
+                                                @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
                                             </td>
                                             <td>
-                                                @{var madhS = db.ChiTietDonHangs
-                                                    .Where(s => s.MaDH == item.MaDH)
-                                                    .FirstOrDefault();
-                                                }
-                                                @*@{ var thanhtien = string.format("{0:0,0 vnđ}", madh.thanhtien);}
-                                                @html.displayfor(modelitem => thanhtien)*@
+                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                @Html.DisplayFor(modelItem => ThanhTien)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
                                             </td>
                                             <td>
-                                                <a href="/KeToan/Taohdbh/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                
+                                                <a href="/KeToan/TaoHD/@item.MaDH" class="btn btn-primary btn-sm edit">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                @*<a href="/KinhDoanh/XoaDH/@item.MaDH" class="btn btn-primary btn-sm trash">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>*@
+                                                
+
+
                                             </td>
                                         </tr>
                                     }
@@ -122,9 +114,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 
 
