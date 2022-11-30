@@ -1,9 +1,12 @@
-﻿
+﻿@using Test02.Models;
 @{
     ViewBag.Title = "TrangChu";
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.home = "active";
     ViewBag.nd = "Bảng điều khiển";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var dsdonhang = db.DonHangs.ToList();
+    var dsdl = db.DaiLies.ToList();
 }
 
 <div class="col-md-12">
@@ -14,44 +17,46 @@
                 <thead>
                     <tr>
                         <th>ID đơn hàng</th>
-                        <th>Tên khách hàng</th>
+                        <th>Mã đại lý</th>
+                        <th>Mã nhân viên lập</th>
+                        <th>Ngày lập </th>
+                        <th>Trạng thái đơn hàng</th>
+                        <th>Địa điểm giao hàng</th>
                         <th>Tổng tiền</th>
                         <th>Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>AL3947</td>
-                        <td>Phạm Thị Ngọc</td>
-                        <td>
-                            19.770.000 đ
-                        </td>
-                        <td><span class="badge bg-info">Chờ xử lý</span></td>
-                    </tr>
-                    <tr>
-                        <td>ER3835</td>
-                        <td>Nguyễn Thị Mỹ Yến</td>
-                        <td>
-                            16.770.000 đ
-                        </td>
-                        <td><span class="badge bg-warning">Đang vận chuyển</span></td>
-                    </tr>
-                    <tr>
-                        <td>MD0837</td>
-                        <td>Triệu Thanh Phú</td>
-                        <td>
-                            9.400.000 đ
-                        </td>
-                        <td><span class="badge bg-success">Đã hoàn thành</span></td>
-                    </tr>
-                    <tr>
-                        <td>MT9835</td>
-                        <td>Đặng Hoàng Phúc	</td>
-                        <td>
-                            40.650.000 đ
-                        </td>
-                        <td><span class="badge bg-danger">Đã hủy	</span></td>
-                    </tr>
+                    @foreach (var item in dsdonhang.OrderByDescending(s=>s.NgayLap))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaDH)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaDL)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaNVLap)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgayLap)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TrangThai)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiemGiao)
+                            </td>
+                            <td>
+                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                @Html.DisplayFor(modelItem => ThanhTien)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
@@ -62,42 +67,50 @@
 <!-- col-12 -->
 <div class="col-md-12">
     <div class="tile">
-        <h3 class="tile-title">Đại lý mới</h3>
+        <h3 class="tile-title">Danh sách đại lý mới</h3>
         <div>
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Tên khách hàng</th>
-                        <th>Ngày sinh</th>
+                        <th>Mã đại lý</th>
+                        <th>Loại đại lý</th>
+                        <th>Tên đại lý</th>
+                        <th>Địa chỉ</th>
                         <th>Số điện thoại</th>
+                        <th>Địa chỉ email</th>
+                        <th>Ngày tạo</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>#183</td>
-                        <td>Hột vịt muối</td>
-                        <td>21/7/1992</td>
-                        <td><span class="tag tag-success">0921387221</span></td>
-                    </tr>
-                    <tr>
-                        <td>#219</td>
-                        <td>Bánh tráng trộn</td>
-                        <td>30/4/1975</td>
-                        <td><span class="tag tag-warning">0912376352</span></td>
-                    </tr>
-                    <tr>
-                        <td>#627</td>
-                        <td>Cút rang bơ</td>
-                        <td>12/3/1999</td>
-                        <td><span class="tag tag-primary">01287326654</span></td>
-                    </tr>
-                    <tr>
-                        <td>#175</td>
-                        <td>Hủ tiếu nam vang</td>
-                        <td>4/12/20000</td>
-                        <td><span class="tag tag-danger">0912376763</span></td>
-                    </tr>
+                    @foreach (var item in dsdl.OrderByDescending(s => s.NgayTao))
+                    {
+                        <tr>
+                            <td style="width: 150px;">
+                                @Html.DisplayFor(modelItem => item.MaDL)
+                            </td>
+                            <td>
+                                @{var tenldk = db.LoaiDLs.Find(item.MaLoaiDL);
+                                }
+                                @Html.DisplayFor(modelItem => tenldk.TenDaiLy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenDL)
+                            </td>
+                            <td style="width:250px;">
+                                @Html.DisplayFor(modelItem => item.DiaChi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SDT)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgayTao)
+                            </td>
+                           
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
