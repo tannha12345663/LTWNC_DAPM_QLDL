@@ -83,9 +83,7 @@
                                                 @Html.DisplayFor(modelItem => item.TrangThai)
                                             </td>
                                             <td>
-                                                @{var diemgiao = db.ChiTietDonHangs.Where(s => s.MaDH == item.MaDH) .FirstOrDefault();
-                                                }
-                                                    @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
+                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
                                                 </td>
                                             <td>
                                                 @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}

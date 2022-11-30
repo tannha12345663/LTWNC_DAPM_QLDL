@@ -184,18 +184,17 @@ namespace Test02.Controllers
                 LuudhvaoDB();
 
                 //Thêm chi tiết đơn hàng
-
+                
                 chiTietDonHang.MaDH = (string)Session["tempdata"];
+                var dongia = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
                 if (chiTietDonHang.ChietKhau == null)
                 {
-                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia);
+                    chiTietDonHang.ThanhTien = (dongia.Gia) * (chiTietDonHang.SoLuong);
                 }
                 else
                 {
-
-                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia) * (chiTietDonHang.ChietKhau);
+                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia) * (chiTietDonHang.ChietKhau);
                 }
-                chiTietDonHang.DiemGiao = (string)Session["diemgiao"];
                 database.ChiTietDonHangs.Add(chiTietDonHang);
                 database.SaveChanges();
                 
@@ -276,14 +275,15 @@ namespace Test02.Controllers
         {
             if (ModelState.IsValid)
             {
+                var dongia = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
                 chiTietDonHang.MaCTDH = (int)Session["MaCTDH"];
                 if (chiTietDonHang.ChietKhau == null)
                 {
-                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia);
+                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia);
                 }
                 else
                 {
-                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia) * (chiTietDonHang.ChietKhau);
+                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia) * (chiTietDonHang.ChietKhau);
                 }
                 chiTietDonHang.MaDH = (string)Session["madh"];
                 database.Entry(chiTietDonHang).State = System.Data.Entity.EntityState.Modified;
@@ -313,17 +313,18 @@ namespace Test02.Controllers
             if (ModelState.IsValid)
             {
                 //Thêm chi tiết đơn hàng
+
                 chiTietDonHang.MaDH = (string)Session["mdh1"];
+                var dongia = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
                 if (chiTietDonHang.ChietKhau == null)
                 {
-                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia);
+                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia);
                 }
                 else
                 {
 
-                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (chiTietDonHang.DonGia) * (chiTietDonHang.ChietKhau);
+                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia) * (chiTietDonHang.ChietKhau);
                 }
-                chiTietDonHang.DiemGiao = (string)Session["diemgiao"];
                 database.ChiTietDonHangs.Add(chiTietDonHang);
                 database.SaveChanges();
                 return RedirectToAction("QuanLyDH");
@@ -449,6 +450,7 @@ namespace Test02.Controllers
             {
                 Random rd = new Random();
                 var themSP = "SP" + rd.Next(1, 100);
+                sanPham.TongTon = 0;
                 sanPham.MaSP = themSP;
                 database.SanPhams.Add(sanPham);
                 database.SaveChanges();

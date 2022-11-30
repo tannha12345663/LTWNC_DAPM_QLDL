@@ -18,7 +18,7 @@ namespace Test02.Models
         public string MaDH { get; set; }
         public string TenDVTiepNhan { get; set; }
         public Nullable<double> TongTien { get; set; }
-        public string GhiChu { get; set; }
+        public Nullable<System.DateTime> NgayLap { get; set; }
     
         public virtual DonHang DonHang { get; set; }
     }
