@@ -208,9 +208,14 @@ namespace Test02.Controllers
             return View(database.DaiLies.ToList().OrderByDescending(s => s.MaDL));
         }
 
-      
-
-
+        public ActionResult CongnoDL(String id)
+        {
+            return View(database.PhieuCongNoes.Where(s => s.MaDL == id).ToList().OrderByDescending(s => s.MaDL));
+        }
        
+
+
+
+
     }
 }
