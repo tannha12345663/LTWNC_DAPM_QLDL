@@ -28,6 +28,7 @@ namespace Test02.Models
         public Nullable<int> Gia { get; set; }
         public Nullable<System.DateTime> HanSD { get; set; }
         public Nullable<System.DateTime> NgaySX { get; set; }
+        public Nullable<int> TongTon { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BienBangKiemKe> BienBangKiemKes { get; set; }

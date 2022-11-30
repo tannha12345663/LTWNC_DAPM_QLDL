@@ -1,18 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "NhapKho";
+    ViewBag.Title = "QuanLyPhieuNhapXuat";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.nk = "active";
-    ViewBag.Name = "Nhập kho";
+    ViewBag.Name = "Quản lý phiếu nhập xuất";
 }
 
 <div class="row element-button">
-    <div class="col-sm-2">
-        <a class="btn btn-add btn-sm" href="TaoPhieuNhapKho" title="Thêm">
-            <i class="fas fa-plus"></i>
-            Tạo Phiếu nhập kho
-        </a>
-    </div>
 
     <div class="col-sm-2">
         <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
@@ -43,17 +37,16 @@
                     <thead>
                         <tr>
                             <th>Mã phiếu</th>
+                            <th>Loại phiếu</th>
                             <th>Ngày</th>
-                            <th>Giờ</th>
                             <th>Tính năng</th>
-
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>83826226</td>
+                            <td>Xuất</td>
                             <td>22/10/2022</td>
-                            <td>22:10</td>
                             <td class="table-td-center">
                                 <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
                                         onclick="myFunction(this)">
@@ -67,8 +60,8 @@
                         </tr>
                         <tr>
                             <td>83235413</td>
+                            <td>Nhập</td>
                             <td>22/11/2022</td>
-                            <td>16:10</td>
                             <td class="table-td-center">
                                 <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
                                         onclick="myFunction(this)">
@@ -82,8 +75,8 @@
                         </tr>
                         <tr>
                             <td>93847212</td>
+                            <td>Nhập</td>
                             <td>12/10/2021</td>
-                            <td>02:33</td>
                             <td class="table-td-center">
                                 <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
                                         onclick="myFunction(this)">
@@ -102,14 +95,27 @@
     </div>
 </div>
 
-<div class="d-md-block">
-    <div class="tile">
-        <h3 class="tile-title">DỮ LIỆU NHẬP KHO 6 THÁNG ĐẦU NĂM</h3>
-        <div class="embed-responsive embed-responsive-16by9">
-            <canvas class="embed-responsive-item" id="lineChartDemo" width="292" height="163" style="width: 234px; height: 131px;"></canvas>
+<div class="col-md-12 col-lg-12">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="tile">
+                <h3 class="tile-title">Dữ liệu nhập kho 6 tháng đầu vào</h3>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="tile">
+                <h3 class="tile-title">Biểu đồ xuất kho 6 tháng đầu vào</h3>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 @*<script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

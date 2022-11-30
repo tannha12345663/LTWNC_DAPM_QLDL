@@ -18,11 +18,8 @@ namespace Test02.Models
         public string MaDH { get; set; }
         public string MaSP { get; set; }
         public Nullable<int> SoLuong { get; set; }
-        public Nullable<int> DonGia { get; set; }
         public Nullable<double> ChietKhau { get; set; }
         public Nullable<double> ThanhTien { get; set; }
-        public string DiemGiao { get; set; }
-        public string DonViTinh { get; set; }
     
         public virtual DonHang DonHang { get; set; }
         public virtual SanPham SanPham { get; set; }

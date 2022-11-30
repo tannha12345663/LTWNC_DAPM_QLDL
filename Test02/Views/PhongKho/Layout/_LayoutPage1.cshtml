@@ -15,14 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-    @*<script>
-        $(document).ready(function () {
-            $("#show").click(function () {
-                $("aside").show();
-            });
-        });
-    </script>*@
-
+    
 </head>
 <body onload="time()" class="app sidebar-mini rtl">
     <!-- Navbar-->
@@ -67,18 +60,20 @@
                 </a>
             </li>
             <li>
+                <a class="app-menu__item @ViewBag.qlk" href="QuanLyKho">
+                    <i class='app-menu__icon bx bx-run'></i><span class="app-menu__label">
+                        Quản lý Kho
+                    </span>
+                </a>
+            </li>
+            <li>
                 <a class="app-menu__item @ViewBag.hh" href="QuanLyDL">
                     <i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý hàng hóa</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.nk" href="NhapKho">
-                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Nhập kho</span>
-                </a>
-            </li>
-            <li>
-                <a class="app-menu__item @ViewBag.xk" href="XuatKho">
-                    <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Xuất kho</span>
+                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý phiếu nhập/xuất</span>
                 </a>
             </li>
             <li>
@@ -90,7 +85,7 @@
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.bc" href="BaoCao">
-                    <i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Báo cáo kho hàng</span>
+                    <i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Kiểm kê / báo cáo</span>
                 </a>
             </li>
         </ul>

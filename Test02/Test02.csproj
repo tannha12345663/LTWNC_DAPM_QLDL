@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ChiTietDonHangsController.cs" />
+    <Compile Include="Controllers\ChiTietKhoesController.cs" />
     <Compile Include="Controllers\DonHangsController.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -531,6 +532,24 @@
     <Content Include="Views\KinhDoanh\DanhSachCTDH.cshtml" />
     <Content Include="Views\KinhDoanh\ThemCTHD1.cshtml" />
     <Content Include="Views\KinhDoanh\XoaCTDH.cshtml" />
+    <Content Include="Views\Khoes\Create.cshtml" />
+    <Content Include="Views\Khoes\Delete.cshtml" />
+    <Content Include="Views\Khoes\Details.cshtml" />
+    <Content Include="Views\Khoes\Edit.cshtml" />
+    <Content Include="Views\Khoes\Index.cshtml" />
+    <Content Include="Views\PhongKho\QuanLyKho.cshtml" />
+    <Content Include="Views\PhongKho\Themkho.cshtml" />
+    <Content Include="Views\PhongKho\ChinhSuaKho.cshtml" />
+    <Content Include="Views\PhongKho\XoaKho.cshtml" />
+    <Content Include="Views\PhongKho\ChiTietKho.cshtml" />
+    <Content Include="Views\ChiTietKhoes\Create.cshtml" />
+    <Content Include="Views\ChiTietKhoes\Delete.cshtml" />
+    <Content Include="Views\ChiTietKhoes\Details.cshtml" />
+    <Content Include="Views\ChiTietKhoes\Edit.cshtml" />
+    <Content Include="Views\ChiTietKhoes\Index.cshtml" />
+    <Content Include="Views\PhongKho\CreateCTKho.cshtml" />
+    <Content Include="Views\PhongKho\EditCTKho.cshtml" />
+    <Content Include="Views\PhongKho\DeleteCTKho.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
