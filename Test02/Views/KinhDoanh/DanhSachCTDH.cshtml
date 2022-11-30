@@ -65,17 +65,19 @@
                                                 @Html.DisplayFor(modelItem => item.SoLuong)
                                             </td>
                                             <td>
-                                                @{ var chuyendoi = string.Format("{0:0,0 vnđ}", item.DonGia);}
+                                                @{ var dongia = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
+                                                @{ var chuyendoi = string.Format("{0:0,0 vnđ}", dongia.Gia);}
                                                 @Html.DisplayFor(modelItem => chuyendoi)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.DonViTinh)
+                                                @Html.DisplayFor(modelItem => dongia.DonViTinh)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ChietKhau)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                @{var diemgiao = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault(); }
+                                                @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
                                             </td>
                                             <td>
                                                 @{ total += Convert.ToInt32(item.ThanhTien);}
