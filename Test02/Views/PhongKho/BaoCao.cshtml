@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Test02.Models.BienBangKiemKe>
 @{
     ViewBag.Title = "BaoCao";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
@@ -67,46 +67,22 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
-            <div>
-                <h3 class="tile-title">SẢN PHẨM BÁN CHẠY</h3>
-            </div>
             <div class="tile-body">
-                <table class="table table-hover table-bordered" id="sampleTable">
-                    <thead>
-                        <tr>
-                            <th>Mã sản phẩm</th>
-                            <th>Tên sản phẩm</th>
-                            <th>Giá tiền</th>
-                            <th>Đơn vị tính</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>71309005</td>
-                            <td>Coca Cola</td>
-                            <td>12.000 đ</td>
-                            <td>Lon</td>
-                        </tr>
-                        <tr>
-                            <td>71309005</td>
-                            <td>Coca Cola</td>
-                            <td>17.000 đ</td>
-                            <td>Chai</td>
-                        </tr>
-                        <tr>
-                            <td>71309005</td>
-                            <td>Pepsi</td>
-                            <td>15.000 đ</td>
-                            <td>Lon</td>
-                        </tr>
-                        <tr>
-                            <td>71309005</td>
-                            <td>Cê 2</td>
-                            <td>12.000 đ</td>
-                            <td>Chai</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="row element-button">
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/PhongKho/CreateBBKK">
+                            <i class="fas fa-file-upload"></i> Tạo biên bản kiểm kê
+                        </a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+                            <i class="fas fa-print"></i> In dữ liệu
+                        </a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLySP"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -115,35 +91,63 @@
     <div class="col-md-12">
         <div class="tile">
             <div>
-                <h3 class="tile-title">SẢN PHẨM ĐÃ HẾT</h3>
+                <h3 class="tile-title">DANH SÁCH BIÊN BẢNG KIỂM KÊ</h3>
             </div>
             <div class="tile-body">
                 <table class="table table-hover table-bordered" id="sampleTable">
                     <thead>
                         <tr>
-                            <th>Mã sản phẩm</th>
-                            <th>Tên sản phẩm</th>
-                            <th>Giá tiền</th>
-                            <th>Đơn vị tính</th>
-                            <th>Tình trạng</th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaKK)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TenNV)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TenBienBang)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NgayLap)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NhanVien.MaChucVu)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SanPham.TenSP)
+                            </th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach (var item in Model)
+                        {
                         <tr>
-                            <td>83826226</td>
-                            <td>Spite chanh muối</td>
-                            <td>23.000 đ</td>
-                            <td>Chai</td>
-                            <td><span class="badge bg-danger">Hết hàng</span></td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaKK)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenNV)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenBienBang)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgayLap)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NhanVien.MaChucVu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Details", "DetailsBB", new { id = item.MaKK }) |
+                                @Html.ActionLink("Delete", "DeleteBBKK", new { id = item.MaKK })
+                            </td>
                         </tr>
-                        <tr>
-                            <td>SU679236</td>
-                            <td>7 Up</td>
-                            <td>21.000 đ</td>
-                            <td>Chai</td>
-                            <td><span class="badge bg-danger">Hết hàng</span></td>
-                        </tr>
+                        }
                     </tbody>
+                    
                 </table>
             </div>
         </div>

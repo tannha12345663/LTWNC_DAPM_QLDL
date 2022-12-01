@@ -1,9 +1,13 @@
 ﻿
+@using Test02.Models
 @{
     ViewBag.Title = "GiaiQuyetTonKho";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.tk = "active";
-    ViewBag.Name = "Giải quyết tồn kho";
+    ViewBag.Name = "Giải phóng hàng tồn kho";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var dsCTKho = db.ChiTietKhoes.ToList();
+    List<string> distint = new List<string>();
 }
 
 <div class="tile">
@@ -12,8 +16,6 @@
         <form style="text-align:center">
             <label for="date">Ngày:</label>
             <input type="date" id="clock" class="date" name="ngay"><br>
-            <label for="number">Mã số:</label>
-            <input type="number" id="number" name="maso"> <br>
         </form>
         <form class="row">
             <div class="form-group col-md-12">
@@ -21,8 +23,26 @@
                 <input class="form-control" type="text">
             </div>
             <div class="form-group col-md-12">
-                <label class="control-label">Xuất tại kho: </label>
-                <input class="form-control" type="text" required>
+                <label class="control-label">Xuất tại các kho: </label> <br />
+                @for (int i = 0; i < dsCTKho.Count; i++)
+                {
+                    if (dsCTKho[i].TinhTrang == "Tồn kho")
+                    {
+                        distint.Add(dsCTKho[i].MaKho);
+                        distint = distint.Distinct().ToList();
+                    }
+                }
+                @for (int i = 0; i < dsCTKho.Count; i++)
+                {
+                    for (int j = 0; j >= 0 && j < distint.Count; j++)
+                    {
+                        if (distint[j].Equals(dsCTKho[i].MaKho))
+                        {
+                            <span>@dsCTKho[i].MaKho - @dsCTKho[i].Kho.TenKho </span> <br />
+                            distint.RemoveAt(j);
+                        }
+                    }
+                }
             </div>
             <div class="form-group col-md-12">
                 <label class="control-label">Họ tên người làm phiếu:</label>
@@ -33,86 +53,44 @@
                 <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
                     <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Mã sản phẩm</th>
-                            <th>Tên sản phẩm</th>
-                            <th>Đơn vị tính</th>
-                            <th>Số lượng</th>
-                            <th>Ngày sản xuất</th>
-                            <th>Hạn sử dụng</th>
+                            <th style="text-align:center;">Mã Kho</th>
+                            <th style="text-align:center;">Mã sản phẩm</th>
+                            <th style="text-align:center;">Tên sản phẩm</th>
+                            <th style="text-align:center;">Giá tiền</th>
+                            <th style="text-align:center;">Số lượng tồn</th>
+                            <th style="text-align:center;">Đơn vị tính</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach (var item in dsCTKho)
+                        {
+                            if (item.TinhTrang == "Tồn kho")
+                            {
                         <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaKho)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaSP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SanPham.Gia)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SoLuong)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SanPham.DonViTinh)
+                            </td>
+                            
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                        </tr>
+
+                            }
+                        }
                     </tbody>
                 </table>
             </div>

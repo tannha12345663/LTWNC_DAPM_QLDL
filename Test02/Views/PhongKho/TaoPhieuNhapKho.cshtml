@@ -1,133 +1,146 @@
-﻿@model Test02.Models.SanPham
+﻿@model Test02.Models.ChiTietKho
+@using Test02.Models
 @{
     ViewBag.Title = "TaoPhieuNhapKho";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
-    ViewBag.nk = "active";
+    ViewBag.hh = "active";
     ViewBag.Name = "Tạo phiếu đề nghị nhập kho";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var dsSP = db.SanPhams.ToList();
+    var dsCTKho = db.ChiTietKhoes.ToList();
+    List<string> distint = new List<string>();
 }
 
 <div class="row">
     <div class="col-md-12">
-        <div class="tile">
-            <h2 style="text-align:center">PHIẾU ĐỀ NGHỊ NHẬP KHO</h2>
-            <form style="text-align:center">
+        <div class="tile" >
+            <h2 style="text-align:center" id="sample1">PHIẾU ĐỀ NGHỊ NHẬP KHO</h2>
+            <form id="sample2" style="text-align:center">
                 <label for="date">Ngày:</label>
                 <input type="date" id="clock" class="date" name="ngay"><br>
                 <br>
             </form>
             <div class="tile-body">
-                <form class="row">
-                    <div class="form-group col-md-12">
-                        <label class="control-label">Kính gửi: </label>
-                        <input class="form-control" type="text">
+                <form class="row" >
+                    <div class="form-group col-md-12" id="sample3">
+                        <label class="control-label">- Kính gửi: </label>
+                        <input class="form-control" type="text" id="sample31">
                     </div>
-                    <div class="form-group col-md-12">
-                        <label class="control-label">Nhập vào kho: </label>
+                    <div class="form-group col-md-12" id="sample4">
+                        <label class="control-label">- Nhập vào các kho: </label> <br />
+                        @for (int i = 0; i < dsCTKho.Count; i++)
+                        {
+                            if (dsCTKho[i].TinhTrang == "Sắp hết hàng")
+                            {
+                                distint.Add(dsCTKho[i].MaKho);
+                                distint = distint.Distinct().ToList();
+                            }
+                        }
+                        @for (int i = 0; i < dsCTKho.Count; i++)
+                        {
+                            for (int j = 0; j >= 0 && j < distint.Count; j++)
+                            {
+                                if (distint[j].Equals(dsCTKho[i].MaKho))
+                                {
+                                    <span>@dsCTKho[i].MaKho - @dsCTKho[i].Kho.TenKho </span> <br />
+                                    distint.RemoveAt(j);
+                                }
+                            }
+                        }
+                    </div>
+                    <div class="form-group col-md-12" id="sample5">
+                        <label class="control-label">- Họ tên người làm phiếu:</label>
                         <input class="form-control" type="text" required>
                     </div>
-                    <div class="form-group col-md-12">
-                        <label class="control-label">Họ tên người làm phiếu:</label>
-                        <input class="form-control" type="text" required>
-                    </div>
-                    <div class="form-group col-md-12" style="text-align:center;">
-                        <label class="control-label">Sản phẩm cần nhập kho: </label>
+                    <div class="form-group col-md-12" id="sample6">
+                        <label class="control-label">- Sản phẩm cần nhập kho: </label>
                         <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
                             <thead>
                                 <tr>
-                                    <th>STT</th>
-                                    <th>Mã sản phẩm</th>
-                                    <th>Đơn vị tính</th>
+                                    <th style="text-align:center;">Mã Kho</th>
+                                    <th style="text-align:center;">Mã sản phẩm</th>
+                                    <th style="text-align:center;">Tên sản phẩm</th>
+                                    <th style="text-align:center;">Giá tiền</th>
+                                    <th style="text-align:center;">Số lượng còn lại</th>
+                                    <th style="text-align:center;">Đơn vị tính</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
-                                    </td>
-                                    <td>
-                                        <select class="form-control" id="DonViTinh" name="DonViTinh">
-                                            <option value="Lốc">Lốc </option>
-                                            <option value="Thùng">Thùng</option>
-                                            <option value="Lon">Lon</option>
-                                            <option value="Chai">Chai</option>
-                                        </select>
-                                        @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>
-                                        @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
-                                    </td>
-                                    <td>
-                                        <select class="form-control" id="DonViTinh" name="DonViTinh">
-                                            <option value="Lốc">Lốc </option>
-                                            <option value="Thùng">Thùng</option>
-                                            <option value="Lon">Lon</option>
-                                            <option value="Chai">Chai</option>
-                                        </select>
-                                        @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>
-                                        @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
-                                    </td>
-                                    <td>
-                                        <select class="form-control" id="DonViTinh" name="DonViTinh">
-                                            <option value="Lốc">Lốc </option>
-                                            <option value="Thùng">Thùng</option>
-                                            <option value="Lon">Lon</option>
-                                            <option value="Chai">Chai</option>
-                                        </select>
-                                        @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <
-                                    <td>4</td>
-                                    <td>
-                                        @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
-                                    </td>
-                                    <td>
-                                        <select class="form-control" id="DonViTinh" name="DonViTinh">
-                                            <option value="Lốc">Lốc </option>
-                                            <option value="Thùng">Thùng</option>
-                                            <option value="Lon">Lon</option>
-                                            <option value="Chai">Chai</option>
-                                        </select>
-                                        @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>
-                                        @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
-                                    </td>
-                                    <td>
-                                        <select class="form-control" id="DonViTinh" name="DonViTinh">
-                                            <option value="Lốc">Lốc </option>
-                                            <option value="Thùng">Thùng</option>
-                                            <option value="Lon">Lon</option>
-                                            <option value="Chai">Chai</option>
-                                        </select>
-                                        @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
-                                    </td>
-                                </tr>
+                                @foreach (var item in dsCTKho)
+                                {
+                                    if (item.TinhTrang == "Sắp hết hàng")
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaKho)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SanPham.Gia)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SoLuong)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SanPham.DonViTinh)
+                                            </td>
+                                        </tr>
+
+                                    }
+                                }
                             </tbody>
                         </table>
                     </div>
                 </form>
                 <button class="btn btn-save" type="button">Lưu và gửi</button>
                 <a class="btn btn-cancel" href="QuanLyDL">Hủy bỏ</a>
+                <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+                    <i class="fas fa-print"></i> In dữ liệu
+                </a>
             </div>
         </div>
     </div>
 </div>
+<script>
+    //In dữ liệu
+    var myApp = new function () {
+        this.printTable = function () {
+            var tab1 = document.getElementById('sample1');
+            var tab2 = document.getElementById('sample2');
+            var tab3 = document.getElementById('sample3');
+            var tab4 = document.getElementById('sample4');
+            var tab5 = document.getElementById('sample5');
+            var tab6 = document.getElementById('sample6');
+            var tab7 = document.getElementById('sample7');
+            var win = window.open('', '', 'height=700,width=700');
+            win.document.write(tab1.outerHTML);
+            win.document.write(tab2.outerHTML);
+            win.document.write(tab3.innerText);
+            win.document.write(tab4.outerHTML);
+            win.document.write(tab5.outerHTML);
+            win.document.write(tab6.outerHTML);
+            win.document.write(tab7.outerHTML);
+            win.document.close();
+            win.print();
+        }
+    }
+</script>
+<!-- Essential javascripts for application to work-->
+<script src="~/Content/js/jquery-3.2.1.min.js"></script>
+<script src="~/Content/js/popper.min.js"></script>
+<script src="~/Content/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="src/jquery.table2excel.js"></script>
+<script src="~/Content/js/main.js"></script>
+<!-- The javascript plugin to display page loading on top-->
+<script src="~/Content/js/plugins/pace.min.js"></script>
+<!-- Page specific javascripts-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<!-- Data table plugin-->
+<script type="text/javascript" src="~/Content/js/plugins/jquery.dataTables.min.js"></script>
