@@ -260,15 +260,17 @@ namespace Test02.Controllers
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "MaSP");
             return View();
         }
+        //-----------------------------------------------------------------------
         public ActionResult NhapKho()
         {
-            return View();
+            return View(database.PhieuNhapXuats.ToList().OrderByDescending(s=> s.NgayLap));
         }
         //----------------------------------------------------------------------
         // GET: PhieuNhapXuats/Create
-        public ActionResult CreatePhieuNhapXuat()
+        public ActionResult TaoPhieuNhapKho()
         {
-            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
+            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "MaKho");
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "MaSP");
             return View();
         }
 
@@ -277,24 +279,70 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePhieuNhapXuat([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu")] PhieuNhapXuat phieuNhapXuat)
+        public ActionResult TaoPhieuNhapKho([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu")] PhieuNhapXuat phieuNhapXuat)
         {
             if (ModelState.IsValid)
             {
+                Random rd = new Random();
+                var maphieu = "PN" + rd.Next(1, 1000);
+                phieuNhapXuat.MaPhieu = maphieu;
+                Session["phieunhap"] = maphieu;
+                phieuNhapXuat.NgayLap = System.DateTime.Now;
+                phieuNhapXuat.LoaiPhieu = "Phiếu nhập";
+                Session["KinhGui"] = " ";
+                Session["HoTen"] = " ";
                 database.PhieuNhapXuats.Add(phieuNhapXuat);
                 database.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("QuanLyDL");
             }
 
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", phieuNhapXuat.MaKho);
             return View(phieuNhapXuat);
         }
-        public ActionResult TaoPhieuNhapKho()
+
+        // GET: PhieuNhapXuats/Details/5
+        public ActionResult ChiTietPhieuNhapKho(string id)
         {
-            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "MaKho");
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "MaSP");
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TempData["maPhieuNhap"] = id;
+            Session["KinhGui"] = "Trưởng phòng kinh doanh";
+            Session["HoTen"] = "Nguyễn Thị Diễm Khang";
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            if (phieuNhapXuat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phieuNhapXuat);
         }
+        // GET: PhieuNhapXuats/Delete/5
+        public ActionResult XoaPhieuNhapKho(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            if (phieuNhapXuat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phieuNhapXuat);
+        }
+
+        // POST: PhieuNhapXuats/Delete/5
+        [HttpPost, ActionName("XoaPhieuNhapKho")]
+        [ValidateAntiForgeryToken]
+        public ActionResult XoaPhieuNhapKhoConfirmed(string id)
+        {
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            database.PhieuNhapXuats.Remove(phieuNhapXuat);
+            database.SaveChanges();
+            return RedirectToAction("NhapKho");
+        }
+        //-------------------------------------Hết phần Phiếu Nhập----------------------
         public ActionResult XuatKho()
         {
             return View();
@@ -303,16 +351,89 @@ namespace Test02.Controllers
         {
             return View();
         }
+        //-----------------------------Bắt đầu phiếu xuất - tồn kho------------------------------------
         public ActionResult TonKho()
         {
             return View();
         }
+        
+        // GET: PhieuNhapXuats/Create
         public ActionResult GiaiQuyetTonKho()
         {
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "MaKho");
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "MaSP");
             return View();
         }
+        
+        // POST: PhieuNhapXuats/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GiaiQuyetTonKho([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu")] PhieuNhapXuat phieuNhapXuat)
+        {
+            if (ModelState.IsValid)
+            {
+                Random rd = new Random();
+                var maphieux = "PX" + rd.Next(1, 1000);
+                phieuNhapXuat.MaPhieu = maphieux;
+                Session["phieuXuat"] = maphieux;
+                phieuNhapXuat.NgayLap = System.DateTime.Now;
+                phieuNhapXuat.LoaiPhieu = "Phiếu xuất";
+                Session["KinhGui"] = " ";
+                Session["HoTen"] = " ";
+                database.PhieuNhapXuats.Add(phieuNhapXuat);
+                database.SaveChanges();
+                return RedirectToAction("TonKho");
+            }
+
+            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", phieuNhapXuat.MaKho);
+            return View(phieuNhapXuat);
+        }
+
+        // GET: PhieuNhapXuats/Details/5
+        public ActionResult ChiTietPhieuXuatKho(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TempData["maPhieuXuat"] = id;
+            Session["KinhGui"] = "Trưởng phòng kinh doanh";
+            Session["HoTen"] = "Nguyễn Thị Diễm Khang";
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            if (phieuNhapXuat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phieuNhapXuat);
+        }
+        // GET: PhieuNhapXuats/Delete/5
+        public ActionResult XoaPhieuXuatKho(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            if (phieuNhapXuat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phieuNhapXuat);
+        }
+
+        // POST: PhieuNhapXuats/Delete/5
+        [HttpPost, ActionName("XoaPhieuXuatKho")]
+        [ValidateAntiForgeryToken]
+        public ActionResult XoaPhieuXuatKhoConfirmed(string id)
+        {
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            database.PhieuNhapXuats.Remove(phieuNhapXuat);
+            database.SaveChanges();
+            return RedirectToAction("NhapKho");
+        }
+        //------------------------------------------Hết phần tồn kho - phiếu xuất---------------------------
         public ActionResult BaoCao()
         {
             //var bienBangKiemKes = database.BienBangKiemKes.Include(b => b.NhanVien).Include(b => b.SanPham);

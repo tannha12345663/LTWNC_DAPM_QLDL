@@ -575,6 +575,11 @@
     <Content Include="Views\PhieuNhapXuats\Details.cshtml" />
     <Content Include="Views\PhieuNhapXuats\Edit.cshtml" />
     <Content Include="Views\PhieuNhapXuats\Index.cshtml" />
+    <Content Include="Views\PhongKho\CreatePhieuNhapXuat.cshtml" />
+    <Content Include="Views\PhongKho\ChiTietPhieuNhapKho.cshtml" />
+    <Content Include="Views\PhongKho\XoaPhieuNhapKho.cshtml" />
+    <Content Include="Views\PhongKho\ChiTietPhieuXuatKho.cshtml" />
+    <Content Include="Views\PhongKho\XoaPhieuXuatKho.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
