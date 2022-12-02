@@ -37,6 +37,8 @@
         <AssociationConnector Association="QuanLyDLModel.FK_DanhSachGiaoHang_DonHang" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_DonHang_NhanVien" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_HoaDon_DonHang" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QuanLyDLModel.PhieuNhapXuat" Width="1.5" PointX="7.5" PointY="19" />
+        <AssociationConnector Association="QuanLyDLModel.FK_PhieuNhapXuat_Kho" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -181,10 +181,9 @@ namespace Test02.Controllers
             if (ModelState.IsValid)
             {
                 //Thêm thông tin đơn hàng sau khi đã điền chi tiết đơn hàng
-                LuudhvaoDB();
 
+                LuudhvaoDB();
                 //Thêm chi tiết đơn hàng
-                
                 chiTietDonHang.MaDH = (string)Session["tempdata"];
                 var dongia = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
                 if (chiTietDonHang.ChietKhau == null)
@@ -195,6 +194,7 @@ namespace Test02.Controllers
                 {
                     chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia) * (chiTietDonHang.ChietKhau);
                 }
+                
                 database.ChiTietDonHangs.Add(chiTietDonHang);
                 database.SaveChanges();
                 
@@ -208,6 +208,7 @@ namespace Test02.Controllers
         public void LuudhvaoDB()
         {
             DonHang donHang = new DonHang();
+            
             DataTable dh = Session["DonHang"] as DataTable;
             foreach (DataRow dr in dh.Rows)
             {
@@ -219,7 +220,6 @@ namespace Test02.Controllers
                 donHang.TrangThai = dr["TrangThai"].ToString();
                 donHang.TinhTrangThanhToan = dr["TinhTrangThanhToan"].ToString();
                 donHang.DiemGiao = dr["DiemGiao"].ToString();
-                
             }
             database.DonHangs.Add(donHang);
             database.SaveChanges();
@@ -322,7 +322,6 @@ namespace Test02.Controllers
                 }
                 else
                 {
-
                     chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia) * (chiTietDonHang.ChietKhau);
                 }
                 database.ChiTietDonHangs.Add(chiTietDonHang);
@@ -535,10 +534,17 @@ namespace Test02.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult BaoCao(BaoCao baocao)
         {
             if (ModelState.IsValid)
             {
+
+                Random rd = new Random();
+                var mabc = "BC" + rd.Next(1, 1000);
+                baocao.MaBC = mabc;
+                var manv = (Test02.Models.NhanVien)Session["user"];
+                baocao.MaNV = manv.MaNV;
                 database.BaoCaos.Add(baocao);
                 database.SaveChanges();
                 return RedirectToAction("TrangChu");
