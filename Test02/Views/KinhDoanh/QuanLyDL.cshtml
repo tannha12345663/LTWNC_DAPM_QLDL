@@ -19,7 +19,7 @@
                         <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDL"><i class="fas fa-file-upload"></i> Thêm mới hồ sơ</a>
                     </div>
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file"  title="In" onclick="myApp.printTable()">
+                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
@@ -30,8 +30,6 @@
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
-                       
-                        
                         <div class="col-md-1">
                             <div id="sampleTable_filter" class="dataTables_filter">
                                 <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
@@ -51,7 +49,7 @@
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 101px;">Số điện thoại</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa chỉ email</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Ngày tiếp nhận</th>
-                                        <th width="100" class="sorting" tabindex="0"  rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                        <th width="100" class="sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -100,16 +98,17 @@
                                                 </a>
                                             </td>
                                         </tr>
+
                                     }
                                 </tbody>
                             </table>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-    </div>
 <script>
     //In dữ liệu
     var myApp = new function () {

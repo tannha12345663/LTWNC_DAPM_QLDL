@@ -27,8 +27,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in dsdonhang.OrderByDescending(s=>s.NgayLap))
+                    @{ var count = 0;}
+                    @foreach (var item in dsdonhang.OrderByDescending(s => s.NgayLap))
                     {
+                        count += 1;
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.MaDH)
@@ -56,6 +58,10 @@
                                 @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
                             </td>
                         </tr>
+                        if (count > 5)
+                        {
+                            break;
+                        }
                     }
                 </tbody>
             </table>
@@ -108,7 +114,7 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.NgayTao)
                             </td>
-                           
+
                         </tr>
                     }
                 </tbody>
