@@ -27,9 +27,9 @@
         <div class="col-md-10">
             <select class="form-control" id="TinhTrangThanhToan" name="TinhTrangThanhToan">
                 <option selected="@Model.TinhTrangThanhToan">@Model.TinhTrangThanhToan</option>
-                <option>Chưa thanh toán</option>
+                
                 <option>Đã thanh toán</option>
-                <option>Delayed</option>
+               
             </select>
             @Html.ValidationMessageFor(model => model.TinhTrangThanhToan, "", new { @class = "text-danger" })
         </div>

@@ -89,9 +89,11 @@ namespace Test02.Controllers
 
         [HttpPost]
 
-        public ActionResult ChinhsuaHD(DonHang ct)
+        public ActionResult ChinhsuaHD(DonHang ct,String id)
         {
+           
             database.Entry(ct).State = System.Data.Entity.EntityState.Modified;
+            
             database.SaveChanges();
             return RedirectToAction("QLHoaDon");
         }
@@ -115,16 +117,16 @@ namespace Test02.Controllers
 
         public ActionResult TaoCongno(String id)
         {
-            return View(database.DaiLies.Where(s => s.MaDL == id).FirstOrDefault());
+            return View(database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault());
         }
 
         [HttpPost]
-        public ActionResult TaoCongno(DaiLy dl,String id,PhieuCongNo phieuCongNo,DonHang dh)
+        public ActionResult TaoCongno(String id,PhieuCongNo phieuCongNo,DonHang dh)
         {
             
             try
             {
-                dl = database.DaiLies.Where(s => s.MaDL == id).FirstOrDefault();
+                var dl=database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault();
                 List<DonHang> listdh = database.DonHangs.ToList();
                 double count = 0;
                for(int i=0;i<listdh.Count;i++)
@@ -210,7 +212,21 @@ namespace Test02.Controllers
 
         public ActionResult CongnoDL(String id)
         {
-            return View(database.DonHangs.Where(s => s.MaDL == id).ToList());
+            List<DonHang> listdh = database.DonHangs.Where(s => s.MaDL == id).ToList();
+            List<DonHang> dh = new List<DonHang>();
+
+            for(int i=0;i<listdh.Count;i++)
+            {
+                if(listdh[i].TinhTrangThanhToan=="Chưa thanh toán")
+                {
+                    dh.Add(listdh[i]);
+                }    
+            }    
+
+
+
+
+            return View(dh);
         }
        
 

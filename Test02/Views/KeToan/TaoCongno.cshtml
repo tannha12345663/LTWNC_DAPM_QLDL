@@ -1,4 +1,4 @@
-﻿@model Test02.Models.DaiLy
+﻿@model Test02.Models.DonHang
 
 @{
     ViewBag.Title = "TaoCongno";
@@ -23,20 +23,21 @@
                 @*<p><strong>Mã đại lý:</strong> @Html.DisplayFor(model => model.MaDL)</p>*@
 
                 @*@{
-                    var tendl = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
-                }*@
-                 <p><strong>Tên đại lý:</strong> @Html.DisplayFor(model => model.TenDL)</p>
+            var tendl = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
+        }*@
+                <p><strong>Tên đại lý:</strong> @Html.DisplayFor(model => model.MaDL)</p>
+
+
                
 
-                @{ var tongien = string.Format("{0:0,0 vnđ}", Model.TongNo);}
-                <p> <strong>Thành tiền: </strong>@Html.DisplayFor(model => tongien)</p>
+                
 
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Thêm phiếu" class="btn btn-default" />
-                            </div>
-                        </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Thêm phiếu" class="btn btn-default" />
                     </div>
+                </div>
+            </div>
                 }
 
                 <div>

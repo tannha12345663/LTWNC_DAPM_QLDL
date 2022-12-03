@@ -59,59 +59,60 @@
 
                                     @foreach (var item in Model)
                                     {
-                                        if (item.TinhTrangThanhToan == "Chưa thanh toán")
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.MaDH)
-                                                </td>
-                                                <td>
-                                                    @{var hd = db.HoaDons.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
-                                                    @Html.DisplayFor(modelItem => hd.MaHD)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => hd.TenDVTiepNhan)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => hd.NgayLap)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
-                                                </td>
 
-                                                <td>
-                                                    @{
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaDH)
+                                            </td>
+                                            <td>
+                                                @{var hd = db.HoaDons.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
+                                                @Html.DisplayFor(modelItem => hd.MaHD)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => hd.TenDVTiepNhan)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => hd.NgayLap)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DiemGiao)
+                                            </td>
 
-                                                        total += Convert.ToInt32(item.TongTien);
-                                                        var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
-                                                    @Html.DisplayFor(modelItem => ThanhTien)
+                                            <td>
+                                                @{
 
-                                                </td>
-                                            </tr>
-                                        }
+                                                    total += Convert.ToInt32(item.TongTien);
+                                                    var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                @Html.DisplayFor(modelItem => ThanhTien)
+
+                                            </td>
+                                        </tr>
 
 
                                     }
-                                    <tr>
-                                        <th colspan="5">Tổng cộng hóa đơn :</th>
-                                        @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
-                                        <td>@Html.DisplayFor(modelItem => TongCong)</td>
-                                    </tr>
+
                                 </tbody>
+                                <tr>
+                                    <th colspan="5">Tổng cộng hóa đơn :</th>
+                                    @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                    <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                </tr>
                             </table>
+
+                            
+                            <div class="row element-button">
+                                <div class="col-sm-2">
+                                    <a class="btn btn-cancel" type="button" title="Back" href="~/KeToan/DSDaiLy"><i class="fas fa-step-backward"></i> Quay lại</a>
+                                </div>
+                                @*<div class="col-sm-2">
+                                    <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/TaoCongno/@item.MaDH "><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
+                                </div>*@
+                            </div>
                         </div>
                     </div>
-                    @foreach (var i in Model)
-                    {
-                        <div class="row element-button">
-                            <div class="col-sm-2">
-                                <a class="btn btn-cancel" type="button" title="Back" href="~/KeToan/DSDaiLy"><i class="fas fa-step-backward"></i> Quay lại</a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/TaoCongno/@i.MaDL "><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
-                            </div>
-                        </div>
-                    }
+                   
+                       
+                    
 
 
                 </div>
