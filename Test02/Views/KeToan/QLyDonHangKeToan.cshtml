@@ -6,26 +6,37 @@
     ViewBag.qldonhangkt = "active";
     ViewBag.nd = "Danh sách đơn hàng";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
+    var hd = db.HoaDons.ToList();
 }
+
+
 
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-body">
 
-                @*<div class="row element-button">
-                        <div class="col-sm-2">
-                            <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDH"><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
-                        </div>
-                        <div class="col-sm-2">
-                            <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
-                        </div>
-
-                    </div>*@
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
+                        @*<div class="MyModalSuccess" class="modal fade fa-text-width:30%" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <h2>thông báo</h2>
+                                    <div id="mymodalsuccessAlerbody" class="modal-body alert-danger">
+                                        ha
+                                    </div>
+                                    <div class="modal-footer">
+                                        &nbsp;
+                                        <button type="button" class="btn btn-close" data-dismiss="modal">
+                                            Close
+                                        </button>
 
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>*@
 
                         <div class="col-md-1">
                             <div id="sampleTable_filter" class="dataTables_filter">
@@ -39,7 +50,7 @@
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
-                                        <th></th>
+
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Mã nhân viên lập</th>
@@ -56,58 +67,62 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td width="10">
-                                        <input type="checkbox" id="all">
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaDH)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaDL)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaNVLap)
-                                        </td>
-                                        @*<td>
-            @{var tensp = db.SanPhams.Find(item.MaSP);
-            }
-            @Html.DisplayFor(modelItem => tensp.TenSP)
-        </td>*@
-                                        @*<td>
-            @{var madh = db.ChiTietDonHangs.Find(item.MaDH);
-            }
-            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", madh.ThanhTien);}
-            @Html.DisplayFor(modelItem => ThanhTien)
-        </td>*@
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NgayLap)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TrangThai)
-                                        </td>
-                                        <td>
-                                            @{var diemgiao = db.ChiTietDonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
-                                            }
-                                            @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
-                                        </td>
-                                        <td>
-                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
-                                            @Html.DisplayFor(modelItem => ThanhTien)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
-                                        </td>
-                                        <td>
+                                       
+                                        if (item.TrangThai == "Đã xét duyệt" )
+                                        {
+                                            <tr>
 
-                                            <a href="/KeToan/TaoHD/@item.MaDH" class="btn btn-primary btn-sm edit">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaDH)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaDL)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaNVLap)
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.NgayLap)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TrangThai)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                </td>
+                                                <td>
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                    @Html.DisplayFor(modelItem => ThanhTien)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                </td>
+                                                <td>
+                                                    @*@foreach (var i in hd)
+                                                        {
+                                                            if (i.MaDH == item.MaDH)
+                                                            {
+
+                                                            }
+                                                            else
+                                                            {
+
+                                                            }
 
 
 
-                                        </td>
-                                    </tr>
+
+                                                        }*@
+                                                    @*<input type="submit" value="Alter" name="alerMessage" id="btnAlerMessage" />*@
+                                                    <a href="/KeToan/TaoHD/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+
+                                                </td>
+                                            </tr>
+}
+
                                     }
                                 </tbody>
                             </table>

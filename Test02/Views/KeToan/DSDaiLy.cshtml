@@ -47,38 +47,37 @@
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đại lý: activate to sort column ascending" style="width: 50px;">Mã đại lý</th>
                                         <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý:: activate to sort column ascending" style="width: 150px;">Tên đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Loại đại lý</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Tổng công nợ</th>
+                                        <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý:: activate to sort column ascending" style="width: 150px;">Tổng công nợ</th>
                                         <th width="100" class="sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    @{ var total = 0;}
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td style="width: 150px;">
-                                                @Html.DisplayFor(modelItem => item.MaDL)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TenDL)
-                                              
-                                            </td>
-                                            <td>
-                                                @{var tenldk = database.LoaiDLs.Find(item.MaLoaiDL);
-                                                }
-                                                @Html.DisplayFor(modelItem => tenldk.TenDaiLy)
-                                            </td>
-                                            <td>
+                                    <tr>
+                                        <td style="width: 150px;">
+                                            @Html.DisplayFor(modelItem => item.MaDL)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TenDL)
 
-                                            </td>
-                                           
-                                            <td>
-                                                <a href="~/KeToan/CongnoDL/@item.MaDL" class="btn btn-primary btn-sm edit">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                
-                                            </td>
-                                        </tr>
+                                        </td>
+                                        <td>
+                                            @{var tenldk = database.LoaiDLs.Find(item.MaLoaiDL);
+                                            }
+                                            @Html.DisplayFor(modelItem => tenldk.TenDaiLy)
+                                        </td>
+
+                                       
+                                        <td>
+
+                                            <a href="~/KeToan/CongnoDL/@item.MaDL" class="btn btn-primary btn-sm edit">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

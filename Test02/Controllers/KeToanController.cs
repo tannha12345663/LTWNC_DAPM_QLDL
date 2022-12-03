@@ -29,43 +29,32 @@ namespace Test02.Controllers
         public ActionResult QLyDonHangKeToan(String id,DonHang dh)
         {
             
-            List<DonHang> listdh = new List<DonHang>();
-            List<DonHang> listdh1 = new List<DonHang>();
-            listdh = database.DonHangs.ToList();
-            for(int i=0;i<listdh.Count;i++)
-            {
-                if (listdh[i].TrangThai == "Đã xét duyệt")
-                {
-                    listdh1.Add(listdh[i]);
-                }
-            }    
-            //dh = database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault();
-               
-            return View(listdh1);
+            return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
         }
 
        public ActionResult TaoHD(String id)
         {
-            return View(database.ChiTietDonHangs.Where(s => s.MaDH == id).FirstOrDefault());
+            return View(database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault());
         }
         [HttpPost]
-        public ActionResult TaoHD(String id,ChiTietDonHang ct,HoaDon hoaDon)
+        public ActionResult TaoHD(String id,DonHang dh,HoaDon hoaDon)
         {
+            TempData["successmassage"] = "ha";
             var user = (Test02.Models.NhanVien)Session["user"];
-
-            ct = database.ChiTietDonHangs.Where(s => s.MaDH == id).FirstOrDefault();
+            dh = database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault();
             Random rd = new Random();
             var maHD = "HD" + rd.Next(1, 1000);
             hoaDon.MaHD = maHD;
-            hoaDon.MaDH = ct.MaDH;
-            hoaDon.TongTien = ct.ThanhTien;
+            hoaDon.MaDH = dh.MaDH;
+            hoaDon.TongTien = dh.TongTien;
             hoaDon.TenDVTiepNhan = user.MaNV;
+            hoaDon.NgayLap= System.DateTime.Now;
 
-            
+
 
             database.HoaDons.Add(hoaDon);
-                database.SaveChanges();
-                return RedirectToAction("QLHoaDon");
+             database.SaveChanges();
+             return RedirectToAction("QLHoaDon");
             
         }
 
@@ -124,23 +113,35 @@ namespace Test02.Controllers
             return View(database.PhieuCongNoes.ToList().OrderByDescending(s => s.MaCongNo));
         }
 
-        public ActionResult TaoCongno()
+        public ActionResult TaoCongno(String id)
         {
-            return View();
+            return View(database.DaiLies.Where(s => s.MaDL == id).FirstOrDefault());
         }
 
         [HttpPost]
-        public ActionResult TaoCongno(PhieuCongNo phieuCongNo)
+        public ActionResult TaoCongno(DaiLy dl,String id,PhieuCongNo phieuCongNo,DonHang dh)
         {
             
             try
             {
-                TempData["AlerMessage"] = "haha";
+                dl = database.DaiLies.Where(s => s.MaDL == id).FirstOrDefault();
+                List<DonHang> listdh = database.DonHangs.ToList();
+                double count = 0;
+               for(int i=0;i<listdh.Count;i++)
+                {
+                    if(dl.MaDL==listdh[i].MaDL)
+                    {
+                        count = (double)(count + listdh[i].TongTien);
+                    }    
+                }    
                 Random rd = new Random();
                 var macn = "CN" + rd.Next(1, 1000);
                 phieuCongNo.MaCongNo = macn;
-              
                 phieuCongNo.TrangThai = "Chưa thanh toán";
+                phieuCongNo.MaDL = dl.MaDL;
+                phieuCongNo.TienNo = count;
+                phieuCongNo.HanTra= System.DateTime.Now;
+
                 database.PhieuCongNoes.Add(phieuCongNo);
                 database.SaveChanges();
                 return RedirectToAction("QLCongno");
@@ -209,7 +210,7 @@ namespace Test02.Controllers
 
         public ActionResult CongnoDL(String id)
         {
-            return View(database.PhieuCongNoes.Where(s => s.MaDL == id).ToList().OrderByDescending(s => s.MaDL));
+            return View(database.DonHangs.Where(s => s.MaDL == id).ToList());
         }
        
 

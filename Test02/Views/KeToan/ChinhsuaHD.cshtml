@@ -29,7 +29,7 @@
                 <option selected="@Model.TinhTrangThanhToan">@Model.TinhTrangThanhToan</option>
                 <option>Chưa thanh toán</option>
                 <option>Đã thanh toán</option>
-                <option>Cọc trước</option>
+                <option>Delayed</option>
             </select>
             @Html.ValidationMessageFor(model => model.TinhTrangThanhToan, "", new { @class = "text-danger" })
         </div>

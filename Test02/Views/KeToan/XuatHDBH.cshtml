@@ -20,18 +20,29 @@
 
                     @foreach (var item in Model)
                     {
-                        
-                            <p style="text-align:right"><strong>Mã CTDH: </strong>@Html.DisplayFor(modelItem => item.MaCTDH)</p>
+                        <p style="text-align:center">
+                            <span>
+                                @{ var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+                                    var hd = db.HoaDons.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
+                                @Html.DisplayFor(modelItem => hd.NgayLap)
+                            </span>
 
-                            <p>
-                                <strong>Tên Đại lý: </strong> @{ var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
-                                    var tendly = db.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();}
-                                @Html.DisplayFor(modelItem => tendly.TenDL)
-                            </p>
-                            <p><strong>Địa điểm giao:</strong>@Html.DisplayFor(modelItem => item.DiemGiao)</p>
-                                        break;
+                        </p>
+                        <p>
+                            <strong>Mã hóa đơn:</strong>
+                            @Html.DisplayFor(modelItem => hd.MaHD)
+                        </p>
+                        @*<p style="text-align:right"><strong>Mã CTDH: </strong>@Html.DisplayFor(modelItem => item.MaCTDH)</p>*@
 
-                                    }
+                        <p>
+                            <strong>Tên Đại lý: </strong> @{
+                                var tendly = db.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();}
+                            @Html.DisplayFor(modelItem => tendly.TenDL)
+                        </p>
+                        <p><strong>Địa điểm giao:</strong>@Html.DisplayFor(modelItem => dh.DiemGiao)</p>
+                        break;
+
+                    }
 
 
 
@@ -52,7 +63,7 @@
                                 </thead>
                                 <tbody>
                                     @{ var total = 0;
-                                        int stt = 0;}
+                                    }
                                     @foreach (var item in Model)
                                     {
                                         <tr>
@@ -68,10 +79,10 @@
                                                 @Html.DisplayFor(modelItem => item.SoLuong)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.DonViTinh)
+                                                @Html.DisplayFor(modelItem => tensp.DonViTinh)
                                             </td>
                                             <td>
-                                                @{ var chuyendoi = string.Format("{0:0,0 vnđ}", item.DonGia);}
+                                                @{ var chuyendoi = string.Format("{0:0,0 vnđ}", tensp.Gia);}
                                                 @Html.DisplayFor(modelItem => chuyendoi)
                                             </td>
 
@@ -79,14 +90,12 @@
                                                 @{ total += Convert.ToInt32(item.ThanhTien);}
                                                 @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
                                                 @Html.DisplayFor(modelItem => ThanhTien)
-                                            </td>
 
-                                            <td>
                                             </td>
                                         </tr>
                                     }
                                     <tr>
-                                        <th colspan="6">Tổng cộng hóa đơn:</th>
+                                        <th colspan="5">Tổng cộng hóa đơn:</th>
                                         @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
                                         <td>@Html.DisplayFor(modelItem => TongCong)</td>
                                     </tr>
