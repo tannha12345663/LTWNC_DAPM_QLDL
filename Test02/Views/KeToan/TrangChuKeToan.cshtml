@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Test02.Models.HoaDon>
+﻿
 @using Test02.Models;
 @{
     ViewBag.Title = "TrangChuKeToan";
@@ -6,6 +6,8 @@
     ViewBag.homekt = "active";
     ViewBag.nd = "Trang chủ";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    List<HoaDon> hd = db.HoaDons.ToList();
+    List<PhieuCongNo> cn = db.PhieuCongNoes.ToList();
 }
 
 <div class="col-md-12">
@@ -28,7 +30,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in hd)
                         {
                             <tr>
                                 <td>
@@ -58,7 +60,7 @@
                                     @Html.DisplayFor(modelItem => item.TenDVTiepNhan)
                                 </td>
                                 <td>
-                                    Ngay lập
+                                    @Html.DisplayFor(modelItem => item.NgayLap)
                                 </td>
 
 
@@ -75,28 +77,63 @@
     </div>
 
     <div class="tile">
-        <h3 class="tile-title">Tổng quan hóa đơn</h3>
+        <h3 class="tile-title">Tổng quan công nợ</h3>
         <div class="row">
             <div class="col-sm-12">
                 <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                     @*//Phần render từng dòng trong C#*@
                     <thead>
                         <tr role="row">
-                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã hóa đơn: activate to sort column ascending" style="width: 100px;">Mã hóa đơn</th>
+                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã hóa đơn: activate to sort column ascending" style="width: 100px;">Mã công nợ</th>
                             <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đại lý: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
                             <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý: activate to sort column ascending" style="width: 160px;">Tên đại lý</th>
-                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng tiền: activate to sort column ascending" style="width: 100px;">Tổng hóa đơn</th>
-                            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 100px;">Mã nhân viên</th>
-                            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 120px;">Ngày lập</th>
+                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng tiền: activate to sort column ascending" style="width: 100px;">Tiền nợ</th>
+                            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 100px;">Hạn trả</th>
+                            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 120px;">Trạng thái</th>
 
 
                         </tr>
+
+                    <tbody>
+                        @foreach (var item in cn)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaCongNo)
+                                </td>
+                                @*<td>
+                        @Html.DisplayFor(modelItem => item.MaDH)
+                    </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaDL)
+                                </td>
+                                <td>
+                                    @{
+                                        var dl = db.DaiLies.Where(s => s.MaDL == item.MaDL).FirstOrDefault();
+                                    }
+                                    @Html.DisplayFor(modelItem => dl.TenDL)
+                                </td>
+
+                                <td>
+                                    @{ var No = string.Format("{0:0,0 vnđ}", item.TienNo);}
+                                    @Html.DisplayFor(modelItem => No)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HanTra)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TrangThai)
+                                </td>
+
+
+
+
+
+                            </tr>
+                        }
+                    </tbody>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
-                        {
-                            
-                        }
                     </tbody>
                 </table>
             </div>

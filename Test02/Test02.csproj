@@ -549,6 +549,8 @@
     <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
     <Content Include="Views\KeToan\CongnoDL.cshtml" />
     <Content Include="Views\KeToan\Doanhthu.cshtml" />
+    <Content Include="Views\KeToan\XuatCN.cshtml" />
+    <Content Include="Views\KeToan\ThemCongno.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

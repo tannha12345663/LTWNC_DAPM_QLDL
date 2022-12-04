@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<Test02.Models.DonHang>
-@using Test02.Models;
+
 @{
     ViewBag.Title = "Doanhthu";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
+
+<h2>Doanhthu</h2>
 
 <div class="row">
     <div class="col-md-12">
@@ -13,7 +14,7 @@
 
                 <div class="row element-button">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyHD"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KeToan/Doanhthu"><i class="fas fa-copy"></i> Làm mới danh sách</a>
                     </div>
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
@@ -50,9 +51,7 @@
                                     @{ var total = 0;}
                                     @foreach (var item in Model)
                                     {
-                                        if (item.TinhTrangThanhToan == "Đã thanh toán")
-                                        {
-                                            <tr>
+                                          <tr>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.MaDH)
                                                 </td>
@@ -76,7 +75,7 @@
 
                                                 </td>
                                             </tr>
-                                        }
+                                        
 
 
                                     }

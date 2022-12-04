@@ -4,8 +4,6 @@
 @{
     ViewBag.Title = "CongnoDL";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
-    ViewBag.dsdl = "active";
-    ViewBag.nd = "Công nợ của đại lý";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
 
@@ -16,7 +14,7 @@
 
                 <div class="row element-button">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KeToan/CongnoDL"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyHD"><i class="fas fa-copy"></i> Làm mới danh sách</a>
                     </div>
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
@@ -26,20 +24,22 @@
                 </div>
 
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    @foreach (var item in Model)
-                    {
+                    
+                        @foreach (var i in Model)
+                        {
+                            <p><strong>Mã đại lý:</strong> @Html.DisplayFor(modelItem => i.MaDL)</p>
+                            <p>
+                                <strong>Mã đại lý:</strong>
+                                @{
+                                    var dh = db.DaiLies.Where(s => s.MaDL == i.MaDL).FirstOrDefault();
+                                }
+                                @Html.DisplayFor(modelItem => dh.TenDL)
+                            </p>
+                       break;
+                          }
 
-                        <p>
-                            <strong>Tên Đại lý: </strong> @{
-                                var tendly = db.DaiLies.Where(s => s.MaDL == item.MaDL).FirstOrDefault();}
-                            @Html.DisplayFor(modelItem => tendly.TenDL)
-                        </p>
 
-                        break;
-
-                    }
-
-
+                    
                     <div class="row">
                         <div class="col-sm-12">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
@@ -47,7 +47,6 @@
                                 <thead>
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã hóa đơn</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 100px;">Mã nhân viên lập</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Điểm giao hàng</th>
@@ -55,66 +54,55 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @{ var total = 0;}
-
+                                    @{ var id = "";
+                                        var total = 0;}
                                     @foreach (var item in Model)
                                     {
+                                        id = item.MaDL;
+                                        if (item.TinhTrangThanhToan == "Chưa thanh toán")
+                                        {
 
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MaDH)
-                                            </td>
-                                            <td>
-                                                @{var hd = db.HoaDons.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
-                                                @Html.DisplayFor(modelItem => hd.MaHD)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => hd.TenDVTiepNhan)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => hd.NgayLap)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.DiemGiao)
-                                            </td>
 
-                                            <td>
-                                                @{
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaDH)
+                                                </td>
 
-                                                    total += Convert.ToInt32(item.TongTien);
-                                                    var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
-                                                @Html.DisplayFor(modelItem => ThanhTien)
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaNVLap)
+                                                </td>
 
-                                            </td>
-                                        </tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.NgayLap)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                </td>
+                                                <td>
+                                                    @{ total += Convert.ToInt32(item.TongTien);}
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                    @Html.DisplayFor(modelItem => ThanhTien)
+
+                                                </td>
+                                            </tr>
+                                        }
 
 
                                     }
-
+                                    <tr>
+                                        <th colspan="4">Tổng cộng hóa đơn :</th>
+                                        @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                        <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                    </tr>
                                 </tbody>
-                                <tr>
-                                    <th colspan="5">Tổng cộng hóa đơn :</th>
-                                    @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
-                                    <td>@Html.DisplayFor(modelItem => TongCong)</td>
-                                </tr>
-                            </table>
 
-                            
-                            <div class="row element-button">
-                                <div class="col-sm-2">
-                                    <a class="btn btn-cancel" type="button" title="Back" href="~/KeToan/DSDaiLy"><i class="fas fa-step-backward"></i> Quay lại</a>
-                                </div>
-                                @*<div class="col-sm-2">
-                                    <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/TaoCongno/@item.MaDH "><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
-                                </div>*@
-                            </div>
+
+                            </table>
+                            <a href="~/KeToan/TaoCongno/@id" class="btn btn-primary btn-sm edit">
+                                <i class="fa fa-edit"></i>
+                            </a>
                         </div>
                     </div>
-                   
-                       
-                    
-
-
                 </div>
             </div>
         </div>
@@ -132,6 +120,3 @@
         }
     }
 </script>
-
-
-   

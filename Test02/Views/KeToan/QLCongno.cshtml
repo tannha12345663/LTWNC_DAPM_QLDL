@@ -14,20 +14,20 @@
         <div class="tile">
             <div class="tile-body">
                
-                <!--<div class="row element-button">
+                <div class="row element-button">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/TaoCongno "><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
-                    </div>-->
-                    @*<div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/ThemCongno "><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
+                    </div>
+                    <div class="col-sm-2">
                             <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-copy"></i> Làm mới danh sách</a>
-                        </div>*@
-                    <!--<div class="col-sm-2">
+                        </div>
+                    <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
 
-                </div>-->
+                </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
                     <div class="col-md-1">
@@ -42,13 +42,13 @@
                             @*//Phần render từng dòng trong C#*@
                             <thead>
                                 <tr role="row">
-                                    <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã công nợ: activate to sort column ascending" style="width: 150px;">Mã Công nợ</th>
+                                    <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã công nợ: activate to sort column ascending" style="width: 90px;">Mã Công nợ</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý: activate to sort column ascending" style="width: 160px;">Tên đại lý</th>
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Loại: activate to sort column ascending" style="width: 160px;">Loại đại lý</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Loại: activate to sort column ascending" style="width: 100px;">Loại đại lý</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng nợ: activate to sort column ascending" style="width: 124px;">Tổng nợ</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Hạn trả: activate to sort column ascending" style="width: 124px;">Hạn trả</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tình trạng: activate to sort column ascending" style="width: 124px;">Tình trạng</th>
-                                    <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                    <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 160px;">Chức năng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,7 +73,8 @@
                                         </td>
 
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.TienNo)
+                                            @{ var Tienno = string.Format("{0:0,0 vnđ}", item.TienNo);}
+                                            @Html.DisplayFor(modelItem => Tienno)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.HanTra)
@@ -87,6 +88,9 @@
                                             </a>
                                             <a href="/KeToan/XoaCN/@item.MaCongNo" class="btn btn-primary btn-sm trash">
                                                 <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                            <a href="/KeToan/XuatCN/@item.MaCongNo" class="btn btn-primary btn-sm edit">
+                                                <i class="fas fa-train"></i>
                                             </a>
 
                                         </td>

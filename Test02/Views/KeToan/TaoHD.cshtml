@@ -8,9 +8,17 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 
 }
+@{
+    if (TempData["mess"] != null)
+    {
+        <script>alert("Đơn hàng đã có hóa đơn !!!");</script>
+
+    }
+}
+
 
 <div class="row">
-    
+
     <div class="col-md-12">
         <div class="tile" style="padding:30dp">
             <h3 style="text-align:center">TẠO HÓA ĐƠN</h3>
@@ -40,13 +48,14 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Thêm hóa đơn" class="btn btn-default" />
+                            <input type="submit" value="Thêm hóa đơn" class="btn btn-default" id="submitButton" />
                         </div>
 
                     </div>
                 </div>
-            }
 
+            }
+            
             <div>
                 @Html.ActionLink("Quay lại danh sách hóa đơn", "QLyDonHangKeToan")
             </div>

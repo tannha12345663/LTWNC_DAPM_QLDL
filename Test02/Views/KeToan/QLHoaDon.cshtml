@@ -29,14 +29,14 @@
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã hóa đơn: activate to sort column ascending" style="width: 80px;">Mã hóa đơn</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đại lý: activate to sort column ascending" style="width: 80px;">Mã đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã hóa đơn: activate to sort column ascending" style="width: 60px;">Mã hóa đơn</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đại lý: activate to sort column ascending" style="width: 60px;">Mã đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý: activate to sort column ascending" style="width: 140px;">Tên đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng tiền: activate to sort column ascending" style="width: 100px;">Tổng hóa đơn</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 100px;">Mã nhân viên</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Trạng thái: activate to sort column ascending" style="width: 150px;">Trạng thái</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 120px;">Chức năng</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 90px;">Ngày lập</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 160px;">Chức năng</th>
 
                                     </tr>
                                 </thead>
@@ -69,16 +69,14 @@
                                                 @Html.DisplayFor(modelItem => item.TenDVTiepNhan)
                                             </td>
                                             <td>
-                                                @{var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
-
-                                                }
-                                                @Html.DisplayFor(modelItem => dh.TinhTrangThanhToan)
+                                                @Html.DisplayFor(modelItem => madh.TinhTrangThanhToan)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.NgayLap)
                                             </td>
 
                                             <td>
+                                                
                                                 <a href="/KeToan/ChinhsuaHD/@item.MaDH" class="btn btn-primary btn-sm edit">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
