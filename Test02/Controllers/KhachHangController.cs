@@ -28,7 +28,7 @@ namespace Test02.Controllers
         public ActionResult DonHangDL(string id)
         {
             
-            return View(db.ChiTietDonHangs.ToList());
+            return View(db.DonHangs.ToList());
         }
 
         // GET: ChiTietDonHangs/Details/5
