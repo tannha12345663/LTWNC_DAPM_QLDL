@@ -1,24 +1,20 @@
 ﻿
+@using Test02.Models;
 @{
     ViewBag.Title = "QuanLyDL";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.hh = "active";
     ViewBag.Name = "Quản lý hàng hóa";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var dssp = db.SanPhams.ToList();
+    var dsctk = db.ChiTietKhoes.ToList();
 }
 
 <div class="row">
     <div class="col-lg-12">
         <div class="tile">
             <div class="tile-body">
-
                 <div class="row element-button">
-                    <div class="col-sm-2">
-                        <a class="btn btn-add btn-sm" href="ThemSanPham" title="Thêm">
-                            <i class="fas fa-plus"></i>
-                            Thêm sản phẩm
-                        </a>
-                    </div>
-
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
                             <i class="fas fa-print"></i> In dữ liệu
@@ -30,8 +26,8 @@
                     </div>
 
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm pdf-file" type="button" title="In" onclick="myFunction(this)">
-                            <i class="fas fa-file-pdf"></i> Xuất PDF
+                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+                            <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
 
@@ -41,170 +37,105 @@
                         </a>
                     </div>
                 </div>
+                <h3 class="tile-title" id="sample1" style="text-align:center">DANH SÁCH SẢN PHẨM</h3>
                 <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
-                        id="sampleTable">
+                       id="sampleTable">
                     <thead>
                         <tr>
-                            <th>STT</th>
                             <th>Mã sản phẩm</th>
-                            <th width="20">Ảnh</th>
                             <th>Tên sản phẩm</th>
-                            <th>Đơn vị</th>
-                            <th>Số lượng</th>
+                            <th>Giá</th>
+                            <th>Đơn vị tính</th>
                             <th>Ngày sản xuất</th>
                             <th>Hạn sử dụng</th>
-                            <th>Tình trạng</th>
-                            <th>Tính năng</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach (var item in dssp)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaSP)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TenSP)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Gia)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DonViTinh)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NgaySX)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HanSD)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                <div class="row element-button">
+                    <div class="col-sm-2">
+                        <a class="btn btn-add btn-sm" href="TaoPhieuNhapKho" title="Thêm">
+                            <i class="fas fa-plus"></i>
+                            Tạo phiếu đề nghị nhập hàng hóa
+                        </a>
+                    </div>
+                </div>
+                <h3 class="tile-title" style="text-align:center">SẢN PHẨM SẮP HẾT HÀNG</h3>
+                <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                       id="sampleTable">
+                    <thead>
                         <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/coca.png" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                            <td class="table-td-center">
-                                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
-                                        onclick="myFunction(this)">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                        data-toggle="modal" data-target="#ModalUP">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
+                            <th>Mã Kho</th>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá tiền</th>
+                            <th>Đơn vị tính</th>
+                            <th>Số lượng</th>
+                            <th>Tình trạng</th>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/stingVang.jpg" alt=""></td>
-                            <td>String vàng</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                            <td class="table-td-center">
-                                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
-                                        onclick="myFunction(this)">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                        data-toggle="modal" data-target="#ModalUP">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/sting.jpg" alt=""></td>
-                            <td>Sting </td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                            <td class="table-td-center">
-                                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
-                                        onclick="myFunction(this)">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                        data-toggle="modal" data-target="#ModalUP">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/pepsi.jpg" alt=""></td>
-                            <td>Pepsi</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                            <td class="table-td-center">
-                                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
-                                        onclick="myFunction(this)">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                        data-toggle="modal" data-target="#ModalUP">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/cocalight.jpg" alt=""></td>
-                            <td>Coca Light</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                            <td class="table-td-center">
-                                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
-                                        onclick="myFunction(this)">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                        data-toggle="modal" data-target="#ModalUP">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/7up.jpg" alt=""></td>
-                            <td>7 Up</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                            <td class="table-td-center">
-                                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
-                                        onclick="myFunction(this)">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                        data-toggle="modal" data-target="#ModalUP">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/pepsi0calo.jpg" alt=""></td>
-                            <td>Pepsi không calo </td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                            <td class="table-td-center">
-                                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
-                                        onclick="myFunction(this)">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                        data-toggle="modal" data-target="#ModalUP">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in dsctk)
+                        {
+                            if (item.TinhTrang == "Sắp hết hàng")
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaKho)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaSP)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SanPham.Gia)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SanPham.DonViTinh)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SoLuong)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TinhTrang)
+                                    </td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                 </table>
             </div>
@@ -212,76 +143,6 @@
     </div>
 </div>
 
-<!--
-  MODAL
--->
-<div class="modal fade" id="ModalUP" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
-     data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-
-            <div class="modal-body">
-                <div class="row">
-                    <div class="form-group  col-md-12">
-                        <span class="thong-tin-thanh-toan">
-                            <h5>Chỉnh sửa thông tin nhân viên cơ bản</h5>
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label class="control-label">ID nhân viên</label>
-                        <input class="form-control" type="text" required value="#CD2187" disabled>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="control-label">Họ và tên</label>
-                        <input class="form-control" type="text" required value="Võ Trường">
-                    </div>
-                    <div class="form-group  col-md-6">
-                        <label class="control-label">Số điện thoại</label>
-                        <input class="form-control" type="number" required value="09267312388">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="control-label">Địa chỉ email</label>
-                        <input class="form-control" type="text" required value="truong.vd2000@gmail.com">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="control-label">Ngày sinh</label>
-                        <input class="form-control" type="date" value="15/03/2000">
-                    </div>
-                    <div class="form-group  col-md-6">
-                        <label for="exampleSelect1" class="control-label">Chức vụ</label>
-                        <select class="form-control" id="exampleSelect1">
-                            <option>Bán hàng</option>
-                            <option>Tư vấn</option>
-                            <option>Dịch vụ</option>
-                            <option>Thu Ngân</option>
-                            <option>Quản kho</option>
-                            <option>Bảo trì</option>
-                            <option>Kiểm hàng</option>
-                            <option>Bảo vệ</option>
-                            <option>Tạp vụ</option>
-                        </select>
-                    </div>
-                </div>
-                <BR>
-                <a href="#" style="    float: right;
-        font-weight: 600;
-        color: #ea0000">Chỉnh sửa nâng cao</a>
-                <BR>
-                <BR>
-                <button class="btn btn-save" type="button">Lưu lại</button>
-                <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
-                <BR>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-<!--
-  MODAL
--->
 <script>
     function deleteRow(r) {
         var i = r.parentNode.parentNode.rowIndex;
@@ -321,16 +182,6 @@
     //   });
     // });
 
-    //In dữ liệu
-    var myApp = new function () {
-        this.printTable = function () {
-            var tab = document.getElementById('sampleTable');
-            var win = window.open('', '', 'height=700,width=700');
-            win.document.write(tab.outerHTML);
-            win.document.close();
-            win.print();
-        }
-    }
     //     //Sao chép dữ liệu
     //     var copyTextareaBtn = document.querySelector('.js-textareacopybtn');
 
@@ -354,4 +205,31 @@
         $("#ModalUP").modal({ backdrop: false, keyboard: false })
     });
 </script>
-
+<script>
+    //In dữ liệu
+    var myApp = new function () {
+        this.printTable = function () {
+            var tab = document.getElementById('sampleTable');
+            var tab1 = document.getElementById('sample1');
+            var win = window.open('', '', 'height=700,width=700');
+            win.document.write(tab1.outerHTML);
+            win.document.write(tab.outerHTML);
+            win.document.close();
+            win.print();
+        }
+    }
+</script>
+<!-- Essential javascripts for application to work-->
+<script src="~/Content/js/jquery-3.2.1.min.js"></script>
+<script src="~/Content/js/popper.min.js"></script>
+<script src="~/Content/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="src/jquery.table2excel.js"></script>
+<script src="~/Content/js/main.js"></script>
+<!-- The javascript plugin to display page loading on top-->
+<script src="~/Content/js/plugins/pace.min.js"></script>
+<!-- Page specific javascripts-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<!-- Data table plugin-->
+<script type="text/javascript" src="~/Content/js/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="~/Content/js/plugins/dataTables.bootstrap.min.js"></script>

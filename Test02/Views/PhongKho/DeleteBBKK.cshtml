@@ -1,0 +1,62 @@
+﻿@model Test02.Models.BienBangKiemKe
+@{
+    ViewBag.Title = "DeleteBBKK";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+    ViewBag.bc = "active";
+    ViewBag.Name = "Xóa biên bản";
+}
+<h3>Bạn muốn xóa biên bản kiểm kê này?</h3>
+<hr />
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.TenNV)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.TenNV)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.TenBienBang)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.TenBienBang)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.NgayLap)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.NgayLap)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.NhanVien.MaChucVu)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.NhanVien.MaChucVu)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.SanPham.TenSP)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.SanPham.TenSP)
+    </dd>
+
+</dl>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        @Html.ActionLink("Back to List", "BaoCao")
+    </div>
+}
+</div>

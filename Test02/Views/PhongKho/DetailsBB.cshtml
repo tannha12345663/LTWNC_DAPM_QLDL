@@ -1,0 +1,102 @@
+﻿
+    @using Test02.Models
+@{
+    ViewBag.Title = "DetailsBB";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+    ViewBag.bc = "active";
+    ViewBag.Name = "Chi tiết biên bản";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var ctBBKK = db.ChiTietBienBangs.ToList();
+    var BBKK = db.BienBangKiemKes.ToList();
+}
+
+<h2>Chi tiết biên bản @TempData["makk"]</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        @foreach (var item in ctBBKK)
+        {
+            if ((string)item.MaKK == (string)TempData["makk"])
+            {
+                <dt>
+                    Mã chi tiết biên bản:
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(@modelItem => item.MaCTBB)
+                </dd>
+                <dt>
+                    Tên biên bản:
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(@modelItem => item.BienBangKiemKe.TenBienBang)
+                </dd>
+                <dt>
+                    Ngày lập:
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(@modelItem => item.BienBangKiemKe.NgayLap)
+                </dd>
+                <dt>
+                    Mã NV lập - Tên nhân viên:
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(@modelItem => item.BienBangKiemKe.MaNVLap) -
+                    @Html.DisplayFor(@modelItem => item.BienBangKiemKe.NhanVien.TenNV)
+                </dd>
+                <dt>
+                    Mã Sản phẩm - Tên sản phẩm:
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(@modelItem => item.BienBangKiemKe.MaSP) -
+                    @Html.DisplayFor(@modelItem => item.BienBangKiemKe.SanPham.TenSP)
+                </dd>
+
+                <dt>
+                    Số lượng tồn / @Html.DisplayFor(@modelItem => item.BienBangKiemKe.SanPham.DonViTinh)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(@modelItem => item.SLTonKho)
+                </dd>
+
+                <dt>
+                    Số lượng thực tế /  @Html.DisplayFor(@modelItem => item.BienBangKiemKe.SanPham.DonViTinh)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(@modelItem => item.SLThucTe)
+                </dd>
+
+                <dt>
+                    Chênh lệch / @Html.DisplayFor(@modelItem => item.BienBangKiemKe.SanPham.DonViTinh)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(@modelItem => item.ChenhLech)
+                </dd>
+
+                <dt>
+                    Lý do:
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(@modelItem => item.LyDo)
+                </dd>
+            }
+
+        }
+    </dl>
+</div>
+<p>
+    <a class="btn btn-danger btn-sm" href="/PhongKho/BaoCao" title="Trở lại">
+        <i class="fas fa-retweet"></i>
+        Trở lại
+    </a>
+</p>
