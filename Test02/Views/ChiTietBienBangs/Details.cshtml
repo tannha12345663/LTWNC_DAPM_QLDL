@@ -1,0 +1,61 @@
+﻿@model Test02.Models.ChiTietBienBang
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ChiTietBienBang</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SLTonKho)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLTonKho)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLThucTe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLThucTe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChenhLech)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChenhLech)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LyDo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LyDo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BienBangKiemKe.MaNVLap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BienBangKiemKe.MaNVLap)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.BienBangKiemKe.MaNVLap)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaCTBB }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

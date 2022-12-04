@@ -1,0 +1,77 @@
+﻿
+@model Test02.Models.ChiTietKho
+@{
+    ViewBag.Title = "DeleteCTKho";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+    ViewBag.Name = "Xóa chi tiết kho";
+    ViewBag.qlk = "active";
+}
+
+
+<h3>Bạn muốn xóa chi tiết kho @Model.MaCTKho của kho @Model.MaKho?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayNhap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayNhap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayXuat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayXuat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoLuong)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoLuong)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TinhTrang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TinhTrang)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kho.TenKho)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kho.TenKho)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SanPham.TenSP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SanPham.TenSP)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa vĩnh viễn" class="btn btn-danger" /> |
+            <a class="btn btn-danger btn-sm" href="QuanLyKho" title="Thêm">
+                <i class="fas fa-retweet"></i>
+                Trở lại danh sách kho
+            </a>
+        </div>
+    }
+</div>

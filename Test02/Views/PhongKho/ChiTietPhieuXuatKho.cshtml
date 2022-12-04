@@ -1,0 +1,119 @@
+﻿@model Test02.Models.PhieuNhapXuat
+@using Test02.Models;
+@{
+    ViewBag.Title = "ChiTietPhieuXuatKho";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+    ViewBag.hh = "active";
+    ViewBag.Name = "Chi tiết phiếu đề nghị xuất kho";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var dsSP = db.SanPhams.ToList();
+    var dsCTKho = db.ChiTietKhoes.ToList();
+    List<string> distint = new List<string>();
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h2 style="text-align:center" id="sample1">PHIẾU ĐỀ NGHỊ XUẤT KHO</h2>
+            <form style="text-align:center">
+                <label for="date">Ngày:</label>
+                @Html.DisplayFor(model => model.NgayLap)<br>
+                <label for="date">Mã số:</label>
+                @Html.DisplayFor(model => model.MaPhieu)<br>
+            </form>
+            <div class="tile-body">
+                <form class="row">
+                    <div class="form-group col-md-12" id="sample3">
+                        <label class="control-label">- Kính gửi: </label>
+                        @Session["kinhgui"]
+                    </div>
+                    <div class="form-group col-md-12" id="sample4">
+                        <label class="control-label">Xuất tại các kho: </label> <br />
+                        @for (int i = 0; i < dsCTKho.Count; i++)
+                        {
+                            if (dsCTKho[i].TinhTrang == "Tồn kho")
+                            {
+                                distint.Add(dsCTKho[i].MaKho);
+                                distint = distint.Distinct().ToList();
+                            }
+                        }
+                        @for (int i = 0; i < dsCTKho.Count; i++)
+                        {
+                            for (int j = 0; j >= 0 && j < distint.Count; j++)
+                            {
+                                if (distint[j].Equals(dsCTKho[i].MaKho))
+                                {
+                                    <span>@dsCTKho[i].MaKho - @dsCTKho[i].Kho.TenKho </span> <br />
+                                    distint.RemoveAt(j);
+                                }
+                            }
+                        }
+                    </div>
+                    <div class="form-group col-md-12" id="sample5">
+                        <label class="control-label">- Họ tên người làm phiếu:</label>
+                        @Session["hoten"]
+                    </div>
+                    <div class="form-group col-md-12" id="sample6">
+                        <label class="control-label">Danh sách sản phẩm tồn kho cần giải quyết:</label>
+                        <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;">Mã Kho</th>
+                                    <th style="text-align:center;">Mã sản phẩm</th>
+                                    <th style="text-align:center;">Tên sản phẩm</th>
+                                    <th style="text-align:center;">Giá tiền</th>
+                                    <th style="text-align:center;">Số lượng tồn</th>
+                                    <th style="text-align:center;">Đơn vị tính</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in dsCTKho)
+                                {
+                                    if (item.TinhTrang == "Tồn kho")
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaKho)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SanPham.Gia)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SoLuong)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SanPham.DonViTinh)
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>
+    <a class="btn btn-actv btn-sm" href="/PhongKho/NhapKho" title="Trở lại">
+        <i class="fas fa-retweet"></i>
+        Trở lại
+    </a>
+    <a class="btn btn-danger btn-sm" href="/PhongKho/XoaPhieuXuatkho" title="Xóa">
+        <i class="fas fa-close"></i>
+        Xóa vĩnh viễn
+    </a>
+    <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+        <i class="fas fa-print"></i> In phiếu
+    </a>
+</p>

@@ -1,0 +1,88 @@
+﻿
+@model Test02.Models.ChiTietDonHang
+@{
+    ViewBag.Title = "DetailsDH";
+    Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
+    ViewBag.dhdl = "active";
+    ViewBag.Name = "Chi tiết đơn hàng";
+}
+
+<div>
+    <h4>Chi Tiết Đơn Hàng @Model.DonHang.MaDH</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Mã đơn hàng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DonHang.MaDH)
+        </dd>
+
+        <dt>
+            Mã chi tiết đơn hàng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaCTDH)
+        </dd>
+
+        <dt>
+            Mã sản phẩm - Tên sản phẩm
+        </dt>
+
+        <dd>
+            <span>
+                @Html.DisplayFor(model => model.MaSP) - @Html.DisplayFor(model => model.SanPham.TenSP)
+            </span>
+        </dd>
+
+        <dt>
+            Giá:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SanPham.Gia)
+        </dd>
+
+        <dt>
+            Số lượng:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoLuong)
+        </dd>
+
+        <dt>
+            Thành tiền:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThanhTien)
+        </dd>
+
+        <dt>
+            Địa chỉ giao hàng:
+        </dt>
+
+        <dd>
+            Trạng thái:
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DonHang.TrangThai)
+        </dt>
+
+        <dd>
+            Thời gian dự kiến giao:
+        </dd>
+
+        <dt>
+            <i>Trong vòng 30 ngày</i>
+        </dt>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Trở lại", "DonHangDL")
+</p>
+

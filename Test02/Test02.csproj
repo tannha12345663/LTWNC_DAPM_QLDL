@@ -129,17 +129,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Authentication.cs" />
+    <Compile Include="App_Start\AuthenticationDL.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BienBangKiemKesController.cs" />
+    <Compile Include="Controllers\ChiTietBienBangsController.cs" />
     <Compile Include="Controllers\ChiTietDonHangsController.cs" />
+    <Compile Include="Controllers\ChiTietKhoesController.cs" />
     <Compile Include="Controllers\DonHangsController.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KeToanController.cs" />
     <Compile Include="Controllers\KhachHangController.cs" />
     <Compile Include="Controllers\KinhDoanhController.cs" />
+    <Compile Include="Controllers\LoginDLController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
+    <Compile Include="Controllers\PhieuNhapXuatsController.cs" />
     <Compile Include="Controllers\PhongKhoController.cs" />
     <Compile Include="Controllers\QTVController.cs" />
     <Compile Include="Global.asax.cs">
@@ -203,6 +209,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PhieuCongNo.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhieuNhapXuat.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SanPham.cs">
@@ -447,11 +456,13 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -533,24 +544,6 @@
     <Content Include="Views\KinhDoanh\DanhSachCTDH.cshtml" />
     <Content Include="Views\KinhDoanh\ThemCTHD1.cshtml" />
     <Content Include="Views\KinhDoanh\XoaCTDH.cshtml" />
-    <Content Include="Views\KeToan\TaoCongno.cshtml" />
-    <Content Include="Views\KeToan\ChinhsuCN.cshtml" />
-    <Content Include="Views\KeToan\XoaCN.cshtml" />
-    <Content Include="Views\KeToan\QLyDonHangKeToan.cshtml" />
-    <Content Include="Views\KeToan\TaoHD.cshtml" />
-    <Content Include="Views\KeToan\QLHoaDon.cshtml" />
-    <Content Include="Views\KeToan\XoaHD.cshtml" />
-    <Content Include="Views\KeToan\DSDaiLy.cshtml" />
-    <Content Include="Views\QTV\Layout\LayoutQTV.cshtml" />
-    <Content Include="Views\QTV\QLNhanVien.cshtml" />
-    <Content Include="Views\QTV\ThemNV.cshtml" />
-    <Content Include="Views\QTV\ChinhsuaNV.cshtml" />
-    <Content Include="Views\KeToan\XuatHDBH.cshtml" />
-    <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
-    <Content Include="Views\KeToan\CongnoDL.cshtml" />
-    <Content Include="Views\KeToan\Doanhthu.cshtml" />
-    <Content Include="Views\KeToan\XuatCN.cshtml" />
-    <Content Include="Views\KeToan\ThemCongno.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,50 @@
+﻿@model Test02.Models.PhieuNhapXuat
+@{
+    ViewBag.Title = "XoaPhieuXuatKho";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+    ViewBag.hh = "active";
+    ViewBag.Name = "Xóa phiếu đề nghị xuất kho";
+}
+<h3>Bạn có muốn xóa vĩnh viễn phiếu @Model.MaPhieu?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaPhieu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaPhieu)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayLap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayLap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoaiPhieu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiPhieu)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Vẫn xóa" class="btn btn-danger" /> |
+            <a class="btn btn-actv btn-sm" href="/PhongKho/NhapKho" title="Trở lại">
+                <i class="fas fa-retweet"></i>
+                Trở lại
+            </a>
+        </div>
+    }
+</div>
+

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuanLyDLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QuanLyDLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BaoCao">
           <Key>
             <PropertyRef Name="MaBC" />
@@ -165,6 +165,15 @@
           <Property Name="TienNo" Type="float" />
           <Property Name="HanTra" Type="datetime" />
           <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PhieuNhapXuat">
+          <Key>
+            <PropertyRef Name="MaPhieu" />
+          </Key>
+          <Property Name="MaPhieu" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MaKho" Type="varchar" MaxLength="10" />
+          <Property Name="NgayLap" Type="datetime" />
+          <Property Name="LoaiPhieu" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="SanPham">
           <Key>
@@ -402,6 +411,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PhieuNhapXuat_Kho">
+          <End Role="Kho" Type="Self.Kho" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PhieuNhapXuat" Type="Self.PhieuNhapXuat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kho">
+              <PropertyRef Name="MaKho" />
+            </Principal>
+            <Dependent Role="PhieuNhapXuat">
+              <PropertyRef Name="MaKho" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="QuanLyDLModelStoreContainer">
           <EntitySet Name="BaoCao" EntityType="Self.BaoCao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BienBangKiemKe" EntityType="Self.BienBangKiemKe" Schema="dbo" store:Type="Tables" />
@@ -418,6 +441,7 @@
           <EntitySet Name="LoaiDL" EntityType="Self.LoaiDL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhieuCongNo" EntityType="Self.PhieuCongNo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhieuNhapXuat" EntityType="Self.PhieuNhapXuat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BaoCao_NhanVien" Association="Self.FK_BaoCao_NhanVien">
             <End Role="NhanVien" EntitySet="NhanVien" />
@@ -483,9 +507,12 @@
             <End Role="DaiLy" EntitySet="DaiLy" />
             <End Role="PhieuCongNo" EntitySet="PhieuCongNo" />
           </AssociationSet>
+          <AssociationSet Name="FK_PhieuNhapXuat_Kho" Association="Self.FK_PhieuNhapXuat_Kho">
+            <End Role="Kho" EntitySet="Kho" />
+            <End Role="PhieuNhapXuat" EntitySet="PhieuNhapXuat" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyDLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -641,6 +668,7 @@
           <Property Name="TenKho" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ChiTietKhoes" Relationship="Self.FK_ChiTietKho_Kho" FromRole="Kho" ToRole="ChiTietKho" />
+          <NavigationProperty Name="PhieuNhapXuats" Relationship="Self.FK_PhieuNhapXuat_Kho" FromRole="Kho" ToRole="PhieuNhapXuat" />
         </EntityType>
         <EntityType Name="LoaiDL">
           <Key>
@@ -678,6 +706,16 @@
           <Property Name="HanTra" Type="DateTime" Precision="3" />
           <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DaiLy" Relationship="Self.FK_PhieuCongNo_DaiLy" FromRole="PhieuCongNo" ToRole="DaiLy" />
+        </EntityType>
+        <EntityType Name="PhieuNhapXuat">
+          <Key>
+            <PropertyRef Name="MaPhieu" />
+          </Key>
+          <Property Name="MaPhieu" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaKho" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NgayLap" Type="DateTime" Precision="3" />
+          <Property Name="LoaiPhieu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Kho" Relationship="Self.FK_PhieuNhapXuat_Kho" FromRole="PhieuNhapXuat" ToRole="Kho" />
         </EntityType>
         <EntityType Name="SanPham">
           <Key>
@@ -918,6 +956,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PhieuNhapXuat_Kho">
+          <End Role="Kho" Type="Self.Kho" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PhieuNhapXuat" Type="Self.PhieuNhapXuat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kho">
+              <PropertyRef Name="MaKho" />
+            </Principal>
+            <Dependent Role="PhieuNhapXuat">
+              <PropertyRef Name="MaKho" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="QuanLyDLEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BaoCaos" EntityType="Self.BaoCao" />
           <EntitySet Name="BienBangKiemKes" EntityType="Self.BienBangKiemKe" />
@@ -934,6 +986,7 @@
           <EntitySet Name="LoaiDLs" EntityType="Self.LoaiDL" />
           <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
           <EntitySet Name="PhieuCongNoes" EntityType="Self.PhieuCongNo" />
+          <EntitySet Name="PhieuNhapXuats" EntityType="Self.PhieuNhapXuat" />
           <EntitySet Name="SanPhams" EntityType="Self.SanPham" />
           <AssociationSet Name="FK_BaoCao_NhanVien" Association="Self.FK_BaoCao_NhanVien">
             <End Role="NhanVien" EntitySet="NhanViens" />
@@ -998,6 +1051,10 @@
           <AssociationSet Name="FK_HoaDon_DonHang" Association="Self.FK_HoaDon_DonHang">
             <End Role="DonHang" EntitySet="DonHangs" />
             <End Role="HoaDon" EntitySet="HoaDons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhieuNhapXuat_Kho" Association="Self.FK_PhieuNhapXuat_Kho">
+            <End Role="Kho" EntitySet="Khoes" />
+            <End Role="PhieuNhapXuat" EntitySet="PhieuNhapXuats" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -1179,6 +1236,16 @@
                 <ScalarProperty Name="TienNo" ColumnName="TienNo" />
                 <ScalarProperty Name="HanTra" ColumnName="HanTra" />
                 <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhieuNhapXuats">
+            <EntityTypeMapping TypeName="QuanLyDLModel.PhieuNhapXuat">
+              <MappingFragment StoreEntitySet="PhieuNhapXuat">
+                <ScalarProperty Name="MaPhieu" ColumnName="MaPhieu" />
+                <ScalarProperty Name="MaKho" ColumnName="MaKho" />
+                <ScalarProperty Name="NgayLap" ColumnName="NgayLap" />
+                <ScalarProperty Name="LoaiPhieu" ColumnName="LoaiPhieu" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

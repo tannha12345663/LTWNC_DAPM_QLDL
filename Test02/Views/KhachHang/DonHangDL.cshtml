@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Test02.Models.ChiTietDonHang>
+    @using Test02.Models
+@{
+    ViewBag.Title = "DonHangDL";
+    Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
+    ViewBag.dhdl = "active";
+    ViewBag.Name = "Đơn hàng";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+}
+
+<h2>Danh sách đơn hàng</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Mã đơn hàng
+        </th>
+        <th>
+            Tên sản phẩm
+        </th>
+        <th>
+            Số lượng
+        </th>
+        <th>
+            Giá
+        </th>
+        <th>
+            Chiết khấu
+        </th>
+        <th>
+            Thành tiền
+        </th>
+        <th>
+            Trạng thái
+        </th>
+        <th>Chức năng</th>
+    </tr>
+    @{
+        var user = (Test02.Models.DaiLy)HttpContext.Current.Session["userDL"];
+      }
+    @{ var mdl = user.MaDL;}
+    @foreach (var item in Model)
+    {
+        if (item.DonHang.MaDL == mdl)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DonHang.MaDH)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoLuong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SanPham.Gia)
+                </td>
+                <td>
+                    @{var ck = item.DonHang.DaiLy.LoaiDL.ChietKhau * 100;
+                      string str = Convert.ToString(ck);}
+                    @Html.DisplayFor(modelItem => str)%
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ThanhTien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DonHang.TrangThai)
+                </td>
+                <td>
+                    @Html.ActionLink("Hủy đơn", "DeleteDH", new { id = item.MaCTDH })
+                </td>
+            </tr>
+        }
+            
+    }
+
+</table>
+

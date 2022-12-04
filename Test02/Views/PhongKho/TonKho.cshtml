@@ -1,9 +1,12 @@
-﻿
+﻿@using Test02.Models
 @{
     ViewBag.Title = "TonKho";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.tk = "active";
     ViewBag.Name = "Tồn kho";
+
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var dsctk = db.ChiTietKhoes.ToList();
 }
 
 <div class="row element-button">
@@ -24,78 +27,45 @@
                        id="sampleTable">
                     <thead>
                         <tr>
-                            <th>STT</th>
+                            <th>Mã Kho</th>
                             <th>Mã sản phẩm</th>
-                            <th width="20">Ảnh</th>
                             <th>Tên sản phẩm</th>
-                            <th>Đơn vị</th>
+                            <th>Giá tiền</th>
+                            <th>Đơn vị tính</th>
                             <th>Số lượng</th>
-                            <th>Ngày sản xuất</th>
-                            <th>Hạn sử dụng</th>
+                            <th>Tình trạng</th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/pepsi.jpg" alt=""></td>
-                            <td>Pepsi</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/pepsi.jpg" alt=""></td>
-                            <td>Pepsi</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/pepsi.jpg" alt=""></td>
-                            <td>Pepsi</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/coca.png" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/coca.png" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="~/Content/Img/SanPham/coca.png" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                        </tr>
+                        @foreach (var item in dsctk)
+                        {
+                            if (item.TinhTrang == "Tồn kho")
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaKho)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaSP)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SanPham.Gia)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SanPham.DonViTinh)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SoLuong)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TinhTrang)
+                                    </td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                 </table>
             </div>

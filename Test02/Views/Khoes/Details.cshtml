@@ -1,0 +1,35 @@
+﻿@model Test02.Models.Kho
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Kho</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenKho)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenKho)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiaChi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiaChi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaKho }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
