@@ -57,15 +57,18 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -109,6 +112,7 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -143,6 +147,7 @@
     <Compile Include="Controllers\LoginUserController.cs" />
     <Compile Include="Controllers\PhieuNhapXuatsController.cs" />
     <Compile Include="Controllers\PhongKhoController.cs" />
+    <Compile Include="Controllers\QTVController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -512,17 +517,13 @@
     <Content Include="Views\PhongKho\XuatKho.cshtml" />
     <Content Include="Views\KhachHang\Layout\_LayoutKhachHang.cshtml" />
     <Content Include="Views\KhachHang\PageSanPham.cshtml" />
-    <Content Include="Views\KeToan\CreateCongno.cshtml" />
     <Content Include="Views\KeToan\Doanhthu.cshtml" />
     <Content Include="Views\KeToan\LoiNhuan.cshtml" />
     <Content Include="Views\KeToan\QLCongno.cshtml" />
-    <Content Include="Views\KeToan\QLHoaDon.cshtml" />
     <Content Include="Views\KeToan\TrangChuKeToan.cshtml" />
     <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
     <Content Include="Views\LoginUser\Layout\QuenMatKhau.cshtml" />
     <Content Include="Views\LoginUser\QuenMK.cshtml" />
-    <Content Include="Views\KeToan\createHDGTGT.cshtml" />
-    <Content Include="Views\KeToan\createHDBH.cshtml" />
     <Content Include="Views\KeToan\CreateDoanhThu.cshtml" />
     <Content Include="Views\DonHangs\Create.cshtml" />
     <Content Include="Views\DonHangs\Delete.cshtml" />
@@ -587,6 +588,20 @@
     <Content Include="Views\KhachHang\DonHangDL.cshtml" />
     <Content Include="Views\KhachHang\DetailsDH.cshtml" />
     <Content Include="Views\KhachHang\DeleteDH.cshtml" />
+    <Content Include="Views\KeToan\TaoCongno.cshtml" />
+    <Content Include="Views\KeToan\ChinhsuCN.cshtml" />
+    <Content Include="Views\KeToan\XoaCN.cshtml" />
+    <Content Include="Views\KeToan\QLyDonHangKeToan.cshtml" />
+    <Content Include="Views\KeToan\TaoHD.cshtml" />
+    <Content Include="Views\KeToan\QLHoaDon.cshtml" />
+    <Content Include="Views\KeToan\XoaHD.cshtml" />
+    <Content Include="Views\KeToan\DSDaiLy.cshtml" />
+    <Content Include="Views\QTV\Layout\LayoutQTV.cshtml" />
+    <Content Include="Views\QTV\QLNhanVien.cshtml" />
+    <Content Include="Views\QTV\ThemNV.cshtml" />
+    <Content Include="Views\QTV\ChinhsuaNV.cshtml" />
+    <Content Include="Views\KeToan\XuatHDBH.cshtml" />
+    <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,48 @@
+﻿@model Test02.Models.DonHang
+
+@{
+    ViewBag.Title = "ChinhsuaHD";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+}
+
+<h2>Chỉnh sửa hóa đơn</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.MaDH)
+    @Html.HiddenFor(model => model.MaDL)
+    @Html.HiddenFor(model => model.MaNVLap)
+    @Html.HiddenFor(model => model.NgayLap)
+    @Html.HiddenFor(model => model.TrangThai)
+    @Html.HiddenFor(model => model.DiemGiao)
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TinhTrangThanhToan, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select class="form-control" id="TinhTrangThanhToan" name="TinhTrangThanhToan">
+                <option selected="@Model.TinhTrangThanhToan">@Model.TinhTrangThanhToan</option>
+                <option>Chưa thanh toán</option>
+                <option>Đã thanh toán</option>
+                <option>Cọc trước</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.TinhTrangThanhToan, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Lưu tình trạng @Model.MaDH" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Quay lại danh sách hóa đơn", "QLHoaDon")
+</div>

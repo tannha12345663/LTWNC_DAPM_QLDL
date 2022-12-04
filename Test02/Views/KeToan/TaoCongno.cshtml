@@ -1,0 +1,86 @@
+﻿@model Test02.Models.PhieuCongNo
+
+@{
+    ViewBag.Title = "TaoCongno";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+          
+
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="header" style="text-align:center">
+                            <h3>PHIẾU CÔNG NỢ</h3>
+                            <form style="text-align:center">
+                                <label for="date">Ngày:</label>
+                                <input type="date" id="clock" class="date" name="ngay"><br>
+
+                            </form>
+                            @*<div class="form-group" style="text-align: right">
+                                @Html.LabelFor(model => model.MaCongNo, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.MaCongNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.MaCongNo, "", new { @class = "text-danger" })
+                            </div>*@
+                        </div>
+
+
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MaDL, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.MaDL, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.MaDL, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TienNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.TienNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.TienNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.HanTra, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.HanTra, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.HanTra, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.TrangThai, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <select class="form-control" id="TrangThai" name="TrangThai">
+                                    <option selected>Chưa xét duyệt</option>
+                                    <option>Đã xét duyệt</option>
+                                    <option>Delayed</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Thêm phiếu" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div>
+                    @Html.ActionLink("Quay lại danh sách công nợ", "QLCongno")
+                </div>
+        
+        </div>
+    </div>
+</div>
