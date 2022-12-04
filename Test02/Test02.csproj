@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Authentication.cs" />
+    <Compile Include="App_Start\AuthenticationDL.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Controllers\KeToanController.cs" />
     <Compile Include="Controllers\KhachHangController.cs" />
     <Compile Include="Controllers\KinhDoanhController.cs" />
+    <Compile Include="Controllers\LoginDLController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
     <Compile Include="Controllers\PhieuNhapXuatsController.cs" />
     <Compile Include="Controllers\PhongKhoController.cs" />
@@ -580,6 +582,11 @@
     <Content Include="Views\PhongKho\XoaPhieuNhapKho.cshtml" />
     <Content Include="Views\PhongKho\ChiTietPhieuXuatKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuXuatKho.cshtml" />
+    <Content Include="Views\LoginDL\Login.cshtml" />
+    <Content Include="Views\LoginDL\QuenMK.cshtml" />
+    <Content Include="Views\KhachHang\DonHangDL.cshtml" />
+    <Content Include="Views\KhachHang\DetailsDH.cshtml" />
+    <Content Include="Views\KhachHang\DeleteDH.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
