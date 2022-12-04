@@ -1,4 +1,4 @@
-﻿@model Test02.Models.ChiTietDonHang
+﻿@model Test02.Models.DonHang
 @using Test02.Models;
 @{
     ViewBag.Title = "TaoHD";
@@ -8,7 +8,17 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 
 }
+@{
+    if (TempData["mess"] != null)
+    {
+        <script>alert("Đơn hàng đã có hóa đơn !!!");</script>
+
+    }
+}
+
+
 <div class="row">
+
     <div class="col-md-12">
         <div class="tile" style="padding:30dp">
             <h3 style="text-align:center">TẠO HÓA ĐƠN</h3>
@@ -17,40 +27,35 @@
             {
                 @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
+                <div class="form-horizontal">
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            <p> <strong>Mã đơn hàng: </strong>@Html.DisplayFor(model => model.MaDH)</p>
+                    <p> <strong>Mã đơn hàng: </strong>@Html.DisplayFor(model => model.MaDH)</p>
 
-            @{ var mahd = db.HoaDons.Where(s => s.MaDH == Model.MaDH).FirstOrDefault(); ;
+                    <p><strong>Mã đại lý:</strong> @Html.DisplayFor(model => model.MaDL)</p>
 
-            }
-            <p><strong>Mã hóa đơn:</strong> @mahd.MaHD</p>
+                    @{
+                        var tendl = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
+                    }
+                    <p><strong>Tên đại lý:</strong> @tendl.TenDL</p>
+                    <p><strong>Ngày lập đơn hàng: </strong> @Html.DisplayFor(model => model.NgayLap)</p>
 
-            @{ var mahd1 = db.DonHangs.Where(s => s.MaDH == Model.MaDH).FirstOrDefault(); ;
-            }
-            <p><strong>Mã đại lý:</strong> @mahd1.MaDL</p>
-
-            @{ var madh = db.DonHangs.Where(s => s.MaDH == Model.MaDH).FirstOrDefault(); ;
-                var tendl = db.DaiLies.Where(s => s.MaDL == madh.MaDL).FirstOrDefault();
-            }
-            <p><strong>Tên đại lý:</strong> @tendl.TenDL</p>
-            <p><strong>Ngày lập đơn hàng: </strong> @mahd1.NgayLap</p>
-
-            @{ var tongien = string.Format("{0:0,0 vnđ}", Model.ThanhTien);}
-            <p> <strong>Thành tiền: </strong>@Html.DisplayFor(model => tongien)</p>
+                    @{ var tongien = string.Format("{0:0,0 vnđ}", Model.TongTien);}
+                    <p> <strong>Thành tiền: </strong>@Html.DisplayFor(model => tongien)</p>
 
 
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Thêm hóa đơn" class="btn btn-default" />
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Thêm hóa đơn" class="btn btn-default" id="submitButton" />
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-        </div>
-            }
 
+            }
+            
             <div>
                 @Html.ActionLink("Quay lại danh sách hóa đơn", "QLyDonHangKeToan")
             </div>

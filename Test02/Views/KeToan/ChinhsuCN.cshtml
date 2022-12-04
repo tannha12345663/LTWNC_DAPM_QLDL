@@ -1,36 +1,42 @@
 ﻿@model Test02.Models.PhieuCongNo
+@using Test02.Models;
 
 @{
     ViewBag.Title = "ChinhsuCN";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
 
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
-
+            <h4 style="align-content:center">Phiếu Công nợ @Model.MaCongNo</h4>
 
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.MaCongNo)
+                @Html.HiddenFor(model => model.MaDL)
+                @Html.HiddenFor(model => model.TienNo)
 
+                <p>
+                    <strong>Mã công nợ:</strong>
+                    @Html.DisplayFor(model => model.MaCongNo);
+                </p>
+                <p><strong>Mã đại lý:</strong> @Html.DisplayFor(model => model.MaDL)</p>
+                <p>
+                    <strong>Tên đại lý:</strong> @{ var madh = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
+                    }
+                    @Html.DisplayFor(model => madh.TenDL);
+                </p>
+                
+                <p>
+                    <strong>Tiền nợ:</strong> @{ var ThanhTien = string.Format("{0:0,0 vnđ}", Model.TienNo);}
+                    @Html.DisplayFor(modelItem => ThanhTien)
+                </p>
                 <div class="form-horizontal">
-                    <h4 style="align-content:center">Phiếu Công nợ @Model.MaCongNo</h4>
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                    @Html.HiddenFor(model => model.MaCongNo)
-                    @Html.HiddenFor(model => model.MaDL)
-
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.TienNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.TienNo, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.TienNo, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
+ 
                     <div class="form-group">
                         @Html.LabelFor(model => model.HanTra, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -63,6 +69,6 @@
             <div>
                 @Html.ActionLink("Quay lại danh sách công nợ", "QLCongno")
             </div>
-</div>
-</div>
+        </div>
+    </div>
 </div>

@@ -1,86 +1,62 @@
-﻿@model Test02.Models.PhieuCongNo
+﻿@model Test02.Models.DonHang
+@using Test02.Models;
 
 @{
     ViewBag.Title = "TaoCongno";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    List<DonHang> dh = db.DonHangs.ToList();
 }
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
-          
-
-
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-
-                    <div class="form-horizontal">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="header" style="text-align:center">
-                            <h3>PHIẾU CÔNG NỢ</h3>
-                            <form style="text-align:center">
-                                <label for="date">Ngày:</label>
-                                <input type="date" id="clock" class="date" name="ngay"><br>
-
-                            </form>
-                            @*<div class="form-group" style="text-align: right">
-                                @Html.LabelFor(model => model.MaCongNo, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.MaCongNo, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.MaCongNo, "", new { @class = "text-danger" })
-                            </div>*@
-                        </div>
 
 
 
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.MaDL, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.MaDL, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.MaDL, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+            <div class="form-horizontal">
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.TienNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.TienNo, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.TienNo, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.HanTra, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.HanTra, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.HanTra, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        @*<div class="form-group">
-                            @Html.LabelFor(model => model.TrangThai, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <select class="form-control" id="TrangThai" name="TrangThai">
-                                    <option selected>Chưa xét duyệt</option>
-                                    <option>Đã xét duyệt</option>
-                                    <option>Delayed</option>
-                                </select>
-                                @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
-                            </div>
-                        </div>*@
-
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Thêm phiếu" class="btn btn-default" />
-                            </div>
-                        </div>
-                    </div>
+                <p> <strong>Mã đại lý: </strong>@Html.DisplayFor(model => model.MaDL)</p>
+                @{
+                    var tendl = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
                 }
+                <p><strong>Tên đại lý:</strong> @Html.DisplayFor(model => tendl.TenDL)</p>
+                <p><strong>Địa chỉ:</strong> @Html.DisplayFor(model => tendl.DiaChi)</p>
+                <p>
+                    <strong>Loại đại lý:</strong> @{
+                        var loai = db.LoaiDLs.Where(s => s.MaLoaiDL == tendl.MaLoaiDL).FirstOrDefault();
+                    }@Html.DisplayFor(model => loai.TenDaiLy)
+                </p>
 
-                <div>
-                    @Html.ActionLink("Quay lại danh sách công nợ", "QLCongno")
+                @{
+                    int count = 0;
+                    for (int i = 0; i < dh.Count; i++)
+                    {
+
+                        if ((dh[i].TinhTrangThanhToan == "Chưa thanh toán") && Model.MaDH == dh[i].MaDH)
+                        {
+                            count = (int)(count + dh[i].TongTien);
+                        }
+                    }
+                }
+                <p><strong>Tiền nợ:</strong> @Html.DisplayFor(model => count)</p>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Thêm phiếu" class="btn btn-default" />
+                    </div>
                 </div>
-        
+            </div>
+            }
+
+            <div>
+                @Html.ActionLink("Quay lại danh sách đại lý", "DSDaily")
+            </div>
+
         </div>
     </div>
 </div>

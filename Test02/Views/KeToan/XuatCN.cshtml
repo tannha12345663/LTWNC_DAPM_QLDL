@@ -1,0 +1,77 @@
+﻿@model Test02.Models.PhieuCongNo
+
+@using Test02.Models;
+
+
+    @{
+        ViewBag.Title = "XuatCN";
+        Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+        QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+
+                    <h3 style="text-align:center">PHIẾU CÔNG NỢ</h3>
+                    <div style="text-align:center">
+                        <p><strong>Ngày:</strong></p>
+                        <p><strong>Mã công nợ:</strong>@Html.DisplayFor(model => model.MaCongNo)</p>
+                    </div>
+
+                    <p>
+                        <strong>Tên đại lý:</strong>
+                        @{
+                            var dl = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
+                        }
+                        @Html.DisplayFor(model => dl.TenDL);
+                    </p>
+                    <p>
+                        <strong>Loại đại lý:</strong>
+                        @{
+                            var loaidl = db.LoaiDLs.Where(s => s.MaLoaiDL == dl.MaLoaiDL).FirstOrDefault();
+                        }
+                        @Html.DisplayFor(model => loaidl.TenDaiLy);
+                    </p>
+                    <p>
+                        <strong>Địa chỉ:</strong>
+
+                        @Html.DisplayFor(model => dl.DiaChi);
+                    </p>
+                    <p>
+                        <strong>Tiền nợ:</strong>
+
+                        @Html.DisplayFor(model => Model.TienNo);
+                    </p>
+
+
+                    <div class="row element-button">
+                        <div class="col-sm-12">
+                            <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
+                                <i class="fas fa-print"></i> In dữ liệu
+                            </a>
+                        </div>
+                       
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        //In dữ liệu
+        var myApp = new function () {
+            this.printTable = function () {
+                var tab = document.getElementById('sampleTable');
+                var win = window.open('', '', 'height=800px,width=1200px');
+                win.document.write(tab.outerHTML);
+                win.document.close();
+                win.print();
+            }
+        }
+    </script>
+
+

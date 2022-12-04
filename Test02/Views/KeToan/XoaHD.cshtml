@@ -17,12 +17,12 @@
                 <hr />
                 <p> <strong>Mã hóa đơn: </strong>@Html.DisplayFor(model => model.MaHD)</p>
                 <p> <strong>Mã Nhân viên tiếp nhận: </strong>@Html.DisplayFor(model => model.TenDVTiepNhan)</p>
-                @{ var mahd = db.DonHangs.Where(s => s.MaDH == Model.MaDH).FirstOrDefault(); ;
+                @{ var mahd = db.DonHangs.Where(s => s.MaDH == Model.MaDH).FirstOrDefault() ;
                 }
                 <p><strong>Mã đại lý:</strong> @mahd.MaDL</p>
 
-                @{
-                    var tendl = db.DaiLies.Where(s => s.MaDL == mahd.MaDL).FirstOrDefault();
+                @{var hd = db.DonHangs.Where(s => s.MaDH == Model.MaDH).FirstOrDefault();
+                    var tendl = db.DaiLies.Where(s => s.MaDL == hd.MaDL).FirstOrDefault();
                 }
                 <p><strong>Tên đại lý:</strong> @tendl.TenDL</p>
 
