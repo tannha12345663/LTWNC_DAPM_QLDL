@@ -6,7 +6,7 @@
     ViewBag.dsdl = "active";
     ViewBag.nd = "Danh sách đại lý";
     QuanLyDLEntities2 database = new QuanLyDLEntities2();
-    List<LoaiDL> LoaiDL = database.LoaiDLs.ToList();
+    List<PhieuCongNo> congno = database.PhieuCongNoes.ToList();
 }
 
 <div class="row">
@@ -24,12 +24,12 @@
                         </a>
                     </div>
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDL"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                        <a class="btn btn-delete btn-sm print-file" type="button" title="Sao chép" href="~/KeToan/DSDaily"><i class="fas fa-copy"></i> Làm mới danh sách</a>
                     </div>
 
                 </div>
-                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    <div class="row">
+         
+                    @*<div class="row">
 
 
                         <div class="col-md-1">
@@ -37,17 +37,17 @@
                                 <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="row">
                         <div class="col-sm-12">
-                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                            <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đại lý: activate to sort column ascending" style="width: 50px;">Mã đại lý</th>
                                         <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý:: activate to sort column ascending" style="width: 150px;">Tên đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Loại đại lý</th>
-                                        @*<th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý:: activate to sort column ascending" style="width: 150px;">Tổng công nợ</th>*@
+                                        <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý:: activate to sort column ascending" style="width: 150px;">Tổng công nợ</th>
                                         <th width="100" class="sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
                                     </tr>
                                 </thead>
@@ -68,7 +68,23 @@
                                             }
                                             @Html.DisplayFor(modelItem => tenldk.TenDaiLy)
                                         </td>
-   
+                                        <td>
+                                            @{
+                                                var tongno = 0;
+                                                for (int i = 0; i < congno.Count; i++)
+                                                {
+                                                    if (item.MaDL == congno[i].MaDL && congno[i].TrangThai == "Chưa thanh toán")
+                                                    {
+                                                        tongno = (int)(tongno + congno[i].TienNo);
+                                                    }
+                                                }
+
+                                            }
+                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}",tongno);}
+                                            @Html.DisplayFor(modelItem => ThanhTien)
+                                         
+                                        </td>
+
                                         <td>
 
                                             <a href="~/KeToan/CongnoDL/@item.MaDL" class="btn btn-primary btn-sm edit">
@@ -86,7 +102,7 @@
             </div>
         </div>
     </div>
-</div>
+
 <script>
     //In dữ liệu
     var myApp = new function () {
@@ -98,6 +114,13 @@
             win.print();
         }
     }
+
+    // tim kiem
+    oTable = $('#sampleTable').dataTable();
+    $('#all').click(function (e) {
+        $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
+        e.stopImmediatePropagation();
+    });
 </script>
 
 

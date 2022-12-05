@@ -1,0 +1,126 @@
+﻿@model Test02.Models.PhieuCongNo
+@using Test02.Models;
+@{
+    ViewBag.Title = "ChitietCN";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    List<DonHang> donhang = db.DonHangs.ToList();
+    ViewBag.cn = "active";
+    ViewBag.nd = "Xuất phiếu công nợ";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile" id="body">
+            @{
+                DateTime ngay = (DateTime)(Model.NgayLapCN);
+                int thang = ngay.Month;
+
+                var daily = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
+                var loaidaily = db.LoaiDLs.Where(s => s.MaLoaiDL == daily.MaLoaiDL).FirstOrDefault();
+            }
+
+            <div>
+                <div style="text-align:center">
+                    <h4>PHIẾU CÔNG NỢ</h4>
+                    <p> <strong>Ngày: </strong>@Html.DisplayFor(model => model.NgayLapCN)</p>
+                    <p> <strong>Mã công nợ: </strong>@Html.DisplayFor(model => model.MaCongNo)</p>
+                </div>
+
+
+                <p> <strong>Tên đại lý: </strong>@Html.DisplayFor(model => daily.TenDL)</p>
+                <p> <strong>Loại đại lý: </strong>@Html.DisplayFor(model => loaidaily.MaLoaiDL)</p>
+                <p> <strong>Địa chỉ: </strong>@Html.DisplayFor(model => daily.DiaChi)</p>
+                <p> <strong>Hạn trả: </strong>@Html.DisplayFor(model => model.HanTra)</p>
+                <p> <strong>Phiếu công nợ tháng: </strong>@thang</p>
+
+
+
+
+                @{ var tongien = string.Format("{0:0,0 vnđ}", Model.TienNo);}
+                <p> <strong>Thành tiền: </strong>@Html.DisplayFor(model => tongien)</p>
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                            @*//Phần render từng dòng trong C#*@
+                            <thead>
+                                <tr role="row" style="text-align:center">
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã sản phẩm: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
+                                    <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Số lượng: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
+                                    <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Số lượng: activate to sort column ascending" style="width: 100px;">Địa điểm giao hàng</th>
+                                    <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Thành tiền: activate to sort column ascending" style="width: 120px;">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var total = 0;
+                                }
+                                @for (int i = 0; i < donhang.Count; i++)
+                                {
+                                    DateTime ngayhd = (DateTime)(donhang[i].NgayLap);
+
+
+                                    if ((donhang[i].MaDL == Model.MaDL) && ngay.Month == ngayhd.Month)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => donhang[i].MaDH)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => donhang[i].NgayLap)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => donhang[i].DiemGiao)
+                                            </td>
+
+
+                                            <td>
+                                                @{ total += Convert.ToInt32(donhang[i].TongTien);}
+                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", donhang[i].TongTien);}
+                                                @Html.DisplayFor(modelItem => ThanhTien)
+
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                <tr>
+                                    <th colspan="3">Tổng cộng tiền nợ:</th>
+                                    @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                    <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="row element-button">
+        <div class="col-sm-12">
+            <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
+                <i class="fas fa-print"></i> In dữ liệu
+            </a>
+            @Html.ActionLink("Quay lại", "QLCongno")
+        </div>
+
+    </div>
+</div>
+
+<script>
+    //In dữ liệu
+    var myApp = new function () {
+        this.printTable = function () {
+            var tab = document.getElementById('body');
+            var win = window.open('', '', 'height=800px,width=1200px');
+            win.document.write(tab.outerHTML);
+            win.document.close();
+            win.print();
+        }
+    }
+</script>

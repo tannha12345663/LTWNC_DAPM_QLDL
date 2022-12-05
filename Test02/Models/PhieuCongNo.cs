@@ -19,6 +19,7 @@ namespace Test02.Models
         public Nullable<double> TienNo { get; set; }
         public Nullable<System.DateTime> HanTra { get; set; }
         public string TrangThai { get; set; }
+        public Nullable<System.DateTime> NgayLapCN { get; set; }
     
         public virtual DaiLy DaiLy { get; set; }
     }

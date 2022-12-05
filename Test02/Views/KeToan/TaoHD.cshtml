@@ -6,12 +6,20 @@
     ViewBag.qldonhangkt = "active";
     ViewBag.nd = "Tạo hóa đơn";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    List<ChiTietDonHang> chiTietDonHangs = db.ChiTietDonHangs.ToList();
 
 }
 @{
     if (TempData["mess"] != null)
     {
-        <script>alert("Đơn hàng đã có hóa đơn !!!");</script>
+     <script>
+         swal({
+             title: "Đơn hàng đã có hóa đơn !!!!",
+             icon: "warning",
+             button: "Thoát",
+         });
+
+    </script>
 
     }
 }
@@ -20,39 +28,86 @@
 <div class="row">
 
     <div class="col-md-12">
-        <div class="tile" style="padding:30dp">
+        <div class="tile">
             <h3 style="text-align:center">TẠO HÓA ĐƠN</h3>
 
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
 
-                <div class="form-horizontal">
+        <div class="form-horizontal">
 
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                    <p> <strong>Mã đơn hàng: </strong>@Html.DisplayFor(model => model.MaDH)</p>
+            <p> <strong>Mã đơn hàng: </strong>@Html.DisplayFor(model => model.MaDH)</p>
 
-                    <p><strong>Mã đại lý:</strong> @Html.DisplayFor(model => model.MaDL)</p>
+            <p><strong>Mã đại lý:</strong> @Html.DisplayFor(model => model.MaDL)</p>
 
-                    @{
-                        var tendl = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
-                    }
-                    <p><strong>Tên đại lý:</strong> @tendl.TenDL</p>
-                    <p><strong>Ngày lập đơn hàng: </strong> @Html.DisplayFor(model => model.NgayLap)</p>
+            @{
+                var tendl = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
+            }
+            <p><strong>Tên đại lý:</strong> @tendl.TenDL</p>
+            <p><strong>Ngày lập đơn hàng: </strong> @Html.DisplayFor(model => model.NgayLap)</p>
 
-                    @{ var tongien = string.Format("{0:0,0 vnđ}", Model.TongTien);}
-                    <p> <strong>Thành tiền: </strong>@Html.DisplayFor(model => tongien)</p>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                        @*//Phần render từng dòng trong C#*@
+                        <thead>
+                            <tr role="row" style="text-align:center">
+                                <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã sản phẩm: activate to sort column ascending" style="width: 100px;">Mã sản phẩm</th>
+                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Số lượng: activate to sort column ascending" style="width: 100px;">Số lượng</th>
+                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Thành tiền: activate to sort column ascending" style="width: 120px;">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var total = 0;
+                            }
+                            @for (int item=0;item<chiTietDonHangs.Count;item++)
+                            {
+                                if (chiTietDonHangs[item].MaDH == Model.MaDH)
+                                {
+                                <tr>
 
+                                    <td>
+                                        @Html.DisplayFor(modelItem => chiTietDonHangs[item].MaSP)
+                                    </td>
+                                   
+                                    <td>
+                                        @Html.DisplayFor(modelItem => chiTietDonHangs[item].SoLuong)
+                                    </td>
+                                   
 
+                                    <td>
+                                        @{ total += Convert.ToInt32(chiTietDonHangs[item].ThanhTien);}
+                                        @{ var ThanhTien = string.Format("{0:0,0 vnđ}", chiTietDonHangs[item].ThanhTien);}
+                                        @Html.DisplayFor(modelItem => ThanhTien)
 
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Thêm hóa đơn" class="btn btn-default" id="submitButton" />
-                        </div>
-
-                    </div>
+                                    </td>
+                                </tr>
+                                 }
+                              }
+                            <tr>
+                                <th colspan="2">Tổng cộng hóa đơn:</th>
+                                @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                            </tr>
+                    </table>
                 </div>
+            </div>
+
+            @*@{ var tongien = string.Format("{0:0,0 vnđ}", Model.TongTien);}
+        <p> <strong>Thành tiền: </strong>@Html.DisplayFor(model => tongien)</p>*@
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Thêm hóa đơn" class="btn btn-default" id="submitButton" />
+                </div>
+
+            </div>
+        </div>
 
             }
             

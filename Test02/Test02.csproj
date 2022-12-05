@@ -603,6 +603,7 @@
     <Content Include="Views\KeToan\Doanhthu.cshtml" />
     <Content Include="Views\KeToan\XuatCN.cshtml" />
     <Content Include="Views\KeToan\ThemCongno.cshtml" />
+    <Content Include="Views\KeToan\ChitietCN.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,9 +13,9 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
-            <div class="tile-body">
+            <div class="tile-body" id="hd">
 
-                <h3 style="text-align:center">HÓA ĐƠN BÁN HÀNG</h3>
+                <h3 style="text-align:center" >HÓA ĐƠN BÁN HÀNG</h3>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
                     @foreach (var item in Model)
@@ -28,7 +28,7 @@
                             </span>
 
                         </p>
-                        <p>
+                        <p style="text-align:center">
                             <strong>Mã hóa đơn:</strong>
                             @Html.DisplayFor(modelItem => hd.MaHD)
                         </p>
@@ -51,7 +51,7 @@
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
-                                    <tr role="row">
+                                    <tr role="row" style="text-align:center">
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã sản phẩm: activate to sort column ascending" style="width: 100px;">Mã sản phẩm</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên sản phẩm: activate to sort column ascending" style="width: 100px;">Tên sản phẩm</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Số lượng: activate to sort column ascending" style="width: 100px;">Số lượng</th>
@@ -104,21 +104,31 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
-                    <i class="fas fa-print"></i> In dữ liệu
-                </a>
-            </div>
+
         </div>
     </div>
 </div>
+<div class="row element-button">
+    <div class="col-sm-2">
+        <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
+            <i class="fas fa-print"></i> In dữ liệu
+        </a>
+    </div>
+    <div class="col-sm-2">
+        <a class="btn btn-danger" type="button" title="Quay lại " href="~/KeToan/QLHoaDon"><i class=""></i> Quay lại</a>
+    </div>
+
+</div>
+
 <script>
     //In dữ liệu
     var myApp = new function () {
         this.printTable = function () {
-            var tab = document.getElementById('sampleTable');
+            var tab = document.getElementById('hd');
+   
             var win = window.open('', '', 'height=800px,width=1200px');
             win.document.write(tab.outerHTML);
+          
             win.document.close();
             win.print();
         }
