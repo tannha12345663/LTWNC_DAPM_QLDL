@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Test02.Models;
+@{ 
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    
+}
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -28,7 +33,7 @@
 
             <!-- User Menu-->
             <li>
-                <a class="app-nav__item" href="PageSanPham"><i class='bx bx-log-out bx-rotate-180'></i> </a>
+                <a class="app-nav__item" href="@Url.Action("Logout", "LoginDL")" ><i class='bx bx-log-out bx-rotate-180'></i> </a>
 
             </li>
         </ul>
@@ -40,7 +45,12 @@
             <img class="app-sidebar__user-avatar" src="~/Content/Img/account.png" width="50px"
                  alt="User Image">
             <div>
-                <p class="app-sidebar__user-name"><b>Diễm Lươn</b></p>
+                <p class="app-sidebar__user-name">
+                    <b>
+                    @{
+                    var user = (Test02.Models.DaiLy)HttpContext.Current.Session["userDL"];
+                    @user.TenDL}
+                </b></p>
                 <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
             </div>
         </div>
@@ -49,35 +59,43 @@
             <li>
                 <a class="app-menu__item haha" href="phan-mem-ban-hang.html">
                     <i class='app-menu__icon bx bx-badge-check'></i>
-                    <span class="app-menu__label">Đại lý loại 1</span>
+                    <span class="app-menu__label">
+                        @{ var ldl = user.MaLoaiDL;
+                            var tendl = db.LoaiDLs.Where(s => s.MaLoaiDL == ldl).FirstOrDefault();}
+                        @tendl.TenDaiLy
+                    </span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item " href="index.html">
+                <a class="app-menu__item  @ViewBag.tcdl" href="PageSanPham">
                     <i class='app-menu__icon bx bx-tachometer'></i><span class="app-menu__label">Trang chủ</span>
                 </a>
             </li>
-            <!-- <li><a class="app-menu__item active" href="table-data-table.html"><i class='app-menu__icon bx bx-id-card'></i>
-                <span class="app-menu__label">Quản lý nhân viên</span></a></li>
-            <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-user-voice'></i><span
-                  class="app-menu__label">Quản lý khách hàng</span></a></li>
-            <li><a class="app-menu__item" href="table-data-product.html"><i
-                  class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý sản phẩm</span></a>
+            <li>
+                <a class="app-menu__item @ViewBag.dhdl" href="DonHangDL">
+                    <i class='app-menu__icon bx bx-id-card'></i>
+                    <span class="app-menu__label">Hóa đơn đặt hàng</span>
+                </a>
             </li>
-            <li><a class="app-menu__item" href="table-data-oder.html"><i class='app-menu__icon bx bx-task'></i><span
-                  class="app-menu__label">Quản lý đơn hàng</span></a></li>
-            <li><a class="app-menu__item" href="table-data-banned.html"><i class='app-menu__icon bx bx-run'></i><span
-                  class="app-menu__label">Quản lý nội bộ
-                </span></a></li>
-            <li><a class="app-menu__item" href="table-data-money.html"><i class='app-menu__icon bx bx-dollar'></i><span
-                  class="app-menu__label">Bảng kê lương</span></a></li>
-            <li><a class="app-menu__item" href="quan-ly-bao-cao.html"><i
-                  class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Báo cáo doanh thu</span></a>
-            </li>
-            <li><a class="app-menu__item" href="page-calendar.html"><i class='app-menu__icon bx bx-calendar-check'></i><span
-                  class="app-menu__label">Lịch công tác </span></a></li>
-            <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-cog'></i><span class="app-menu__label">Cài
-                  đặt hệ thống</span></a></li> -->
+            <!-- <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-user-voice'></i><span
+          class="app-menu__label">Quản lý khách hàng</span></a></li>
+    <li><a class="app-menu__item" href="table-data-product.html"><i
+          class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý sản phẩm</span></a>
+    </li>
+    <li><a class="app-menu__item" href="table-data-oder.html"><i class='app-menu__icon bx bx-task'></i><span
+          class="app-menu__label">Quản lý đơn hàng</span></a></li>
+    <li><a class="app-menu__item" href="table-data-banned.html"><i class='app-menu__icon bx bx-run'></i><span
+          class="app-menu__label">Quản lý nội bộ
+        </span></a></li>
+    <li><a class="app-menu__item" href="table-data-money.html"><i class='app-menu__icon bx bx-dollar'></i><span
+          class="app-menu__label">Bảng kê lương</span></a></li>
+    <li><a class="app-menu__item" href="quan-ly-bao-cao.html"><i
+          class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Báo cáo doanh thu</span></a>
+    </li>
+    <li><a class="app-menu__item" href="page-calendar.html"><i class='app-menu__icon bx bx-calendar-check'></i><span
+          class="app-menu__label">Lịch công tác </span></a></li>
+    <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-cog'></i><span class="app-menu__label">Cài
+          đặt hệ thống</span></a></li> -->
         </ul>
     </aside>
     <main class="app-content">
@@ -91,9 +109,9 @@
         <div class="row element-button">
             <div class="col-sm-2">
 
-                <a class="btn btn-add btn-sm" href="form-add-nhan-vien.html" title="Thêm">
+                <a class="btn btn-add btn-sm" href="https://forms.gle/kK8TNpb1pQooGcQ77" title="Thêm" target="_blank">
                     <i class="fas fa-plus"></i>
-                    Đặt hàng qua google from
+                    Đặt hàng qua google form
                 </a>
             </div>
         </div>

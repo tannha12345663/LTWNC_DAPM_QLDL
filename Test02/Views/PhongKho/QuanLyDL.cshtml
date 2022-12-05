@@ -1,7 +1,7 @@
 ﻿
 @using Test02.Models;
 @{
-    ViewBag.Title = "QuanLyDL";
+    ViewBag.Title = "Quản lý sản phẩm";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.hh = "active";
     ViewBag.Name = "Quản lý hàng hóa";
@@ -48,31 +48,35 @@
                             <th>Đơn vị tính</th>
                             <th>Ngày sản xuất</th>
                             <th>Hạn sử dụng</th>
+                            <th>Tổng tồn</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in dssp)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MaSP)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TenSP)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Gia)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DonViTinh)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NgaySX)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.HanSD)
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaSP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenSP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Gia)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DonViTinh)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgaySX)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HanSD)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TongTon)
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

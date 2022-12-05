@@ -94,7 +94,7 @@ namespace Test02.Controllers
             }
             Session["Mactkho"] = mactk.MaCTKho;
             Session["Makho"] = mactk.MaKho;
-
+            
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
             return View(mactk);
@@ -111,6 +111,19 @@ namespace Test02.Controllers
             {
                 chiTietKho.MaCTKho = (string)Session["Mactkho"];
                 chiTietKho.MaKho = (string)Session["Makho"];
+                if (chiTietKho.SoLuong <= 100 && chiTietKho.SoLuong > 0)
+                {
+                    chiTietKho.TinhTrang = "Sắp hết hàng";
+                }
+                else if (chiTietKho.SoLuong > 100 && chiTietKho.SoLuong < 1000)
+                {
+                    chiTietKho.TinhTrang = "Còn hàng";
+                }
+                //var ktra = (System.DateTime.Now - chiTietKho.NgayXuat);
+                else if (chiTietKho.SoLuong >= 1000)
+                {
+                    chiTietKho.TinhTrang = "Tồn kho";
+                }
                 database.Entry(chiTietKho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();
                 return RedirectToAction("QuanLyKho");
