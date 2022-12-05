@@ -9,6 +9,21 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@{
+    var checkmess = (string)TempData["messageAlert"];
+    if (checkmess == "Đã thêm mới sản phẩm")
+    {
+        <script>
+            swal({
+                title: "Thêm sản phẩm thành công",
+                text: "Mã sản phẩm @TempData["maspTT"] đã được thêm mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    };
+}
 <div class="row">
     <div class="col-md-12">
         <div class="tile">

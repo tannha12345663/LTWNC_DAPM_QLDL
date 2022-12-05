@@ -6,7 +6,21 @@
     ViewBag.nd = "Thêm mới đại lý";
     ViewBag.dl = "active";
 }
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@{
+    var checkmess = (string)TempData["messageAlert"];
+    if (checkmess == "Đã thêm mới loại đại lý")
+    {
+        <script>
+            swal({
+                title: "Thêm loại đại lý thành công",
+                text: "Loại đại lý đã được thêm mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    };
+}
 <div class="tile">
     <h3 class="tile-title">Tạo mới đại lý</h3>
     <div class="tile-body">
@@ -14,7 +28,7 @@
             <div class="col-sm-2">
                 <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
                     <b>
-                        <i class="fas fa-folder-plus"></i> Tạo chức vụ mới
+                        <i class="fas fa-folder-plus"></i> Tạo loại đại lý
                     </b>
                 </a>
             </div>
@@ -72,4 +86,42 @@
     </div>
 </div>
 
-
+<!--
+  MODAL
+-->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="~/KinhDoanh/ThemLDL" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group  col-md-12">
+                            <span class="thong-tin-thanh-toan">
+                                <h5>Tạo loại đại lý mới</h5>
+                            </span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Nhập loại đại lý</label>
+                            <input class="form-control text-box single-line" id="TenDaiLy" name="TenDaiLy" type="text"required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Nhập chiết khấu</label>
+                            <input class="form-control" id="ChietKhau" name="ChietKhau" type="text" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Thêm mới loại đại lý" class="btn btn-save" />
+                        <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                        <BR>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--
+MODAL
+-->

@@ -31,6 +31,7 @@ namespace Test02.Controllers
             ViewBag.MaLoaiDL = new SelectList(database.LoaiDLs, "MaLoaiDL", "TenDaiLy");
             return View();
         }
+
         public ActionResult ChinhSuaDL(string id)
         {
             if (id == null)
@@ -168,6 +169,18 @@ namespace Test02.Controllers
 
             return View(donHang);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ThemLDL(LoaiDL loaiDL)
+        {
+            Random rd = new Random();
+            var madl = "LDL" + rd.Next(1, 1000);
+            loaiDL.MaLoaiDL = madl;
+            database.LoaiDLs.Add(loaiDL);
+            database.SaveChanges();
+            TempData["messageAlert"] = "Đã thêm mới loại đại lý";
+            return RedirectToAction("ThemDL");
+        }
         //Thêm mới chi tiết đơn hàng bán tự động
         public ActionResult ThemCTHD()
         {
@@ -199,7 +212,8 @@ namespace Test02.Controllers
                 
                 database.ChiTietDonHangs.Add(chiTietDonHang);
                 database.SaveChanges();
-                
+                TempData["messageAlert"] = "Đã thêm mới đơn hàng";
+                TempData["themmadh"] = chiTietDonHang.MaDH;
                 return RedirectToAction("QuanLyDH");
                 
             }
@@ -328,6 +342,8 @@ namespace Test02.Controllers
                 }
                 database.ChiTietDonHangs.Add(chiTietDonHang);
                 database.SaveChanges();
+                TempData["messageAlert"] = "Đã cập nhật chi tiết đơn hàng";
+                TempData["capnhatdh"] = chiTietDonHang.MaDH;
                 return RedirectToAction("QuanLyDH");
 
             }
@@ -455,6 +471,8 @@ namespace Test02.Controllers
                 sanPham.MaSP = themSP;
                 database.SanPhams.Add(sanPham);
                 database.SaveChanges();
+                TempData["messageAlert"] = "Đã thêm mới sản phẩm";
+                TempData["maspTT"] = sanPham.MaSP;
                 return RedirectToAction("QuanLySP");
             }
 

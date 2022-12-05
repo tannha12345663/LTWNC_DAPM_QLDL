@@ -8,6 +8,33 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
 }
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@{
+    var checkmess = (string)TempData["messageAlert"];
+    if (checkmess == "Đã thêm mới đơn hàng")
+    {
+        <script>
+            swal({
+                title: "Thêm đơn hàng thành công",
+                text: "Mã đơn hàng @TempData["themmadh"] đã được thêm mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "Đã cập nhật chi tiết đơn hàng")
+    {
+        <script>
+            swal({
+                title: "Đặt thêm sản phẩm thành công",
+                text: "Mã đơn hàng @TempData["capnhatdh"] đã được cập nhật",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    ;
+}
 
 <div class="row">
     <div class="col-md-12">
@@ -74,8 +101,8 @@
                                                 @Html.DisplayFor(modelItem => item.TrangThai)
                                             </td>
                                             <td>
-                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
-                                                </td>
+                                                @Html.DisplayFor(modelItem => item.DiemGiao)
+                                            </td>
                                             <td>
                                                 @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                                 @Html.DisplayFor(modelItem => ThanhTien)
@@ -88,8 +115,8 @@
                                                     <i class="fa fa-edit"></i>
                                                 </a> ||
                                                 @*<a href="/KinhDoanh/ChinhSuaCTDH/@item.MaDH" class="btn btn-outline-primary btn-sm edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a> ||*@
+                                                        <i class="fas fa-edit"></i>
+                                                    </a> ||*@
                                                 <a href="/KinhDoanh/XoaDH/@item.MaDH" class="btn btn-primary btn-sm trash">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </a> ||

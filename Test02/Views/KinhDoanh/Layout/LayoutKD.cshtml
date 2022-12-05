@@ -107,31 +107,20 @@
             @RenderBody()
         </div>
     </main>
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="js/popper.min.js"></script>
-    <script src="https://unpkg.g.com/boxicons@latest/dist/boxicons.js"></script>
-    <!--===============================================================================================-->
-    <script src="js/bootstrap.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="~/Content/js/main.js"></script>
-    <!--===============================================================================================-->
-    <script src="~/Content/js/plugins/pace.min.js"></script>
-    <!--===============================================================================================-->
-    <script type="text/javascript" src="~/Content/js/plugins/chart.js"></script>
-    <!--===============================================================================================-->
-    <!--===============================================================================================-->
-
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/popper.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-    @*<script src="src/jquery.table2excel.js"></script>*@
-
-    <script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
-
-    <script type="text/javascript" src="~/Scripts/dataTables.bootstrap.min.js"></script>
-
+    <script src="src/jquery.table2excel.js"></script>
+    <script src="~/Content/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="~/Content/js/plugins/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="~/Content/js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/plugins/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
-
     <script type="text/javascript">
         var data = {
             labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6"],
@@ -202,6 +191,16 @@
                     i = "0" + i;
                 }
                 return i;
+            }
+        }
+        //In dữ liệu
+        var myApp = new function () {
+            this.printTable = function () {
+                var tab = document.getElementById('sampleTable');
+                var win = window.open('', '', 'height=700,width=700');
+                win.document.write(tab.outerHTML);
+                win.document.close();
+                win.print();
             }
         }
     </script>
