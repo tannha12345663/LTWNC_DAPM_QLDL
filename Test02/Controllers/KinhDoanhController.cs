@@ -70,6 +70,8 @@ namespace Test02.Controllers
                 daiLy.NgayTao = System.DateTime.Now;
                 database.DaiLies.Add(daiLy);
                 database.SaveChanges();
+                TempData["messageAlert"] = "Đã thêm mới";
+                TempData["TenDLthem"] = daiLy.TenDL;
                 return RedirectToAction("QuanLyDL");
             }
 

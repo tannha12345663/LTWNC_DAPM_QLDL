@@ -25,6 +25,7 @@
                 @Html.HiddenFor(model => model.MaDL)
                 @Html.HiddenFor(model => model.MaNVLap)
                 @Html.HiddenFor(model => model.NgayLap)
+                @Html.HiddenFor(model => model.TinhTrangThanhToan)
 
 
                 <div class="form-group">
@@ -34,7 +35,6 @@
                             <option selected="@Model.TrangThai">@Model.TrangThai</option>
                             <option>Chưa xét duyệt</option>
                             <option>Đã xét duyệt</option>
-                            <option>Đã xử lý</option>
                         </select>
                         @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
                     </div>
@@ -48,20 +48,6 @@
                     </div>
                 </div>
 
-
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TinhTrangThanhToan, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <select class="form-control" id="TinhTrangThanhToan" name="TinhTrangThanhToan">
-                            <option selected="@Model.TinhTrangThanhToan">@Model.TinhTrangThanhToan</option>
-                            <option>Chưa thanh toán</option>
-                            <option>Đã thanh toán</option>
-                            <option>Cọc trước</option>
-                        </select>
-                        @Html.ValidationMessageFor(model => model.TinhTrangThanhToan, "", new { @class = "text-danger" })
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">

@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <!-- Main CSS-->
-    <link rel="stylesheet"  href="~/Content/Test01/main.css">
+    <link rel="stylesheet" href="~/Content/Test01/main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <!-- or -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <!-- Font-icon css-->
-    <link rel="stylesheet" 
+    <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-    
+
 </head>
 <body onload="time()" class="app sidebar-mini rtl">
     <!-- Navbar-->
@@ -44,172 +44,172 @@
                         @{
                             var user = (Test02.Models.NhanVien)HttpContext.Current.Session["user"];
                             @user.TenNV}
-                </b>
-            </p>
-            <p class="app-sidebar__user-designation app-menu__label">Chào mừng bạn trở lại</p>
-        </div>
-    </div>
-    <hr>
-    <ul class="app-menu">
-        <li>
-            <a class="app-menu__item haha" href="#">
-                <i class='app-menu__icon bx bx-cart-alt'></i>
-                <span class="">PHÒNG KHO HÀNG</span>
-            </a>
-        </li>
-        <li>
-            <a class="app-menu__item @ViewBag.tq" href="Test02">
-                <i class='app-menu__icon bx bx-tachometer'></i>
-                <span class="app-menu__label">Tổng quan</span>
-            </a>
-        </li>
-        <li>
-            <a class="app-menu__item @ViewBag.qlk" href="QuanLyKho">
-                <i class='app-menu__icon bx bx-run'></i><span class="app-menu__label">
-                    Quản lý Kho
-                </span>
-            </a>
-        </li>
-        <li>
-            <a class="app-menu__item @ViewBag.hh" href="QuanLyDL">
-                <i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý hàng hóa</span>
-            </a>
-        </li>
-        <li>
-            <a class="app-menu__item @ViewBag.nk" href="NhapKho">
-                <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý phiếu nhập/xuất</span>
-            </a>
-        </li>
-        <li>
-            <a class="app-menu__item @ViewBag.tk" href="TonKho">
-                <i class='app-menu__icon bx bx-run'></i><span class="app-menu__label">
-                    Tồn kho
-                </span>
-            </a>
-        </li>
-        <li>
-            <a class="app-menu__item @ViewBag.bc" href="BaoCao">
-                <i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Kiểm kê / báo cáo</span>
-            </a>
-        </li>
-    </ul>
-</aside>
-<main class="app-content">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="app-title">
-                <ul class="app-breadcrumb breadcrumb">
-                    <li class="breadcrumb-item"><a href="#"><b>@ViewBag.Name</b></a></li>
-                </ul>
-                <div id="clock"></div>
+                    </b>
+                </p>
+                <p class="app-sidebar__user-designation app-menu__label">Chào mừng bạn trở lại</p>
             </div>
         </div>
-    </div>
-    <div>
-        @RenderBody()
-    </div>
-</main>
-<script src="js/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-<script src="js/popper.min.js"></script>
-<script src="https://unpkg.g.com/boxicons@latest/dist/boxicons.js"></script>
-<!--===============================================================================================-->
-<script src="js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-<script src="~/Content/js/main.js"></script>
-<!--===============================================================================================-->
-<script src="~/Content/js/plugins/pace.min.js"></script>
-<!--===============================================================================================-->
-<script type="text/javascript" src="~/Content/js/plugins/chart.js"></script>
-<!--===============================================================================================-->
-<!--===============================================================================================-->
+        <hr>
+        <ul class="app-menu">
+            <li>
+                <a class="app-menu__item haha" href="#">
+                    <i class='app-menu__icon bx bx-cart-alt'></i>
+                    <span class="">PHÒNG KHO HÀNG</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item @ViewBag.tq" href="Test02">
+                    <i class='app-menu__icon bx bx-tachometer'></i>
+                    <span class="app-menu__label">Tổng quan</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item @ViewBag.qlk" href="QuanLyKho">
+                    <i class='app-menu__icon bx bx-run'></i><span class="app-menu__label">
+                        Quản lý Kho
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item @ViewBag.hh" href="QuanLyDL">
+                    <i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý hàng hóa</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item @ViewBag.nk" href="NhapKho">
+                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý phiếu nhập/xuất</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item @ViewBag.tk" href="TonKho">
+                    <i class='app-menu__icon bx bx-run'></i><span class="app-menu__label">
+                        Tồn kho
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item @ViewBag.bc" href="BaoCao">
+                    <i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Kiểm kê / báo cáo</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+    <main class="app-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="app-title">
+                    <ul class="app-breadcrumb breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><b>@ViewBag.Name</b></a></li>
+                    </ul>
+                    <div id="clock"></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            @RenderBody()
+        </div>
+    </main>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="js/popper.min.js"></script>
+    <script src="https://unpkg.g.com/boxicons@latest/dist/boxicons.js"></script>
+    <!--===============================================================================================-->
+    <script src="js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/js/main.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/js/plugins/pace.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="~/Content/js/plugins/chart.js"></script>
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-@*<script src="src/jquery.table2excel.js"></script>*@
+    @*<script src="src/jquery.table2excel.js"></script>*@
 
-<script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
 
-<script type="text/javascript" src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/dataTables.bootstrap.min.js"></script>
 
-<script type="text/javascript">$('#sampleTable').DataTable();</script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
 
-<!--===============================================================================================-->
+    <!--===============================================================================================-->
 
-<script type="text/javascript">
-    var data = {
-        labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6"],
-        datasets: [{
-            label: "Dữ liệu đầu tiên",
-            fillColor: "rgba(255, 213, 59, 0.767), 212, 59)",
-            strokeColor: "rgb(255, 212, 59)",
-            pointColor: "rgb(255, 212, 59)",
-            pointStrokeColor: "rgb(255, 212, 59)",
-            pointHighlightFill: "rgb(255, 212, 59)",
-            pointHighlightStroke: "rgb(255, 212, 59)",
-            data: [20, 59, 90, 51, 56, 100, 40, 60, 78, 53, 33, 81]
-        },
-        {
-            label: "Dữ liệu kế tiếp",
-            fillColor: "rgba(9, 109, 239, 0.651)  ",
-            pointColor: "rgb(9, 109, 239)",
-            strokeColor: "rgb(9, 109, 239)",
-            pointStrokeColor: "rgb(9, 109, 239)",
-            pointHighlightFill: "rgb(9, 109, 239)",
-            pointHighlightStroke: "rgb(9, 109, 239)",
-            data: [48, 48, 49, 39, 86, 10, 50, 70, 60, 70, 75, 90]
-        }
-        ]
-    };
-    var ctxl = $("#lineChartDemo").get(0).getContext("2d");
-    var lineChart = new Chart(ctxl).Line(data);
-
-    var ctxb = $("#barChartDemo").get(0).getContext("2d");
-    var barChart = new Chart(ctxb).Bar(data);
-</script>
-
-<script type="text/javascript">
-    //Thời Gian
-    function time() {
-        var today = new Date();
-        var weekday = new Array(7);
-        weekday[0] = "Chủ Nhật";
-        weekday[1] = "Thứ Hai";
-        weekday[2] = "Thứ Ba";
-        weekday[3] = "Thứ Tư";
-        weekday[4] = "Thứ Năm";
-        weekday[5] = "Thứ Sáu";
-        weekday[6] = "Thứ Bảy";
-        var day = weekday[today.getDay()];
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1;
-        var yyyy = today.getFullYear();
-        var h = today.getHours();
-        var m = today.getMinutes();
-        var s = today.getSeconds();
-        m = checkTime(m);
-        s = checkTime(s);
-        nowTime = h + " giờ " + m + " phút " + s + " giây";
-        if (dd < 10) {
-            dd = '0' + dd
-        }
-        if (mm < 10) {
-            mm = '0' + mm
-        }
-        today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-        tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-            '</span>';
-        document.getElementById("clock").innerHTML = tmp;
-        clocktime = setTimeout("time()", "1000", "Javascript");
-
-        function checkTime(i) {
-            if (i < 10) {
-                i = "0" + i;
+    <script type="text/javascript">
+        var data = {
+            labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6"],
+            datasets: [{
+                label: "Dữ liệu đầu tiên",
+                fillColor: "rgba(255, 213, 59, 0.767), 212, 59)",
+                strokeColor: "rgb(255, 212, 59)",
+                pointColor: "rgb(255, 212, 59)",
+                pointStrokeColor: "rgb(255, 212, 59)",
+                pointHighlightFill: "rgb(255, 212, 59)",
+                pointHighlightStroke: "rgb(255, 212, 59)",
+                data: [20, 59, 90, 51, 56, 100, 40, 60, 78, 53, 33, 81]
+            },
+            {
+                label: "Dữ liệu kế tiếp",
+                fillColor: "rgba(9, 109, 239, 0.651)  ",
+                pointColor: "rgb(9, 109, 239)",
+                strokeColor: "rgb(9, 109, 239)",
+                pointStrokeColor: "rgb(9, 109, 239)",
+                pointHighlightFill: "rgb(9, 109, 239)",
+                pointHighlightStroke: "rgb(9, 109, 239)",
+                data: [48, 48, 49, 39, 86, 10, 50, 70, 60, 70, 75, 90]
             }
-            return i;
-        }
-    }
+            ]
+        };
+        var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+        var lineChart = new Chart(ctxl).Line(data);
 
-</script>
+        var ctxb = $("#barChartDemo").get(0).getContext("2d");
+        var barChart = new Chart(ctxb).Bar(data);
+    </script>
+
+    <script type="text/javascript">
+        //Thời Gian
+        function time() {
+            var today = new Date();
+            var weekday = new Array(7);
+            weekday[0] = "Chủ Nhật";
+            weekday[1] = "Thứ Hai";
+            weekday[2] = "Thứ Ba";
+            weekday[3] = "Thứ Tư";
+            weekday[4] = "Thứ Năm";
+            weekday[5] = "Thứ Sáu";
+            weekday[6] = "Thứ Bảy";
+            var day = weekday[today.getDay()];
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            nowTime = h + " giờ " + m + " phút " + s + " giây";
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+            tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                '</span>';
+            document.getElementById("clock").innerHTML = tmp;
+            clocktime = setTimeout("time()", "1000", "Javascript");
+
+            function checkTime(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+        }
+
+    </script>
 </body>
 </html>

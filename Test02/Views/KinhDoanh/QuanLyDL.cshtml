@@ -9,106 +9,102 @@
     List<LoaiDL> LoaiDL = database.LoaiDLs.ToList();
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="tile">
-            <div class="tile-body">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@{
+    var checkmess = (string)TempData["messageAlert"];
+    var madl = (string)TempData["TenDLthem"];
+    if (checkmess == "Đã thêm mới")
+    {
+        <script>
+            swal({
+                title: "Thêm đại lý thành công",
+                text: "Đại lý @TempData["TenDLthem"] đã được thêm mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    };
+}
 
-                <div class="row element-button">
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDL"><i class="fas fa-file-upload"></i> Thêm mới hồ sơ</a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
-                            <i class="fas fa-print"></i> In dữ liệu
-                        </a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDL"><i class="fas fa-copy"></i> Làm mới danh sách</a>
-                    </div>
-
-                </div>
-                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    <div class="row">
-                        <div class="col-md-1">
-                            <div id="sampleTable_filter" class="dataTables_filter">
-                                <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
-                                @*//Phần render từng dòng trong C#*@
-                                <thead>
-                                    <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 50px;">Mã đại lý</th>
-                                        <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 150px;">Tên đại lý</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Loại đại lý</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa chỉ</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 101px;">Số điện thoại</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa chỉ email</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Ngày tiếp nhận</th>
-                                        <th width="100" class="sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr role="row" class="odd">
-                                        <td>01</td>
-                                        <td>HSG01</td>
-                                        <td>Demo</td>
-                                        <td>123 Phan Xích Long, P.24,Q.Bình Thạnh</td>
-                                        <td>0908455325</td>
-                                        <td>abc@gmail.com</td>
-                                        <td>24/02/2022</td>
-
-                                    </tr>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td style="width: 150px;">
-                                                @Html.DisplayFor(modelItem => item.MaDL)
-                                            </td>
-                                            <td>
-                                                @{var tenldk = database.LoaiDLs.Find(item.MaLoaiDL);
-                                                }
-                                                @Html.DisplayFor(modelItem => tenldk.TenDaiLy)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TenDL)
-                                            </td>
-                                            <td style="width:250px;">
-                                                @Html.DisplayFor(modelItem => item.DiaChi)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.SDT)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Email)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NgayTao)
-                                            </td>
-                                            <td>
-                                                <a href="/KinhDoanh/ChinhSuaDL/@item.MaDL" class="btn btn-primary btn-sm edit">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="/KinhDoanh/Delete/@item.MaDL" class="btn btn-primary btn-sm deleted">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+<div class="col-md-12">
+    <div class="tile">
+        <h3 class="tile-title">Tình trạng đơn hàng</h3>
+        <div class="row element-button">
+            <div class="col-sm-2">
+                <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDL"><i class="fas fa-file-upload"></i> Thêm mới hồ sơ</a>
             </div>
+            <div class="col-sm-2">
+                <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
+                    <i class="fas fa-print"></i> In dữ liệu
+                </a>
+            </div>
+            <div class="col-sm-2">
+                <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDL"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+            </div>
+
         </div>
+        <div>
+            <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                   id="sampleTable">
+                <thead>
+                    <tr>
+                        <th>Mã đại lý</th>
+                        <th>Tên đại lý</th>
+                        <th>Loại đại lý</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Địa chỉ email</th>
+                        <th>Ngày tiếp nhận</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaDL)
+                            </td>
+                            <td>
+                                @{var tenldk = database.LoaiDLs.Find(item.MaLoaiDL);
+                                }
+                                @Html.DisplayFor(modelItem => tenldk.TenDaiLy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenDL)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiaChi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SDT)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgayTao)
+                            </td>
+                            <td>
+                                <a href="/KinhDoanh/ChinhSuaDL/@item.MaDL" class="btn btn-primary btn-sm edit">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="/KinhDoanh/Delete/@item.MaDL" class="btn btn-primary btn-sm deleted">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- / div trống-->
     </div>
 </div>
+
+
+
 <script>
     //In dữ liệu
     var myApp = new function () {
@@ -120,4 +116,10 @@
             win.print();
         }
     }
+    oTable = $('#sampleTable').dataTable();
+    $('#all').click(function (e) {
+        $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
+        e.stopImmediatePropagation();
+    });
+
 </script>
