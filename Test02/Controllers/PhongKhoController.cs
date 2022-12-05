@@ -153,6 +153,8 @@ namespace Test02.Controllers
             var mactk = database.ChiTietKhoes.Where(s => s.MaCTKho == id).FirstOrDefault();
             database.ChiTietKhoes.Remove(mactk);
             database.SaveChanges();
+            TempData["AlertMessage"] = "Đã xóa";
+            TempData["MaCTK"] = mactk.MaCTKho;
             return RedirectToAction("QuanLyKho");
         }
 
@@ -253,7 +255,21 @@ namespace Test02.Controllers
 
         public ActionResult Test02()
         {
-            return View();
+            //tính tổng số kho
+            var total = database.Khoes.ToList().Count;
+            TempData["tongKho"] = total;
+            //tính tổng sản phẩm sắp hết hàng
+            var dssphh = database.ChiTietKhoes.ToList();
+            var total2 = 0;
+            foreach (var item in dssphh)
+            {
+                if (item.TinhTrang == "Sắp hết hàng")
+                {
+                    total2 = total2 + 1;
+                }
+            }
+            TempData["tongSPHH"] = total2;
+                return View(database.Khoes.ToList());
         }
         public ActionResult QuanLyDL()
         {
@@ -449,6 +465,51 @@ namespace Test02.Controllers
         //------------------------------------------Hết phần tồn kho - phiếu xuất---------------------------
         public ActionResult BaoCao()
         {
+            //tính tổng số kho
+            var totalkho = database.Khoes.ToList().Count;
+            TempData["TongKho"] = totalkho;
+            //tính tổng số sản phẩm
+            var totalsp = database.SanPhams.ToList().Count;
+            TempData["Tongsp"] = totalsp;
+            //tính tổng số Phiếu nhập xuất hàng
+            var tongpn = 0;
+            var tongpx = 0;
+            var pnx = database.PhieuNhapXuats.ToList();
+            foreach(var item in pnx)
+            {
+                string str = item.MaPhieu.Substring(0, 2); 
+                if(str == "PX")
+                {
+                    tongpx = tongpx + 1;
+                }
+                else 
+                { 
+                    tongpn = tongpn + 1; 
+                }
+            }
+            TempData["Tongpn"] = tongpn;
+            TempData["Tongpx"] = tongpx;
+            //tính tổng sản phẩm sắp hết hàng
+            var dssphh = database.ChiTietKhoes.ToList();
+            var total2 = 0;
+            foreach (var item in dssphh)
+            {
+                if (item.TinhTrang == "Sắp hết hàng")
+                {
+                    total2 = total2 + 1;
+                }
+            }
+            TempData["TongSPHH"] = total2;
+            //tính tổng sản phẩm tồn kho
+            var total3 = 0;
+            foreach (var item in dssphh)
+            {
+                if (item.TinhTrang == "Tồn kho")
+                {
+                    total3 = total3 + 1;
+                }
+            }
+            TempData["TongSPTK"] = total3;
             //var bienBangKiemKes = database.BienBangKiemKes.Include(b => b.NhanVien).Include(b => b.SanPham);
             return View(database.BienBangKiemKes.ToList().OrderByDescending(s => s.NgayLap));
         }

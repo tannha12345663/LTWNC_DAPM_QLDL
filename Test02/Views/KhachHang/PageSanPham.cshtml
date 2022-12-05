@@ -16,17 +16,43 @@
                     {
                     <div style="margin:10px;">
                         <div class="widget-small primary coloured-icon">
-                            <img src="~/Content/Img/SanPham/7up.jpg" style="height: 100px ; width: 100px;" alt="">
+                            @if (item.MaSP == "SP71")
+                            {
+                                <img src="~/Content/Img/SanPham/stingVang.jpg" style="height: 100px ; width: 100px;" alt="">
+                            }
+                            else if (item.MaSP == "SP84")
+                            {
+                                <img src="~/Content/Img/SanPham/cocalight.jpg" style="height: 100px ; width: 100px;" alt="">
+                            }
+                            else if (item.MaSP == "SP13")
+                            {
+                                <img src="~/Content/Img/SanPham/pepsi.jpg" style="height: 100px ; width: 100px;" alt="">
+                            }
+                            else if (item.MaSP == "SP15")
+                            {
+                                <img src="~/Content/Img/SanPham/coca.png" style="height: 100px ; width: 100px;" alt="">
+                            }
+                            else if (item.MaSP == "SP55")
+                            {
+                                <img src="~/Content/Img/SanPham/cocalight.jpg" style="height: 100px ; width: 100px;" alt="">
+                            }
+                            else if (item.MaSP == "SP01")
+                            {
+                                <img src="~/Content/Img/SanPham/7up.jpg" style="height: 100px ; width: 100px;" alt="">
+                            }
                             <div class="info">
                                 <h4>@Html.DisplayFor(modelItem => item.TenSP)</h4>
-                                <p><b>HSD: @Html.DisplayFor(modelItem => item.HanSD)</b></p>
-                                <p><b>Mã sản phẩm: @Html.DisplayFor(modelItem => item.MaSP)</b></p>
-                                <p><span class="badge bg-info">Chi tiết</span></p> <br />
+                                <p><b>HSD: <b>@Html.DisplayFor(modelItem => item.HanSD)</b></b></p>
+                                <p><b>Mã sản phẩm:<b> @Html.DisplayFor(modelItem => item.MaSP)</b></b></p>
+                                <p><b></b></p>
+                                <p><span class="badge bg-info">
+                                    Số lượng còn lại: @item.TongTon <span>/</span>
+                                    @Html.DisplayFor(modelItem => item.DonViTinh)
+                                </span></p> <br />
                             </div>
                         </div>
                     </div>
-            }
-        
+                    }
                 </div>
             </div>
         </div>

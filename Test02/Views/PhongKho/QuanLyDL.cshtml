@@ -14,72 +14,59 @@
     <div class="col-lg-12">
         <div class="tile">
             <div class="tile-body">
-                <div class="row element-button">
+                <div class="row">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="printDiv('printMe')">
                             <i class="fas fa-print"></i> In dữ liệu
-                        </a>
-                    </div>
-
-                    <div class="col-sm-2">
-                        <a class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
-                    </div>
-
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
-                            <i class="fas fa-print"></i> In dữ liệu
-                        </a>
-                    </div>
-
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)">
-                            <i class="fas fa-trash-alt"></i> Xóa tất cả
                         </a>
                     </div>
                 </div>
-                <h3 class="tile-title" id="sample1" style="text-align:center">DANH SÁCH SẢN PHẨM</h3>
-                <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
-                       id="sampleTable">
-                    <thead>
-                        <tr>
-                            <th>Mã sản phẩm</th>
-                            <th>Tên sản phẩm</th>
-                            <th>Giá</th>
-                            <th>Đơn vị tính</th>
-                            <th>Ngày sản xuất</th>
-                            <th>Hạn sử dụng</th>
-                            <th>Tổng tồn</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in dssp)
-                        {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MaSP)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TenSP)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Gia)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DonViTinh)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NgaySX)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.HanSD)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TongTon)
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
+                <div id="printMe">
+                    <h3 class="tile-title" id="sample1" style="text-align:center">DANH SÁCH SẢN PHẨM</h3>
+                    <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                           id="sampleTable">
+                        <thead>
+                            <tr>
+                                <th>Mã sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Đơn vị tính</th>
+                                <th>Ngày sản xuất</th>
+                                <th>Hạn sử dụng</th>
+                                <th>Tổng tồn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in dssp)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaSP)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenSP)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Gia)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DonViTinh)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NgaySX)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.HanSD)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TongTon)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -98,7 +85,7 @@
                 </div>
                 <h3 class="tile-title" style="text-align:center">SẢN PHẨM SẮP HẾT HÀNG</h3>
                 <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
-                       id="sampleTable">
+                           id="sampleTable">
                     <thead>
                         <tr>
                             <th>Mã Kho</th>
@@ -211,29 +198,15 @@
 </script>
 <script>
     //In dữ liệu
-    var myApp = new function () {
-        this.printTable = function () {
-            var tab = document.getElementById('sampleTable');
-            var tab1 = document.getElementById('sample1');
-            var win = window.open('', '', 'height=700,width=700');
-            win.document.write(tab1.outerHTML);
-            win.document.write(tab.outerHTML);
-            win.document.close();
-            win.print();
-        }
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
     }
 </script>
-<!-- Essential javascripts for application to work-->
-<script src="~/Content/js/jquery-3.2.1.min.js"></script>
-<script src="~/Content/js/popper.min.js"></script>
-<script src="~/Content/js/bootstrap.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="src/jquery.table2excel.js"></script>
-<script src="~/Content/js/main.js"></script>
-<!-- The javascript plugin to display page loading on top-->
-<script src="~/Content/js/plugins/pace.min.js"></script>
-<!-- Page specific javascripts-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<!-- Data table plugin-->
-<script type="text/javascript" src="~/Content/js/plugins/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="~/Content/js/plugins/dataTables.bootstrap.min.js"></script>

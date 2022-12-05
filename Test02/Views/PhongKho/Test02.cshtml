@@ -4,176 +4,83 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Tổng quan";
     ViewBag.tq = "active";
+    
 }
 
 <div class="row">
     <!--Left-->
-    <div class="col-md-12 col-lg-6">
+    <div class="col-md-12 col-lg-12">
         <div class="row">
             <!-- col-6 -->
-            <div class="col-md-12" >
+            <div class="col-6">
                 <a class="widget-small primary coloured-icon @ViewBag.qlk" href="QuanLyKho">
                     <i class='icon bx bxs-user-account fa-3x'></i>
                     <div class="info">
                         <h4>Thông tin kho</h4>
-                        <p><b>Tổng 5 kho được quản lý</b></p>
+                        <p><b>Tổng @TempData["tongKho"] kho được quản lý</b></p>
                         <p class="info-tong">Chịu trách nhiệm quản lý kho hàng: nhập xuất, kiểm kê, báo cáo hàng hóa.</p>
                     </div>
                 </a>
             </div>
             <!-- col-6 -->
-            <div class="col-md-12">
-                <div class="widget-small danger coloured-icon">
+            <div class="col-6">
+                <a class="widget-small danger coloured-icon @ViewBag.hh" href="QuanLyDL">
                     <i class='icon bx bxs-error-alt fa-3x'></i>
                     <div class="info">
                         <h4>Sắp hết hàng</h4>
-                        <p><b>4 sản phẩm</b></p>
+                        <p><b>@TempData["tongSPHH"] sản phẩm</b></p>
                         <p class="info-tong">Số sản phẩm cảnh báo hết cần nhập thêm.</p>
                     </div>
-                </div>
+                </a>
             </div>
-            <!-- col-12 -->
-            <div class="col-md-12">
-                <div class="tile">
-                    <h3 class="tile-title">Danh sách kho hàng</h3>
-                    <div>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th class="sorting" tabindex="0" rowspan="1" colspan="1" aria-label="ID kho hàng: activate to sort column ascending">
-                                    Mã kho hàng
-                                </th>
-                                <th>
-                                    Tên kho
-                                </th>
-                                <th>
-                                    Địa chỉ
-                                </th>
-                            </tr>                            
-                            <tbody>
-                                <tr>
-                                    <td>KO01</td>
-                                    <td>Điện Biên Phủ</td>
-                                    <td>399/43 Điện Biên Phủ, phường 5, Quận 3</td>
-                                </tr>
-                                <tr>
-                                    <td>KO02</td>
-                                    <td>Ba tháng hai</td>
-                                    <td>Số 22 đường 3/2, phường 3, Quận 4</td>
-                                </tr>
-                                <tr>
-                                    <td>KO03</td>
-                                    <td>Sư Vạn Hạnh</td>
-                                    <td>456/43 Sư Vạn Hạnh, phường 5, Quận 7</td>
-                                </tr>
-                                <tr>
-                                    <td>KO04</td>
-                                    <td>Lý Thường Kiệt</td>
-                                    <td>Số 7 Lý Thường Kiệt, phường 5, Quận 7</td>
-                                </tr>
-                                <tr>
-                                    <td>KO05</td>
-                                    <td>Nguyễn Đình Chiểu</td>
-                                    <td>456/43 Nguỹen Đình Chiểu, phường 5, Quận 7</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- / div trống-->
-                </div>
-            </div>
-            <!-- / col-12 -->
-            <!-- col-12 -->
-            <div class="col-md-12">
-                <div class="tile">
-                    <h3 class="tile-title">Sản phẩm mới nhập</h3>
-                    <div>
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Mã sản phẩm</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Đơn vị tính</th>
-                                    <th>Số lượng</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>SU2210</td>
-                                    <td>Seven Up</td>
-                                    <td>Chai</td>
-                                    <td><span class="tag tag-success">3075</span></td>
-                                </tr>
-                                <tr>
-                                    <td>ST5681</td>
-                                    <td>Sting</td>
-                                    <td>Chai</td>
-                                    <td><span class="tag tag-warning">962</span></td>
-                                </tr>
-                                <tr>
-                                    <td>FC4361</td>
-                                    <td>Fanta C</td>
-                                    <td>Lon</td>
-                                    <td><span class="tag tag-primary">6654</span></td>
-                                </tr>
-                                <tr>
-                                    <td>TX3389</td>
-                                    <td>Trà xanh không độ</td>
-                                    <td>Chai</td>
-                                    <td><span class="tag tag-danger">6763</span></td>
-                                </tr>
-                                <tr>
-                                    <td>LT3389</td>
-                                    <td>Lipton</td>
-                                    <td>Lon</td>
-                                    <td><span class="tag tag-danger">9763</span></td>
-                                </tr>
-                                <tr>
-                                    <td>TX3389</td>
-                                    <td>Redpull</td>
-                                    <td>Lon</td>
-                                    <td><span class="tag tag-danger">5367</span></td>
-                                </tr>
-                                <tr>
-                                    <td>TX3389</td>
-                                    <td>Tango</td>
-                                    <td>Lon</td>
-                                    <td><span class="tag tag-danger">6343</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-            </div>
-            <!-- / col-12 -->
         </div>
-
     </div>
     <!--END left-->
-    <!--Right-->
-    <div class="col-md-12 col-lg-6">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="tile">
-                    <h3 class="tile-title">Dữ liệu 6 tháng đầu vào</h3>
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="tile">
-                    <h3 class="tile-title">Biểu đồ nhập xuất</h3>
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
-                    </div>
-                </div>
+</div>
+<!-- col-12 -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="tile">
+            <h3 class="tile-title">Danh sách kho hàng</h3>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                       id="sampleTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                Mã kho
+                            </th>
+                            <th>
+                                Tên kho
+                            </th>
+                            <th>
+                                Địa chỉ
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaKho)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TenKho)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DiaChi)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
-
     </div>
-    <!--END right-->
 </div>
+<!-- / col-12 -->
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

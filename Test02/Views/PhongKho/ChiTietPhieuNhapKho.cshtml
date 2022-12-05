@@ -1,5 +1,5 @@
 ﻿@model Test02.Models.PhieuNhapXuat
-    @using Test02.Models;
+@using Test02.Models;
 @{
     ViewBag.Title = "ChiTietPhieuNhapKho";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
@@ -13,9 +13,9 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="tile">
-            <h2 style="text-align:center" id="sample1">PHIẾU ĐỀ NGHỊ NHẬP KHO</h2>
-            <form style="text-align:center">
+        <div class="tile" id="printMe">
+            <h2 style="text-align:center" >PHIẾU ĐỀ NGHỊ NHẬP KHO</h2>
+            <form style="text-align:center" id="sample2">
                 <label for="date">Ngày:</label>
                 @Html.DisplayFor(model => model.NgayLap)<br>
                 <label for="date">Mã số:</label>
@@ -104,15 +104,26 @@
 </div>
 
 <p>
-    <a class="btn btn-actv btn-sm" href="/PhongKho/NhapKho" title="Trở lại">
+    <a class="btn btn-actv btn-sm" id="btnPrint"  href="/PhongKho/NhapKho" title="Trở lại">
         <i class="fas fa-retweet"></i>
         Trở lại
     </a>
-    <a class="btn btn-danger btn-sm" href="/PhongKho/XoaPhieuNhapkho" title="Xóa">
-        <i class="fas fa-close"></i>
-        Xóa vĩnh viễn
-    </a>
-    <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+    <a class="btn btn-delete btn-sm print-file" id="btnPrint" title="In" onclick="printDiv('printMe')">
         <i class="fas fa-print"></i> In phiếu
     </a>
 </p>
+
+<script>
+    //In dữ liệu
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+    }
+</script>

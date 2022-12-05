@@ -11,8 +11,8 @@
         <div class="widget-small info coloured-icon">
             <i class='icon bx bxs-purchase-tag-alt fa-3x'></i>
             <div class="info">
-                <h4>Tổng sản phẩm</h4>
-                <p><b>8580 sản phẩm</b></p>
+                <h4>Tổng số kho</h4>
+                <p><b>@TempData["TongKho"] kho</b></p>
             </div>
         </div>
     </div>
@@ -20,8 +20,8 @@
         <div class="widget-small warning coloured-icon">
             <i class='icon fa-3x bx bxs-shopping-bag-alt'></i>
             <div class="info">
-                <h4>Tổng đơn hàng</h4>
-                <p><b>457 đơn hàng</b></p>
+                <h4>Tổng sản phẩm</h4>
+                <p><b>@TempData["Tongsp"] sản phẩm</b></p>
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
             <i class='icon fa-3x bx bxs-info-circle'></i>
             <div class="info">
                 <h4>Tổng phiếu xuất hàng</h4>
-                <p><b>534 phiếu</b></p>
+                <p><b>@TempData["Tongpx"] phiếu</b></p>
             </div>
         </div>
     </div>
@@ -40,8 +40,8 @@
         <div class="widget-small info coloured-icon">
             <i class='icon fa-3x bx bxs-user-badge'></i>
             <div class="info">
-                <h4>Sản phẩm mới</h4>
-                <p><b>5 sản phẩm</b></p>
+                <h4>Sản phẩm sắp hết hàng</h4>
+                <p><b>@TempData["TongSPHH"] sản phẩm</b></p>
             </div>
         </div>
     </div>
@@ -49,8 +49,8 @@
         <div class="widget-small warning coloured-icon">
             <i class='icon fa-3x bx bxs-tag-x'></i>
             <div class="info">
-                <h4>Hết hàng</h4>
-                <p><b>1 sản phẩm</b></p>
+                <h4>Sản phẩm tồn kho</h4>
+                <p><b>@TempData["TongSPTK"] sản phẩm</b></p>
             </div>
         </div>
     </div>
@@ -59,7 +59,7 @@
             <i class='icon fa-3x bx bxs-receipt'></i>
             <div class="info">
                 <h4>Tổng phiếu nhập hàng</h4>
-                <p><b>233 phiếu</b></p>
+                <p><b>@TempData["Tongpn"] phiếu</b></p>
             </div>
         </div>
     </div>
@@ -75,12 +75,7 @@
                         </a>
                     </div>
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
-                            <i class="fas fa-print"></i> In dữ liệu
-                        </a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLySP"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="/PhongKho/BaoCao"><i class="fas fa-copy"></i> Làm mới danh sách</a>
                     </div>
                 </div>
             </div>
@@ -149,129 +144,6 @@
                     </tbody>
                     
                 </table>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="tile">
-            <div>
-                <h3 class="tile-title                                                                                                                                                                                                               "> SẢN PHẨM MỚI</h3>
-            </div>
-            <div class="tile-body">
-                <table class="table table-hover table-bordered" id="sampleTable">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Mã sản phẩm</th>
-                            <th width="20">Ảnh</th>
-                            <th>Tên sản phẩm</th>
-                            <th>Đơn vị</th>
-                            <th>Số lượng</th>
-                            <th>Ngày sản xuất</th>
-                            <th>Hạn sử dụng</th>
-                            <th>Tình trạng</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#CD12837</td>
-                            <td><img class="img-card-person" src="/img-anhthe/1.jpg" alt=""></td>
-                            <td>Coca Cola</td>
-                            <td>Lon</td>
-                            <td>3249</td>
-                            <td>22/10/2021</td>
-                            <td>22/10/2025</td>
-                            <td>Còn hàng</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="tile">
-            <h3 class="tile-title">DỮ LIỆU HÀNG THÁNG</h3>
-            <div class="embed-responsive embed-responsive-16by9">
-                <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="tile">
-            <h3 class="tile-title">THỐNG KÊ DOANH SỐ</h3>
-            <div class="embed-responsive embed-responsive-16by9">
-                <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
             </div>
         </div>
     </div>

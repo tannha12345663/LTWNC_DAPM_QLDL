@@ -29,7 +29,7 @@
             Chiết khấu
         </th>*@
         <th>
-            Trạng thái
+            Trạng thái tiếp nhận
         </th>
         <th>
             Tình trạng thanh toán
@@ -67,8 +67,8 @@
                     @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
                 </td>
                 <td>
-                    @Html.ActionLink("Hủy đơn", "DeleteDH", new { id = item.MaDH })|
-                    @Html.ActionLink("Details", "DetailsDH", new { id = item.MaDH })
+                    @Html.ActionLink("Hủy đơn", "DeleteDH", new { id = item.MaDH }) |
+                    @Html.ActionLink("Chi tiết", "DetailsDH", new { id = item.MaDH })
                 </td>
             </tr>
         }

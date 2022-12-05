@@ -62,7 +62,7 @@
                     <span class="app-menu__label">
                         @{ var ldl = user.MaLoaiDL;
                             var tendl = db.LoaiDLs.Where(s => s.MaLoaiDL == ldl).FirstOrDefault();}
-                        @tendl.TenDaiLy
+                        @tendl.TenDaiLy - @user.MaDL
                     </span>
                 </a>
             </li>
