@@ -285,20 +285,8 @@ namespace Test02.Controllers
         {
             return View();
         }
-        public ActionResult DangNhap()
-        {
-            return View();
-        }
-        public ActionResult QuenMatKhau()
-        {
-            return View();
-        }
-        public ActionResult ThemSanPham()
-        {
-            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "MaKho");
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "MaSP");
-            return View();
-        }
+
+
         //-----------------------------------------------------------------------
         public ActionResult NhapKho()
         {
@@ -386,14 +374,6 @@ namespace Test02.Controllers
             return RedirectToAction("NhapKho");
         }
         //-------------------------------------Hết phần Phiếu Nhập----------------------
-        public ActionResult XuatKho()
-        {
-            return View();
-        }
-        public ActionResult TaoPhieuXuatKho()
-        {
-            return View();
-        }
         //-----------------------------Bắt đầu phiếu xuất - tồn kho------------------------------------
         public ActionResult TonKho()
         {
