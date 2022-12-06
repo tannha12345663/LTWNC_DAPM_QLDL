@@ -1,5 +1,4 @@
 ﻿@model Test02.Models.PhieuCongNo
-
 @using Test02.Models;
 
 
@@ -7,6 +6,8 @@
         ViewBag.Title = "XuatCN";
         Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
         QuanLyDLEntities2 db = new QuanLyDLEntities2();
+        ViewBag.cn = "active";
+        ViewBag.nd = "Xuất phiếu công nợ";
     }
 
     <div class="row">
@@ -40,6 +41,7 @@
                         @Html.DisplayFor(model => dl.DiaChi);
                     </p>
                     <p>
+                       
                         <strong>Tiền nợ:</strong>
 
                         @Html.DisplayFor(model => Model.TienNo);
@@ -47,12 +49,11 @@
 
 
                     <div class="row element-button">
-                        <div class="col-sm-12">
+                        
                             <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
                                 <i class="fas fa-print"></i> In dữ liệu
                             </a>
-                        </div>
-                       
+                        
                     </div>
 
                 </div>

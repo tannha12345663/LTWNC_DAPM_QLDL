@@ -1,0 +1,68 @@
+﻿@model Test02.Models.NhanVien
+@using Test02.Models;
+
+@{
+    ViewBag.Title = "XoaNV";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.qtnv = "active";
+    ViewBag.nd = "Xóa nhân viên";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h2 style="text-align:center">Xóa nhân viên @Model.MaNV</h2>
+
+            <p>
+                <strong>Mã nhân viên: </strong>
+                @Html.DisplayFor(model => model.MaNV)
+            </p>
+            <p>
+                <strong>Mã nhân viên: </strong>
+                @Html.DisplayFor(model => model.MaNV)
+            </p>
+            <p>
+                <strong>Mã chức vụ </strong>
+                @Html.DisplayFor(model => model.MaChucVu)
+            </p>
+            @{
+                var loainv = db.ChucVus.Where(s => s.MaChucVu == Model.MaChucVu).FirstOrDefault();
+            }
+            <p>
+                <strong>Chức vụ nhân viên: </strong>
+                @Html.DisplayFor(model => loainv.ViTri)
+            </p>
+            <p>
+                <strong>Tên nhân viên: </strong>
+                @Html.DisplayFor(model => model.TenNV)
+            </p>
+            <p>
+                <strong>Tên đăng nhập: </strong>
+                @Html.DisplayFor(model => model.UserName)
+            </p>
+            <p>
+                <strong>STD: </strong>
+                @Html.DisplayFor(model => model.SDT)
+            </p>
+            <p>
+                <strong>Địa chỉ: </strong>
+                @Html.DisplayFor(model => model.DiaChi)
+            </p>
+            <p>
+                <strong>Email </strong>
+                @Html.DisplayFor(model => model.Email)
+            </p>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Xóa" class="btn btn-warning" />
+                    @Html.ActionLink("Quay lại", "QLNhanVien")
+                </div>
+            }
+        </div>
+    </div>
+</div>
