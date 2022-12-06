@@ -5,7 +5,31 @@
     ViewBag.bc = "active";
     ViewBag.Name = "Báo cáo kho hàng";
 }
-
+@{
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "Đã xóa")
+    {
+        <script>
+            swal({
+                title: "Xóa thành công",
+                text: "Đã xóa biên bản kiểm kê @TempData["MaCTKkk"]!",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkMessage == "Đã thêm")
+    {
+        <script>
+            swal({
+                title: "Thêm thành công",
+                text: "Đã thêm thành công biên bản kiểm kê!",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+}
 <div class="row">
     <div class="col-md-6 col-lg-4">
         <div class="widget-small info coloured-icon">
@@ -116,33 +140,33 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MaKK)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TenNV)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TenBienBang)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NgayLap)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NhanVien.MaChucVu)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SanPham.TenSP)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Details", "DetailsBB", new { id = item.MaKK }) |
-                                @Html.ActionLink("Delete", "DeleteBBKK", new { id = item.MaKK })
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaKK)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NhanVien.TenNV)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TenBienBang)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NgayLap)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NhanVien.MaChucVu)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Chi tiết", "DetailsBB", new { id = item.MaKK }) |
+                                    @Html.ActionLink("Xóa", "DeleteBBKK", new { id = item.MaKK })
+                                </td>
+                            </tr>
                         }
                     </tbody>
-                    
+
                 </table>
             </div>
         </div>
