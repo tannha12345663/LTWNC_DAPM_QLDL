@@ -96,42 +96,8 @@
         </form>
         <input type="submit" value="Lưu phiếu" class="btn btn-save" />
         <a class="btn btn-cancel" href="TonKho">Hủy bỏ</a>
-        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
-            <i class="fas fa-print"></i> In phiếu
-        </a>
-
         </div>
     }
     
 </div>
 
-<script>
-        //In dữ liệu
-        var myApp = new function () {
-            this.printTable = function () {
-                var tab1 = document.getElementById('sample1');
-                var tab2 = document.getElementById('sample2');
-                var tab3 = document.getElementById('sample3');
-                var tab4 = document.getElementById('sample4');
-                var tab5 = document.getElementById('sample5');
-                var tab6 = document.getElementById('sample6');
-                var tab7 = document.getElementById('sample7');
-                var win = window.open('', '', 'height=700,width=700');
-                win.document.write(tab1.outerHTML);
-                win.document.write(tab2.outerHTML);
-                win.document.write(tab3.innerText);
-                win.document.write(tab4.outerHTML);
-                win.document.write(tab5.outerHTML);
-                win.document.write(tab6.outerHTML);
-                win.document.write(tab7.outerHTML);
-                win.document.close();
-                win.print();
-            }
-            this.getvalue = function () {
-                var text1 = document.ggetElementById('kinhgui');
-                var text2 = document.ggetElementById('hoten');
-                @Session["KinhGui"] = text1.getvalue;
-                @Session["HoTen"] = text2.getvalue;
-            }
-}
-</script>

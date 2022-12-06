@@ -96,59 +96,12 @@
                         </table>
                     </div>
                 </form>
-                <input type="submit" value="Lưu phiếu" class="btn btn-save" onclick="myApp.getvalue()" />
+                <input type="submit" value="Lưu phiếu" class="btn btn-save" />
                 <a class="btn btn-cancel" href="QuanLyDL">Hủy bỏ</a>
-                <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
-                    <i class="fas fa-print"></i> In phiếu
-                </a>
             </div>
             }
 
         </div>
     </div>
 </div>
-
-    
-    <script>
-        //In dữ liệu
-        var myApp = new function () {
-            this.printTable = function () {
-                var tab1 = document.getElementById('sample1');
-                var tab2 = document.getElementById('sample2');
-                var tab3 = document.getElementById('sample3');
-                var tab4 = document.getElementById('sample4');
-                var tab5 = document.getElementById('sample5');
-                var tab6 = document.getElementById('sample6');
-                var tab7 = document.getElementById('sample7');
-                var win = window.open('', '', 'height=700,width=700');
-                win.document.write(tab1.outerHTML);
-                win.document.write(tab2.outerHTML);
-                win.document.write(tab3.innerText);
-                win.document.write(tab4.outerHTML);
-                win.document.write(tab5.outerHTML);
-                win.document.write(tab6.outerHTML);
-                win.document.write(tab7.outerHTML);
-                win.document.close();
-                win.print();
-            }
-            this.getvalue = function () {
-                var text1 = document.ggetElementById('kinhgui');
-                var text2 = document.ggetElementById('hoten');
-                @Session["KinhGui"] = text1.getvalue;
-                @Session["HoTen"] = text2.getvalue;
-            }
-}
-    </script>
-    <!-- Essential javascripts for application to work-->
-    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
-    <script src="~/Content/js/popper.min.js"></script>
-    <script src="~/Content/js/bootstrap.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="src/jquery.table2excel.js"></script>
-    <script src="~/Content/js/main.js"></script>
-    <!-- The javascript plugin to display page loading on top-->
-    <script src="~/Content/js/plugins/pace.min.js"></script>
-    <!-- Page specific javascripts-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-    <!-- Data table plugin-->
-    <script type="text/javascript" src="~/Content/js/plugins/jquery.dataTables.min.js"></script>
+   

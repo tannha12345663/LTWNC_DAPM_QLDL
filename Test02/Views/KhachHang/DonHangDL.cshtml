@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Test02.Models.ChiTietDonHang>
+﻿@model IEnumerable<Test02.Models.DonHang>
     @using Test02.Models
 @{
     ViewBag.Title = "DonHangDL";
@@ -17,9 +17,9 @@
             Mã đơn hàng
         </th>
         <th>
-            Tên sản phẩm
+            Ngày lập
         </th>
-        <th>
+        @*<th>
             Số lượng
         </th>
         <th>
@@ -27,12 +27,12 @@
         </th>
         <th>
             Chiết khấu
+        </th>*@
+        <th>
+            Trạng thái tiếp nhận
         </th>
         <th>
-            Thành tiền
-        </th>
-        <th>
-            Trạng thái
+            Tình trạng thanh toán
         </th>
         <th>Chức năng</th>
     </tr>
@@ -42,35 +42,33 @@
     @{ var mdl = user.MaDL;}
     @foreach (var item in Model)
     {
-        if (item.DonHang.MaDL == mdl)
+        if (item.MaDL == mdl)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DonHang.MaDH)
+                    @Html.DisplayFor(modelItem => item.MaDH)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                    @Html.DisplayFor(modelItem => item.NgayLap)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SoLuong)
+                    @Html.DisplayFor(modelItem => item.TrangThai)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SanPham.Gia)
-                </td>
-                <td>
+                @*<td>
                     @{var ck = item.DonHang.DaiLy.LoaiDL.ChietKhau * 100;
                       string str = Convert.ToString(ck);}
                     @Html.DisplayFor(modelItem => str)%
 
-                </td>
-                <td>
+                </td>*@
+                @*<td>
                     @Html.DisplayFor(modelItem => item.ThanhTien)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DonHang.TrangThai)
-                </td>
-                <td>
-                    @Html.ActionLink("Hủy đơn", "DeleteDH", new { id = item.MaCTDH })
+                    @Html.ActionLink("Hủy đơn", "DeleteDH", new { id = item.MaDH }) |
+                    @Html.ActionLink("Chi tiết", "DetailsDH", new { id = item.MaDH })
                 </td>
             </tr>
         }

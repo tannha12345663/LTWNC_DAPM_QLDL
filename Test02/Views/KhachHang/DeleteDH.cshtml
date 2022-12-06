@@ -1,62 +1,84 @@
-﻿@model Test02.Models.ChiTietDonHang
-
+﻿@model Test02.Models.DonHang
 @{
     ViewBag.Title = "DeleteDH";
     Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
+    ViewBag.dhdl = "active";
+    ViewBag.Name = "Hủy bỏ đơn hàng";
 }
 
-<h3>Bạn có chắc muốn xóa đơn hàng này?</h3>
+<h3>Bạn có muốn xóa đơn hàng @Model.MaDH này ?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
-
         <dt>
-            @Html.DisplayNameFor(model => model.SanPham.TenSP)
+            @Html.DisplayNameFor(model => model.MaDL)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SanPham.TenSP)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SoLuong)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SoLuong)
+            @Html.DisplayFor(model => model.MaDL)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SanPham.Gia)
+            @Html.DisplayNameFor(model => model.NgayLap)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SanPham.Gia)
+            @Html.DisplayFor(model => model.NgayLap)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ChietKhau)
+            @Html.DisplayNameFor(model => model.TrangThai)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ChietKhau)
+            @Html.DisplayFor(model => model.TrangThai)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ThanhTien)
+            @Html.DisplayNameFor(model => model.TinhTrangThanhToan)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ThanhTien)
+            @Html.DisplayFor(model => model.TinhTrangThanhToan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiemGiao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiemGiao)
         </dd>
     </dl>
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+        if (Model.TrangThai == "Chưa xử lý")
+        {
+            <div class="form-actions no-color">
+                <input type="submit" value="Vẫn xóa" class="btn btn-danger" /> |
+                <a class="btn btn-danger btn-sm" href="/KhachHang/DonHangDL" title="Thêm">
+                    <i class="fas fa-retweet"></i>
+                    Trở lại danh sách kho
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="form-actions no-color">
+                <p value="Hủy đơn" class="btn btn-default" >Hủy</p>
+                <a class="btn btn-actv btn-sm" href="/KhachHang/DonHangDL" title="Trở lại">
+                    <i class="fas fa-retweet"></i>
+                    Quay lại
+                </a>
+            </div>
+            <p>Đã hết thời gian hủy đơn. Vui lòng liên hệ sđt 0944219234 để được chỉnh sửa</p>
+        }
     }
+
+
+
 </div>
+
+

@@ -28,22 +28,15 @@ namespace Test02.Controllers
         public ActionResult DonHangDL(string id)
         {
             
-            return View(db.ChiTietDonHangs.ToList());
+            return View(db.DonHangs.ToList());
         }
 
         // GET: ChiTietDonHangs/Details/5
         public ActionResult DetailsDH(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DonHang chiTietDonHang = db.DonHangs.Where(s => s.MaDH == id).FirstOrDefault();
-            if (chiTietDonHang == null)
-            {
-                return HttpNotFound();
-            }
-            return View(chiTietDonHang);
+            TempData["madh"] = id;
+            return View(db.ChiTietDonHangs.ToList().Where(s => s.MaDH == id));
+
         }
 
         // GET: ChiTietDonHangs/Delete/5
@@ -51,14 +44,14 @@ namespace Test02.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            ChiTietDonHang chiTietDonHang = db.ChiTietDonHangs.Find(id);
-            if (chiTietDonHang == null)
+            DonHang donHang = db.DonHangs.Find(id);
+            if (donHang == null)
             {
                 return HttpNotFound();
             }
-            return View(chiTietDonHang);
+            return View(donHang);
         }
 
         // POST: ChiTietDonHangs/Delete/5
@@ -66,8 +59,8 @@ namespace Test02.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteDHConfirmed(string id)
         {
-            ChiTietDonHang chiTietDonHang = db.ChiTietDonHangs.Find(id);
-            db.ChiTietDonHangs.Remove(chiTietDonHang);
+            DonHang donHang = db.DonHangs.Find(id);
+            db.DonHangs.Remove(donHang);
             db.SaveChanges();
             return RedirectToAction("DonHangDL");
         }

@@ -6,26 +6,6 @@
     ViewBag.Name = "Quản lý phiếu nhập xuất";
 }
 
-<div class="row element-button">
-
-    <div class="col-sm-2">
-        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
-            <i class="fas fa-print"></i> In tất cả
-        </a>
-    </div>
-
-    <div class="col-sm-2">
-        <a class="btn btn-delete btn-sm pdf-file" type="button" title="In" onclick="myFunction(this)">
-            <i class="fas fa-file-pdf"></i> Xuất PDF
-        </a>
-    </div>
-    <div class="col-sm-2">
-        <a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)">
-            <i class="fas fa-trash-alt"></i> Xóa tất cả
-        </a>
-    </div>
-</div>
-
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
@@ -76,30 +56,7 @@
                             </td>
                         </tr>
                     }
-
                 </table>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="col-md-12 col-lg-12">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="tile">
-                <h3 class="tile-title">Dữ liệu nhập kho 6 tháng đầu vào</h3>
-                <div class="embed-responsive embed-responsive-16by9">
-                    <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="tile">
-                <h3 class="tile-title">Biểu đồ xuất kho 6 tháng đầu vào</h3>
-                <div class="embed-responsive embed-responsive-16by9">
-                    <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
-                </div>
             </div>
         </div>
     </div>
@@ -132,4 +89,5 @@
         ga('send', 'pageview');
     }
 </script>
+
 
