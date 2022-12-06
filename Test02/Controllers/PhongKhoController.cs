@@ -58,11 +58,11 @@ namespace Test02.Controllers
                 Random rd = new Random();
                 var mactk = "CTK" + rd.Next(1, 1000);
                 chiTietKho.MaCTKho = mactk;
-                if (chiTietKho.SoLuong <= 100 && chiTietKho.SoLuong > 0)
+                if (chiTietKho.SoLuong <= 150 && chiTietKho.SoLuong > 0)
                 {
                     chiTietKho.TinhTrang = "Sắp hết hàng";
                 }
-                else if (chiTietKho.SoLuong > 100 && chiTietKho.SoLuong < 1000)
+                else if (chiTietKho.SoLuong > 150 && chiTietKho.SoLuong < 1000)
                 {
                     chiTietKho.TinhTrang = "Còn hàng";
                 }
@@ -73,6 +73,8 @@ namespace Test02.Controllers
                 }
                 database.ChiTietKhoes.Add(chiTietKho);
                 database.SaveChanges();
+                TempData["AlertMessage"] = "Đã thêm";
+                TempData["MaCTKkk"] = mactk;
                 return RedirectToAction("QuanLyKho");
             }
             return View();
@@ -126,6 +128,8 @@ namespace Test02.Controllers
                 }
                 database.Entry(chiTietKho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();
+                TempData["AlertMessage"] = "Đã cập nhật";
+                TempData["MaCTKkk"] = Session["Mactkho"];
                 return RedirectToAction("QuanLyKho");
             }
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", chiTietKho.MaKho);
@@ -154,7 +158,7 @@ namespace Test02.Controllers
             database.ChiTietKhoes.Remove(mactk);
             database.SaveChanges();
             TempData["AlertMessage"] = "Đã xóa";
-            TempData["MaCTK"] = mactk.MaCTKho;
+            TempData["MaCTKkk"] = mactk.MaCTKho;
             return RedirectToAction("QuanLyKho");
         }
 
@@ -179,6 +183,8 @@ namespace Test02.Controllers
                 kho.MaKho = makho;
                 database.Khoes.Add(kho);
                 database.SaveChanges();
+                TempData["AlertMessage"] = "Đã thêm";
+                TempData["MaCTKkk"] = makho;
                 return RedirectToAction("QuanLyKho");
             }
             return View(kho);
@@ -211,6 +217,8 @@ namespace Test02.Controllers
             {
                 database.Entry(kho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();
+                TempData["AlertMessage"] = "Đã cập nhật";
+                TempData["MaCTKkk"] = kho.MaKho;
                 return RedirectToAction("QuanLyKho");
             }
             return View(kho);
@@ -239,6 +247,8 @@ namespace Test02.Controllers
             Kho kho = database.Khoes.Find(id);
             database.Khoes.Remove(kho);
             database.SaveChanges();
+            TempData["AlertMessage"] = "Đã xóa";
+            TempData["MaCTKkk"] = id;
             return RedirectToAction("QuanLyKho");
         }
 
@@ -322,6 +332,8 @@ namespace Test02.Controllers
                 Session["HoTen"] = " ";
                 database.PhieuNhapXuats.Add(phieuNhapXuat);
                 database.SaveChanges();
+                TempData["AlertMessage"] = "Đã thêm";
+                TempData["MaPNKho"] = maphieu;
                 return RedirectToAction("QuanLyDL");
             }
 
@@ -369,6 +381,8 @@ namespace Test02.Controllers
             PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
             database.PhieuNhapXuats.Remove(phieuNhapXuat);
             database.SaveChanges();
+            TempData["AlertMessage"] = "Đã xóa";
+            TempData["MaPNKho"] = id;
             return RedirectToAction("NhapKho");
         }
         //-------------------------------------Hết phần Phiếu Nhập----------------------
@@ -413,6 +427,8 @@ namespace Test02.Controllers
                 Session["HoTen"] = " ";
                 database.PhieuNhapXuats.Add(phieuNhapXuat);
                 database.SaveChanges();
+                TempData["AlertMessage"] = "Đã thêm";
+                TempData["MaPNKho"] = maphieux;
                 return RedirectToAction("TonKho");
             }
 
@@ -460,6 +476,8 @@ namespace Test02.Controllers
             PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
             database.PhieuNhapXuats.Remove(phieuNhapXuat);
             database.SaveChanges();
+            TempData["AlertMessage"] = "Đã xóa";
+            TempData["MaPNKho"] = id;
             return RedirectToAction("NhapKho");
         }
         //------------------------------------------Hết phần tồn kho - phiếu xuất---------------------------
@@ -614,6 +632,7 @@ namespace Test02.Controllers
                 database.SaveChanges();
                 database.ChiTietBienBangs.Add(chiTietBienBang);
                 database.SaveChanges();
+                TempData["AlertMessage"] = "Đã thêm";
                 return RedirectToAction("BaoCao");
             }
             ViewBag.MaKK = new SelectList(database.BienBangKiemKes, "MaKK", "MaNVLap", chiTietBienBang.MaKK);
@@ -643,6 +662,8 @@ namespace Test02.Controllers
             BienBangKiemKe bienBangKiemKe = database.BienBangKiemKes.Find(id);
             database.BienBangKiemKes.Remove(bienBangKiemKe);
             database.SaveChanges();
+            TempData["AlertMessage"] = "Đã xóa";
+            TempData["MaBBKKe"] = id;
             return RedirectToAction("BaoCao");
         }
 

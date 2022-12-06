@@ -5,7 +5,20 @@
     ViewBag.nk = "active";
     ViewBag.Name = "Quản lý phiếu nhập xuất";
 }
-
+@{ 
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "Đã xóa")
+    {
+        <script >
+            swal({
+                title: "Xóa thành công",
+                text: "Đã xóa phiếu @TempData["MaCTKkk"]!",
+                icon: "success",
+                button: "OK",
+            });
+        </script >
+    }
+}
 <div class="row">
     <div class="col-md-12">
         <div class="tile">

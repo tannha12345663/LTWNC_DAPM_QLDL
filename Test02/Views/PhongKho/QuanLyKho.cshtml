@@ -7,15 +7,37 @@
     ViewBag.qlk = "active";
 
 }
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-@{ 
-    var checkMessage =(string) TempData["AlertMessage"];
-    if(checkMessage == "Đã xóa")
+
+@{
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "Đã xóa")
     {
         <script>
             swal({
                 title: "Xóa thành công",
-                text: "Đã xóa chi tiết kho "@TempData["MaCTK"]"!",
+                text: "Đã xóa @TempData["MaCTKkk"]!",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkMessage == "Đã thêm")
+    {
+        <script>
+            swal({
+                title: "Thêm thành công",
+                text: "Đã thêm @TempData["MaCTKkk"]!",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkMessage == "Đã cập nhật")
+    {
+        <script>
+            swal({
+                title: "Cập nhật thành công",
+                text: "Đã cập nhật @TempData["MaCTKkk"]!",
                 icon: "success",
                 button: "OK",
             });

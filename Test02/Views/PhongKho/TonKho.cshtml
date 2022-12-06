@@ -8,7 +8,20 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dsctk = db.ChiTietKhoes.ToList();
 }
-
+@{
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "Đã thêm")
+    {
+        <script>
+            swal({
+                title: "Thêm thành công",
+                text: "Đã thêm phiếu đề nghị xuất kho @TempData["MaPNKho"]!",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+}
 <div class="row element-button">
     <div class="col-md-12">
         <a class="btn btn-delete btn-sm pdf-file" type="button" title="In" href="GiaiQuyetTonKho">
