@@ -111,7 +111,7 @@
           <Property Name="MaDH" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="MaDL" Type="varchar" MaxLength="10" />
           <Property Name="MaNVLap" Type="varchar" MaxLength="10" />
-          <Property Name="NgayLap" Type="datetime" />
+          <Property Name="NgayLap" Type="date" />
           <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
           <Property Name="TinhTrangThanhToan" Type="nvarchar" MaxLength="50" />
           <Property Name="DiemGiao" Type="nvarchar" MaxLength="50" />
@@ -125,7 +125,7 @@
           <Property Name="MaDH" Type="varchar" MaxLength="10" />
           <Property Name="TenDVTiepNhan" Type="nvarchar" MaxLength="50" />
           <Property Name="TongTien" Type="float" />
-          <Property Name="NgayLap" Type="datetime" />
+          <Property Name="NgayLap" Type="date" />
         </EntityType>
         <EntityType Name="Kho">
           <Key>
@@ -165,6 +165,7 @@
           <Property Name="TienNo" Type="float" />
           <Property Name="HanTra" Type="datetime" />
           <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgayLapCN" Type="date" />
         </EntityType>
         <EntityType Name="PhieuNhapXuat">
           <Key>
@@ -638,7 +639,7 @@
           <Property Name="MaDH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MaDL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MaNVLap" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="NgayLap" Type="DateTime" Precision="3" />
+          <Property Name="NgayLap" Type="DateTime" Precision="0" />
           <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TinhTrangThanhToan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DiemGiao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -657,7 +658,7 @@
           <Property Name="MaDH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TenDVTiepNhan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TongTien" Type="Double" />
-          <Property Name="NgayLap" Type="DateTime" Precision="3" />
+          <Property Name="NgayLap" Type="DateTime" Precision="0" />
           <NavigationProperty Name="DonHang" Relationship="Self.FK_HoaDon_DonHang" FromRole="HoaDon" ToRole="DonHang" />
         </EntityType>
         <EntityType Name="Kho">
@@ -706,6 +707,7 @@
           <Property Name="HanTra" Type="DateTime" Precision="3" />
           <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DaiLy" Relationship="Self.FK_PhieuCongNo_DaiLy" FromRole="PhieuCongNo" ToRole="DaiLy" />
+          <Property Name="NgayLapCN" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="PhieuNhapXuat">
           <Key>
@@ -1231,6 +1233,7 @@
           <EntitySetMapping Name="PhieuCongNoes">
             <EntityTypeMapping TypeName="QuanLyDLModel.PhieuCongNo">
               <MappingFragment StoreEntitySet="PhieuCongNo">
+                <ScalarProperty Name="NgayLapCN" ColumnName="NgayLapCN" />
                 <ScalarProperty Name="MaCongNo" ColumnName="MaCongNo" />
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
                 <ScalarProperty Name="TienNo" ColumnName="TienNo" />
