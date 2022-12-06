@@ -190,7 +190,7 @@ namespace Test02.Controllers
             phieuCongNo.TienNo = tien;
             phieuCongNo.NgayLapCN = time;
            
-            phieuCongNo.HanTra = time.AddDays(30);
+            phieuCongNo.HanTra = time.AddDays(15);
 
             database.PhieuCongNoes.Add(phieuCongNo);
             database.SaveChanges();
