@@ -5,6 +5,8 @@
     ViewBag.Title = "CongnoDL";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    ViewBag.dsdl = "active";
+    ViewBag.nd = "Danh sách đơn hàng chưa thanh toán";
 }
 
 <div class="row">
@@ -12,34 +14,24 @@
         <div class="tile">
             <div class="tile-body">
 
-                <div class="row element-button">
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyHD"><i class="fas fa-copy"></i> Làm mới danh sách</a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
-                            <i class="fas fa-print"></i> In dữ liệu
-                        </a>
-                    </div>
-                </div>
-
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    
-                        @foreach (var i in Model)
-                        {
-                            <p><strong>Mã đại lý:</strong> @Html.DisplayFor(modelItem => i.MaDL)</p>
-                            <p>
-                                <strong>Mã đại lý:</strong>
-                                @{
-                                    var dh = db.DaiLies.Where(s => s.MaDL == i.MaDL).FirstOrDefault();
-                                }
-                                @Html.DisplayFor(modelItem => dh.TenDL)
-                            </p>
-                       break;
-                          }
+
+                    @foreach (var i in Model)
+                    {
+                        <h3>DANH SÁCH ĐƠN HÀNG CHƯA THANH TOÁN CỦA ĐẠI LÝ @i.MaDL</h3>
+                        <p><strong>Mã đại lý:</strong> @Html.DisplayFor(modelItem => i.MaDL)</p>
+                        <p>
+                            <strong>Mã đại lý:</strong>
+                            @{
+                                var dh = db.DaiLies.Where(s => s.MaDL == i.MaDL).FirstOrDefault();
+                            }
+                            @Html.DisplayFor(modelItem => dh.TenDL)
+                        </p>
+                        break;
+                    }
 
 
-                    
+
                     <div class="row">
                         <div class="col-sm-12">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
@@ -59,7 +51,7 @@
                                     @foreach (var item in Model)
                                     {
                                         id = item.MaDL;
-                                        if (item.TinhTrangThanhToan == "Chưa thanh toán")
+                                        if (item.TinhTrangThanhToan == "Chưa thanh toán" && item.TrangThai == "Đã xét duyệt")
                                         {
 
 
@@ -98,25 +90,43 @@
 
 
                             </table>
-                            <a href="~/KeToan/TaoCongno/@id" class="btn btn-primary btn-sm edit">
-                                <i class="fa fa-edit"></i>
-                            </a>
+
+
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
+        <div class="row element-button">
+            <div class="col-sm-2">
+                <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/TaoCongno/@id"><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
+            </div>
+            <div class="col-sm-2">
+                <a class="btn btn-warning btn-sm " type="button" title="Quay lại" href="~/KeToan/DSDaiLy"><i class="fas fa-copy"></i> Quay lại</a>
+            </div>
+            <div class="col-sm-2">
+                <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+                    <i class="fas fa-print"></i> In dữ liệu
+                </a>
+            </div>
+
+        </div>
     </div>
+
 </div>
+
 <script>
     //In dữ liệu
     var myApp = new function () {
         this.printTable = function () {
+            var top = document.getElementById('sampleTable_wrapper');
             var tab = document.getElementById('sampleTable');
             var win = window.open('', '', 'height=700,width=700');
-            win.document.write(tab.outerHTML);
+            win.document.write(top.outerHTML);
             win.document.close();
             win.print();
+
         }
     }
 </script>

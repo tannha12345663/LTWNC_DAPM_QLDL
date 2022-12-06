@@ -37,7 +37,7 @@ namespace Test02.Controllers
             
             database.NhanViens.Add(nhanVien);
             database.SaveChanges();
-            return RedirectToAction("QLCongno");
+            return RedirectToAction("QLNhanVien");
         }
 
         public ActionResult ChinhsuaNV(String id)

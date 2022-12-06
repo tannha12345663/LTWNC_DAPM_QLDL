@@ -1,67 +1,35 @@
 ﻿@model Test02.Models.PhieuCongNo
+@using Test02.Models;
 
 @{
     ViewBag.Title = "XoaCN";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.cn = "active";
+    ViewBag.nd = "Xóa phiếu công nợ";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+
 }
 
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
+            @{
+                DateTime ngay = (DateTime)(Model.NgayLapCN);
+                int thang = ngay.Month;
 
-
-            <h4 style="text-align:center">PHIẾU CÔNG NỢ</h4>
-            <hr />
-
-            @*<div>
-                <div class="row">
-                    <div class="col-sm-2">.col-sm-4</div>
-                    <div class="col-sm-8">.col-sm-8</div>
-                </div>
-            </div>*@
-            <dl class="dl-horizontal">
-                
-                <dt>
-                    @Html.DisplayNameFor(model => model.MaCongNo)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.MaCongNo)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.MaDL)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.MaDL)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.TienNo)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.TienNo)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.HanTra)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.HanTra)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.TrangThai)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.TrangThai)
-                </dd>
-
-            </dl>
+                var daily = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
+                var loaidaily = db.LoaiDLs.Where(s => s.MaLoaiDL == daily.MaLoaiDL).FirstOrDefault();
+            }
+            <div style="text-align:center">
+                <h4 style="text-align:center">PHIẾU CÔNG NỢ</h4>
+                <p><strong>Ngày:</strong>  @Html.DisplayFor(model => model.NgayLapCN)</p>
+                <p><strong>Mã công nợ:</strong>  @Html.DisplayFor(model => model.MaCongNo)</p>
+            </div>
+            <p> <strong>Tên đại lý: </strong>@Html.DisplayFor(model => daily.TenDL)</p>
+            <p> <strong>Loại đại lý: </strong>@Html.DisplayFor(model => loaidaily.MaLoaiDL)</p>
+            <p> <strong>Địa chỉ: </strong>@Html.DisplayFor(model => daily.DiaChi)</p>
+            <p> <strong>Phiếu công nợ tháng: </strong>@thang</p>
+            <p> <strong>Hạn trả: </strong>@Html.DisplayFor(model => model.HanTra)</p>
 
             @using (Html.BeginForm())
             {
@@ -75,5 +43,3 @@
         </div>
     </div>
 </div>
- </div>
- </div>

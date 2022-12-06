@@ -42,24 +42,23 @@ namespace Test02.Controllers
         {
             dh = database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault();
             List<HoaDon> lisths = database.HoaDons.ToList();
-            for(int i=0;i<lisths.Count;i++)
+            for (int i = 0; i < lisths.Count; i++)
             {
-                if (lisths[i].MaDH==dh.MaDH)
+                if (lisths[i].MaDH == dh.MaDH)
                 {
                     TempData["mess"] = "Mã đơn hàng bị trùng ";
                     return RedirectToAction("TaoHD");
                 }
-            }         
-            var user = (Test02.Models.NhanVien)Session["user"];           
+            }
+            var user = (Test02.Models.NhanVien)Session["user"];
             Random rd = new Random();
             var maHD = "HD" + rd.Next(1, 1000);
             hoaDon.MaHD = maHD;
             hoaDon.MaDH = dh.MaDH;
-            
+
             hoaDon.TongTien = dh.TongTien;
             hoaDon.TenDVTiepNhan = user.MaNV;
-            hoaDon.NgayLap= System.DateTime.Now;
-
+            hoaDon.NgayLap = System.DateTime.Now;
 
 
             database.HoaDons.Add(hoaDon);
@@ -165,17 +164,21 @@ namespace Test02.Controllers
         [HttpPost]
         public ActionResult TaoCongno(String id, PhieuCongNo phieuCongNo, DonHang dh)
         {
+            //NGÀY
+            var time = System.DateTime.Now;
 
-
+            // lấy hóa đơn
             List<DonHang> dl = database.DonHangs.ToList();
-            var c = database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault();
+            var c = database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault();   
             var tien = 0;
             for (int i = 0; i < dl.Count; i++)
             {
                 if (dl[i].MaDL == c.MaDL && dl[i].TinhTrangThanhToan == "Chưa thanh toán")
                 {
                     tien = (int)(tien + dl[i].TongTien);
+                    dl[i].TinhTrangThanhToan = "Đang nợ";
                 }
+                   
             }
 
 
@@ -185,8 +188,9 @@ namespace Test02.Controllers
             phieuCongNo.TrangThai = "Chưa thanh toán";
             phieuCongNo.MaDL = c.MaDL;
             phieuCongNo.TienNo = tien;
-            var time= System.DateTime.Now;
-            phieuCongNo.HanTra = time.AddDays(30);
+            phieuCongNo.NgayLapCN = time;
+           
+            phieuCongNo.HanTra = time.AddDays(15);
 
             database.PhieuCongNoes.Add(phieuCongNo);
             database.SaveChanges();
@@ -202,8 +206,9 @@ namespace Test02.Controllers
         [HttpPost]
         public ActionResult ChinhsuCN(String id, PhieuCongNo phieuCongNo)
         {
+            
             database.Entry(phieuCongNo).State = System.Data.Entity.EntityState.Modified;
-            database.SaveChanges();
+            database.SaveChanges();          
             return RedirectToAction("QLCongno");
         }
 
@@ -234,7 +239,10 @@ namespace Test02.Controllers
             return View(database.PhieuCongNoes.Where(s => s.MaCongNo == id).FirstOrDefault());
         }    
 
-
+        public ActionResult ChitietCN(String id)
+        {
+            return View(database.PhieuCongNoes.Where(s => s.MaCongNo == id).FirstOrDefault());
+        }
 
         public ActionResult Doanhthu()
         {

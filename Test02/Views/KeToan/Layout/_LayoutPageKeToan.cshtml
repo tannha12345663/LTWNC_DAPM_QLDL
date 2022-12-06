@@ -41,10 +41,14 @@
             <img class="app-sidebar__user-avatar" src="~/Content/Img/account.png" width="50px"
                  alt="User Image">
             <div>
-                
-                <p class="app-sidebar__user-name"><b>@{
+
+                <p class="app-sidebar__user-name">
+                    <b>
+                        @{
                             var user = (Test02.Models.NhanVien)HttpContext.Current.Session["user"];
-                            @user.TenNV}</b></p>
+                            @user.TenNV}
+                    </b>
+                </p>
                 <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
             </div>
         </div>
@@ -64,18 +68,18 @@
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.qldonhangkt" href="~/KeToan/QlyDonHangKeToan">
-                    <i class='app-menu__icon bx bx-tachometer'></i>
+                    <i class='app-menu__icon bx bx-user-voice'></i>
                     <span class="app-menu__label">Danh sách đơn hàng</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item  @ViewBag.qlhd" href="~/KeToan/QLHoaDon">
-                    <i class='app-menu__icon bx bx-id-card'></i> <span class="app-menu__label">Danh sách hóa đơn</span>
+                    <i class='app-menu__icon bx bx-cart-alt'></i> <span class="app-menu__label">Quản lý hóa đơn</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.dsdl" href="~/KeToan/DSDaiLy">
-                    <i class='app-menu__icon bx bx-dollar'></i><span class="app-menu__label">Danh sách Đại lý</span>
+                    <i class='app-menu__icon bx bx bx-id-card'></i><span class="app-menu__label">Danh sách Đại lý</span>
                 </a>
             </li>
             <li>
@@ -88,12 +92,12 @@
                     <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Doanh thu</span>
                 </a>
             </li>
-          
+
             @*<li>
-            <a class="app-menu__item @ViewBag.ln" href="~/KeToan/LoiNhuan">
-                <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lợi Nhuận</span>
-            </a>
-        </li>*@
+                    <a class="app-menu__item @ViewBag.ln" href="~/KeToan/LoiNhuan">
+                        <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lợi Nhuận</span>
+                    </a>
+                </li>*@
 
         </ul>
     </aside>
@@ -124,6 +128,15 @@
     <script src="js/plugins/pace.min.js"></script>
     <!--===============================================================================================-->
     <script type="text/javascript" src="js/plugins/chart.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/dataTables.bootstrap.min.js"></script>
+
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!--===============================================================================================-->
     <script type="text/javascript">
         var data = {

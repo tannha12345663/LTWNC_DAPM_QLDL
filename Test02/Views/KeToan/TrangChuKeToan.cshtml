@@ -8,14 +8,74 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<HoaDon> hd = db.HoaDons.ToList();
     List<PhieuCongNo> cn = db.PhieuCongNoes.ToList();
+    List<DaiLy> dly = db.DaiLies.ToList();
 }
+<div class="col-md-12">
+    <div class="tile">
+        <h3 class="tile-title">Tổng quan đại lý</h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0" role="grid">
+                    @*//Phần render từng dòng trong C#*@
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đại lý: activate to sort column ascending" style="width: 50px;">Mã đại lý</th>
+                            <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý:: activate to sort column ascending" style="width: 150px;">Tên đại lý</th>
+                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Loại đại lý</th>
+                            <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý:: activate to sort column ascending" style="width: 150px;">Tổng công nợ</th>
 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ var total = 0;}
+                        @foreach (var item in dly)
+                        {
+                            <tr>
+                                <td style="width: 150px;">
+                                    @Html.DisplayFor(modelItem => item.MaDL)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TenDL)
+
+                                </td>
+                                <td>
+                                    @{var tenldk = db.LoaiDLs.Find(item.MaLoaiDL);
+                                    }
+                                    @Html.DisplayFor(modelItem => tenldk.TenDaiLy)
+                                </td>
+                                <td>
+                                    @{
+                                        var tongno = 0;
+                                        for (int i = 0; i < cn.Count; i++)
+                                        {
+                                            if (item.MaDL == cn[i].MaDL && cn[i].TrangThai == "Chưa thanh toán")
+                                            {
+                                                tongno = (int)(tongno + cn[i].TienNo);
+                                            }
+                                        }
+
+                                    }
+                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", tongno);}
+                                    @Html.DisplayFor(modelItem => ThanhTien)
+
+                                </td>
+
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 <div class="col-md-12">
     <div class="tile">
         <h3 class="tile-title">Tổng quan hóa đơn</h3>
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" role="grid" aria-describedby="sampleTable_info">
                     @*//Phần render từng dòng trong C#*@
                     <thead>
                         <tr role="row">
@@ -80,7 +140,7 @@
         <h3 class="tile-title">Tổng quan công nợ</h3>
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" role="grid" aria-describedby="sampleTable_info">
                     @*//Phần render từng dòng trong C#*@
                     <thead>
                         <tr role="row">
@@ -102,8 +162,8 @@
                                     @Html.DisplayFor(modelItem => item.MaCongNo)
                                 </td>
                                 @*<td>
-                        @Html.DisplayFor(modelItem => item.MaDH)
-                    </td>*@
+                                        @Html.DisplayFor(modelItem => item.MaDH)
+                                    </td>*@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.MaDL)
                                 </td>

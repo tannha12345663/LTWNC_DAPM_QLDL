@@ -534,6 +534,8 @@
     <Content Include="Views\KinhDoanh\DanhSachCTDH.cshtml" />
     <Content Include="Views\KinhDoanh\ThemCTHD1.cshtml" />
     <Content Include="Views\KinhDoanh\XoaCTDH.cshtml" />
+    <Content Include="Views\KhachHang\DeleteDH.cshtml" />
+=========
     <Content Include="Views\KeToan\TaoCongno.cshtml" />
     <Content Include="Views\KeToan\ChinhsuCN.cshtml" />
     <Content Include="Views\KeToan\XoaCN.cshtml" />
@@ -550,8 +552,6 @@
     <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
     <Content Include="Views\KeToan\CongnoDL.cshtml" />
     <Content Include="Views\KeToan\Doanhthu.cshtml" />
-    <Content Include="Views\KeToan\XuatCN.cshtml" />
-    <Content Include="Views\KeToan\ThemCongno.cshtml" />
     <Content Include="Views\KhachHang\DeleteDH.cshtml" />
     <Content Include="Views\KhachHang\DetailsDH.cshtml" />
     <Content Include="Views\KhachHang\DonHangDL.cshtml" />
@@ -572,6 +572,8 @@
     <Content Include="Views\PhongKho\XoaKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuNhapKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuXuatKho.cshtml" />
+    <Content Include="Views\KeToan\ThemCongno.cshtml" />
+>>>>>>>>> Temporary merge branch 2
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
