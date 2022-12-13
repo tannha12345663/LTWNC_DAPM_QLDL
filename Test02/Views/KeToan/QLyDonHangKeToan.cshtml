@@ -8,7 +8,20 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var hd = db.HoaDons.ToList();
 }
+@{
+    if (TempData["mess"] != null)
+    {
+        <script>
+            swal({
+                title: "Đơn hàng đã có hóa đơn !!!!",
+                icon: "warning",
+                button: "Thoát",
+            });
 
+        </script>
+
+    }
+}
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
@@ -50,43 +63,43 @@
 
                                         if (item.TrangThai == "Đã xét duyệt")
                                         {
-                                    <tr>
+                                            <tr>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaDH)
-                                        </td>
-                                        <td>
-                                            @{var tendl = db.DaiLies.Where(s => s.MaDL == item.MaDL).FirstOrDefault();
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaDH)
+                                                </td>
+                                                <td>
+                                                    @{var tendl = db.DaiLies.Where(s => s.MaDL == item.MaDL).FirstOrDefault();
 
-                                            }
-                                            @Html.DisplayFor(modelItem => tendl.TenDL)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaDL)
-                                        </td>
+                                                    }
+                                                    @Html.DisplayFor(modelItem => tendl.TenDL)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaDL)
+                                                </td>
 
 
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NgayLap)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DiemGiao)
-                                        </td>
-                                        <td>
-                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
-                                            @Html.DisplayFor(modelItem => ThanhTien)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
-                                        </td>
-                                        <td>
-                                            <a href="/KeToan/TaoHD/@item.MaDH" class="btn btn-primary btn-sm edit">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.NgayLap)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                </td>
+                                                <td>
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                    @Html.DisplayFor(modelItem => ThanhTien)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                </td>
+                                                <td>
+                                                    <a href="/KeToan/TaoHD/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
 
-                                        </td>
-                                    </tr>
+                                                </td>
+                                            </tr>
                                         }
 
                                     }
@@ -101,15 +114,15 @@
 </div>
 
 <script>
-        //In dữ liệu
-        var myApp = new function () {
-            this.printTable = function () {
-                var tab = document.getElementById('sampleTable');
-                var win = window.open('', '', 'height=800px,width=1200px');
-                win.document.write(tab.outerHTML);
-                win.document.close();
-                win.print();
-            }
+    //In dữ liệu
+    var myApp = new function () {
+        this.printTable = function () {
+            var tab = document.getElementById('sampleTable');
+            var win = window.open('', '', 'height=800px,width=1200px');
+            win.document.write(tab.outerHTML);
+            win.document.close();
+            win.print();
+        }
     }
 
     oTable = $('#sampleTable').dataTable();
