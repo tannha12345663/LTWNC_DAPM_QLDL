@@ -47,8 +47,9 @@ namespace Test02.Controllers
                 if (lisths[i].MaDH == dh.MaDH)
                 {
                     TempData["mess"] = "Mã đơn hàng bị trùng ";
-                    return RedirectToAction("TaoHD");
+                    return RedirectToAction("QlyDonHangKeToan");
                 }
+                
             }
             var user = (Test02.Models.NhanVien)Session["user"];
             Random rd = new Random();
@@ -60,7 +61,7 @@ namespace Test02.Controllers
             hoaDon.TenDVTiepNhan = user.MaNV;
             hoaDon.NgayLap = System.DateTime.Now;
 
-
+            TempData["ktra"] = "thanhcong ";
             database.HoaDons.Add(hoaDon);
             database.SaveChanges();
             return RedirectToAction("QLHoaDon");
@@ -74,6 +75,7 @@ namespace Test02.Controllers
         [HttpPost]
         public ActionResult XoaHD(String id,HoaDon hoaDon)
         {
+            TempData["xoahd"] = "thanhcong ";
             hoaDon = database.HoaDons.Where(s => s.MaHD == id).FirstOrDefault();
             database.HoaDons.Remove(hoaDon);
             database.SaveChanges();
@@ -138,21 +140,22 @@ namespace Test02.Controllers
             return View(database.PhieuCongNoes.ToList().OrderByDescending(s => s.MaCongNo));
         }
         //nhập tay
-        public ActionResult ThemCongno()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult ThemCongno(PhieuCongNo phieu)
-        {
-            Random rd = new Random();
-            var macn = "CN" + rd.Next(1, 1000);
-            phieu.MaCongNo = macn;
+        //public ActionResult ThemCongno()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //public ActionResult ThemCongno(PhieuCongNo phieu)
+        //{
+        //    Random rd = new Random();
+        //    var macn = "CN" + rd.Next(1, 1000);
+        //    phieu.MaCongNo = macn;
 
-            database.PhieuCongNoes.Add(phieu);
-            database.SaveChanges();
-            return RedirectToAction("QLCongno");
-        }
+        //    TempData["taocn"] = "success";
+        //    database.PhieuCongNoes.Add(phieu);
+        //    database.SaveChanges();
+        //    return RedirectToAction("QLCongno");
+        //}
 
 
         //tao tu dong tu danh sách đại lý
@@ -192,6 +195,7 @@ namespace Test02.Controllers
            
             phieuCongNo.HanTra = time.AddDays(15);
 
+            TempData["taocn"] = "success";
             database.PhieuCongNoes.Add(phieuCongNo);
             database.SaveChanges();
             return RedirectToAction("QLCongno");
@@ -206,7 +210,7 @@ namespace Test02.Controllers
         [HttpPost]
         public ActionResult ChinhsuCN(String id, PhieuCongNo phieuCongNo)
         {
-            
+            TempData["chinhsuacn"] = "success";
             database.Entry(phieuCongNo).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();          
             return RedirectToAction("QLCongno");
@@ -221,6 +225,7 @@ namespace Test02.Controllers
         {
             try
             {
+                TempData["xoacn"] = "success";
                 phieuCongNo = database.PhieuCongNoes.Where(s => s.MaCongNo == id).FirstOrDefault();
                 database.PhieuCongNoes.Remove(phieuCongNo);
                 database.SaveChanges();
@@ -287,10 +292,10 @@ namespace Test02.Controllers
 
 
 
-        public ActionResult LoiNhuan()
-        {
-            return View();
-        }
+        //public ActionResult LoiNhuan()
+        //{
+        //    return View();
+        //}
 
         
        

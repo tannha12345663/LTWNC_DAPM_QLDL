@@ -9,20 +9,7 @@
     List<ChiTietDonHang> chiTietDonHangs = db.ChiTietDonHangs.ToList();
 
 }
-@{
-    if (TempData["mess"] != null)
-    {
-     <script>
-         swal({
-             title: "Đơn hàng đã có hóa đơn !!!!",
-             icon: "warning",
-             button: "Thoát",
-         });
 
-    </script>
-
-    }
-}
 
 
 <div class="row">
