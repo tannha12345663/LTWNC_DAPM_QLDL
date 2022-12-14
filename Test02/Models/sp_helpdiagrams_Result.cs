@@ -10,12 +10,13 @@
 namespace Test02.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PhieuNhapXuat
+    public partial class sp_helpdiagrams_Result
     {
-        public string MaPhieu { get; set; }
-        public Nullable<System.DateTime> NgayLap { get; set; }
-        public string LoaiPhieu { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

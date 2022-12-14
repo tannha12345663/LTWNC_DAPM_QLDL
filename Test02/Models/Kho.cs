@@ -18,7 +18,6 @@ namespace Test02.Models
         public Kho()
         {
             this.ChiTietKhoes = new HashSet<ChiTietKho>();
-            this.PhieuNhapXuats = new HashSet<PhieuNhapXuat>();
         }
     
         public string MaKho { get; set; }
@@ -27,7 +26,5 @@ namespace Test02.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietKho> ChiTietKhoes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhieuNhapXuat> PhieuNhapXuats { get; set; }
     }
 }

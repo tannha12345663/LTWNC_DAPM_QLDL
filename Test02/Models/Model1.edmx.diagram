@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c68360d1165846d89579ad1b15540eaa" Name="Diagram1">
+      <Diagram DiagramId="d4568be92fef4015b9a9a64be4f83806" Name="Diagram1">
         <EntityTypeShape EntityType="QuanLyDLModel.BaoCao" Width="1.5" PointX="5.25" PointY="21.875" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.BienBangKiemKe" Width="1.5" PointX="10.5" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.ChiTietBienBang" Width="1.5" PointX="12.75" PointY="7.875" IsExpanded="true" />
@@ -16,11 +16,11 @@
         <EntityTypeShape EntityType="QuanLyDLModel.DoanhSo" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.DonHang" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.HoaDon" Width="1.5" PointX="7.5" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.Kho" Width="1.5" PointX="5.25" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.Kho" Width="1.5" PointX="5.25" PointY="19.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.LoaiDL" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.NhanVien" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.PhieuCongNo" Width="1.5" PointX="5.25" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.PhieuNhapXuat" Width="1.5" PointX="7.5" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.PhieuNhapXuat" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.SanPham" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
         <AssociationConnector Association="QuanLyDLModel.FK_BaoCao_NhanVien" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_BienBangKiemKe_NhanVien" ManuallyRouted="false" />
@@ -38,7 +38,6 @@
         <AssociationConnector Association="QuanLyDLModel.FK_DanhSachGiaoHang_DonHang" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_DonHang_NhanVien" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_HoaDon_DonHang" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDLModel.FK_PhieuNhapXuat_Kho" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

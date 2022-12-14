@@ -325,7 +325,6 @@ namespace Test02.Controllers
                 return RedirectToAction("QuanLyDL");
             }
 
-            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", phieuNhapXuat.MaKho);
             return View(phieuNhapXuat);
         }
 
@@ -411,8 +410,6 @@ namespace Test02.Controllers
                 TempData["MaPNKho"] = maphieux;
                 return RedirectToAction("TonKho");
             }
-
-            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", phieuNhapXuat.MaKho);
             return View(phieuNhapXuat);
         }
 
