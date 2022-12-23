@@ -209,12 +209,48 @@ namespace Test02.Controllers
                 {
                     chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia) * (chiTietDonHang.ChietKhau);
                 }
+                var checkslp = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
+                if (chiTietDonHang.SoLuong  > checkslp.TongTon)
+                {
+                    var madh = database.DonHangs.Where(s=> s.MaDH == chiTietDonHang.MaDH).FirstOrDefault();
+                    TempData["messageAlert"] = "Không đủ số lượng để đặt";
+                    database.DonHangs.Remove(madh);
+                    database.SaveChanges();
+                    return RedirectToAction("QuanLyDH");
+                }
+                else {
+                    var ctk = database.ChiTietKhoes.Where(s => s.MaSP == chiTietDonHang.MaSP).ToList();
+                    var slsp = (int)chiTietDonHang.SoLuong;
+                    var checksl = -slsp;
+                    foreach (var udk in ctk)
+                    {
+                        checksl += (int)udk.SoLuong;
+                            if(checksl>=0)
+                            {
+                                udk.SoLuong = checksl;
+                                if (udk.SoLuong < 1500)
+                                {
+                                    udk.TinhTrang = "Sắp hết hàng";
+                                }
+                                database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
+                                database.SaveChanges();
+                                break;
+                            }
+                            else if (checksl <0)
+                            {
+                                udk.TinhTrang = "Hết hàng";
+                                udk.SoLuong = 0;
+                                database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
+                                database.SaveChanges();
+                            }
+                    }
+                    database.ChiTietDonHangs.Add(chiTietDonHang);
+                    database.SaveChanges();
+                    TempData["messageAlert"] = "Đã thêm mới đơn hàng";
+                    TempData["themmadh"] = chiTietDonHang.MaDH;
+                    return RedirectToAction("QuanLyDH");
+                }
                 
-                database.ChiTietDonHangs.Add(chiTietDonHang);
-                database.SaveChanges();
-                TempData["messageAlert"] = "Đã thêm mới đơn hàng";
-                TempData["themmadh"] = chiTietDonHang.MaDH;
-                return RedirectToAction("QuanLyDH");
                 
             }
 

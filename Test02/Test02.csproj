@@ -296,6 +296,7 @@
     <Content Include="Content\Img\SanPham\sting.jpg" />
     <Content Include="Content\Img\SanPham\stingVang.jpg" />
     <Content Include="Content\images\teamwork-la-gi-3.jpg" />
+    <Content Include="Content\Img\SanPham\traolong.png" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\jquery-3.2.1.min.js" />
     <Content Include="Content\js\main.js" />

@@ -33,6 +33,17 @@
             });
         </script>
     }
+    else if (checkmess == "Không đủ số lượng để đặt")
+    {
+        <script>
+            swal({
+                title: "Thêm đơn hàng không thành công \n Vui lòng kiểm tra lại ",
+                text: "Mã đơn hàng @TempData["capnhatdh"] đã được cập nhật",
+                icon: "error",
+                button: "OK",
+            });
+        </script>
+    }
     ;
 }
 
