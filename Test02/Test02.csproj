@@ -144,6 +144,7 @@
     <Compile Include="Controllers\LoginUserController.cs" />
     <Compile Include="Controllers\PhongKhoController.cs" />
     <Compile Include="Controllers\QTVController.cs" />
+    <Compile Include="Controllers\TuChoiTruyCapController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -318,6 +319,7 @@
     <Content Include="Content\js\popper.min.js" />
     <Content Include="Content\QLHoadon.css" />
     <Content Include="Content\soft-ui-dashboard.css" />
+    <Content Include="Content\style01.css" />
     <Content Include="Content\Test01\all.min.css" />
     <Content Include="Content\Test01\animate.css" />
     <Content Include="Content\Test01\hamburgers.min.css" />
@@ -586,6 +588,9 @@
     <Content Include="Views\DaiLies\Details.cshtml" />
     <Content Include="Views\DaiLies\Edit.cshtml" />
     <Content Include="Views\DaiLies\Index.cshtml" />
+    <Content Include="Views\KinhDoanh\TuChoiTruyCap.cshtml" />
+    <Content Include="Views\TuChoiTruyCap\Layout\Error.cshtml" />
+    <Content Include="Views\TuChoiTruyCap\TuChoiTruyCap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

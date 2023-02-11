@@ -16,15 +16,37 @@ namespace Test02.Controllers
     {
 
         QuanLyDLEntities2 database = new QuanLyDLEntities2();
+        //Kiểm tra phân quyền
+        public bool CheckIn()
+        {
+            var kd = "NVKD";
+            NhanVien nvsession = (NhanVien)Session["user"];
+            if (nvsession.MaChucVu != kd)
+            {
+                //Không có quyền 
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         // GET: KinhDoanh
         public ActionResult TrangChu()
         {
+            if(CheckIn() == false)
+            {
+                return RedirectToAction("TuChoiTruyCap", "TuChoiTruyCap");
+            }
             return View();
         }
 
         public ActionResult QuanLyDL()
         {
-
+            if (CheckIn() == false)
+            {
+                return RedirectToAction("TuChoiTruyCap", "TuChoiTruyCap");
+            }
             return View(database.DaiLies.ToList().OrderByDescending(s=> s.NgayTao));
         }
         public ActionResult ThemDL()
@@ -108,6 +130,10 @@ namespace Test02.Controllers
         //Quản lý đơn hàng
         public ActionResult QuanLyDH()
         {
+            if (CheckIn() == false)
+            {
+                return RedirectToAction("TuChoiTruyCap", "TuChoiTruyCap");
+            }
             return View(database.DonHangs.ToList().OrderByDescending(s => s.NgayLap));
         }
         //Thêm mới đơn hàng
@@ -470,6 +496,10 @@ namespace Test02.Controllers
 
         public ActionResult QuanLySP()
         {
+            if (CheckIn() == false)
+            {
+                return RedirectToAction("TuChoiTruyCap", "TuChoiTruyCap");
+            }
             return View(database.SanPhams.ToList().OrderByDescending(s=> s.NgaySX));
         }
 
@@ -580,14 +610,26 @@ namespace Test02.Controllers
         }
         public ActionResult QuanLyHD()
         {
+            if (CheckIn() == false)
+            {
+                return RedirectToAction("TuChoiTruyCap", "TuChoiTruyCap");
+            }
             return View(database.DonHangs.ToList().OrderByDescending(s=>s.NgayLap));
         }
         public ActionResult QuanLyKho()
         {
+            if (CheckIn() == false)
+            {
+                return RedirectToAction("TuChoiTruyCap", "TuChoiTruyCap");
+            }
             return View();
         }
         public ActionResult BaoCao()
         {
+            if (CheckIn() == false)
+            {
+                return RedirectToAction("TuChoiTruyCap", "TuChoiTruyCap");
+            }
             return View();
         }
         [HttpPost]
@@ -613,6 +655,9 @@ namespace Test02.Controllers
         {
 
         }
-
+        public ActionResult TuChoiTruyCap()
+        {
+            return View();
+        }
     }
 }
