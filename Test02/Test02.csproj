@@ -133,6 +133,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DaiLiesController.cs" />
     <Compile Include="Controllers\DonHangsController.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -579,6 +580,12 @@
     <Content Include="Views\PhongKho\XoaPhieuNhapKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuXuatKho.cshtml" />
     <Content Include="Views\KeToan\ThemCongno.cshtml" />
+    <Content Include="Views\KinhDoanh\BaoCaoTaiChinh.cshtml" />
+    <Content Include="Views\DaiLies\Create.cshtml" />
+    <Content Include="Views\DaiLies\Delete.cshtml" />
+    <Content Include="Views\DaiLies\Details.cshtml" />
+    <Content Include="Views\DaiLies\Edit.cshtml" />
+    <Content Include="Views\DaiLies\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

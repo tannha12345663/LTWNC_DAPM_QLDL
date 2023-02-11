@@ -29,7 +29,7 @@
                         <label class="control-label">- Nhập vào các kho: </label> <br />
                         @for (int i = 0; i < dsCTKho.Count; i++)
                         {
-                            if (dsCTKho[i].TinhTrang == "Sắp hết hàng")
+                            if (dsCTKho[i].TinhTrang == "Sắp hết hàng" || dsCTKho[i].TinhTrang == "Hết hàng")
                             {
                                 distint.Add(dsCTKho[i].MaKho);
                                 distint = distint.Distinct().ToList();
@@ -68,7 +68,7 @@
                             <tbody>
                                 @foreach (var item in dsCTKho)
                                 {
-                                    if (item.TinhTrang == "Sắp hết hàng")
+                                    if (item.TinhTrang == "Sắp hết hàng" || item.TinhTrang == "Hết hàng")
                                     {
                                         <tr>
                                             <td>
