@@ -18,7 +18,7 @@
         <div class="col-lg-12">
             <div class="tile">
                 <div class="tile-body">
-                    <h3 style="text-align:center">THÊM MỚI KHO HÀNG</h3>
+                    <h3 class="tile-title" style="text-align:center">THÊM MỚI KHO HÀNG</h3>
                     @*<h6>    Mã kho sẽ tự động sinh ra sau khi lưu</h6>*@
                     <div class="form-horizontal">
                         <hr />
@@ -40,12 +40,12 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row justify-content-center">
                             <div class="col-sm-2">
-                                <input type="submit" value="Lưu dữ liệu" class="btn btn-dark" title="Lưu" />
+                                <input type="submit" value="Lưu dữ liệu" class="btn btn-outline-dark" title="Lưu" />
                             </div>
                             <div class="col-sm-2">
-                                <a class="btn btn-add btn-group-sm" href="~/PhongKho/QuanLyKho" title="Trở về">
+                                <a class="btn btn-outline-primary btn-group-sm" href="~/PhongKho/QuanLyKho" title="Trở về">
                                     Trở về
                                 </a>
                             </div>
@@ -60,12 +60,12 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="tile">
-            <h3 class="tile-title">Kho hàng đã thêm</h3>
+            <h5 class="text-primary">Kho hàng đã thêm</h5>
+            <hr>
             <div class="tile-body">
-                <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
-                       id="sampleTable">
+                <table class="table table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
                     <thead>
-                        <tr>
+                        <tr class="table-warning">
                             <th>
                                 Mã kho
                             </th>
