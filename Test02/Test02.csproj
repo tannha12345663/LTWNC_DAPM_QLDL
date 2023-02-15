@@ -128,11 +128,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AdminAuthorize.cs" />
     <Compile Include="App_Start\Authentication.cs" />
     <Compile Include="App_Start\AuthenticationDL.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DaiLiesController.cs" />
     <Compile Include="Controllers\DonHangsController.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="Controllers\LoginUserController.cs" />
     <Compile Include="Controllers\PhongKhoController.cs" />
     <Compile Include="Controllers\QTVController.cs" />
+    <Compile Include="Controllers\TuChoiTruyCapController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -317,6 +320,7 @@
     <Content Include="Content\js\popper.min.js" />
     <Content Include="Content\QLHoadon.css" />
     <Content Include="Content\soft-ui-dashboard.css" />
+    <Content Include="Content\style01.css" />
     <Content Include="Content\Test01\all.min.css" />
     <Content Include="Content\Test01\animate.css" />
     <Content Include="Content\Test01\hamburgers.min.css" />
@@ -579,6 +583,15 @@
     <Content Include="Views\PhongKho\XoaPhieuNhapKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuXuatKho.cshtml" />
     <Content Include="Views\KeToan\ThemCongno.cshtml" />
+    <Content Include="Views\KinhDoanh\BaoCaoTaiChinh.cshtml" />
+    <Content Include="Views\DaiLies\Create.cshtml" />
+    <Content Include="Views\DaiLies\Delete.cshtml" />
+    <Content Include="Views\DaiLies\Details.cshtml" />
+    <Content Include="Views\DaiLies\Edit.cshtml" />
+    <Content Include="Views\DaiLies\Index.cshtml" />
+    <Content Include="Views\KinhDoanh\TuChoiTruyCap.cshtml" />
+    <Content Include="Views\TuChoiTruyCap\Layout\Error.cshtml" />
+    <Content Include="Views\TuChoiTruyCap\TuChoiTruyCap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

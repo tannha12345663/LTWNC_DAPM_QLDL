@@ -11,7 +11,7 @@ using System.Net;
 
 namespace Test02.Controllers
 {
-    [Authentication]
+    [Authentication (MaChucVu ="NVKD")]
     public class KinhDoanhController : Controller
     {
 
@@ -21,9 +21,9 @@ namespace Test02.Controllers
         {
             return View();
         }
+
         public ActionResult QuanLyDL()
         {
-
             return View(database.DaiLies.ToList().OrderByDescending(s=> s.NgayTao));
         }
         public ActionResult ThemDL()
@@ -612,6 +612,10 @@ namespace Test02.Controllers
         public void Hamrandom( )
         {
 
+        }
+        public ActionResult TuChoiTruyCap()
+        {
+            return View();
         }
     }
 }
