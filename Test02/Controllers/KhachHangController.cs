@@ -24,6 +24,12 @@ namespace Test02.Controllers
             return View(db.SanPhams.ToList().OrderByDescending(s => s.TenSP));
         }
 
+        // GioHang
+        public ActionResult GioHangDL()
+        {
+            return View();
+        }
+
         // GET: ChiTietDonHangs
         public ActionResult DonHangDL(string id)
         {
