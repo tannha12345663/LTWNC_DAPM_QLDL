@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Test02.App_Start;
 namespace Test02.Controllers
 {
-    [Authentication]
+    [Authentication (MaChucVu ="NVGH")]
     public class GiaoHangController : Controller
     {
         // GET: GiaoHang

@@ -10,7 +10,7 @@ using Test02.Models;
 
 namespace Test02.Controllers
 {
-    [Authentication]
+    [Authentication(MaChucVu ="NVKT")]
     public class KeToanController : Controller
     {
         
