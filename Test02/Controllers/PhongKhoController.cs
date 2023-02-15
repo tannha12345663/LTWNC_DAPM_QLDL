@@ -71,6 +71,10 @@ namespace Test02.Controllers
                 {
                     chiTietKho.TinhTrang = "Tồn kho";
                 }
+                else if (chiTietKho.SoLuong >= 0)
+                {
+                    chiTietKho.TinhTrang = "Hết hàng";
+                }
                 database.ChiTietKhoes.Add(chiTietKho);
                 database.SaveChanges();
                 TempData["AlertMessage"] = "Đã thêm";
@@ -113,11 +117,11 @@ namespace Test02.Controllers
             {
                 chiTietKho.MaCTKho = (string)Session["Mactkho"];
                 chiTietKho.MaKho = (string)Session["Makho"];
-                if (chiTietKho.SoLuong <= 100 && chiTietKho.SoLuong > 0)
+                if (chiTietKho.SoLuong <= 150 && chiTietKho.SoLuong > 0)
                 {
                     chiTietKho.TinhTrang = "Sắp hết hàng";
                 }
-                else if (chiTietKho.SoLuong > 100 && chiTietKho.SoLuong < 1000)
+                else if (chiTietKho.SoLuong > 150 && chiTietKho.SoLuong < 1000)
                 {
                     chiTietKho.TinhTrang = "Còn hàng";
                 }
@@ -125,6 +129,10 @@ namespace Test02.Controllers
                 else if (chiTietKho.SoLuong >= 1000)
                 {
                     chiTietKho.TinhTrang = "Tồn kho";
+                }
+                else if (chiTietKho.SoLuong >= 0)
+                {
+                    chiTietKho.TinhTrang = "Hết hàng";
                 }
                 database.Entry(chiTietKho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();
@@ -490,6 +498,10 @@ namespace Test02.Controllers
             foreach (var item in dssphh)
             {
                 if (item.TinhTrang == "Sắp hết hàng")
+                {
+                    total2 = total2 + 1;
+                }
+                else if (item.TinhTrang == "Hết hàng")
                 {
                     total2 = total2 + 1;
                 }

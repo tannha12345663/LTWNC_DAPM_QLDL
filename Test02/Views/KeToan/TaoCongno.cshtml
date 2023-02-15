@@ -12,59 +12,59 @@
 
 
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="tile">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
 
-            <h3 style="text-align:center">TẠO PHIẾU CÔNG NỢ</h3>
+                <h3 style="text-align:center">TẠO PHIẾU CÔNG NỢ</h3>
 
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-            <p> <strong>Mã đại lý: </strong>@Html.DisplayFor(model => model.MaDL)</p>
-            @{
-                var tendl = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
-
-            }
-            <p><strong>Tên đại lý:</strong> @Html.DisplayFor(model => tendl.TenDL)</p>
-            <p><strong>Địa chỉ:</strong> @Html.DisplayFor(model => tendl.DiaChi)</p>
-            <p>
-                <strong>Loại đại lý:</strong> @{
-                    var loai = db.LoaiDLs.Where(s => s.MaLoaiDL == tendl.MaLoaiDL).FirstOrDefault();
-                }@Html.DisplayFor(model => loai.TenDaiLy)
-            </p>
-
-            @{
-                int count = 0;
-                for (int i = 0; i < dh.Count; i++)
+                @using (Html.BeginForm())
                 {
+                    @Html.AntiForgeryToken()
 
-                    if (dh[i].TinhTrangThanhToan == "Chưa thanh toán" && Model.MaDL == dh[i].MaDL)
-                    {
-                        count = (int)(count + dh[i].TongTien);
-                      
-                    }
+                    <div class="form-horizontal">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <p> <strong>Mã đại lý: </strong>@Html.DisplayFor(model => model.MaDL)</p>
+                        @{
+                            var tendl = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
+
+                        }
+                        <p><strong>Tên đại lý:</strong> @Html.DisplayFor(model => tendl.TenDL)</p>
+                        <p><strong>Địa chỉ:</strong> @Html.DisplayFor(model => tendl.DiaChi)</p>
+                        <p>
+                            <strong>Loại đại lý:</strong> @{
+                                var loai = db.LoaiDLs.Where(s => s.MaLoaiDL == tendl.MaLoaiDL).FirstOrDefault();
+                            }@Html.DisplayFor(model => loai.TenDaiLy)
+                        </p>
+
+                        @{
+                            int count = 0;
+                            for (int i = 0; i < dh.Count; i++)
+                            {
+
+                                if (dh[i].TinhTrangThanhToan == "Chưa thanh toán" && Model.MaDL == dh[i].MaDL)
+                                {
+                                    count = (int)(count + dh[i].TongTien);
+
+                                }
+                            }
+                            var Tienno = string.Format("{0:0,0 vnđ}", count);
+                        }
+                        <p><strong>Tiền nợ:</strong> @Html.DisplayFor(model => Tienno)</p>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Thêm phiếu" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
                 }
-                var Tienno = string.Format("{0:0,0 vnđ}", count);
-            }
-            <p><strong>Tiền nợ:</strong> @Html.DisplayFor(model => Tienno)</p>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Thêm phiếu" class="btn btn-default" />
+
+                <div>
+                    @Html.ActionLink("Quay lại danh sách đại lý", "DSDaily")
                 </div>
-            </div>
-        </div>
-            }
 
-            <div>
-                @Html.ActionLink("Quay lại danh sách đại lý", "DSDaily")
             </div>
-
         </div>
     </div>
-</div>

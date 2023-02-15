@@ -172,6 +172,8 @@ namespace Test02.Controllers
 
             // lấy hóa đơn
             List<DonHang> dl = database.DonHangs.ToList();
+
+               
             var c = database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault();   
             var tien = 0;
             for (int i = 0; i < dl.Count; i++)

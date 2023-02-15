@@ -7,6 +7,7 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     ViewBag.dsdl = "active";
     ViewBag.nd = "Danh sách đơn hàng chưa thanh toán";
+    var check = 0;
 }
 
 <div class="row">
@@ -47,7 +48,10 @@
                                 </thead>
                                 <tbody>
                                     @{ var id = "";
-                                        var total = 0;}
+
+                                        var total = 0;
+                                        
+                                        }
                                     @foreach (var item in Model)
                                     {
                                         id = item.MaDL;
@@ -71,7 +75,8 @@
                                                     @Html.DisplayFor(modelItem => item.DiemGiao)
                                                 </td>
                                                 <td>
-                                                    @{ total += Convert.ToInt32(item.TongTien);}
+                                                    @{ total += Convert.ToInt32(item.TongTien);
+                                                        check = total;}
                                                     @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                                     @Html.DisplayFor(modelItem => ThanhTien)
 
@@ -83,7 +88,9 @@
                                     }
                                     <tr>
                                         <th colspan="4">Tổng cộng hóa đơn :</th>
-                                        @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                        @{ var TongCong = string.Format("{0:0,0 vnđ}", total);
+
+                                            }
                                         <td>@Html.DisplayFor(modelItem => TongCong)</td>
                                     </tr>
                                 </tbody>
@@ -99,17 +106,30 @@
             </div>
         </div>
         <div class="row element-button">
-            <div class="col-sm-2">
-                <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/TaoCongno/@id"><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
-            </div>
-            <div class="col-sm-2">
-                <a class="btn btn-warning btn-sm " type="button" title="Quay lại" href="~/KeToan/DSDaiLy"><i class="fas fa-copy"></i> Quay lại</a>
-            </div>
-            <div class="col-sm-2">
-                <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
-                    <i class="fas fa-print"></i> In dữ liệu
-                </a>
-            </div>
+            @{
+                if (check == 0)
+                {
+                    <div class="col-sm-2">
+                        <a class="btn btn-warning btn-sm " type="button" title="Quay lại" href="~/KeToan/DSDaiLy"><i class="fas fa-copy"></i> Quay lại</a>
+                    </div>
+                    
+                }
+                else
+                {
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/TaoCongno/@id"><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a class="btn btn-warning btn-sm " type="button" title="Quay lại" href="~/KeToan/DSDaiLy"><i class="fas fa-copy"></i> Quay lại</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+                            <i class="fas fa-print"></i> In dữ liệu
+                        </a>
+                    </div>
+                }
+            }
+
 
         </div>
     </div>
