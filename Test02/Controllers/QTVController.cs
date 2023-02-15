@@ -8,7 +8,7 @@ using Test02.Models;
 
 namespace Test02.Controllers
 {
-    [Authentication]
+    [Authentication (MaChucVu ="QTHT")]
     public class QTVController : Controller
     {
         QuanLyDLEntities2 database = new QuanLyDLEntities2();
