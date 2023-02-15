@@ -31,6 +31,7 @@ namespace Test02.Models
         public string DiaChi { get; set; }
         public string Email { get; set; }
         public Nullable<System.DateTime> NgayTao { get; set; }
+        public string HinhAnh { get; set; }
     
         public virtual LoaiDL LoaiDL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
