@@ -33,58 +33,58 @@ namespace Test02.Controllers
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
         }
 
-       public ActionResult TaoHD(String id)
-        {
-            return View(database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault());
-        }
-        [HttpPost]
-        public ActionResult TaoHD(String id,DonHang dh,HoaDon hoaDon)
-        {
-            dh = database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault();
-            List<HoaDon> lisths = database.HoaDons.ToList();
-            for (int i = 0; i < lisths.Count; i++)
-            {
-                if (lisths[i].MaDH == dh.MaDH)
-                {
-                    TempData["mess"] = "Mã đơn hàng bị trùng ";
-                    return RedirectToAction("QlyDonHangKeToan");
-                }
+       //public ActionResult TaoHD(String id)
+       // {
+       //     return View(database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault());
+       // }
+       // [HttpPost]
+       // public ActionResult TaoHD(String id,DonHang dh,HoaDon hoaDon)
+       // {
+       //     dh = database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault();
+       //     List<HoaDon> lisths = database.HoaDons.ToList();
+       //     for (int i = 0; i < lisths.Count; i++)
+       //     {
+       //         if (lisths[i].MaDH == dh.MaDH)
+       //         {
+       //             TempData["mess"] = "Mã đơn hàng bị trùng ";
+       //             return RedirectToAction("QlyDonHangKeToan");
+       //         }
                 
-            }
-            var user = (Test02.Models.NhanVien)Session["user"];
-            Random rd = new Random();
-            var maHD = "HD" + rd.Next(1, 1000);
-            hoaDon.MaHD = maHD;
-            hoaDon.MaDH = dh.MaDH;
+       //     }
+       //     var user = (Test02.Models.NhanVien)Session["user"];
+       //     Random rd = new Random();
+       //     var maHD = "HD" + rd.Next(1, 1000);
+       //     hoaDon.MaHD = maHD;
+       //     hoaDon.MaDH = dh.MaDH;
 
-            hoaDon.TongTien = dh.TongTien;
-            hoaDon.TenDVTiepNhan = user.MaNV;
-            hoaDon.NgayLap = System.DateTime.Now;
+       //     hoaDon.TongTien = dh.TongTien;
+       //     hoaDon.TenDVTiepNhan = user.MaNV;
+       //     hoaDon.NgayLap = System.DateTime.Now;
 
-            TempData["ktra"] = "thanhcong ";
-            database.HoaDons.Add(hoaDon);
-            database.SaveChanges();
-            return RedirectToAction("QLHoaDon");
+       //     TempData["ktra"] = "thanhcong ";
+       //     database.HoaDons.Add(hoaDon);
+       //     database.SaveChanges();
+       //     return RedirectToAction("QLHoaDon");
             
-        }
+       // }
 
-        public ActionResult XoaHD(String id)
-        {
-            return View(database.HoaDons.Where(s => s.MaHD== id).FirstOrDefault());
-        }
-        [HttpPost]
-        public ActionResult XoaHD(String id,HoaDon hoaDon)
-        {
-            TempData["xoahd"] = "thanhcong ";
-            hoaDon = database.HoaDons.Where(s => s.MaHD == id).FirstOrDefault();
-            database.HoaDons.Remove(hoaDon);
-            database.SaveChanges();
-            return RedirectToAction("QLHoaDon");
-        }
+       // public ActionResult XoaHD(String id)
+       // {
+       //     return View(database.HoaDons.Where(s => s.MaHD== id).FirstOrDefault());
+       // }
+       // [HttpPost]
+       // public ActionResult XoaHD(String id,HoaDon hoaDon)
+       // {
+       //     TempData["xoahd"] = "thanhcong ";
+       //     hoaDon = database.HoaDons.Where(s => s.MaHD == id).FirstOrDefault();
+       //     database.HoaDons.Remove(hoaDon);
+       //     database.SaveChanges();
+       //     return RedirectToAction("QLHoaDon");
+       // }
 
         public ActionResult QLHoaDon()
         {
-            return View(database.HoaDons.ToList().OrderByDescending(s => s.MaHD));
+            return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
         }
 
         public ActionResult ChinhsuaHD(String id)
