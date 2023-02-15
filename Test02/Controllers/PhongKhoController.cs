@@ -279,7 +279,40 @@ namespace Test02.Controllers
                 }
             }
             TempData["tongSPHH"] = total2;
-                return View(database.Khoes.ToList());
+
+            //tính tổng số sản phẩm
+            var totalsp = database.SanPhams.ToList().Count;
+            TempData["Tongsp1"] = totalsp;
+            //tính tổng số Phiếu nhập xuất hàng
+            var tongpn = 0;
+            var tongpx = 0;
+            var pnx = database.PhieuNhapXuats.ToList();
+            foreach (var item in pnx)
+            {
+                string str = item.MaPhieu.Substring(0, 2);
+                if (str == "PX")
+                {
+                    tongpx = tongpx + 1;
+                }
+                else
+                {
+                    tongpn = tongpn + 1;
+                }
+            }
+            TempData["Tongpn"] = tongpn;
+            TempData["Tongpx"] = tongpx;
+            //tính tổng sản phẩm tồn kho
+            var total3 = 0;
+            foreach (var item in dssphh)
+            {
+                if (item.TinhTrang == "Tồn kho")
+                {
+                    total3 = total3 + 1;
+                }
+            }
+            TempData["TongSPTK"] = total3;
+
+            return View(database.Khoes.ToList());
         }
         public ActionResult QuanLyDL()
         {

@@ -582,6 +582,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Img\KhoHang\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Test01\Layout\" />
   </ItemGroup>
