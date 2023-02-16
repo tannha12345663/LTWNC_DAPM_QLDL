@@ -14,8 +14,18 @@ namespace Test02.Models
     
     public partial class PhieuNhapXuat
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PhieuNhapXuat()
+        {
+            this.ChiTietPhieuNhapXuats = new HashSet<ChiTietPhieuNhapXuat>();
+        }
+    
         public string MaPhieu { get; set; }
         public Nullable<System.DateTime> NgayLap { get; set; }
         public string LoaiPhieu { get; set; }
+        public string MaNVLap { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChiTietPhieuNhapXuat> ChiTietPhieuNhapXuats { get; set; }
     }
 }
