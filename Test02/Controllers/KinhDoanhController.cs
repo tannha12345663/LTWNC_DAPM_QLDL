@@ -8,6 +8,7 @@ using Test02.Models;
 using Test02.App_Start;
 using System.Data;
 using System.Net;
+using System.IO;
 
 namespace Test02.Controllers
 {
@@ -495,12 +496,42 @@ namespace Test02.Controllers
         // POST: SanPhams/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
+        //Hàm lưu ảnh (Khi chuyển sang phòng khác nhớ đổi SanPham thành tên đối tượng cần được lưu ảnh  )
+        public void LuuAnh(SanPham sp , HttpPostedFileBase HinhAnh)
+        {
+            #region Hình ảnh
+            //Xác định đường dẫn lưu file : Url tương đói => tuyệt đói
+            var urlTuongdoi = "/Data/Images/";
+            var urlTuyetDoi = Server.MapPath(urlTuongdoi);// Lấy đường dẫn lưu file trên server
+
+            //Check trùng tên file => Đổi tên file  = tên file cũ (ko kèm đuôi)
+            //Ảnh.jpg = > ảnh + "-" + 1 + ".jpg" => ảnh-1.jpg
+
+            string fullDuongDan = urlTuyetDoi + HinhAnh.FileName;
+            int i = 1;
+            while (System.IO.File.Exists(fullDuongDan) == true)
+            {
+                // 1. Tách tên và đuôi 
+                var ten = Path.GetFileNameWithoutExtension(HinhAnh.FileName);
+                var duoi = Path.GetExtension(HinhAnh.FileName);
+                // 2. Sử dụng biến i để chạy và cộng vào tên file mới
+                fullDuongDan = urlTuyetDoi + ten + "-" + i + duoi;
+                i++;
+                // 3. Check lại 
+            }
+            #endregion
+            //Lưu file (Kiểm tra trùng file)
+            HinhAnh.SaveAs(fullDuongDan);
+            sp.HinhAnh = urlTuongdoi + Path.GetFileName(fullDuongDan);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemSP([Bind(Include = "TenSP,DonViTinh,Gia,HanSD,NgaySX")] SanPham sanPham)
+        public ActionResult ThemSP([Bind(Include = "TenSP,DonViTinh,Gia,HanSD,NgaySX,HinhAnh")] SanPham sanPham, HttpPostedFileBase HinhAnh)
         {
             if (ModelState.IsValid)
             {
+                LuuAnh(sanPham, HinhAnh);
                 Random rd = new Random();
                 var themSP = "SP" + rd.Next(1, 100);
                 
@@ -536,10 +567,11 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChinhSuaSP(SanPham sanPham)
+        public ActionResult ChinhSuaSP(SanPham sanPham, HttpPostedFileBase HinhAnh)
         {
             if (ModelState.IsValid)
             {
+                LuuAnh(sanPham, HinhAnh);
                 database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();
                 return RedirectToAction("QuanLySP");
@@ -617,5 +649,7 @@ namespace Test02.Controllers
         {
             return View();
         }
+        // Hình ảnh
+        
     }
 }
