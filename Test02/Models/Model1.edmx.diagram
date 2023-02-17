@@ -4,12 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f72d2ba83f2742b98389c75ee28ad571" Name="Diagram1">
+      <Diagram DiagramId="b4965ff42fef491fbae00f2a68659a21" Name="Diagram1">
         <EntityTypeShape EntityType="QuanLyDLModel.BaoCao" Width="1.5" PointX="5.25" PointY="21.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.BienBangKiemKe" Width="1.5" PointX="10.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.BienBangKiemKe" Width="1.5" PointX="10.5" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.ChiTietBienBang" Width="1.5" PointX="12.75" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.ChiTietDonHang" Width="1.5" PointX="7.5" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.ChiTietKho" Width="1.5" PointX="7.5" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.ChiTietPhieuNhapXuat" Width="1.5" PointX="10.5" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.ChucVu" Width="1.5" PointX="0.75" PointY="13.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.DaiLy" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.DanhSachGiaoHang" Width="1.5" PointX="7.5" PointY="11.375" IsExpanded="true" />
@@ -20,16 +21,18 @@
         <EntityTypeShape EntityType="QuanLyDLModel.LoaiDL" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.NhanVien" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.PhieuCongNo" Width="1.5" PointX="5.25" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.PhieuNhapXuat" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.PhieuNhapXuat" Width="1.5" PointX="8.25" PointY="18" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.SanPham" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
         <AssociationConnector Association="QuanLyDLModel.FK_BaoCao_NhanVien" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_BienBangKiemKe_NhanVien" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_BienBangKiemKe_SanPham" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDLModel.FK_ChiTietBienBang_BienBangKiemKe" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDLModel.FK_ChiTietBienBang_BienBangKiemKe1" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_ChiTietDonHang_DonHang" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_ChiTietDonHang_SanPham" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_ChiTietKho_Kho" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_ChiTietKho_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDLModel.FK_ChiTietPhieuNhapXuat_PhieuNhapXuat" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDLModel.FK_ChiTietPhieuNhapXuat_SanPham" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_NhanVien_ChucVu" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_DaiLy_LoaiDL" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_DoanhSo_DaiLy" ManuallyRouted="false" />
@@ -38,9 +41,6 @@
         <AssociationConnector Association="QuanLyDLModel.FK_DanhSachGiaoHang_DonHang" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_DonHang_NhanVien" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_HoaDon_DonHang" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="QuanLyDLModel.ChiTietPhieuNhapXuat" Width="1.5" PointX="7.5" PointY="0.75" />
-        <AssociationConnector Association="QuanLyDLModel.FK_ChiTietPhieuNhapXuat_PhieuNhapXuat" />
-        <AssociationConnector Association="QuanLyDLModel.FK_ChiTietPhieuNhapXuat_SanPham" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Test02.App_Start;
 using Test02.Models;
 
@@ -79,7 +80,8 @@ namespace Test02.Controllers
                 database.SaveChanges();
                 TempData["AlertMessage"] = "Đã thêm";
                 TempData["MaCTKkk"] = mactk;
-                return RedirectToAction("QuanLyKho");
+                return RedirectToAction("Chitietkho", new RouteValueDictionary(
+                                        new { controller = "PhongKho", action = "Chitietkho", Id = chiTietKho.MaKho }));
             }
             return View();
         }
@@ -138,7 +140,8 @@ namespace Test02.Controllers
                 database.SaveChanges();
                 TempData["AlertMessage"] = "Đã cập nhật";
                 TempData["MaCTKkk"] = Session["Mactkho"];
-                return RedirectToAction("QuanLyKho");
+                return RedirectToAction("Chitietkho", new RouteValueDictionary(
+                                        new { controller = "PhongKho", action = "Chitietkho", Id = chiTietKho.MaKho }));
             }
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", chiTietKho.MaKho);
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietKho.MaSP);
@@ -184,7 +187,23 @@ namespace Test02.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ThemKho([Bind(Include = "MaKho,TenKho,DiaChi")] Kho kho)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            //    Random rd = new Random();
+            //    var makho = "KO" + rd.Next(1, 1000);
+            //    kho.MaKho = makho;
+            //    database.Khoes.Add(kho);
+            //    database.SaveChanges();
+            //    TempData["AlertMessage"] = "Đã thêm";
+            //    TempData["MaCTKkk"] = makho;
+            //    return RedirectToAction("QuanLyKho");
+            //}
+            if(kho.TenKho == null || kho.DiaChi == null)
+            {
+                TempData["AlertMessage"] = "check null";
+                return RedirectToAction("Themkho");
+            }
+            else
             {
                 Random rd = new Random();
                 var makho = "KO" + rd.Next(1, 1000);
@@ -221,7 +240,20 @@ namespace Test02.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ChinhSuaKho([Bind(Include = "MaKho,TenKho,DiaChi")] Kho kho)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            //    database.Entry(kho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+            //    database.SaveChanges();
+            //    TempData["AlertMessage"] = "Đã cập nhật";
+            //    TempData["MaCTKkk"] = kho.MaKho;
+            //    return RedirectToAction("QuanLyKho");
+            //}
+            if (kho.TenKho == null || kho.DiaChi == null)
+            {
+                TempData["AlertMessage"] = "check null";
+                return RedirectToAction("ChinhSuaKho");
+            }
+            else
             {
                 database.Entry(kho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();

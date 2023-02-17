@@ -9,6 +9,20 @@
     var dskho = db.Khoes.ToList();
 }
 
+@{
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "check null")
+    {
+        <script>
+            swal({
+                title: "Dữ liệu trống",
+                text: "Tên kho và địa chỉ kho không được để trống!",
+                icon: "warning",
+                button: "OK",
+            });
+        </script>
+    }
+}
 
 @using (Html.BeginForm())
 {
@@ -25,9 +39,9 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => model.MaKho)
                         <div class="form-group">
-                            @Html.LabelFor(model => model.TenKho, "Tên kho", htmlAttributes: new { @class = "control-label col-md-12"})
+                            @Html.LabelFor(model => model.TenKho, "Tên kho", htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.TenKho, new { htmlAttributes = new { @class = "form-control "} })
+                                @Html.EditorFor(model => model.TenKho, new { htmlAttributes = new { @class = "form-control " } })
                                 @Html.ValidationMessageFor(model => model.TenKho, "", new { @class = "text-danger" })
                             </div>
                         </div>

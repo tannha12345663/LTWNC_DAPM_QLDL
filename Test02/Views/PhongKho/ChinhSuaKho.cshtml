@@ -5,7 +5,20 @@
     ViewBag.Name = "Chỉnh sửa kho";
     ViewBag.qlk = "active";
 }
-
+@{
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "check null")
+    {
+        <script>
+            swal({
+                title: "Dữ liệu trống",
+                text: "Tên kho và địa chỉ kho không được để trống!",
+                icon: "warning",
+                button: "OK",
+            });
+        </script>
+    }
+}
 <h2>Chỉnh sửa thông tin kho "@Model.TenKho"</h2>
 
 @using (Html.BeginForm())
@@ -55,7 +68,7 @@
             </div>
         </div>
     </div>
-   
+
 }
 
 
