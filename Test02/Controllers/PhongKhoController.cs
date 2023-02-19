@@ -68,13 +68,23 @@ namespace Test02.Controllers
                     chiTietKho.TinhTrang = "Còn hàng";
                 }
                 //var ktra = (System.DateTime.Now - chiTietKho.NgayXuat);
-                else if(chiTietKho.SoLuong >= 1000)
+                else if(chiTietKho.SoLuong >= 3000)
                 {
                     chiTietKho.TinhTrang = "Tồn kho";
                 }
-                else if (chiTietKho.SoLuong >= 0)
+                else if (chiTietKho.SoLuong == 0)
                 {
                     chiTietKho.TinhTrang = "Hết hàng";
+                }
+                else
+                {
+                    TempData["AlertMessage"] = "check null";
+                    return RedirectToAction("CreateCTKho");
+                }
+                if(chiTietKho.NgayXuat == null)
+                {
+                    DateTime ngayDf = new DateTime(2000, 01, 01);
+                    chiTietKho.NgayXuat = ngayDf;
                 }
                 database.ChiTietKhoes.Add(chiTietKho);
                 database.SaveChanges();
@@ -301,7 +311,6 @@ namespace Test02.Controllers
             base.Dispose(disposing);
         }
     
-
 
         public ActionResult Test02()
         {

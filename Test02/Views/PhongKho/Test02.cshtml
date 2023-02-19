@@ -9,10 +9,10 @@
 
 <div class="row">
     <!--Thông tin kho và số sản phẩm sắp hết hàng-->
-    <div class="col-md-12 col-lg-12">
+    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
         <div class="row">
             <!-- col-6 -->
-            <div class="col-6">
+            <div class="col-lg-6 col-xs-12">
                 <a class="widget-small info coloured-icon @ViewBag.qlk" href="~/PhongKho/QuanLyKho">
                     <i class='icon bx bxs-user-account fa-3x'></i>
                     <div class="info">
@@ -23,7 +23,7 @@
                 </a>
             </div>
             <!-- col-6 -->
-            <div class="col-6">
+            <div class="col-lg-6 col-xs-12">
                 <a class="widget-small warning coloured-icon @ViewBag.hh" href="~/PhongKho/QuanLyDL">
                     <i class='icon bx bxs-error-alt fa-3x'></i>
                     <div class="info">
@@ -39,7 +39,7 @@
     <div class="col-md-12 col-lg-12">
         <div class="row">
             <!-- col-6 -->
-            <div class="col-6">
+            <div class="col-lg-6 col-xs-12">
                 <a class="widget-small primary coloured-icon @ViewBag.qlk" href="~/PhongKho/QuanLyDL">
                     <i class='icon bx bxs-shopping-bag-alt fa-3x'></i>
                     <div class="info">
@@ -50,7 +50,7 @@
                 </a>
             </div>
             <!-- col-6 -->
-            <div class="col-6">
+            <div class="col-lg-6 col-xs-12">
                 <a class="widget-small danger coloured-icon @ViewBag.hh" href="~/PhongKho/TonKho">
                     <i class='icon bx bxs-tag-x fa-3x'></i>
                     <div class="info">
@@ -66,7 +66,7 @@
     <div class="col-md-12 col-lg-12">
         <div class="row">
             <!-- col-6 -->
-            <div class="col-6">
+            <div class="col-lg-6 col-xs-12">
                 <a class="widget-small info coloured-icon @ViewBag.qlk" href="~/PhongKho/NhapKho">
                     <i class='icon bx bxs-receipt fa-3x'></i>
                     <div class="info">
@@ -77,12 +77,12 @@
                 </a>
             </div>
             <!-- col-6 -->
-            <div class="col-6">
+            <div class="col-lg-6 col-xs-12">
                 <a class="widget-small primary coloured-icon @ViewBag.hh" href="~/PhongKho/NhapKho">
                     <i class='icon bx bxs-info-circle fa-3x'></i>
                     <div class="info">
                         <h4>Phiếu xuất kho</h4>
-                        <p><b>@TempData["Tongpx"] phiếu được tạo</b></p>
+                        <p><b>Tổng @TempData["Tongpx"] phiếu được tạo</b></p>
                         <p class="info-tong">Phiếu xuất hàng hóa ra khỏi kho.</p>
                     </div>
                 </a>

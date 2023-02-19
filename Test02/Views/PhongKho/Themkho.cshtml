@@ -87,24 +87,31 @@
                                 Tên kho
                             </th>
                             <th>
+                                Số lượng
+                            </th>
+                            <th>
                                 Địa chỉ
                             </th>
+
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in dskho)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MaKho)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TenKho)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DiaChi)
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaKho)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenKho)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ChiTietKhoes.Count) sản phẩm
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiaChi)
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
