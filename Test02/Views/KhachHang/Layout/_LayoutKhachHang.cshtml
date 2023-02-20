@@ -69,18 +69,18 @@
                 </a>
             </li>
             <li>
-                <a class="app-menu__item  @ViewBag.tcdl" href="PageSanPham">
+                <a class="app-menu__item  @ViewBag.tcdl" href="~/KhachHang/PageSanPham">
                     <i class='app-menu__icon bx bx-tachometer'></i><span class="app-menu__label">Trang chủ</span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item @ViewBag.gh" href="GioHangDL">
+                <a class="app-menu__item @ViewBag.gh" href="~/KhachHang/GioHangDL">
                     <i class='app-menu__icon bx bxs-package'></i>
                     <span class="app-menu__label">Giỏ hàng</span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item @ViewBag.dhdl" href="DonHangDL">
+                <a class="app-menu__item @ViewBag.dhdl" href="~/KhachHang/DonHangDL">
                     <i class='app-menu__icon bx bx-id-card'></i>
                     <span class="app-menu__label">Chi tiết đơn hàng</span>
                 </a>
@@ -109,21 +109,20 @@
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item active">
-                    <a href="#"><b>Trang chủ sản phẩm</b></a>
+                    <a href="#"><b>@ViewBag.nd</b></a>
                 </li>
             </ul>
             <div id="clock"></div>
         </div>
 
-        <div class="row element-button">
+        @*<div class="row element-button">
             <div class="col-sm-2">
-
                 <a class="btn btn-add btn-sm" href="https://forms.gle/kK8TNpb1pQooGcQ77" title="Thêm" target="_blank">
                     <i class="fas fa-plus"></i>
                     Đặt hàng qua google form
                 </a>
             </div>
-        </div>
+        </div>*@
         <div>
             @RenderBody()
         </div>
@@ -151,7 +150,7 @@
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
 
     <script>
-        function deleteRow(r) {
+        @*function deleteRow(r) {
             var i = r.parentNode.parentNode.rowIndex;
             document.getElementById("myTable").deleteRow(i);
         }
@@ -176,7 +175,7 @@
         $('#all').click(function (e) {
             $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
             e.stopImmediatePropagation();
-        });
+        });*@
 
         //EXCEL
         // $(document).ready(function () {

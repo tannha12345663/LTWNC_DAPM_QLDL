@@ -30,6 +30,7 @@ namespace Test02.Models
         public virtual DbSet<ChiTietBienBang> ChiTietBienBangs { get; set; }
         public virtual DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public virtual DbSet<ChiTietKho> ChiTietKhoes { get; set; }
+        public virtual DbSet<ChiTietPhieuNhapXuat> ChiTietPhieuNhapXuats { get; set; }
         public virtual DbSet<ChucVu> ChucVus { get; set; }
         public virtual DbSet<DaiLy> DaiLies { get; set; }
         public virtual DbSet<DanhSachGiaoHang> DanhSachGiaoHangs { get; set; }

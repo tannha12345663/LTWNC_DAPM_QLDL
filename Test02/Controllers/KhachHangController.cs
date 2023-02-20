@@ -20,14 +20,64 @@ namespace Test02.Controllers
         }
         public ActionResult PageSanPham()
         {
-           
             return View(db.SanPhams.ToList().OrderByDescending(s => s.TenSP));
         }
 
-        // GioHang
+        // Chi tiết sản phẩm
+        public ActionResult ChiTietSP(string id)
+        {
+            TempData["masp"] = id;
+            return View(db.SanPhams.Where(s => s.MaSP == id).FirstOrDefault());
+        }
+
+        // Giỏ hàng
         public ActionResult GioHangDL()
         {
-            return View();
+            if (Session["Cart"] == null)
+                return View();
+            Cart cart = Session["Cart"] as Cart;
+            return View(cart);
+        }
+
+        // Tạo mới giỏ hàng
+        public Cart GetCart()
+        {
+            Cart cart = Session["Cart"] as Cart;
+            if (cart == null || Session["Cart"] == null)
+            {
+                cart = new Cart();
+                Session["Cart"] = cart;
+            }
+            return cart;
+        }
+        //Thêm vào giỏ hàng
+        public ActionResult ThemVaoGH(string id)
+        {
+            TempData["Themvaogiohang"] = "thanhcong";
+            var sp = db.SanPhams.SingleOrDefault(s => s.MaSP == id);
+            if (sp != null)
+            {
+                GetCart().Add(sp);
+            }
+            return RedirectToAction("PageSanPham", "KhachHang");
+        }
+
+        // Update số lượng sản phẩm
+        public ActionResult CapNhatSL(FormCollection form)
+        {
+            Cart cart = Session["Cart"] as Cart;
+            string id = form["MaSP"];
+            int sl = int.Parse(form["soluong"]);
+            cart.CapNhatSL(id, sl);
+            return RedirectToAction("GioHangDL", "KhachHang");
+        }
+
+        public ActionResult XoaSP(string id)
+        {
+            TempData["xoasp"] = "thanhcong ";
+            Cart cart = Session["Cart"] as Cart;
+            cart.XoaSP(id);
+            return RedirectToAction("GioHangDL", "KhachHang");
         }
 
         // GET: ChiTietDonHangs

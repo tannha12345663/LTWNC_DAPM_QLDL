@@ -1,0 +1,114 @@
+﻿@model Test02.Models.Cart
+
+@{
+    ViewBag.Title = "GioHangDL";
+    Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
+    ViewBag.gh = "active";
+    ViewBag.nd = "Trang giỏ hàng";
+
+    if (TempData["xoasp"] != null)
+    {
+        <script>
+            swal({
+                title: "Xóa sản phẩm thành công!!!!",
+                icon: "success",
+                button: "Thoát",
+            });
+
+        </script>
+
+    }
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">DANH SÁCH GIỎ HÀNG</h3>
+            <div class="tile-body">
+                @if (Model != null)
+                {
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Hình ảnh</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                double total = item.idSP.Gia.Value * item.soLuong;
+                                <tr>
+                                    <td>@Html.DisplayFor(model => item.idSP.TenSP)</td>
+                                    <td style="width: 100px; height: 100px;"><a href="@item.idSP.HinhAnh"></a></td>
+                                    <td>
+                                        @{var gia = string.Format("{0:0,0 VNĐ}", item.idSP.Gia);}
+                                        @Html.DisplayFor(model => gia)
+                                    </td>
+                                    <td>
+                                        @using (Html.BeginForm("CapNhatSL", "KhachHang"))
+                                        {
+                                            <input type="hidden" value="@item.idSP.MaSP" name="MaSP" />
+                                            <input type="number" value="@item.soLuong" name="soluong" />
+                                            <input type="submit" value="Cập nhật" />
+                                        }
+                                    </td>
+                                    <td>
+                                        @{ var tien = string.Format("{0:0,0 VNĐ}", total);} @tien
+                                    </td>
+                                    <td>
+                                        <a href="/KhachHang/XoaSP/@item.idSP.MaSP" class="btn btn-primary btn-sm trash"><i class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6" style="text-align: right;">
+                                    Thành tiền: @{ var tong = string.Format("{0:0,0 VNĐ}", @Model.TongTien());} @tong
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="text-align: right; border: 0px;">
+                                    <a class="badge bg-info">Đặt hàng</a>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    
+                }
+                else if (Model == null)
+                {
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Hình ảnh</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6" style="text-align: center;">Không có sản phẩm trong giỏ hàng</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6" style="text-align: right;">
+                                    Thành tiền:
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>

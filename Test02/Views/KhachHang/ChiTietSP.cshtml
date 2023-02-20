@@ -1,0 +1,85 @@
+﻿@model Test02.Models.SanPham
+
+@{
+    ViewBag.Title = "ChiTietSP";
+    Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
+    ViewBag.nd = "Trang chi tiết sản phẩm";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">Chi tiết sản phẩm @Html.DisplayFor(model => model.TenSP)</h3>
+            <div class="tile-body">
+                <div>
+                    <hr />
+                    <table>
+                        <tr>
+                            <td style="border: 0px; width: 350px;">
+                                <img src="~/Content/Img/SanPham/stingVang.jpg" style="height: 300px ; width: 300px;" alt="" />
+                            </td>
+                            <td style="border: 0px;">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        Tên sản phẩm
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.TenSP)
+                                    </dd>
+
+                                    <dt>
+                                        Đơn vị tính
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.DonViTinh)
+                                    </dd>
+
+                                    <dt>
+                                        Giá
+                                    </dt>
+
+                                    <dd>
+                                        @{ var gia = string.Format("{0:0,0 VNĐ}", Model.Gia);}
+                                        @Html.DisplayFor(model => gia)
+                                    </dd>
+
+                                    <dt>
+                                        Hạn sử dụng
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.HanSD)
+                                    </dd>
+
+                                    <dt>
+                                        Ngày sản xuất
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.NgaySX)
+                                    </dd>
+
+                                    <dt>
+                                        Tổng tồn
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.TongTon)
+                                    </dd>
+
+                                </dl>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <p>
+                    <a class="btn btn-actv btn-sm" href="/KhachHang/PageSanPham" title="Quay lại">
+                        <i class="fas fa-retweet"></i>
+                        Quay lại
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
