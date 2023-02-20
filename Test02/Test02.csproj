@@ -288,6 +288,7 @@
     <Content Include="Content\Img\135017829_1026004181228801_2637032699560275_n.jpg" />
     <Content Include="Content\Img\account.png" />
     <Content Include="Content\Img\DiemKhang.jpg" />
+    <Content Include="Content\Img\KhoHang\bg_createStorage.jpg" />
     <Content Include="Content\Img\SanPham\7up.jpg" />
     <Content Include="Content\Img\SanPham\coca.png" />
     <Content Include="Content\Img\SanPham\cocalight.jpg" />
@@ -592,7 +593,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Img\KhoHang\" />
     <Folder Include="Data\Images\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Test01\Layout\" />

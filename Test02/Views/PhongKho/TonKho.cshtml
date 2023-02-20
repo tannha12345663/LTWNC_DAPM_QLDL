@@ -22,16 +22,17 @@
         </script>
     }
 }
-<div class="row element-button">
-    <div class="col-md-12">
-        <a class="btn btn-delete btn-sm pdf-file" type="button" title="In" href="GiaiQuyetTonKho">
-            <i class="fas fa-circle-notch"></i> Giải quyết tất cả
-        </a>
-    </div>
-</div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
+            <div class="row element-button">
+                <div class="col-md-12">
+                    <a class="btn btn-delete btn-sm pdf-file" type="button" title="In" href="GiaiQuyetTonKho">
+                        <i class="fas fa-circle-notch"></i> Giải quyết tất cả
+                    </a>
+                </div>
+            </div>
             <div>
                 <h3 class="tile-title">DANH SÁCH HÀNG TỒN KHO</h3>
             </div>
@@ -52,6 +53,7 @@
                     <tbody>
                         @foreach (var item in dsctk)
                         {
+                            //thử sử dụng groupby nhá
                             if (item.TinhTrang == "Tồn kho")
                             {
                                 <tr>
