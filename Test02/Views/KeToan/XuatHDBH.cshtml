@@ -20,33 +20,50 @@
 
                     @foreach (var item in Model)
                     {
-                        <p style="text-align:center">
-                            <span>
-                                @{ var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
-                                    var hd = db.HoaDons.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
-                                @Html.DisplayFor(modelItem => hd.NgayLap)
-                            </span>
 
-                        </p>
-                        <p style="text-align:center">
-                            <strong>Mã hóa đơn:</strong>
-                            @Html.DisplayFor(modelItem => hd.MaHD)
-                        </p>
-                        @*<p style="text-align:right"><strong>Mã CTDH: </strong>@Html.DisplayFor(modelItem => item.MaCTDH)</p>*@
+                        <div>
+                            <p> <strong>Mã đơn hàng:</strong>@Html.DisplayFor(modelItem => item.MaDH)</p>
+                            <p>
+                                <strong>Ngày đặt:</strong>
+                                @{
+                                    var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+                                }
+                                @Html.DisplayFor(modelItem => dh.NgayLap)
+                            </p>
 
-                        <p>
-                            <strong>Tên Đại lý: </strong> @{
-                                var tendly = db.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();}
-                            @Html.DisplayFor(modelItem => tendly.TenDL)
-                        </p>
-                        <p><strong>Địa điểm giao:</strong>@Html.DisplayFor(modelItem => dh.DiemGiao)</p>
+                        </div>
+                       
+                        <table>
+                            <tr>
+                                <th>THÔNG TIN</th>
+                                <th>ĐỊA CHỈ GIAO</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Tên đại lý:
+                                    @{
+                                        var dl = db.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();
+                                    }@Html.DisplayFor(modelItem => dl.TenDL)
+                                </td>
+                                <td rowspan="2">
+                                    @Html.DisplayFor(modelItem => dh.DiemGiao)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Điện thoại: @Html.DisplayFor(modelItem => dl.SDT)
+                                </td>
+
+                            </tr>
+                        </table>
+
                         break;
 
                     }
 
 
 
-                    <div class="row">
+                    <div class="row" style="padding-top:10px">
                         <div class="col-sm-12">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
@@ -108,14 +125,31 @@
         </div>
     </div>
 </div>
-<div class="row element-button">
+<div class="row element-button" style="padding-left:10px">
     <div class="col-sm-2">
         <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
             <i class="fas fa-print"></i> In dữ liệu
         </a>
     </div>
     <div class="col-sm-2">
-        <a class="btn btn-danger" type="button" title="Quay lại " href="~/KeToan/QLHoaDon"><i class=""></i> Quay lại</a>
+        @foreach (var item in Model)
+        {
+            var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+            if (dh.TinhTrangThanhToan == "Chưa thanh toán")
+            {
+                <a class="btn btn-danger btn-sm" type="button" title="Quay lại " href="~/KeToan/QLDonHang">Quay lại</a>
+            }
+            else if (dh.TinhTrangThanhToan == "Đang nợ")
+            {
+                <a class="btn btn-danger btn-sm" type="button" title="Quay lại " href="~/KeToan/QLDonNo">Quay lại</a>
+            }
+            else
+            {
+                <a class="btn btn-danger btn-sm" type="button" title="Quay lại " href="~/KeToan/QLDonThanhToan">Quay lại</a>
+            }
+
+        }
+
     </div>
 
 </div>
@@ -125,13 +159,13 @@
     var myApp = new function () {
         this.printTable = function () {
             var tab = document.getElementById('hd');
-   
-            var win = window.open('', '', 'height=800px,width=1200px');
-            win.document.write(tab.outerHTML);
+
+                var win = window.open('', '', 'height=800px,width=1200px');
+                win.document.write(tab.outerHTML);
           
             win.document.close();
             win.print();
         }
-    }
+        }
 </script>
 

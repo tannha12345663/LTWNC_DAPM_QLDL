@@ -273,6 +273,7 @@
     <Content Include="Content\bootstrap\js\bootstrap.js" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\ckeditor.js" />
+    <Content Include="Content\css\KeToan.css" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\util.css" />
@@ -471,6 +472,21 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
+    <Content Include="Views\KeToan\ChinhsuCN.cshtml" />
+    <Content Include="Views\KeToan\CongnoDL.cshtml" />
+    <Content Include="Views\KeToan\Doanhthu.cshtml" />
+    <Content Include="Views\KeToan\DSDaiLy.cshtml" />
+    <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
+    <Content Include="Views\KeToan\QLCongno.cshtml" />
+    <Content Include="Views\KeToan\QLDonHang.cshtml" />
+    <Content Include="Views\KeToan\TaoCongno.cshtml" />
+    <Content Include="Views\KeToan\TaoHD.cshtml" />
+    <Content Include="Views\KeToan\ThemCongno.cshtml" />
+    <Content Include="Views\KeToan\TrangChuKeToan.cshtml" />
+    <Content Include="Views\KeToan\XoaCN.cshtml" />
+    <Content Include="Views\KeToan\XoaHD.cshtml" />
+    <Content Include="Views\KeToan\XuatHDBH.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -524,13 +540,8 @@
     <Content Include="Views\PhongKho\XuatKho.cshtml" />
     <Content Include="Views\KhachHang\Layout\_LayoutKhachHang.cshtml" />
     <Content Include="Views\KhachHang\PageSanPham.cshtml" />
-    <Content Include="Views\KeToan\LoiNhuan.cshtml" />
-    <Content Include="Views\KeToan\QLCongno.cshtml" />
-    <Content Include="Views\KeToan\TrangChuKeToan.cshtml" />
-    <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
     <Content Include="Views\LoginUser\Layout\QuenMatKhau.cshtml" />
     <Content Include="Views\LoginUser\QuenMK.cshtml" />
-    <Content Include="Views\KeToan\CreateDoanhThu.cshtml" />
     <Content Include="Views\DonHangs\Create.cshtml" />
     <Content Include="Views\DonHangs\Delete.cshtml" />
     <Content Include="Views\DonHangs\Details.cshtml" />
@@ -543,22 +554,10 @@
     <Content Include="Views\KinhDoanh\ThemCTHD1.cshtml" />
     <Content Include="Views\KinhDoanh\XoaCTDH.cshtml" />
     <Content Include="Views\KhachHang\DeleteDH.cshtml" />
-    <Content Include="Views\KeToan\TaoCongno.cshtml" />
-    <Content Include="Views\KeToan\ChinhsuCN.cshtml" />
-    <Content Include="Views\KeToan\XoaCN.cshtml" />
-    <Content Include="Views\KeToan\QLyDonHangKeToan.cshtml" />
-    <Content Include="Views\KeToan\TaoHD.cshtml" />
-    <Content Include="Views\KeToan\QLHoaDon.cshtml" />
-    <Content Include="Views\KeToan\XoaHD.cshtml" />
-    <Content Include="Views\KeToan\DSDaiLy.cshtml" />
     <Content Include="Views\QTV\Layout\LayoutQTV.cshtml" />
     <Content Include="Views\QTV\QLNhanVien.cshtml" />
     <Content Include="Views\QTV\ThemNV.cshtml" />
     <Content Include="Views\QTV\ChinhsuaNV.cshtml" />
-    <Content Include="Views\KeToan\XuatHDBH.cshtml" />
-    <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
-    <Content Include="Views\KeToan\CongnoDL.cshtml" />
-    <Content Include="Views\KeToan\Doanhthu.cshtml" />
     <Content Include="Views\KhachHang\DeleteDH.cshtml" />
     <Content Include="Views\KhachHang\DetailsDH.cshtml" />
     <Content Include="Views\KhachHang\DonHangDL.cshtml" />
@@ -579,7 +578,6 @@
     <Content Include="Views\PhongKho\XoaKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuNhapKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuXuatKho.cshtml" />
-    <Content Include="Views\KeToan\ThemCongno.cshtml" />
     <Content Include="Views\KinhDoanh\BaoCaoTaiChinh.cshtml" />
     <Content Include="Views\DaiLies\Create.cshtml" />
     <Content Include="Views\DaiLies\Delete.cshtml" />
@@ -589,6 +587,10 @@
     <Content Include="Views\KinhDoanh\TuChoiTruyCap.cshtml" />
     <Content Include="Views\TuChoiTruyCap\Layout\Error.cshtml" />
     <Content Include="Views\TuChoiTruyCap\TuChoiTruyCap.cshtml" />
+    <Content Include="Views\KeToan\ChitietCN.cshtml" />
+    <Content Include="Views\KeToan\XuatCN.cshtml" />
+    <Content Include="Views\KeToan\QLDonNo.cshtml" />
+    <Content Include="Views\KeToan\QLDonThanhToan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

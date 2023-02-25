@@ -1,0 +1,144 @@
+﻿@model IEnumerable<Test02.Models.DonHang>
+@using Test02.Models;
+@{
+    ViewBag.Title = "QLDonNo";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.qlhd = "active";
+    ViewBag.nd = "Danh sách đơn hàng đã xét duyệt";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/ketoan/QLDonHang" >Đơn chưa thanh toán</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#" >Đơn nợ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/ketoan/QLDonThanhToan">Đơn đã thanh toán</a>
+                    </li>
+                </ul>
+
+                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                    <div class="row" style="padding-top:10px">
+                        <div class="col-sm-12">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                @*//Phần render từng dòng trong C#*@
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã hóa đơn: activate to sort column ascending" style="width: 80px;">Mã đơn hàng</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 60px;">Tên đại lý</th>
+                                        <th class="100" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý: activate to sort column ascending" style="width: 100px;">Điểm điểm giao</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng tiền: activate to sort column ascending" style="width: 80px;">Tình trạng thanh toán</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 60px;">Mã nhân viên lập</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 90px;">Ngày lập đơn</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 100px;">Tổng tiền</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 80px;">Chức năng</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+
+                                    }
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.TrangThai == "Đã xét duyệt" && item.TinhTrangThanhToan == "Đang nợ")
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaDH)
+                                                </td>
+                                                <td>
+                                                    @{var tendl = db.DaiLies.Where(s => s.MaDL == item.MaDL).FirstOrDefault();
+
+                                                    }
+                                                    @Html.DisplayFor(modelItem => tendl.TenDL)
+                                                </td>
+
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaNVLap)
+                                                </td>
+                                                <td>
+                                                    @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLap); ;}
+                                                    @Html.DisplayFor(modelItem => ngay)
+                                                </td>
+                                                <td>
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                    @Html.DisplayFor(modelItem => ThanhTien)
+                                                </td>
+                                                <td>
+
+                                                    <a href="/KeToan/ChinhsuaHD/@item.MaDH" class="btn btn-outline-primary btn-sm">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    @*<a href="/KeToan/XoaHD/@item.MaHD" class="btn btn-primary btn-sm trash">
+            <i class="fas fa-trash-alt"></i>
+        </a>*@
+                                                    <a href="/KeToan/XuatHDBH/@item.MaDH" class="btn btn-outline-primary btn-sm">
+                                                        <i class="fas fa-train"></i>
+                                                    </a>
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row element-button" style="padding-left:10px">
+            @*<div class="col-sm-2">
+                <a class="btn btn-primary btn-sm" type="button" title="làm mới" href="~/ketoan/qldonhang"><i class="fas fa-copy"></i> làm mới danh sách</a>
+            </div>*@
+            <div class="col-sm-2">
+                <a class="btn btn-primary btn-sm " type="button" title="in" onclick="myapp.printtable()">
+                    <i class="fas fa-print"></i> in dữ liệu
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<script>
+    //In dữ liệu
+    var myApp = new function () {
+        this.printTable = function () {
+            var tab = document.getElementById('sampleTable');
+            var win = window.open('', '', 'height=800px,width=1200px');
+            win.document.write(tab.outerHTML);
+            win.document.close();
+            win.print();
+        }
+    }
+
+    oTable = $('#sampleTable').dataTable();
+    $('#all').click(function (e) {
+        $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
+        e.stopImmediatePropagation();
+    });
+</script>

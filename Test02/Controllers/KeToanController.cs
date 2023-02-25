@@ -24,14 +24,14 @@ namespace Test02.Controllers
 
         public ActionResult TrangChuKeToan()
         {
-            return View(database.HoaDons.ToList());
+            return View(database.DonHangs.ToList());
         }
         //chu y
-        public ActionResult QLyDonHangKeToan(String id,DonHang dh)
-        {
+        //public ActionResult QLyDonHangKeToan(String id,DonHang dh)
+        //{
             
-            return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
-        }
+        //    return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
+        //}
 
        //public ActionResult TaoHD(String id)
        // {
@@ -82,11 +82,22 @@ namespace Test02.Controllers
        //     return RedirectToAction("QLHoaDon");
        // }
 
-        public ActionResult QLHoaDon()
+  
+        public ActionResult QLDonHang()
         {
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
         }
 
+        
+        public ActionResult QLDonNo()
+        {
+            return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
+        }
+
+        public ActionResult QLDonThanhToan()
+        {
+            return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
+        }
         public ActionResult ChinhsuaHD(String id)
         {
             return View(database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault());
@@ -98,7 +109,7 @@ namespace Test02.Controllers
            
             database.Entry(donHang).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
-            return RedirectToAction("QLHoaDon");
+            return RedirectToAction("QLDonHang");
         }
 
 
@@ -168,7 +179,9 @@ namespace Test02.Controllers
         public ActionResult TaoCongno(String id, PhieuCongNo phieuCongNo, DonHang dh)
         {
             //NGÀY
-            var time = System.DateTime.Now;
+
+            var time = DateTime.Today;
+
 
             // lấy hóa đơn
             List<DonHang> dl = database.DonHangs.ToList();
