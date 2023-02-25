@@ -15,9 +15,29 @@
                 icon: "success",
                 button: "Thoát",
             });
-
         </script>
+    }
 
+    if (TempData["hethang"] != null)
+    {
+        <script>
+            swal({
+                title: "Sản phẩm đã hết hàng!!!",
+                icon: "warning",
+                button: "Ok",
+            });
+        </script>
+    }
+
+    if (TempData["muahangthanhcong"] != null)
+    {
+        <script>
+            swal({
+                title: "Đã đặt hàng thành công!!!",
+                icon: "success",
+                button: "Ok",
+            });
+        </script>
     }
 }
 <div class="row">
@@ -58,7 +78,7 @@
                                 </a>
                                 <div class="info">
                                     <h4>@Html.DisplayFor(modelItem => item.TenSP)</h4>
-                                    <p><b>HSD: <b>@Html.DisplayFor(modelItem => item.HanSD)</b></b></p>
+                                    <p><b>HSD: <b>@{var ngay = string.Format("{0:dd/MM/yyyy}", item.HanSD);} @Html.DisplayFor(modelItem => ngay)</b></b></p>
                                     <p><b>Mã sản phẩm: <b>@Html.DisplayFor(modelItem => item.MaSP)</b></b></p>
                                     <p>
                                         <b>
@@ -73,22 +93,22 @@
                                             @Html.DisplayFor(modelItem => item.DonViTinh)
                                         </span>
                                         <span>
-                                            @*<button class="badge bg-info btn btn-primary" data-bs-toggle="modal" data-bs-target="#mymodal" style="border: 0px;"></button>*@
+                                            @*<button class="badge bg-info btn btn-primary" data-bs-toggle="modal" data-bs-target="#mymodal" style="border: 0px;">Thêm</button>*@
                                             <a class="badge bg-info" href="/KhachHang/ThemVaoGH/@item.MaSP">Thêm</a>
                                         </span>
 
                                         <!--<div class="modal" id="myModal">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-body" style="margin-top: 20px">
-                                                        <h4>Bạn có muốn thêm sản phẩm này vào giỏ hàng không?</h4>-->
-                                        @*<label style="margin-top: 20px;">Số lượng cần mua</label>
-                                            <input type="number" placeholder="Nhập số lượng sản phẩm" style="width: 335px; height: 40px; margin-left: 10px; border-radius: 5px;" />*@
-                                        <!--</div>
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body" style="margin-top: 20px">
+                                                    <h4>Bạn có muốn thêm sản phẩm này vào giỏ hàng không?</h4>
+                                                    <label style="margin-top: 20px;">Số lượng cần mua</label>
+                                                    <input type="number" placeholder="Nhập số lượng sản phẩm" style="width: 335px; height: 40px; margin-left: 10px; border-radius: 5px;" />
+                                                </div>
 
-                                        <div class="modal-footer" style="margin-top: 20px;">-->
-                                        @*<button type="button" class="btn btn-close" data-bs-dismiss="modal">Hủy</button>*@
-                                        @*<button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Thêm</button>*@
+                                                <div class="modal-footer" style="margin-top: 20px;">-->
+                                        @*<button type="button" class="btn btn-close" data-bs-dismiss="modal">Hủy</button>
+                                            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Thêm</button>*@
                                         <!--<a href="/KhachHang/ThemVaoGH/@item.MaSP">Thêm</a>
                                                     </div>
                                                 </div>

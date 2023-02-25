@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Test02.Models;
 
 namespace Test02.Models
 {
@@ -43,10 +44,10 @@ namespace Test02.Models
         }
 
         //Tính thành tiền
-        public decimal TongTien()
+        public double TongTien()
         {
             var tong = items.Sum(s => s.soLuong * s.idSP.Gia);
-            return (decimal)tong;
+            return (double)tong;
         }
 
         //Cập nhật số lượng

@@ -6,17 +6,25 @@
     ViewBag.gh = "active";
     ViewBag.nd = "Trang giỏ hàng";
 
-    if (TempData["xoasp"] != null)
+    if (TempData["XoaSP"] != null)
     {
         <script>
             swal({
-                title: "Xóa sản phẩm thành công!!!!",
+                title: "Xóa sản phẩm thành công!!!",
                 icon: "success",
                 button: "Thoát",
             });
-
         </script>
-
+    }
+    if (TempData["Warning"] != null)
+    {
+        <script>
+            swal({
+                title: "@TempData["Warning"]",
+                icon: "warning",
+                button: "Thoát",
+            })
+        </script>
     }
 }
 
@@ -29,13 +37,13 @@
                 {
                     <table>
                         <thead>
-                            <tr>
-                                <th>Tên sản phẩm</th>
-                                <th>Hình ảnh</th>
-                                <th>Giá</th>
-                                <th>Số lượng</th>
-                                <th>Thành tiền</th>
-                                <th></th>
+                            <tr style="text-align: center;">
+                                <th style="text-align: center">Tên sản phẩm</th>
+                                <th style="text-align: center">Hình ảnh</th>
+                                <th style="text-align: center">Giá</th>
+                                <th style="text-align: center;">Số lượng</th>
+                                <th style="text-align: center">Tổng tiền</th>
+                                <th style="text-align: center">Chức năng</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,24 +51,26 @@
                             {
                                 double total = item.idSP.Gia.Value * item.soLuong;
                                 <tr>
-                                    <td>@Html.DisplayFor(model => item.idSP.TenSP)</td>
+                                    <td style="text-align: center">@Html.DisplayFor(model => item.idSP.TenSP)</td>
                                     <td style="width: 100px; height: 100px;"><a href="@item.idSP.HinhAnh"></a></td>
-                                    <td>
+                                    <td style="text-align: center">
                                         @{var gia = string.Format("{0:0,0 VNĐ}", item.idSP.Gia);}
                                         @Html.DisplayFor(model => gia)
                                     </td>
-                                    <td>
+                                    <td style="width: 150px;">
                                         @using (Html.BeginForm("CapNhatSL", "KhachHang"))
                                         {
                                             <input type="hidden" value="@item.idSP.MaSP" name="MaSP" />
-                                            <input type="number" value="@item.soLuong" name="soluong" />
-                                            <input type="submit" value="Cập nhật" />
+                                            <div style="display: flex;">
+                                                <input class="form-control" type="number" value="@item.soLuong" name="soluong" style="width: 150px;"/>
+                                                <input class="btn btn-success" type="submit" value="Cập nhật" />
+                                            </div>
                                         }
                                     </td>
-                                    <td>
+                                    <td style="text-align: center">
                                         @{ var tien = string.Format("{0:0,0 VNĐ}", total);} @tien
                                     </td>
-                                    <td>
+                                    <td style="text-align: center;">
                                         <a href="/KhachHang/XoaSP/@item.idSP.MaSP" class="btn btn-primary btn-sm trash"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
@@ -74,24 +84,23 @@
                             </tr>
                             <tr>
                                 <td colspan="6" style="text-align: right; border: 0px;">
-                                    <a class="badge bg-info">Đặt hàng</a>
+                                    <a class="btn btn-primary" href="/KhachHang/PageDatHang">Đặt hàng</a>
                                 </td>
                             </tr>
                         </tfoot>
-                    </table>
-                    
+                    </table> 
                 }
                 else if (Model == null)
                 {
                     <table>
                         <thead>
                             <tr>
-                                <th>Tên sản phẩm</th>
-                                <th>Hình ảnh</th>
-                                <th>Giá</th>
-                                <th>Số lượng</th>
-                                <th>Thành tiền</th>
-                                <th></th>
+                                <th style="text-align: center">Tên sản phẩm</th>
+                                <th style="text-align: center">Hình ảnh</th>
+                                <th style="text-align: center">Giá</th>
+                                <th style="text-align: center">Số lượng</th>
+                                <th style="text-align: center">Thành tiền</th>
+                                <th style="text-align: center">Chức năng</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,7 +111,7 @@
                         <tfoot>
                             <tr>
                                 <td colspan="6" style="text-align: right;">
-                                    Thành tiền:
+                                    Thành tiền: 00 VND
                                 </td>
                             </tr>
                         </tfoot>

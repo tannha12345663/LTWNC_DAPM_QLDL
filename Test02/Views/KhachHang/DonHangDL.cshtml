@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<Test02.Models.DonHang>
-    @using Test02.Models
+@using Test02.Models
 @{
     ViewBag.Title = "DonHangDL";
     Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
@@ -41,7 +41,9 @@
                     @{
                         var user = (Test02.Models.DaiLy)HttpContext.Current.Session["userDL"];
                     }
+
                     @{ var mdl = user.MaDL;}
+
                     @foreach (var item in Model)
                     {
                         if (item.MaDL == mdl)
@@ -69,14 +71,24 @@
                                     @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Hủy đơn", "DeleteDH", new { id = item.MaDH }) |
-                                    @Html.ActionLink("Chi tiết", "DetailsDH", new { id = item.MaDH })
+                                    @{
+                                        var checkTTTT = item.TinhTrangThanhToan;
+                                        var checkTTTN = item.TrangThai;
+                                        if (checkTTTT == "Đã thanh toán" || checkTTTN == "Đã xét duyệt")
+                                        {
+
+                                            @Html.ActionLink("Chi tiết", "DetailsDH", new { id = item.MaDH })
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink("Hủy đơn", "DeleteDH", new { id = item.MaDH }) <span>|</span>
+                                            @Html.ActionLink("Chi tiết", "DetailsDH", new { id = item.MaDH }) 
+                                        }
+                                    }
                                 </td>
                             </tr>
                         }
-
                     }
-
                 </table>
             </div>
         </div>

@@ -592,6 +592,7 @@
     <Content Include="Views\TuChoiTruyCap\TuChoiTruyCap.cshtml" />
     <Content Include="Views\KhachHang\ChiTietSP.cshtml" />
     <Content Include="Views\KhachHang\GioHangDL.cshtml" />
+    <Content Include="Views\KhachHang\PageDatHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
