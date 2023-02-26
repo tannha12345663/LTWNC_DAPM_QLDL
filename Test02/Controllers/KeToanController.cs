@@ -144,6 +144,12 @@ namespace Test02.Controllers
 
         }
 
+        public ActionResult DSCongnoDL(String id)
+        {
+            return View(database.PhieuCongNoes.Where(s => s.MaDL == id).ToList());
+             
+        }
+
 
 
         public ActionResult QLCongno()
