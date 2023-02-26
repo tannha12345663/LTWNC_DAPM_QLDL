@@ -27,8 +27,9 @@
                                 <strong>Ngày đặt:</strong>
                                 @{
                                     var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+                                   var ngay= String.Format("{0:d/M/yyyy}", dh.NgayLap);
                                 }
-                                @Html.DisplayFor(modelItem => dh.NgayLap)
+                                @Html.DisplayFor(modelItem => ngay)
                             </p>
 
                         </div>
@@ -43,6 +44,7 @@
                                     Tên đại lý:
                                     @{
                                         var dl = db.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();
+
                                     }@Html.DisplayFor(modelItem => dl.TenDL)
                                 </td>
                                 <td rowspan="2">

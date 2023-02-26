@@ -273,7 +273,6 @@
     <Content Include="Content\bootstrap\js\bootstrap.js" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\ckeditor.js" />
-    <Content Include="Content\css\KeToan.css" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\util.css" />
@@ -477,6 +476,7 @@
     <Content Include="Views\KeToan\CongnoDL.cshtml" />
     <Content Include="Views\KeToan\Doanhthu.cshtml" />
     <Content Include="Views\KeToan\DSDaiLy.cshtml" />
+    <Content Include="Views\KeToan\Layout\ketoan.css" />
     <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
     <Content Include="Views\KeToan\QLCongno.cshtml" />
     <Content Include="Views\KeToan\QLDonHang.cshtml" />
