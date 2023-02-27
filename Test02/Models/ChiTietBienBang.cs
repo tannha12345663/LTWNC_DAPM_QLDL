@@ -16,11 +16,13 @@ namespace Test02.Models
     {
         public string MaCTBB { get; set; }
         public string MaKK { get; set; }
+        public string MaSP { get; set; }
         public Nullable<int> SLTonKho { get; set; }
         public Nullable<int> SLThucTe { get; set; }
         public Nullable<int> ChenhLech { get; set; }
         public string LyDo { get; set; }
     
         public virtual BienBangKiemKe BienBangKiemKe { get; set; }
+        public virtual SanPham SanPham { get; set; }
     }
 }

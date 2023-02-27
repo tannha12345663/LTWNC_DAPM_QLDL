@@ -22,13 +22,10 @@ namespace Test02.Models
     
         public string MaKK { get; set; }
         public string MaNVLap { get; set; }
-        public string MaSP { get; set; }
-        public string TenNV { get; set; }
         public string TenBienBang { get; set; }
         public Nullable<System.DateTime> NgayLap { get; set; }
     
         public virtual NhanVien NhanVien { get; set; }
-        public virtual SanPham SanPham { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietBienBang> ChiTietBienBangs { get; set; }
     }
