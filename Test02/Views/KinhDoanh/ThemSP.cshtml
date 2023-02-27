@@ -12,7 +12,7 @@
         <div class="row element-button">
 
         </div>
-        <form enctype="multipart/form-data" class="row" action="~/KinhDoanh/ThemSP" method="post">
+        <form class="row" action="~/KinhDoanh/ThemSP" method="post">
             @Html.AntiForgeryToken()
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -48,10 +48,6 @@
                     @Html.LabelFor(model => model.HanSD, htmlAttributes: new { @class = "control-label " })
                     <input class="form-control text-box single-line" data-val="true" data-val-date="The field HanSH must be a date." id="HanSD" name="HanSD" type="datetime-local" value="">
                     @Html.ValidationMessageFor(model => model.HanSD, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-1">
-                    <label class="control-label">Chọn hình ảnh</label>
-                    <input type="file" name="HinhAnh"/>
                 </div>
                 <div class="form-group col-md-12">
                     <div class="col-md-offset-2 col-md-8">

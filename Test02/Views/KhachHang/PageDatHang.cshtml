@@ -1,0 +1,77 @@
+﻿@model Test02.Models.Cart
+@using Test02.Models
+@{
+    ViewBag.Title = "DatHang";
+    Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
+    ViewBag.nd = "Trang đặt hàng";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">ĐẶT HÀNG</h3>
+            <div class="tile-body">
+                @if (Model != null)
+                {
+                    <table>
+                        <thead>
+                            <tr style="text-align: center;">
+                                <th style="text-align: center">Tên sản phẩm</th>
+                                <th style="text-align: center">Hình ảnh</th>
+                                <th style="text-align: center">Giá</th>
+                                <th style="text-align: center;">Số lượng</th>
+                                <th style="text-align: center">Tổng tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                double total = item.idSP.Gia.Value * item.soLuong;
+                                <tr>
+                                    <td style="text-align: center">@Html.DisplayFor(model => item.idSP.TenSP)</td>
+                                    <td style="width: 100px; height: 100px;"><a href="@item.idSP.HinhAnh"></a></td>
+                                    <td style="text-align: center">
+                                        @{var gia = string.Format("{0:0,0 VNĐ}", item.idSP.Gia);}
+                                        @Html.DisplayFor(model => gia)
+                                    </td>
+                                    <td style="width: 150px; text-align: center;">
+                                        @Html.DisplayFor(model => item.soLuong)
+                                    </td>
+                                    <td style="text-align: center">
+                                        @{ var tien = string.Format("{0:0,0 VNĐ}", total);} @tien
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            @using (Html.BeginForm("DatHang", "KhachHang"))
+                            {
+                                <tr style="border-bottom: 0px;">
+                                    <td colspan="6">
+                                        <label>Địa chỉ giao hàng</label>
+                                        <input name="diachigh" class="form-control" type="text" style="width: 500px;" required />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="text-align: right;">
+                                        <label>Tổng: </label> @{ var tong = string.Format("{0:0,0 VNĐ}", @Model.TongTien());} @tong <br />
+                                        <label>Chiết khấu giảm: @TempData["giam"]</label> <br /> 
+                                        <label>Thành tiền: @TempData["thanhtien"] </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="text-align: right; border: 0px;">
+                                        <a class="btn btn-cancel" href="/KhachHang/GioHangDL">Hủy</a>
+                                        <input class="btn btn-primary" type="submit" value="Xác nhận">
+                                    </td>
+                                </tr>
+                             }
+                        </tfoot>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
