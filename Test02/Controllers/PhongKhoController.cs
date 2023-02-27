@@ -57,7 +57,7 @@ namespace Test02.Controllers
                 chiTietKho.MaKho = (string)Session["makho1"];
                 Random rd = new Random();
                 var mactk = "CTK" + rd.Next(1, 1000);
-                chiTietKho.MaCTKho = mactk;
+                //chiTietKho.MaCTKho = mactk;
                 if (chiTietKho.SoLuong <= 150 && chiTietKho.SoLuong > 0)
                 {
                     chiTietKho.TinhTrang = "Sắp hết hàng";
@@ -85,26 +85,26 @@ namespace Test02.Controllers
         }
 
         // GET: ChiTietKhoes/Edit/5
-        public ActionResult EditCTKho(string id)
-        {
-            TempData["mactk"] = id;
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var mactk = database.ChiTietKhoes.Where(s => s.MaCTKho == id).FirstOrDefault();
-            //ChiTietKho chiTietKho = database.ChiTietKhoes.Find(id);
-            if (mactk == null)
-            {
-                return HttpNotFound();
-            }
-            Session["Mactkho"] = mactk.MaCTKho;
-            Session["Makho"] = mactk.MaKho;
+        //public ActionResult EditCTKho(string id)
+        //{
+        //    TempData["mactk"] = id;
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    //var mactk = database.ChiTietKhoes.Where(s => s.MaCTKho == id).FirstOrDefault();
+        //    //ChiTietKho chiTietKho = database.ChiTietKhoes.Find(id);
+        //    //if (mactk == null)
+        //    //{
+        //    //    return HttpNotFound();
+        //    //}
+        //    //Session["Mactkho"] = mactk.MaCTKho;
+        //    //Session["Makho"] = mactk.MaKho;
             
-            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
-            return View(mactk);
-        }
+        //    ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
+        //    ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
+        //    //return View(mactk);
+        //}
 
         // POST: ChiTietKhoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -115,7 +115,7 @@ namespace Test02.Controllers
         {
             if (ModelState.IsValid)
             {
-                chiTietKho.MaCTKho = (string)Session["Mactkho"];
+                //chiTietKho.MaCTKho = (string)Session["Mactkho"];
                 chiTietKho.MaKho = (string)Session["Makho"];
                 if (chiTietKho.SoLuong <= 150 && chiTietKho.SoLuong > 0)
                 {
@@ -145,30 +145,30 @@ namespace Test02.Controllers
             return View(chiTietKho);
         }
 
-        // GET: ChiTietKhoes/Delete/5
-        public ActionResult DeleteCTKho(string id)
-        {
-            var mactk = database.ChiTietKhoes.Where(s => s.MaCTKho == id).FirstOrDefault();
-            //ChiTietKho chiTietKho = database.ChiTietKhoes.Find(id);
-            if (mactk == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            return View(mactk);
-        }
+        //// GET: ChiTietKhoes/Delete/5
+        //public ActionResult DeleteCTKho(string id)
+        //{
+        //    //var mactk = database.ChiTietKhoes.Where(s => s.MaCTKho == id).FirstOrDefault();
+        //    //ChiTietKho chiTietKho = database.ChiTietKhoes.Find(id);
+        //    //if (mactk == null)
+        //    //{
+        //    //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    //}
+        //    //return View(mactk);
+        //}
 
         // POST: ChiTietKhoes/Delete/5
         [HttpPost, ActionName("DeleteCTKho")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteCTKhoConfirmed(string id)
-        {
-            var mactk = database.ChiTietKhoes.Where(s => s.MaCTKho == id).FirstOrDefault();
-            database.ChiTietKhoes.Remove(mactk);
-            database.SaveChanges();
-            TempData["AlertMessage"] = "Đã xóa";
-            TempData["MaCTKkk"] = mactk.MaCTKho;
-            return RedirectToAction("QuanLyKho");
-        }
+        //public ActionResult DeleteCTKhoConfirmed(string id)
+        //{
+        //    var mactk = database.ChiTietKhoes.Where(s => s.MaCTKho == id).FirstOrDefault();
+        //    database.ChiTietKhoes.Remove(mactk);
+        //    database.SaveChanges();
+        //    TempData["AlertMessage"] = "Đã xóa";
+        //    TempData["MaCTKkk"] = mactk.MaCTKho;
+        //    return RedirectToAction("QuanLyKho");
+        //}
 
         //-----------------------------------------------------------------------------------
         // GET: Khoes/Create
@@ -564,8 +564,8 @@ namespace Test02.Controllers
                 DataRow dr = bb.NewRow();
                 dr["MaKK"] = bienBangKiemKe.MaKK;
                 dr["MaNVLap"] = bienBangKiemKe.MaNVLap;
-                dr["MaSP"] = bienBangKiemKe.MaSP;
-                dr["TenNV"] = bienBangKiemKe.TenNV;
+                //dr["MaSP"] = bienBangKiemKe.MaSP;
+                //dr["TenNV"] = bienBangKiemKe.TenNV;
                 dr["TenBB"] = bienBangKiemKe.TenBienBang;
                 dr["NgayLap"] = bienBangKiemKe.NgayLap;
                 bb.Rows.Add(dr);
@@ -575,7 +575,7 @@ namespace Test02.Controllers
             }
 
             ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "TenNV", bienBangKiemKe.MaNVLap);
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", bienBangKiemKe.MaSP);
+            //ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", bienBangKiemKe.MaSP);
             return View(bienBangKiemKe);
         }
 
@@ -601,7 +601,7 @@ namespace Test02.Controllers
                 chiTietBienBang.MaKK = (string)Session["tempdata"];
                 Random rd = new Random();
                 var mactbb = "CTBB" + rd.Next(1, 1000);
-                chiTietBienBang.MaCTBB = mactbb;
+                //chiTietBienBang.MaCTBB = mactbb;
                 chiTietBienBang.ChenhLech = (int)chiTietBienBang.SLTonKho - (int)chiTietBienBang.SLThucTe;
                 BienBangKiemKe bienBangKiemKe = new BienBangKiemKe();
                 
@@ -610,12 +610,12 @@ namespace Test02.Controllers
                 foreach (DataRow dr in bb.Rows)
                 {
                     bienBangKiemKe.MaKK = dr["MaKK"].ToString();
-                    bienBangKiemKe.MaSP = dr["MaSP"].ToString();
+                    //bienBangKiemKe.MaSP = dr["MaSP"].ToString();
                     bienBangKiemKe.MaNVLap = dr["MaNVLap"].ToString();
                     var date = Convert.ToDateTime(dr["NgayLap"]);
                     bienBangKiemKe.NgayLap = date;
                     bienBangKiemKe.TenBienBang = dr["TenBB"].ToString();
-                    bienBangKiemKe.TenNV = dr["TenNV"].ToString();
+                    //bienBangKiemKe.TenNV = dr["TenNV"].ToString();
                 }
                 database.BienBangKiemKes.Add(bienBangKiemKe);
                 database.SaveChanges();
