@@ -14,7 +14,7 @@ namespace Test02.Models
     
     public partial class ChiTietBienBang
     {
-        public string MaCTBB { get; set; }
+        public int STT { get; set; }
         public string MaKK { get; set; }
         public string MaSP { get; set; }
         public Nullable<int> SLTonKho { get; set; }
