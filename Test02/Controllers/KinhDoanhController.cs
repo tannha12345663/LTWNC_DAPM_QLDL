@@ -503,7 +503,7 @@ namespace Test02.Controllers
             {
                 Random rd = new Random();
                 var themSP = "SP" + rd.Next(1, 100);
-                sanPham.TongTon = 0;
+                
                 sanPham.MaSP = themSP;
                 database.SanPhams.Add(sanPham);
                 database.SaveChanges();
@@ -523,6 +523,7 @@ namespace Test02.Controllers
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
             SanPham sanPham = database.SanPhams.Find(id);
+
             if (sanPham == null)
             {
                 return HttpNotFound();
