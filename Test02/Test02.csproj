@@ -596,6 +596,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\ImagesKhachHang\" />
+    <Folder Include="Data\Images\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Test01\Layout\" />
   </ItemGroup>

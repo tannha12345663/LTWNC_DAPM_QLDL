@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -196,6 +197,45 @@ namespace Test02.Controllers
             db.DonHangs.Remove(donHang);
             db.SaveChanges();
             return RedirectToAction("DonHangDL");
+        }
+
+        public void LuuAnh(DaiLy daiLy, HttpPostedFileBase HinhAnh)
+        {
+            #region Hình ảnh
+            //Xác định đường dẫn lưu file : Url tương đói => tuyệt đói
+            var urlTuongdoi = "/Data/Images/";
+            var urlTuyetDoi = Server.MapPath(urlTuongdoi);// Lấy đường dẫn lưu file trên server
+
+            //Check trùng tên file => Đổi tên file  = tên file cũ (ko kèm đuôi)
+            //Ảnh.jpg = > ảnh + "-" + 1 + ".jpg" => ảnh-1.jpg
+
+            string fullDuongDan = urlTuyetDoi + HinhAnh.FileName;
+            int i = 1;
+            while (System.IO.File.Exists(fullDuongDan) == true)
+            {
+                // 1. Tách tên và đuôi 
+                var ten = Path.GetFileNameWithoutExtension(HinhAnh.FileName);
+                var duoi = Path.GetExtension(HinhAnh.FileName);
+                // 2. Sử dụng biến i để chạy và cộng vào tên file mới
+                fullDuongDan = urlTuyetDoi + ten + "-" + i + duoi;
+                i++;
+                // 3. Check lại 
+            }
+            #endregion
+            //Lưu file (Kiểm tra trùng file)
+            HinhAnh.SaveAs(fullDuongDan);
+            daiLy.HinhAnh = urlTuongdoi + Path.GetFileName(fullDuongDan);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DoiHinhDL([Bind(Include = "HinhAnh")] DaiLy daiLy, HttpPostedFileBase HinhAnh)
+        {
+            if (ModelState.IsValid)
+            {
+                LuuAnh(daiLy, HinhAnh);
+                return RedirectToAction("PageSanPham");
+            }
+            return View(daiLy);
         }
     }
 }
