@@ -44,7 +44,7 @@
                                         <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý:: activate to sort column ascending" style="width: 150px;">Tên đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Loại đại lý</th>
                                         @*<th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý:: activate to sort column ascending" style="width: 150px;">Tổng công nợ</th>*@
-                                        <th width="100" class="sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 100px;">Chức năng</th>
+                                        <th width="100" class="sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 80px;">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -81,42 +81,64 @@
                                          
                                         </td>*@
 
-                                        <td >
-                                           @{ 
-                                               var count = 0;
-                                               for (int i = 0; i <donhang.Count ; i++)
-                                               {
-                                                   if (item.MaDL == donhang[i].MaDL && donhang[i].TinhTrangThanhToan=="Chưa thanh toán")
-                                                   {
-                                                       count = count+1;
-                                                   }
-                                               }
-                                           }
-                                            <a href="~/KeToan/CongnoDL/@item.MaDL" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Danh sách đơn hàng" style="position: relative; display: inline-block;">
-                                                <i class="fa fa-edit"></i>
-
-                                                @{
-                                                    if (count > 0)
-                                                    {
-                                                        <span class="badge" style="position: absolute; top: -10px; right: -10px; padding: 5px 10px; border-radius: 50%; background: red;">
-                                                            @Html.DisplayFor(modelItem => count)
-                                                        </span>
-                                                    }
+                                    <td style="text-align:center">
+                                        @{
+                                            var count = 0;
+                                            for (int i = 0; i < donhang.Count; i++)
+                                            {
+                                                if (item.MaDL == donhang[i].MaDL && donhang[i].TinhTrangThanhToan == "Chưa thanh toán" && donhang[i].TrangThai == "Đã xét duyệt")
+                                                {
+                                                    count = count + 1;
                                                 }
-
-
-
-                                            </a>
-                                                <a href="~/KeToan/DSCongnoDL/@item.MaDL" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Chi tiết công nợ">
-                                                    <i class="fa fa-receipt"></i>
-
-                                                </a>
-                                         
+                                            }
                                            
+                                               
 
-          
+                                            
+                                        }
+                                        <a href="~/KeToan/CongnoDL/@item.MaDL" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Danh sách đơn hàng" style="position: relative; display: inline-block;">
+                                            <i class="fa fa-edit"></i>
 
-                                        </td>
+                                            @{
+                                                if (count > 0)
+                                                {
+                                                    <span class="badge" style="position: absolute; top: -10px; right: -10px; padding: 5px 8px; border-radius: 50%; background: red;">
+                                                        @Html.DisplayFor(modelItem => count)
+                                                    </span>
+                                                }
+                                            }
+
+
+
+                                        </a>
+
+                                        @{ 
+                                            var tongphieuno = 0;
+                                            for (int i = 0; i < congno.Count; i++)
+                                            {
+                                                if (item.MaDL == congno[i].MaDL && congno[i].TrangThai == "Chưa thanh toán")
+                                                {
+                                                    tongphieuno = tongphieuno + 1;
+                                                }
+                                            }
+                                        }
+                                        <a href="~/KeToan/DSCongnoDL/@item.MaDL" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Chi tiết công nợ" style="position: relative; display: inline-block;">
+                                            <i class="fa fa-receipt"></i>
+                                            @{
+                                                if (tongphieuno > 0)
+                                                {
+                                                    <span class="badge" style="position: absolute; top: -10px; right: -10px; padding: 5px 8px; border-radius: 50%; background: red;">
+                                                        @Html.DisplayFor(modelItem => tongphieuno)
+                                                    </span>
+                                                }
+                                            }
+                                        </a>
+
+
+
+
+
+                                    </td>
                                     </tr>
                                     }
                                 </tbody>

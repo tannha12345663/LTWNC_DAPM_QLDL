@@ -2,10 +2,10 @@
 
 @using Test02.Models;
 @{
-    ViewBag.Title = "QLCongno";
+    ViewBag.Title = "Công nợ đại lý";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
-    ViewBag.cn = "active";
-    ViewBag.nd = "Danh sách Công nợ";
+    ViewBag.dsdl = "active";
+    ViewBag.nd = "Danh sách đại lý";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<HoaDon> ctdh = db.HoaDons.ToList();
 }
