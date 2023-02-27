@@ -476,7 +476,7 @@
     <Content Include="Views\KeToan\CongnoDL.cshtml" />
     <Content Include="Views\KeToan\Doanhthu.cshtml" />
     <Content Include="Views\KeToan\DSDaiLy.cshtml" />
-    <Content Include="Views\KeToan\Layout\ketoan.css" />
+    <Content Include="Views\KeToan\Layout\ketoan.js" />
     <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
     <Content Include="Views\KeToan\QLCongno.cshtml" />
     <Content Include="Views\KeToan\QLDonHang.cshtml" />
