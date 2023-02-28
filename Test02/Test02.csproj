@@ -143,6 +143,7 @@
     <Compile Include="Controllers\KinhDoanhController.cs" />
     <Compile Include="Controllers\LoginDLController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
+    <Compile Include="Controllers\PhieuNhapXuatsController.cs" />
     <Compile Include="Controllers\PhongKhoController.cs" />
     <Compile Include="Controllers\QTVController.cs" />
     <Compile Include="Controllers\TuChoiTruyCapController.cs" />
@@ -590,6 +591,11 @@
     <Content Include="Views\KinhDoanh\TuChoiTruyCap.cshtml" />
     <Content Include="Views\TuChoiTruyCap\Layout\Error.cshtml" />
     <Content Include="Views\TuChoiTruyCap\TuChoiTruyCap.cshtml" />
+    <Content Include="Views\PhongKho\CreatePNX.cshtml" />
+    <Content Include="Views\PhieuNhapXuats\Delete.cshtml" />
+    <Content Include="Views\PhieuNhapXuats\Details.cshtml" />
+    <Content Include="Views\PhieuNhapXuats\Edit.cshtml" />
+    <Content Include="Views\PhieuNhapXuats\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
