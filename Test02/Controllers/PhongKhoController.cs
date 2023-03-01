@@ -762,9 +762,22 @@ namespace Test02.Controllers
 //----------------------------------------------------------------------------------------------------
         //Phiếu nhập xuất từng kho
         // GET: PhieuNhapXuats/Create
-        public ActionResult CreatePNX()
+        public ActionResult CreatePXuat(string id)
         {
-            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
+            TempData["ngaylap"] = System.DateTime.Now;
+            Random rd = new Random();
+            var maphieu = "PN" + rd.Next(1, 1000);
+            TempData["maphieu"] = maphieu;
+            var makho = id;
+            foreach (var item in database.Khoes)
+            {
+                if (makho == item.MaKho)
+                {
+                    TempData["tenkho"] =  item.TenKho;
+                    TempData["diachi"] =  item.DiaChi;
+                }
+            }
+            ViewBag.MaKho = new SelectList(database.Khoes, "TenKho", "MaKho");
             ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu");
             return View();
         }
@@ -774,7 +787,7 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePNX([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu,MaNVLap")] PhieuNhapXuat phieuNhapXuat)
+        public ActionResult CreatePXuat([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu,MaNVLap")] PhieuNhapXuat phieuNhapXuat)
         {
             if (ModelState.IsValid)
             {
@@ -782,7 +795,7 @@ namespace Test02.Controllers
                 database.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", phieuNhapXuat.MaKho);
             ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu", phieuNhapXuat.MaNVLap);
             return View(phieuNhapXuat);
