@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Test02.Models.PhieuCongNo>
+@using Test02.Models;
+
+@{
+    ViewBag.Title = "QLDonHang";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.tb = "active";
+    ViewBag.nd = "Thông báo";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+
+}
+
+<h2>Thongbao</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MaCongNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaDL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TienNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HanTra)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayLapCN)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaCongNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaDL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TienNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HanTra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrangThai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayLapCN)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>

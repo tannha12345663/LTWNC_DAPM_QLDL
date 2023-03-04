@@ -591,6 +591,7 @@
     <Content Include="Views\KeToan\QLDonNo.cshtml" />
     <Content Include="Views\KeToan\QLDonThanhToan.cshtml" />
     <Content Include="Views\KeToan\DSCongnoDL.cshtml" />
+    <Content Include="Views\KeToan\Thongbao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

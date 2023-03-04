@@ -29,60 +29,64 @@ namespace Test02.Controllers
         //chu y
         //public ActionResult QLyDonHangKeToan(String id,DonHang dh)
         //{
-            
+
         //    return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
         //}
 
-       //public ActionResult TaoHD(String id)
-       // {
-       //     return View(database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault());
-       // }
-       // [HttpPost]
-       // public ActionResult TaoHD(String id,DonHang dh,HoaDon hoaDon)
-       // {
-       //     dh = database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault();
-       //     List<HoaDon> lisths = database.HoaDons.ToList();
-       //     for (int i = 0; i < lisths.Count; i++)
-       //     {
-       //         if (lisths[i].MaDH == dh.MaDH)
-       //         {
-       //             TempData["mess"] = "Mã đơn hàng bị trùng ";
-       //             return RedirectToAction("QlyDonHangKeToan");
-       //         }
-                
-       //     }
-       //     var user = (Test02.Models.NhanVien)Session["user"];
-       //     Random rd = new Random();
-       //     var maHD = "HD" + rd.Next(1, 1000);
-       //     hoaDon.MaHD = maHD;
-       //     hoaDon.MaDH = dh.MaDH;
+        //public ActionResult TaoHD(String id)
+        // {
+        //     return View(database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault());
+        // }
+        // [HttpPost]
+        // public ActionResult TaoHD(String id,DonHang dh,HoaDon hoaDon)
+        // {
+        //     dh = database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault();
+        //     List<HoaDon> lisths = database.HoaDons.ToList();
+        //     for (int i = 0; i < lisths.Count; i++)
+        //     {
+        //         if (lisths[i].MaDH == dh.MaDH)
+        //         {
+        //             TempData["mess"] = "Mã đơn hàng bị trùng ";
+        //             return RedirectToAction("QlyDonHangKeToan");
+        //         }
 
-       //     hoaDon.TongTien = dh.TongTien;
-       //     hoaDon.TenDVTiepNhan = user.MaNV;
-       //     hoaDon.NgayLap = System.DateTime.Now;
+        //     }
+        //     var user = (Test02.Models.NhanVien)Session["user"];
+        //     Random rd = new Random();
+        //     var maHD = "HD" + rd.Next(1, 1000);
+        //     hoaDon.MaHD = maHD;
+        //     hoaDon.MaDH = dh.MaDH;
 
-       //     TempData["ktra"] = "thanhcong ";
-       //     database.HoaDons.Add(hoaDon);
-       //     database.SaveChanges();
-       //     return RedirectToAction("QLHoaDon");
-            
-       // }
+        //     hoaDon.TongTien = dh.TongTien;
+        //     hoaDon.TenDVTiepNhan = user.MaNV;
+        //     hoaDon.NgayLap = System.DateTime.Now;
 
-       // public ActionResult XoaHD(String id)
-       // {
-       //     return View(database.HoaDons.Where(s => s.MaHD== id).FirstOrDefault());
-       // }
-       // [HttpPost]
-       // public ActionResult XoaHD(String id,HoaDon hoaDon)
-       // {
-       //     TempData["xoahd"] = "thanhcong ";
-       //     hoaDon = database.HoaDons.Where(s => s.MaHD == id).FirstOrDefault();
-       //     database.HoaDons.Remove(hoaDon);
-       //     database.SaveChanges();
-       //     return RedirectToAction("QLHoaDon");
-       // }
+        //     TempData["ktra"] = "thanhcong ";
+        //     database.HoaDons.Add(hoaDon);
+        //     database.SaveChanges();
+        //     return RedirectToAction("QLHoaDon");
 
-  
+        // }
+
+        // public ActionResult XoaHD(String id)
+        // {
+        //     return View(database.HoaDons.Where(s => s.MaHD== id).FirstOrDefault());
+        // }
+        // [HttpPost]
+        // public ActionResult XoaHD(String id,HoaDon hoaDon)
+        // {
+        //     TempData["xoahd"] = "thanhcong ";
+        //     hoaDon = database.HoaDons.Where(s => s.MaHD == id).FirstOrDefault();
+        //     database.HoaDons.Remove(hoaDon);
+        //     database.SaveChanges();
+        //     return RedirectToAction("QLHoaDon");
+        // }
+
+        public ActionResult Thongbao()
+        {
+            return View(database.PhieuCongNoes.ToList());
+        }
+
         public ActionResult QLDonHang()
         {
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
