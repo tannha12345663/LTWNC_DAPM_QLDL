@@ -43,5 +43,6 @@ namespace Test02.Models
         public virtual DbSet<PhieuCongNo> PhieuCongNoes { get; set; }
         public virtual DbSet<PhieuNhapXuat> PhieuNhapXuats { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

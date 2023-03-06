@@ -1,0 +1,97 @@
+﻿@model Test02.Models.DaiLy
+
+@{
+    ViewBag.Title = "Thông tin đại lý";
+    Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
+    ViewBag.nd = "Trang thông tin đại lý";
+
+    <style>
+        .img-avatar {
+            background: white;
+            border-radius: .357rem;
+            width: 250px;
+            height: 250px;
+            border: 3px solid white;
+            margin-bottom: 10px;
+            border-radius: 50% !important;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">THÔNG TIN ĐẠI LÝ</h3>
+            <div class=" row tile-body">
+                <div class="col-lg-5 col-md-12 col-sm-12" style="border: 0px; border-right: 2px solid #FFD43B;">
+                    @using (Html.BeginForm("ThongTinDL", "KhachHang", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div style="text-align: center;"><img class="img-avatar" src="@Model.HinhAnh" /></div>
+                        <div style="margin-top: 20px;">
+                            <input type="file" name="HinhAnh" style="width: 80px;" />
+                        </div>
+                        <div class="pull-right" style="margin-top: 20px; width: auto;">
+                            <input type="submit" value="Save" class="btn btn-outline-primary" />
+                        </div>
+                    }
+                </div>
+                <div class="col-lg-7 col-md-12 col-sm-12" style="border: 0px;">
+                    <dl>
+                        <dt>
+                            Mã đại lý
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.MaDL)
+                        </dd>
+
+                        <dt>
+                            Tên đại lý
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.TenDL)
+                        </dd>
+
+                        <dt>
+                            Loại đại lý
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.LoaiDL.TenDaiLy)
+                        </dd>
+
+                        <dt>
+                            Số điện thoại
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.SDT)
+                        </dd>
+
+                        <dt>
+                            Địa chỉ
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.DiaChi)
+                        </dd>
+
+                        <dt>
+                            Email
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Email)
+                        </dd>
+
+                        <dt>
+                            Ngày tạo
+                        </dt>
+                        <dd>
+                            @{ var ngayTao = string.Format("{0:dd/MM/yyyy}", Model.NgayTao); }
+                            @Html.DisplayFor(model => ngayTao)
+                        </dd>
+                    </dl>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 ﻿
 @*@model Test02.Models.ChiTietDonHang*@
-    @using Test02.Models
+@using Test02.Models
 @{
     ViewBag.Title = "DetailsDH";
     Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
@@ -10,72 +10,76 @@
     var ctdh = db.ChiTietDonHangs.ToList();
     var mdh = TempData["madh"];
 }
-<h4>Chi Tiết Đơn Hàng @mdh @TempData["madh"] </h4>
-<table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
-    @*//Phần render từng dòng trong C#*@
-    <thead>
-        <tr role="row">
-            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã sản phẩm</th>
-            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Tên sản phẩm</th>
-            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 100px;">Số lượng</th>
-            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Đơn giá</th>
-            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Đơn vị tính</th>
-            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Điểm giao hàng</th>
-            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Thành tiền</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{ var total = 0;}
-        @*@{
-            var user = (Test02.Models.DaiLy)HttpContext.Current.Session["userDL"];
-        }
-        @{ var mdl = user.MaDL;}*@
-        @foreach (var item in ctdh)
-        {
-            if (item.MaDH.Equals(mdh))
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MaSP)
-                    </td>
-                    <td>
-                        @{ var tensp = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
-                        @Html.DisplayFor(modelItem => tensp.TenSP)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SoLuong)
-                    </td>
-                    <td>
-                        @{ var dongia = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
-                        @{ var chuyendoi = string.Format("{0:0,0 vnđ}", dongia.Gia);}
-                        @Html.DisplayFor(modelItem => chuyendoi)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => dongia.DonViTinh)
-                    </td>
-                    <td>
-                        @{var diemgiao = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault(); }
-                        @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
-                    </td>
-                    <td>
-                        @{ total += Convert.ToInt32(item.ThanhTien);}
-                        @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
-                        @Html.DisplayFor(modelItem => ThanhTien)
-                    </td>
-                </tr>
-            }
-                
-         }
-        <tr>
-            <th colspan="6">Tổng cộng đơn hàng:</th>
-            @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
-            <td>@Html.DisplayFor(modelItem => TongCong)</td>
-        </tr>
-</table>
-<p>
-    <a class="btn btn-actv btn-sm" href="/KhachHang/DonHangDL" title="Trở lại">
-        <i class="fas fa-retweet"></i>
-        Trở lại
-    </a>
-</p>
-
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">CHI TIẾT ĐƠN HÀNG @TempData["madh"]</h3>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                    @*//Phần render từng dòng trong C#*@
+                    <thead>
+                        <tr role="row">
+                            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã sản phẩm</th>
+                            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Tên sản phẩm</th>
+                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 100px;">Số lượng</th>
+                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Đơn giá</th>
+                            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Đơn vị tính</th>
+                            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Điểm giao hàng</th>
+                            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ var total = 0;}
+                        @foreach (var item in ctdh)
+                        {
+                            if (item.MaDH.Equals(mdh))
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaSP)
+                                    </td>
+                                    <td>
+                                        @{ var tensp = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
+                                        @Html.DisplayFor(modelItem => tensp.TenSP)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SoLuong)
+                                    </td>
+                                    <td>
+                                        @{ var dongia = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
+                                        @{ var chuyendoi = string.Format("{0:0,0 vnđ}", dongia.Gia);}
+                                        @Html.DisplayFor(modelItem => chuyendoi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => dongia.DonViTinh)
+                                    </td>
+                                    <td>
+                                        @{var diemgiao = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault(); }
+                                        @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
+                                    </td>
+                                    <td>
+                                        @{ total += Convert.ToInt32(item.ThanhTien);}
+                                        @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
+                                        @Html.DisplayFor(modelItem => ThanhTien)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        <tr>
+                            <td colspan="7" style="text-align: right;">
+                                <label>Tổng cộng: </label>@{ var TongCong = string.Format("{0:0,0 VNĐ}", total);} @TongCong <br />
+                                <label>Chiết khấu: @TempData["giam"]</label> <br />
+                                <label>Thành tiền: @TempData["thanhtien"]</label>
+                            </td>
+                        </tr>
+                </table>
+                <p>
+                    <a class="btn btn-success" href="/KhachHang/DonHangDL" title="Trở lại">
+                        <i class="fas fa-retweet"></i>
+                        Trở lại
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
