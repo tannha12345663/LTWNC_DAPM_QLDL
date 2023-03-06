@@ -1,0 +1,46 @@
+﻿@model Test02.Models.PhieuNhapXuat
+@{
+    ViewBag.Title = "DetailsPXK";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayLap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayLap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoaiPhieu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiPhieu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kho.TenKho)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kho.TenKho)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NhanVien.MaChucVu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NhanVien.MaChucVu)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "NhapKho")
+</p>

@@ -1,24 +1,114 @@
 ﻿@model IEnumerable<Test02.Models.PhieuNhapXuat>
+@using Test02.Models
 @{
     ViewBag.Title = "QuanLyPhieuNhapXuat";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.nk = "active";
     ViewBag.Name = "Quản lý phiếu nhập xuất";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var listDH = db.DonHangs.ToList();
 }
-@{ 
+@{
     var checkMessage = TempData["AlertMessage"];
+
     if (checkMessage == "Đã xóa")
     {
-        <script >
+        <script>
             swal({
                 title: "Xóa thành công",
-                text: "Đã xóa phiếu @TempData["MaCTKkk"]!",
+                text: "Đã xóa phiếu @TempData["xoamphieu"]!",
                 icon: "success",
                 button: "OK",
             });
-        </script >
+        </script>
     }
 }
+<style>
+    button {
+        background-color: rgb(0 0 0 / 0.25);
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+
+        button:hover {
+            opacity: 1;
+        }
+.cancelbtn, .deletebtn {
+ 
+}
+
+/* Add a color to the cancel button */
+    .cancelbtn {
+        float: left;
+        background-color: #ccc;
+        color: black;
+        width: 30%;
+    }
+
+/* Add a color to the delete button */
+    .deletebtn {
+        float: right;
+        background-color: #f44336;
+        width: 30%;
+    }
+
+/* Add padding and center-align text to the container */
+.container {
+  padding: 16px;
+  text-align: center;
+  justify-content:center;
+}
+
+/* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: #474e5d;
+        padding-top: 50px;
+        
+    }
+
+/* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+        border: 1px solid #888;
+        /* Could be more or less, depending on screen size */
+        width: 500px;
+        text-align: center;
+    }
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and delete button on extra small screens */
+    @@media screen and (max-width: 300px) {
+  .cancelbtn, .deletebtn {
+     width: 100%;
+  }
+}
+</style>
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
@@ -54,17 +144,47 @@
                             </td>
                             <td class="element-button">
                                 @{ string str = item.MaPhieu.Substring(0, 2);}
-                                @if (str == "PX")
+                                @if (str == "PXK")
                                 {
                                     @Html.ActionLink("Chi tiết", "ChiTietPhieuXuatKho", new { id = item.MaPhieu })
                                     <span> || </span>
                                     @Html.ActionLink("Xóa", "XoaPhieuXuatKho", new { id = item.MaPhieu })
                                 }
-                                else
+                                else if (str == "PNK")
                                 {
                                     @Html.ActionLink("Chi tiết", "ChiTietPhieuNhapKho", new { id = item.MaPhieu })
                                     <span> || </span>
                                     @Html.ActionLink("Xóa", "XoaPhieuNhapKho", new { id = item.MaPhieu })
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Details", "DetailsPXK", new { id = item.MaPhieu }) <span>|</span>
+                                    @Html.ActionLink("Delete", "DeletePNX", new { id = item.MaPhieu })
+                                    <input type="submit" value="Delete" class="btn btn-danger" onclick="document.getElementById('id01').style.display='block'" />
+                                    <div id="id01" class="modal">
+                                        <form class="modal-content">
+                                            <div class="container tile">
+                                                <div class="tile-title">
+                                                    <i class="fa fa-warning text-warning"></i>
+                                                    <h2>Cảnh báo!</h2>
+                                                </div>
+                                                <p class="tile-body">Bạn có chắc muốn xóa phiếu xuất kho của đơn hàng này?</p>
+                                                <div class="clearfix tile-footer">
+                                                    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Hủy bỏ</button>
+                                                    <button type="button" name="deletePXK" onclick="document.getElementById('id01').style.display='none'" class="deletebtn">
+                                                        @using (Html.BeginForm())
+                                                        {
+                                                            
+                                                            @Html.AntiForgeryToken()
+                                                            @Html.ActionLink("Xóa đơn hàng", "DeletePNXConfirm", new { id = item.MaPhieu })
+                                                        }
+
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
                                 }
                             </td>
                         </tr>
@@ -75,6 +195,91 @@
     </div>
 </div>
 
+@* <Danh sách đơn hàng đã xét duyệt *@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="tile">
+            <h3 class="tile-title" style="text-align:center;"><b>DANH SÁCH ĐƠN HÀNG ĐÃ XÉT DUYỆT</b></h3>
+            <div class="tile-body table-responsive-sm">
+                <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                       id="sampleTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                Mã đại lý
+                            </th>
+                            <th>
+                                Mã đơn hàng
+                            </th>
+                            <th>
+                                Nhân viên xét duyệt
+                            </th>
+                            <th>
+                                Ngày lập đơn
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>
+                                Kho ưu tiên
+                            </th>
+                            <th>
+                                Điểm giao
+                            </th>
+                            <th>
+                                Tổng tiền
+                            </th>
+                            <th>
+                                Chi tiết
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in listDH)
+                        {
+                            if (item.TrangThai == "Đã xét duyệt")
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaDL)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaDH)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NhanVien.TenNV)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NgayLap)
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-success">@Html.DisplayFor(modelItem => item.TrangThai)</span>
+                                    </td>
+                                    <td>
+                                        null
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DiemGiao)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TongTien)
+                                    </td>
+                                    <td>
+                                        <a href="~/PhongKho/ChiTietDonHang/@item.MaDH" class="btn btn-outline-info btn-md" title="Chi tiết"> <i class="fa fa-info"></i> </a>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @*<script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -83,7 +288,17 @@
 <script src="~/Scripts/pace.min.js"></script>
 <!-- Page specific javascripts-->
 <script type="text/javascript" src="~/Scripts/chart.js"></script>
+<script>
+    // Get the modal
+    var modal = document.getElementById('id01');
 
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 <!-- Google analytics script-->
 <script type="text/javascript">
     if (document.location.hostname == 'pratikborsadiya.in') {

@@ -1,98 +1,32 @@
 ﻿@model Test02.Models.PhieuNhapXuat
 @using Test02.Models;
 @{
-    ViewBag.Title = "Tạo phiếu nhập kho";
+    ViewBag.Title = "Tạo phiếu xuất kho";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
-    ViewBag.qlk = "active";
+    ViewBag.nk = "active";
     ViewBag.Name = "Tạo phiếu xuất kho";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var kho = db.Khoes.ToList();
-    var daily = db.DaiLies.ToList();
+    var ctdonhang = db.ChiTietDonHangs.ToList();
     
 }
-<script type="text/javascript">
-    //Phân Trang Cho Table
-    function Pager(tableName, itemsPerPage) {
-        this.tableName = tableName;
-        this.itemsPerPage = itemsPerPage;
-        this.currentPage = 1;
-        this.pages = 0;
-        this.inited = false;
 
-        this.showRecords = function (from, to) {
-            var rows = document.getElementById(tableName).rows;
-            for (var i = 1; i < rows.length; i++) {
-                if (i < from || i > to)
-                    rows[i].style.display = 'none';
-                else
-                    rows[i].style.display = '';
-            }
-        }
-
-        this.showPage = function (pageNumber) {
-            if (!this.inited) {
-                alert("not inited");
-                return;
-            }
-            var oldPageAnchor = document.getElementById('pg' + this.currentPage);
-            oldPageAnchor.className = 'pg-normal';
-
-            this.currentPage = pageNumber;
-            var newPageAnchor = document.getElementById('pg' + this.currentPage);
-            newPageAnchor.className = 'pg-selected';
-
-            var from = (pageNumber - 1) * itemsPerPage + 1;
-            var to = from + itemsPerPage - 1;
-            this.showRecords(from, to);
-        }
-
-        this.prev = function () {
-            if (this.currentPage > 1)
-                this.showPage(this.currentPage - 1);
-        }
-
-        this.next = function () {
-            if (this.currentPage < this.pages) {
-                this.showPage(this.currentPage + 1);
-            }
-        }
-
-        this.init = function () {
-            var rows = document.getElementById(tableName).rows;
-            var records = (rows.length - 1);
-            this.pages = Math.ceil(records / itemsPerPage);
-            this.inited = true;
-        }
-        this.showPageNav = function (pagerName, positionId) {
-            if (!this.inited) {
-                alert("not inited");
-                return;
-            }
-            var element = document.getElementById(positionId);
-
-            var pagerHtml = '<span onclick="' + pagerName +
-                '.prev();" class="pg-normal">&#171</span> | ';
-            for (var page = 1; page <= this.pages; page++)
-                pagerHtml += '<span id="pg' + page + '" class="pg-normal" onclick="' + pagerName +
-                    '.showPage(' + page + ');">' + page + '</span> | ';
-            pagerHtml += '<span onclick="' + pagerName + '.next();" class="pg-normal">&#187;</span>';
-
-            element.innerHTML = pagerHtml;
-        }
-    }
-</script>
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
             <p>Tên đơn vị: Công ty TNHH nước giải khát NQK</p>
             <p>Mã số thuế: 03289456217</p>
-            <p>Theo mã hóa đơn số: HD0199283</p>
+            <p>Theo mã đơn hàng số: @Session["madhxk"]</p>
             <h2 style="text-align:center" id="sample1">PHIẾU XUẤT KHO KIÊM VẬN CHUYỂN NỘI BỘ</h2>
             <form style="text-align:center">
                 <label for="date">Ngày:</label>
                 @TempData["ngaylap"]<br>
                 <label for="date">Mã số:</label>
                 @TempData["maphieu"]<br>
+                <label for="date">Người làm phiếu: </label>
+                @{
+                    var user = (Test02.Models.NhanVien)HttpContext.Current.Session["user"];
+                    @user.TenNV}
             </form>
             @using (Html.BeginForm())
             {
@@ -100,17 +34,15 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="tile-body">
                     <form class="row">
-                        <div class="row" style="margin-left:3px">
-                            <div class="form-group col-md-4" id="sample5">
-                                <label class="control-label">Xuất tại:</label>
-                                @TempData["tenkho"]
-                            </div>
-                            <div class="form-group col-md-4" id="sample5">
-                                <label class="control-label">Địa chỉ xuất hàng:</label>
-                                @TempData["diachi"]
-                            </div>
-                            <div class="form-group col-md-4" id="sample5">
-                            </div>
+                        <div class="form-group col-md-12" id="sample5">
+                            <label class="control-label" id="ThongTinKho1">Kho xuất hàng:</label><br />
+                            <select class="form-control" name="ThongTinKho1">
+                                <option>----chọn_kho----</option>
+                                @foreach (var item in kho)
+                                {
+                                    <option>@item.MaKho</option>
+                                }
+                            </select>
                         </div>
                         <div class="form-group col-md-12" id="sample3">
                             <label class="control-label">Tên người giao hàng: </label>
@@ -121,66 +53,72 @@
                             <input class="form-control" type="text" id="vanchuyen" required>
                         </div>
                         <div class="form-group col-md-12" id="sample4">
-                            <label class="control-label">Đại lý nhận hàng: </label> <br />
-                            <select class="form-control" name="thongtinDL">
-                                <option>Chọn đại lý</option>
-                                @foreach (var item in daily)
-                                {
-                                    <option>@item.TenDL   -----   Địa chỉ: @item.DiaChi</option>
-                                }
-                            </select>
+                            <label class="control-label">Đại lý nhận hàng: </label> 
+                            @TempData["tenDL"]
                         </div>
-                        <div class="form-group col-md-12" id="sample6">
-                            <label class="control-label">Danh sách sản phẩm: </label>
-                            <table class="table table-hover table-bordered js-copytextarea" id="myTable" cellpadding="0" cellspacing="0" border="0">
+                        <div class="form-group col-md-12" id="sample4">
+                            <label class="control-label">Địa chỉ nhận hàng: </label> 
+                            @TempData["diemgiao"]
+                        </div>
+                        <div class="form-group col-md-12 table-responsive" id="sample6">
+
+                            <label class="control-label">Danh sách sản phẩm: </label> <br />
+                            <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
+                                @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr>
-                                        <th style="text-align:center;">STT</th>
-                                        <th style="text-align:center;">Tên sản phẩm</th>
-                                        <th style="text-align:center;">Đơn vị tính</th>
-                                        <th style="text-align:center;">Số lượng</th>
-                                        <th style="text-align:center;">Đơn giá</th>
-                                        <th style="text-align:center;">Thành tiền</th>
+                                        <th>Mã sản phẩm</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th >Số lượng</th>
+                                        <th>Đơn giá</th>
+                                        <th>Đơn vị tính</th>
+                                        <th>Thành tiền</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @{ var total = 0;}
+                                    @{ var madhX = TempData["mahdx"];}
+                                    @foreach (var item in ctdonhang)
+                                    {
+                                        if(item.MaDH == (string)madhX)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaSP)
+                                                </td>
+                                                <td>
+                                                    @{ var tensp = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => tensp.TenSP)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SoLuong)
+                                                </td>
+                                                <td>
+                                                    @{ var dongia = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
+                                                    @{ var chuyendoi = string.Format("{0:0,0 vnđ}", dongia.Gia);}
+                                                    @Html.DisplayFor(modelItem => chuyendoi)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => dongia.DonViTinh)
+                                                </td>
+                                                <td>
+                                                    @{ total += Convert.ToInt32(item.ThanhTien);}
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
+                                                    @Html.DisplayFor(modelItem => ThanhTien)
+                                                </td>
+                                            </tr>
+                                        }
+                                        
+                                    }
                                     <tr>
-                                        <td>1</td>
-                                        <td>Sđas</td>
-                                        <td>thùng</td>
-                                        <td>342</td>
-                                        <td>
-                                            425524
-                                        </td>
-                                        <td>17000222</td>
-                                        <td>
-                                            <a class="add" title="Lưu Lại" data-toggle="tooltip">
-                                                <i class="fa fa-floppy-o"
-                                                   aria-hidden="true"></i>
-                                            </a>
-                                            <a class="edit" title="Sửa" data-toggle="tooltip">
-                                                <i class="fa fa-pencil"
-                                                   aria-hidden="true"></i>
-                                            </a>
-                                            <a class="delete" title="Xóa" data-toggle="tooltip">
-                                                <i class="fa fa-trash-o"
-                                                   aria-hidden="true"></i>
-                                            </a>
-                                        </td>
+                                        <th colspan="5">
+                                            <p class="pull-right">Tổng cộng đơn hàng:</p>
+                                        </th>
+                                        @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                        <td>@Html.DisplayFor(modelItem => TongCong)</td>
                                     </tr>
-                                </tbody>
                             </table>
-                            <div id="pageNavPosition" class="text-right"></div>
-                            <script type="text/javascript">
-                                var pager = new Pager('myTable', 5);
-                                pager.init();
-                                pager.showPageNav('pager', 'pageNavPosition');
-                                pager.showPage(1);
-                            </script>
-                            <button class="nv btn add-new" type="button" data-toggle="tooltip" data-placement="top"
-                                    title="Thêm Nhân Viên">
-                                <i class="fas fa-user-plus"></i>
-                            </button>
+
                         </div>
                         <h5 style="margin-left:82%;" id="sample1">Thủ kho</h5>
                         <h6 style="margin-left:80%; font-style:italic;" id="sample1">(ký và ghi rõ họ tên)</h6>
@@ -189,168 +127,13 @@
                         <br />
                         <h6 style="margin-left:80%;" id="sample1">Nguyễn Thị Diễm Khang</h6>
                     </form>
-                    <input type="submit" value="Lưu phiếu" class="btn btn-save" />
-                    <a class="btn btn-cancel" href="QuanLyDL">Hủy bỏ</a>
+                    <div>
+                        <input type="submit" value="Lưu phiếu" class="btn btn-save"/>
+                        <a class="btn btn-cancel" href="~/PhongKho/ChiTietDonHang/@TempData["mahdx"]">Hủy bỏ</a>
+                    </div>
                 </div>
             }
 
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-        //Tìm kiếm
-        function myFunction() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("myTable");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";  }}}}
-        //Lọc bảng
-        function sortTable() {
-            var table, rows, switching, i, x, y, shouldSwitch;
-            table = document.getElementById("myTable");
-            switching = true;
-            while (switching) {
-                switching = false;
-                rows = table.rows;
-                for (i = 1; i < (rows.length - 1); i++) {
-                    shouldSwitch = false;
-                    x = rows[i].getElementsByTagName("TD")[0];
-                    y = rows[i + 1].getElementsByTagName("TD")[0];
-                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-                if (shouldSwitch) {
-                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                    switching = true;
-                    swal("Thành Công!", "Bạn Đã Lọc Thành Công", "success");
-                }
-            }
-        }
-        //Thời Gian
-        function time() {
-            var today = new Date();
-            var weekday = new Array(7);
-            weekday[0] = "Chủ Nhật";
-            weekday[1] = "Thứ Hai";
-            weekday[2] = "Thứ Ba";
-            weekday[3] = "Thứ Tư";
-            weekday[4] = "Thứ Năm";
-            weekday[5] = "Thứ Sáu";
-            weekday[6] = "Thứ Bảy";
-            var day = weekday[today.getDay()];
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1;
-            var yyyy = today.getFullYear();
-            var h = today.getHours();
-            var m = today.getMinutes();
-            var s = today.getSeconds();
-            m = checkTime(m);
-            s = checkTime(s);
-            nowTime = h + ":" + m + ":" + s;
-            if (dd < 10) {
-                dd = '0' + dd
-            }
-            if (mm < 10) {
-                mm = '0' + mm
-            }
-            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-            tmp = '<i class="fa fa-clock-o" aria-hidden="true"></i> <span class="date">' + today + ' | ' + nowTime +
-                '</span>';
-            document.getElementById("clock").innerHTML = tmp;
-            clocktime = setTimeout("time()", "1000", "Javascript");
-
-            function checkTime(i) {
-                if (i < 10) {
-                    i = "0" + i;
-                }
-                return i;
-            }
-        }
-
-        //Thêm
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-            var actions = $("table td:last-child").html();
-            $(".add-new").click(function () {
-                $(this).attr("disabled", "disabled");
-                var index = $("table tbody tr:last-child").index();
-                var row = '<tr>' +
-                    '<td><input type="text" class="form-control" name="name" id="name" placeholder="Nhập Tên"></td>' +
-                    '<td><input type="text" class="form-control" name="gioitinh" id="gioitinh" placeholder="Nhập Giới Tính"></td>' +
-                    '<td><input type="text" class="form-control" name="namsinh" id="namsinh" value="" placeholder="Nhập Ngày Sinh"></td>' +
-                    '<td><input type="text" class="form-control" name="diachi" id="diachi" value="" placeholder="Nhập Địa Chỉ"></td>' +
-                    '<td><input type="text" class="form-control" name="chucvu" id="chucvu" value="" placeholder="Nhập Chức Vụ"></td>' +
-                    '<td>' + actions + '</td>' +
-                    '</tr>';
-                $("table").append(row);
-                $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-            //Kiểm tra rỗng
-            $(document).on("click", ".add", function () {
-                var empty = false;
-                var input = $(this).parents("tr").find('input[type="text"]');
-                input.each(function () {
-                    if (!$(this).val()) {
-                        $(this).addClass("error");
-                        swal("Thông Báo!", "Dữ Liệu Trống Vui Lòng Kiểm Tra", "error");
-                        empty = true;
-                    } else {
-                        $(this).removeClass("error");
-                        swal("Thông Báo!", "Bạn Chưa Nhập Dữ Liệu", "warning");
-                    }
-                });
-                $(this).parents("tr").find(".error").first().focus();
-                if (!empty) {
-                    input.each(function () {
-                        $(this).parent("td").html($(this).val());
-                        swal("Thành Công", "Bạn Đã Cập Nhật Thành Công", "success");
-                    });
-                    $(this).parents("tr").find(".add, .edit").toggle();
-                    $(".add-new").removeAttr("disabled");
-                }
-            });
-            // Sửa
-            $(document).on("click", ".edit", function () {
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input type="text" class="form-control" value="' + $(this)
-                        .text() + '">');
-                });
-                $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").attr("disabled", "disabled");
-            });
-            jQuery(function () {
-                jQuery(".add").click(function () {
-                    swal("Thành Công!", "Bạn Đã Sửa Thành Công", "success");
-                });
-            });
-            // Xóa
-            $(document).on("click", ".delete", function () {
-                $(this).parents("tr").remove();
-                swal("Thành Công!", "Bạn Đã Xóa Thành Công", "success");
-                $(".add-new").removeAttr("disabled");
-            });
-        });
-        //Not use
-        jQuery(function () {
-            jQuery(".cog").click(function () {
-                swal("Sorry!", "Tính Năng Này Chưa Có", "error");
-            });
-        });
-        //Tool tip
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-</script>
