@@ -185,7 +185,6 @@ namespace Test02.Controllers
         //Thêm mới chi tiết đơn hàng bán tự động
         public ActionResult ThemCTHD()
         {
-
             ViewBag.MaDH = new SelectList(database.DonHangs, "MaDH", "MaDL");
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
             return View();
@@ -247,6 +246,12 @@ namespace Test02.Controllers
                     }
                     database.ChiTietDonHangs.Add(chiTietDonHang);
                     database.SaveChanges();
+                    //THêm tổng tiền của đơn hàng
+                    var dh = database.DonHangs.Find(chiTietDonHang.MaDH);
+                    dh.TongTien += chiTietDonHang.ThanhTien;
+                    database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
+                    database.SaveChanges();
+
                     TempData["messageAlert"] = "Đã thêm mới đơn hàng";
                     TempData["themmadh"] = chiTietDonHang.MaDH;
                     return RedirectToAction("QuanLyDH");
@@ -377,7 +382,49 @@ namespace Test02.Controllers
                 {
                     chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia) * (chiTietDonHang.ChietKhau);
                 }
+                //Kiểm tra số lượng sản phẩm tồn trong kho
+                var checkslp = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
+                if (chiTietDonHang.SoLuong > checkslp.TongTon)
+                {
+                    var madh = database.DonHangs.Where(s => s.MaDH == chiTietDonHang.MaDH).FirstOrDefault();
+                    TempData["messageAlert"] = "Không đủ số lượng để đặt";
+                    return RedirectToAction("QuanLyDH");
+                }
+                else
+                {
+                    var ctk = database.ChiTietKhoes.Where(s => s.MaSP == chiTietDonHang.MaSP).ToList();
+                    var slsp = (int)chiTietDonHang.SoLuong;
+                    var checksl = -slsp;
+                    foreach (var udk in ctk)
+                    {
+                        checksl += (int)udk.SoLuong;
+                        if (checksl >= 0)
+                        {
+                            udk.SoLuong = checksl;
+                            if (udk.SoLuong < 1500)
+                            {
+                                udk.TinhTrang = "Sắp hết hàng";
+                            }
+                            database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
+                            database.SaveChanges();
+                            break;
+                        }
+                        else if (checksl < 0)
+                        {
+                            udk.TinhTrang = "Hết hàng";
+                            udk.SoLuong = 0;
+                            database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
+                            database.SaveChanges();
+                        }
+                    }
+                }
+                //Cập nhật thêm sản phẩm
                 database.ChiTietDonHangs.Add(chiTietDonHang);
+                database.SaveChanges();
+                //THêm tổng tiền của đơn hàng
+                var dh = database.DonHangs.Find(chiTietDonHang.MaDH);
+                dh.TongTien += chiTietDonHang.ThanhTien;
+                database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
                 TempData["messageAlert"] = "Đã cập nhật chi tiết đơn hàng";
                 TempData["capnhatdh"] = chiTietDonHang.MaDH;

@@ -30,6 +30,7 @@ namespace Test02.Models
         public virtual DbSet<ChiTietBienBang> ChiTietBienBangs { get; set; }
         public virtual DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public virtual DbSet<ChiTietKho> ChiTietKhoes { get; set; }
+        public virtual DbSet<ChiTietPhieuNhapXuat> ChiTietPhieuNhapXuats { get; set; }
         public virtual DbSet<ChucVu> ChucVus { get; set; }
         public virtual DbSet<DaiLy> DaiLies { get; set; }
         public virtual DbSet<DanhSachGiaoHang> DanhSachGiaoHangs { get; set; }
@@ -42,6 +43,5 @@ namespace Test02.Models
         public virtual DbSet<PhieuCongNo> PhieuCongNoes { get; set; }
         public virtual DbSet<PhieuNhapXuat> PhieuNhapXuats { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
-        public virtual DbSet<ChiTietPhieuNhapXuat> ChiTietPhieuNhapXuats { get; set; }
     }
 }
