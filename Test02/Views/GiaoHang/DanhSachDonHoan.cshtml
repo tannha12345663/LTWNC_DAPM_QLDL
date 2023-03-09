@@ -1,14 +1,13 @@
 ﻿@model IEnumerable<Test02.Models.DonHang>
 @using Test02.Models;
 @{
-    ViewBag.Title = "DonHangMoi";
+    ViewBag.Title = "DanhSachDonHoan";
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
-    ViewBag.gh_donhangmoi = "active";
-    ViewBag.nd = "Danh sách đơn hàng";
+    ViewBag.gh_dsdh = "active";
+    ViewBag.nd = "Danh sách đơn hoàn";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
 }
 
-
-<h2>DonHangMoi</h2>
+<h2>DanhSachDonHoan</h2>
 
