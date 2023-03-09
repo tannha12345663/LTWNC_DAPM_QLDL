@@ -604,8 +604,8 @@ namespace Test02.Controllers
         // GET: BienBangKiemKes/Create
         public ActionResult CreateBBKK()
         {
+            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
             ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu");
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
             return View();
         }
 
@@ -614,7 +614,7 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateBBKK([Bind(Include = "MaKK,MaNVLap,MaSP,TenNV,TenBienBang,NgayLap")] BienBangKiemKe bienBangKiemKe)
+        public ActionResult CreateBBKK([Bind(Include = "MaKK,MaNVLap,MaKho,TenNV,TenBienBang,NgayLap")] BienBangKiemKe bienBangKiemKe)
         {
             if (ModelState.IsValid)
             {
@@ -622,11 +622,11 @@ namespace Test02.Controllers
                 if (Session["BBKK"] == null)
                 {
                     bb.Columns.Add("MaKK");
-                    bb.Columns.Add("MaSP");
+                    bb.Columns.Add("MaKho");
                     bb.Columns.Add("MaNVLap");
                     bb.Columns.Add("NgayLap");
                     bb.Columns.Add("TenBB");
-                    bb.Columns.Add("TenNV");
+                    //bb.Columns.Add("MaNVLap");
                     //Tạo xong lưu lại Session
                     Session["BBKK"] = bb;
                 }
@@ -643,7 +643,7 @@ namespace Test02.Controllers
                 DataRow dr = bb.NewRow();
                 dr["MaKK"] = bienBangKiemKe.MaKK;
                 dr["MaNVLap"] = bienBangKiemKe.MaNVLap;
-                dr["MaSP"] = bienBangKiemKe.MaKho;
+                dr["MaKho"] = bienBangKiemKe.MaKho;
                 dr["TenNV"] = bienBangKiemKe.NhanVien.TenNV;
                 dr["TenBB"] = bienBangKiemKe.TenBienBang;
                 dr["NgayLap"] = bienBangKiemKe.NgayLap;
@@ -653,15 +653,15 @@ namespace Test02.Controllers
                 return RedirectToAction("CreateCTBBKK");
             }
 
-            ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "TenNV", bienBangKiemKe.MaNVLap);
-            ViewBag.MaKho = new SelectList(database.SanPhams, "MaSP", "TenSP", bienBangKiemKe.MaKho);
+            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", bienBangKiemKe.MaKho);
+            ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu", bienBangKiemKe.MaNVLap);
             return View(bienBangKiemKe);
         }
 
         // GET: ChiTietBienBangs/Create
         public ActionResult CreateCTBBKK()
         {
-            ViewBag.MaKK = new SelectList(database.BienBangKiemKes, "MaKK", "MaNVLap");
+            ViewBag.MaKK = new SelectList(database.BienBangKiemKes, "MaKK", "MaKho");
             return View();
         }
 
