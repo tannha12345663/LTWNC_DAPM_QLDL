@@ -595,14 +595,15 @@
     <Content Include="Views\TuChoiTruyCap\Layout\Error.cshtml" />
     <Content Include="Views\TuChoiTruyCap\TuChoiTruyCap.cshtml" />
     <Content Include="Views\PhongKho\CreatePXuat.cshtml" />
-    <Content Include="Views\PhieuNhapXuats\Delete.cshtml" />
-    <Content Include="Views\PhieuNhapXuats\Details.cshtml" />
-    <Content Include="Views\PhieuNhapXuats\Edit.cshtml" />
-    <Content Include="Views\PhieuNhapXuats\Index.cshtml" />
     <Content Include="Views\DemoPX\DemoPX.cshtml" />
     <Content Include="Views\PhongKho\ChiTietDonHang.cshtml" />
     <Content Include="Views\PhongKho\DetailsPXK.cshtml" />
     <Content Include="Views\PhongKho\DeletePNX.cshtml" />
+    <Content Include="Views\PhieuNhapXuats\Create.cshtml" />
+    <Content Include="Views\PhieuNhapXuats\Delete.cshtml" />
+    <Content Include="Views\PhieuNhapXuats\Details.cshtml" />
+    <Content Include="Views\PhieuNhapXuats\Edit.cshtml" />
+    <Content Include="Views\PhieuNhapXuats\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

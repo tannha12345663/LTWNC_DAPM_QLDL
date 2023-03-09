@@ -89,7 +89,7 @@ namespace Test02.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(phieuNhapXuat).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(phieuNhapXuat).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

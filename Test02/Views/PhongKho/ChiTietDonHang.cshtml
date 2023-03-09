@@ -28,17 +28,19 @@
                 <div class="row element-button">
                     <h3>Danh sách chi tiết của đơn hàng @TempData["madh"]</h3>
                 </div>
-                <h6>Mã hóa đơn số: <span class="badge bg-info">không biết không biết không không không biết</span></h6>
+                <h6>Mã đơn hàng số: <span class="badge bg-info">@TempData["madh"]</span></h6>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
                         <div class="col-md-12">
-                            <span class="badge bg-danger">Điểm giao hàng: </span>
-                            <span class="badge bg-success">
-                                @{
-                                    var madh = @TempData["madh"];
-                                    var diemgiao = db.DonHangs.Where(s => s.MaDH == (string)madh).FirstOrDefault(); }
-                                @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
-                            </span>
+                            <h6>
+                                Điểm giao hàng:
+                                <span class="badge bg-success">
+                                    @{
+                                        var madh = @TempData["madh"];
+                                        var diemgiao = db.DonHangs.Where(s => s.MaDH == (string)madh).FirstOrDefault(); }
+                                    @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
+                                </span>
+                            </h6>
                         </div>
                     </div>
                 </div>

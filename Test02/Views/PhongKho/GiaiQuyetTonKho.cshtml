@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "GiaiQuyetTonKho";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
-    ViewBag.tk = "active";
+    ViewBag.hh = "active";
     ViewBag.Name = "Giải phóng hàng tồn kho";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dsCTKho = db.ChiTietKhoes.ToList();
@@ -95,7 +95,7 @@
             </div>
         </form>
         <input type="submit" value="Lưu phiếu" class="btn btn-save" />
-        <a class="btn btn-cancel" href="TonKho">Hủy bỏ</a>
+        <a class="btn btn-cancel" href="/PhongKho/QuanLyDL">Hủy bỏ</a>
         </div>
     }
     

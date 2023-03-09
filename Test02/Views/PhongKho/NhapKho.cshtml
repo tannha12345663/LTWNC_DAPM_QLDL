@@ -23,92 +23,6 @@
         </script>
     }
 }
-<style>
-    button {
-        background-color: rgb(0 0 0 / 0.25);
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        cursor: pointer;
-        width: 100%;
-        opacity: 0.9;
-    }
-
-        button:hover {
-            opacity: 1;
-        }
-.cancelbtn, .deletebtn {
- 
-}
-
-/* Add a color to the cancel button */
-    .cancelbtn {
-        float: left;
-        background-color: #ccc;
-        color: black;
-        width: 30%;
-    }
-
-/* Add a color to the delete button */
-    .deletebtn {
-        float: right;
-        background-color: #f44336;
-        width: 30%;
-    }
-
-/* Add padding and center-align text to the container */
-.container {
-  padding: 16px;
-  text-align: center;
-  justify-content:center;
-}
-
-/* The Modal (background) */
-    .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: #474e5d;
-        padding-top: 50px;
-        
-    }
-
-/* Modal Content/Box */
-    .modal-content {
-        background-color: #fefefe;
-        margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-        border: 1px solid #888;
-        /* Could be more or less, depending on screen size */
-        width: 500px;
-        text-align: center;
-    }
-
-/* Style the horizontal ruler */
-hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-}
-
-/* Clear floats */
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-/* Change styles for cancel button and delete button on extra small screens */
-    @@media screen and (max-width: 300px) {
-  .cancelbtn, .deletebtn {
-     width: 100%;
-  }
-}
-</style>
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
@@ -144,56 +58,54 @@ hr {
                             </td>
                             <td class="element-button">
                                 @{ string str = item.MaPhieu.Substring(0, 2);}
-                                @if (str == "PXK")
+                                @if (str == "PX")
                                 {
-                                    @Html.ActionLink("Chi tiết", "ChiTietPhieuXuatKho", new { id = item.MaPhieu })
-                                    <span> || </span>
-                                    @Html.ActionLink("Xóa", "XoaPhieuXuatKho", new { id = item.MaPhieu })
+                                    <a href="~/PhongKho/ChiTietPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-info" title=" Chi tiết"> <i class="fa fa-info"></i> </a>
+                                    <a href="/PhongKho/XoaPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
                                 }
-                                else if (str == "PNK")
+                                else if (str == "PN")
                                 {
-                                    @Html.ActionLink("Chi tiết", "ChiTietPhieuNhapKho", new { id = item.MaPhieu })
-                                    <span> || </span>
-                                    @Html.ActionLink("Xóa", "XoaPhieuNhapKho", new { id = item.MaPhieu })
+                                    <a href="~/PhongKho/ChiTietPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-info" title="Chi tiết"> <i class="fa fa-info"></i> </a>
+                                    <a href="/PhongKho/XoaPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
                                 }
                                 else
                                 {
-                                    @Html.ActionLink("Details", "DetailsPXK", new { id = item.MaPhieu }) <span>|</span>
-                                    @Html.ActionLink("Delete", "DeletePNX", new { id = item.MaPhieu })
-                                    <input type="submit" value="Delete" class="btn btn-danger" onclick="document.getElementById('id01').style.display='block'" />
-                                    <div id="id01" class="modal">
-                                        <form class="modal-content">
-                                            <div class="container tile">
-                                                <div class="tile-title">
-                                                    <i class="fa fa-warning text-warning"></i>
-                                                    <h2>Cảnh báo!</h2>
-                                                </div>
-                                                <p class="tile-body">Bạn có chắc muốn xóa phiếu xuất kho của đơn hàng này?</p>
-                                                <div class="clearfix tile-footer">
-                                                    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Hủy bỏ</button>
-                                                    <button type="button" name="deletePXK" onclick="document.getElementById('id01').style.display='none'" class="deletebtn">
-                                                        @using (Html.BeginForm())
-                                                        {
-                                                            
-                                                            @Html.AntiForgeryToken()
-                                                            @Html.ActionLink("Xóa đơn hàng", "DeletePNXConfirm", new { id = item.MaPhieu })
-                                                        }
-
-                                                    </button>
-                                                </div>
-
-                                            </div>
-                                        </form>
-                                    </div>
+                                    <a href="~/PhongKho/DetailsPXK/@item.MaPhieu" class="btn btn-outline-info" title="Chi tiết"> <i class="fa fa-info"></i> </a>
+                                    <a href="/PhongKho/DeletePNX/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
                                 }
                             </td>
                         </tr>
                     }
                 </table>
+                @* Ẩn cột trong table *@
+                <!--<input type="hidden" id="hiddenPhieu" />-->
+                @* Model *@
+                <!--<div class="container">
+                    <div class="modal fade" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" class="" data-dismiss="modal">&times;</a>
+                                    <h2>Cảnh báo!</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <h4>Bạn có chắc muốn xóa phiếu xuất kho của đơn hàng này?</h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-cancel" data-dismiss="modal">Hủy bỏ</a>
+                                    <a href="#" class="btn btn-danger" onclick="DeletePhieu()">Vẫn xóa</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
             </div>
         </div>
     </div>
 </div>
+
+
+
 
 @* <Danh sách đơn hàng đã xét duyệt *@
 <div class="row">
@@ -285,37 +197,43 @@ hr {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>*@
 <!-- The javascript plugin to display page loading on top-->
-<script src="~/Scripts/pace.min.js"></script>
+<!--<script src="~/Scripts/pace.min.js"></script>-->
 <!-- Page specific javascripts-->
-<script type="text/javascript" src="~/Scripts/chart.js"></script>
-<script>
-    // Get the modal
-    var modal = document.getElementById('id01');
+<!--<script type="text/javascript" src="~/Scripts/chart.js"></script>-->
+@*<script>
+        // Get the modal
+        var modal = document.getElementById('id01');
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
         }
-    }
-</script>
-<!-- Google analytics script-->
-<script type="text/javascript">
-    if (document.location.hostname == 'pratikborsadiya.in') {
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-72504830-1', 'auto');
-        ga('send', 'pageview');
-    }
-</script>
+    </script>*@
 
 
+@* model confirm delete *@
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        var ConfirmDelete = function (MaPhieu) {
+            $("#hiddenPhieu").val(MaPhieu);
+            $("#myModal").modal('show');
+
+        }
+
+        var Deletephieu = function () {
+            var maPhieu = $("#hiddenPhieu").val();
+            $.ajax({
+                type: "POST",
+                url: "/PhongKho/DeletePNXConfirm",
+                data: { MaPhieu: maPhieu },
+                success: function () {
+                    $("#myModal").modal("hide");
+                }
+            });
+        }
+    })
+    
+    
+</script>*@

@@ -349,9 +349,13 @@ namespace Test02.Controllers
                 {
                     tongpx = tongpx + 1;
                 }
-                else
+                else if (str == "PN")
                 {
                     tongpn = tongpn + 1;
+                }
+                else
+                {
+                    tongpx = tongpx + 1;
                 }
             }
             TempData["Tongpn"] = tongpn;
@@ -377,169 +381,169 @@ namespace Test02.Controllers
 
         ////----------------------------------------------------------------------
         //// GET: PhieuNhapXuats/Create
-        //public ActionResult TaoPhieuNhapKho()
-        //{
-        //    ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "MaKho");
-        //    ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "MaSP");
-        //    return View();
-        //}
+        public ActionResult TaoPhieuNhapKho()
+        {
+            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "MaKho");
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "MaSP");
+            return View();
+        }
 
         //// POST: PhieuNhapXuats/Create
         //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
         //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult TaoPhieuNhapKho([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu")] PhieuNhapXuat phieuNhapXuat)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        Random rd = new Random();
-        //        var maphieu = "PNK" + rd.Next(1, 1000);
-        //        phieuNhapXuat.MaPhieu = maphieu;
-        //        Session["phieunhap"] = maphieu;
-        //        phieuNhapXuat.NgayLap = System.DateTime.Now;
-        //        phieuNhapXuat.LoaiPhieu = "Phiếu nhập";
-        //        Session["KinhGui"] = " ";
-        //        Session["HoTen"] = " ";
-        //        database.PhieuNhapXuats.Add(phieuNhapXuat);
-        //        database.SaveChanges();
-        //        TempData["AlertMessage"] = "Đã thêm";
-        //        TempData["MaPNKho"] = maphieu;
-        //        return RedirectToAction("QuanLyDL");
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TaoPhieuNhapKho([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu,MaNVLap")] PhieuNhapXuat phieuNhapXuat)
+        {
+            if (ModelState.IsValid)
+            {
+                Random rd = new Random();
+                var maphieu = "PNK" + rd.Next(1, 1000);
+                phieuNhapXuat.MaPhieu = maphieu;
+                Session["phieunhap"] = maphieu;
+                phieuNhapXuat.NgayLap = System.DateTime.Now;
+                phieuNhapXuat.LoaiPhieu = "Phiếu đề nghị nhập hàng vào kho";
+                Session["KinhGui"] = " ";
+                Session["HoTen"] = " ";
+                database.PhieuNhapXuats.Add(phieuNhapXuat);
+                database.SaveChanges();
+                TempData["AlertMessage"] = "Đã thêm";
+                TempData["MaPNKho"] = maphieu;
+                return RedirectToAction("QuanLyDL");
+            }
 
-        //    return View(phieuNhapXuat);
-        //}
-
-        //// GET: PhieuNhapXuats/Details/5
-        //public ActionResult ChiTietPhieuNhapKho(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    TempData["maPhieuNhap"] = id;
-        //    Session["KinhGui"] = "Trưởng phòng kinh doanh";
-        //    Session["HoTen"] = "Nguyễn Thị Diễm Khang";
-        //    PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
-        //    if (phieuNhapXuat == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(phieuNhapXuat);
-        //}
-        //// GET: PhieuNhapXuats/Delete/5
-        //public ActionResult XoaPhieuNhapKho(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
-        //    if (phieuNhapXuat == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(phieuNhapXuat);
-        //}
-
-        //// POST: PhieuNhapXuats/Delete/5
-        //[HttpPost, ActionName("XoaPhieuNhapKho")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult XoaPhieuNhapKhoConfirmed(string id)
-        //{
-        //    PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
-        //    database.PhieuNhapXuats.Remove(phieuNhapXuat);
-        //    database.SaveChanges();
-        //    TempData["AlertMessage"] = "Đã xóa";
-        //    TempData["MaPNKho"] = id;
-        //    return RedirectToAction("NhapKho");
-        //}
-        ////-------------------------------------Hết phần Phiếu Nhập----------------------
-        ////-----------------------------Bắt đầu phiếu xuất - tồn kho------------------------------------
-        //public ActionResult TonKho()
-        //{
-        //    return View();
-        //}
-
-        //// GET: PhieuNhapXuats/Create
-        //public ActionResult GiaiQuyetTonKho()
-        //{
-        //    ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "MaKho");
-        //    ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "MaSP");
-        //    return View();
-        //}
-
-        //// POST: PhieuNhapXuats/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult GiaiQuyetTonKho([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu")] PhieuNhapXuat phieuNhapXuat)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        Random rd = new Random();
-        //        var maphieux = "PXK" + rd.Next(1, 1000);
-        //        phieuNhapXuat.MaPhieu = maphieux;
-        //        Session["phieuXuat"] = maphieux;
-        //        phieuNhapXuat.NgayLap = System.DateTime.Now;
-        //        phieuNhapXuat.LoaiPhieu = "Phiếu xuất";
-        //        Session["KinhGui"] = " ";
-        //        Session["HoTen"] = " ";
-        //        database.PhieuNhapXuats.Add(phieuNhapXuat);
-        //        database.SaveChanges();
-        //        TempData["AlertMessage"] = "Đã thêm";
-        //        TempData["MaPNKho"] = maphieux;
-        //        return RedirectToAction("TonKho");
-        //    }
-        //    return View(phieuNhapXuat);
-        //}
+            return View(phieuNhapXuat);
+        }
 
         //// GET: PhieuNhapXuats/Details/5
-        //public ActionResult ChiTietPhieuXuatKho(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    TempData["maPhieuXuat"] = id;
-        //    Session["KinhGui"] = "Trưởng phòng kinh doanh";
-        //    Session["HoTen"] = "Nguyễn Thị Diễm Khang";
-        //    PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
-        //    if (phieuNhapXuat == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(phieuNhapXuat);
-        //}
-        //// GET: PhieuNhapXuats/Delete/5
-        //public ActionResult XoaPhieuXuatKho(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
-        //    if (phieuNhapXuat == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(phieuNhapXuat);
-        //}
+        public ActionResult ChiTietPhieuNhapKho(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TempData["maPhieuNhap"] = id;
+            Session["KinhGui"] = "Trưởng phòng kinh doanh";
+            Session["HoTen"] = "Nguyễn Thị Diễm Khang";
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            if (phieuNhapXuat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phieuNhapXuat);
+        }
+        // GET: PhieuNhapXuats/Delete/5
+        public ActionResult XoaPhieuNhapKho(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            if (phieuNhapXuat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phieuNhapXuat);
+        }
 
-        //// POST: PhieuNhapXuats/Delete/5
-        //[HttpPost, ActionName("XoaPhieuXuatKho")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult XoaPhieuXuatKhoConfirmed(string id)
-        //{
-        //    PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
-        //    database.PhieuNhapXuats.Remove(phieuNhapXuat);
-        //    database.SaveChanges();
-        //    TempData["AlertMessage"] = "Đã xóa";
-        //    TempData["MaPNKho"] = id;
-        //    return RedirectToAction("NhapKho");
-        //}
+        // POST: PhieuNhapXuats/Delete/5
+        [HttpPost, ActionName("XoaPhieuNhapKho")]
+        [ValidateAntiForgeryToken]
+        public ActionResult XoaPhieuNhapKhoConfirmed(string id)
+        {
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            database.PhieuNhapXuats.Remove(phieuNhapXuat);
+            database.SaveChanges();
+            TempData["AlertMessage"] = "Đã xóa";
+            TempData["MaPNKho"] = id;
+            return RedirectToAction("NhapKho");
+        }
+        //-------------------------------------Hết phần Phiếu Nhập----------------------
+        //-----------------------------Bắt đầu phiếu xuất - tồn kho------------------------------------
+        public ActionResult TonKho()
+        {
+            return View();
+        }
+
+        // GET: PhieuNhapXuats/Create
+        public ActionResult GiaiQuyetTonKho()
+        {
+            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "MaKho");
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "MaSP");
+            return View();
+        }
+
+        // POST: PhieuNhapXuats/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GiaiQuyetTonKho([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu")] PhieuNhapXuat phieuNhapXuat)
+        {
+            if (ModelState.IsValid)
+            {
+                Random rd = new Random();
+                var maphieux = "PXK" + rd.Next(1, 1000);
+                phieuNhapXuat.MaPhieu = maphieux;
+                Session["phieuXuat"] = maphieux;
+                phieuNhapXuat.NgayLap = System.DateTime.Now;
+                phieuNhapXuat.LoaiPhieu = "Phiếu đề nghị xuất hàng tồn";
+                Session["KinhGui"] = " ";
+                Session["HoTen"] = " ";
+                database.PhieuNhapXuats.Add(phieuNhapXuat);
+                database.SaveChanges();
+                TempData["AlertMessage"] = "Đã thêm";
+                TempData["MaPNKho"] = maphieux;
+                return RedirectToAction("QuanLyDL");
+            }
+            return View(phieuNhapXuat);
+        }
+
+        // GET: PhieuNhapXuats/Details/5
+        public ActionResult ChiTietPhieuXuatKho(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TempData["maPhieuXuat"] = id;
+            Session["KinhGui"] = "Trưởng phòng kinh doanh";
+            Session["HoTen"] = "Nguyễn Thị Diễm Khang";
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            if (phieuNhapXuat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phieuNhapXuat);
+        }
+        // GET: PhieuNhapXuats/Delete/5
+        public ActionResult XoaPhieuXuatKho(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            if (phieuNhapXuat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phieuNhapXuat);
+        }
+
+        // POST: PhieuNhapXuats/Delete/5
+        [HttpPost, ActionName("XoaPhieuXuatKho")]
+        [ValidateAntiForgeryToken]
+        public ActionResult XoaPhieuXuatKhoConfirmed(string id)
+        {
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            database.PhieuNhapXuats.Remove(phieuNhapXuat);
+            database.SaveChanges();
+            TempData["AlertMessage"] = "Đã xóa";
+            TempData["MaPNKho"] = id;
+            return RedirectToAction("NhapKho");
+        }
 
         //------------------------------------------Hết phần tồn kho - phiếu xuất---------------------------
         public ActionResult BaoCao()
@@ -777,24 +781,28 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePXuat([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu,MaNVLap")] PhieuNhapXuat phieuNhapXuat, string ThongTinKho1)
+        public ActionResult CreatePXuat([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu,MaNVLap")] PhieuNhapXuat phieuNhapXuat, string ThongTinKho1, string vanchuyen, string nguoigiaohang)
         {
             if (ModelState.IsValid)
             {
                 TempData["makho001"] = ThongTinKho1;
                 Random rd = new Random();
-                var maphieu = "PX_HD0" + rd.Next(1, 1000);
+                var maphieu = "PHXHD0" + rd.Next(1, 1000);
                 phieuNhapXuat.MaPhieu = maphieu;
                 phieuNhapXuat.NgayLap = System.DateTime.Now;
                 phieuNhapXuat.LoaiPhieu = "Phiếu xuất kho theo đơn hàng số "+ Session["madhxk"];
-                var mk = TempData["makho001"];
-                phieuNhapXuat.MaKho = (string)mk;
+                var mk = ThongTinKho1;
+                phieuNhapXuat.MaKho = mk;
+                phieuNhapXuat.NguoiGiaoHang = nguoigiaohang;
+                phieuNhapXuat.PhuongTienGiaoHang = vanchuyen;
+                phieuNhapXuat.MaDH = (string)Session["madhxk"];
                 var user = (Test02.Models.NhanVien)HttpContext.Session["user"];
                 phieuNhapXuat.MaNVLap = user.MaNV;
                 database.PhieuNhapXuats.Add(phieuNhapXuat);
                 database.SaveChanges();
                 TempData["AlertMessage"] = "Đã thêm";
                 TempData["mphieu"] = maphieu;
+                
                 return RedirectToAction("ChiTietDonHang", new RouteValueDictionary(
                                         new { controller = "PhongKho", action = "ChiTietDonHang", Id = Session["madhxk"] }));
             }
@@ -833,7 +841,19 @@ namespace Test02.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            TempData["maPhieuXuattheodonhang"] = id;
+            var maDH = phieuNhapXuat.MaDH;
+            TempData["ctmadh"] = phieuNhapXuat.MaDH;
+            foreach (var item in database.DonHangs)
+            {
+                if (maDH == item.MaDH)
+                {
+                    TempData["tenDL"] = item.DaiLy.TenDL;
+                    TempData["diemgiao"] = item.DiemGiao;
+                }
+            }
             if (phieuNhapXuat == null)
             {
                 return HttpNotFound();
@@ -869,5 +889,6 @@ namespace Test02.Controllers
             TempData["xoamphieu"] = maphieu;
             return RedirectToAction("NhapKho");
         }
+
     }
 }

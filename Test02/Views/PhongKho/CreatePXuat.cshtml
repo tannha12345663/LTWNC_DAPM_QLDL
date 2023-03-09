@@ -45,12 +45,12 @@
                             </select>
                         </div>
                         <div class="form-group col-md-12" id="sample3">
-                            <label class="control-label">Tên người giao hàng: </label>
-                            <input class="form-control" type="text" id="kinhgui" required>
+                            <label class="control-label" id="nguoigiaohang">Tên người giao hàng: </label>
+                            <input class="form-control" type="text" id="kinhgui" name="nguoigiaohang" required>
                         </div>
                         <div class="form-group col-md-12" id="sample4">
-                            <label class="control-label">Phương tiện vận chuyển: </label> <br />
-                            <input class="form-control" type="text" id="vanchuyen" required>
+                            <label class="control-label" id="vanchuyen">Phương tiện vận chuyển: </label> <br />
+                            <input class="form-control" type="text"  name="vanchuyen" required>
                         </div>
                         <div class="form-group col-md-12" id="sample4">
                             <label class="control-label">Đại lý nhận hàng: </label> 
@@ -77,7 +77,7 @@
                                 </thead>
                                 <tbody>
                                     @{ var total = 0;}
-                                    @{ var madhX = TempData["mahdx"];}
+                                    @{ var madhX = Session["madhxk"];}
                                     @foreach (var item in ctdonhang)
                                     {
                                         if(item.MaDH == (string)madhX)
