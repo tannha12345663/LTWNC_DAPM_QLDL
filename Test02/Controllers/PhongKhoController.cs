@@ -785,7 +785,7 @@ namespace Test02.Controllers
         {
             if (ModelState.IsValid)
             {
-                TempData["makho001"] = ThongTinKho1;
+                
                 Random rd = new Random();
                 var maphieu = "PHXHD0" + rd.Next(1, 1000);
                 phieuNhapXuat.MaPhieu = maphieu;
@@ -798,13 +798,23 @@ namespace Test02.Controllers
                 phieuNhapXuat.MaDH = (string)Session["madhxk"];
                 var user = (Test02.Models.NhanVien)HttpContext.Session["user"];
                 phieuNhapXuat.MaNVLap = user.MaNV;
-                database.PhieuNhapXuats.Add(phieuNhapXuat);
-                database.SaveChanges();
-                TempData["AlertMessage"] = "Đã thêm";
-                TempData["mphieu"] = maphieu;
                 
-                return RedirectToAction("ChiTietDonHang", new RouteValueDictionary(
-                                        new { controller = "PhongKho", action = "ChiTietDonHang", Id = Session["madhxk"] }));
+                if (ThongTinKho1 != "----chọn kho----")
+                {
+                    TempData["makho001"] = ThongTinKho1;
+                    database.PhieuNhapXuats.Add(phieuNhapXuat);
+                    database.SaveChanges();
+                    TempData["AlertMessage"] = "Đã thêm";
+                    TempData["mphieu"] = maphieu;
+                    return RedirectToAction("ChiTietDonHang", new RouteValueDictionary(
+                                            new { controller = "PhongKho", action = "ChiTietDonHang", Id = Session["madhxk"] }));
+                }
+                else
+                {
+                    TempData["AlertMessage"] = "khonull";
+                    return View(phieuNhapXuat);
+                }
+                
             }
             
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", phieuNhapXuat.MaKho);
