@@ -10,6 +10,8 @@
 }
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!--Modal-->
+
 @{
     var checkmess = (string)TempData["messageAlert"];
     var madl = (string)TempData["TenDLthem"];
@@ -31,7 +33,7 @@
         <h3 class="tile-title">Tình trạng đơn hàng</h3>
         <div class="row element-button">
             <div class="col-sm-2">
-                <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDL"><i class="fas fa-file-upload"></i> Thêm mới hồ sơ</a>
+                <a class="btn btn-delete btn-sm nhap-tu-file" @*data-toggle="modal" data-target="#myModal"*@ href="/KinhDoanh/ThemDL"><i class="fas fa-file-upload"></i> Thêm mới hồ sơ</a>
             </div>
             <div class="col-sm-2">
                 <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
@@ -102,7 +104,6 @@
         <!-- / div trống-->
     </div>
 </div>
-
 
 
 <script>

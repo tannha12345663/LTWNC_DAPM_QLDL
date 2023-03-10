@@ -7,6 +7,8 @@
     ViewBag.nd = "Danh sách đơn hàng";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
+    var dsdl = db.DaiLies.ToList();
+    var dssp = db.SanPhams.ToList();
 }
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @{
@@ -54,7 +56,7 @@
 
                 <div class="row element-button">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDH"><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
+                        <a class="btn btn-delete btn-sm nhap-tu-file" data-target="#myModal" data-toggle="modal" @*href="~/KinhDoanh/ThemDH"*@><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
                     </div>
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
@@ -150,3 +152,90 @@
 </div>
 
 
+<!--Form thêm thông mới đơn hàng-->
+<!-- The Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="~/KinhDoanh/ThemLDL" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group  col-md-12">
+                            <span class="thong-tin-thanh-toan">
+                                <h5>Thêm mới đơn hàng cho đại lý</h5>
+                            </span>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label class="control-label">Chọn mã đại lý</label>
+                            <select class="form-control" name="MaDL" required>
+                                <option>-----Vui lòng chọn------</option>
+                                @{ foreach (var item01 in dsdl)
+                                    {
+                                        <option value="@item01.MaDL">@item01.MaDL</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Địa điểm giao hàng</label>
+                            <textarea class="form-control" type="text" name="DiemGiao" required></textarea>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Thêm thông tin hóa đơn</label>
+                            <input class="form-check btn-add" id="themsp"  type="button" name="DiemGiao" value="true" onclick="themSP()" required />
+                        </div>
+                        <div id="themdong">
+                            @*<div class="form-group col-md-12">
+                                    <label class="control-label">Tên sản phẩm</label>
+                                    <select class="form-control" name="MaSP" required>
+                                        <option>-----Vui lòng chọn sản phẩm------</option>
+                                        @{ foreach (var item01 in dssp)
+                                            {
+                                                <option value="@item01.MaSP">@item01.MaSP</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Nhập số lượng :</label>
+                                    <input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-save" type="button">Lưu lại</button>
+                    <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function themSP() {
+        var row = '<div class="form-group col-md-12">' +
+    '<label class="control-label">Tên sản phẩm</label>' +
+    ' <select class="form-control" name="MaSP" required>' +
+    '<option>-----Vui lòng chọn sản phẩm------</option>' +
+    '@{ foreach (var item01 in dssp) {<option value="@item01.MaSP">@item01.MaSP</option> } }' +
+    '</select>' + '</div>' +
+    '<div class="form-group col-md-12">' +
+    '<label class="control-label">Nhập số lượng :</label>' +
+    '<input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />' +
+    '</div>';
+        document.getElementById("themdong").innerHTML = row;
+        $("#themsp").attr("disabled", "disabled");
+    }
+</script>
+@* '<div class="form-group col-md-12">' +
+    '<label class="control-label">Tên sản phẩm</label>' +
+    ' <select class="form-control" name="MaSP" required>' +
+    '<option>-----Vui lòng chọn sản phẩm------</option>' +
+    '@{ foreach (var item01 in dssp) {<option value="@item01.MaSP">@item01.MaSP</option> } }' +
+    '</select>' + '</div>' +
+    '<div class="form-group col-md-12">' +
+    '<label class="control-label">Nhập số lượng :</label>' +
+    '<input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />' +
+    '/<div>'; *@
