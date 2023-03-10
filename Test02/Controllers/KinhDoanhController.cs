@@ -108,7 +108,7 @@ namespace Test02.Controllers
         //Quản lý đơn hàng
         public ActionResult QuanLyDH()
         {
-            return View(database.DonHangs.ToList().OrderByDescending(s => s.NgayLap));
+            return View(database.DonHangs.ToList().OrderBy(s => s.NgayLap));
         }
         //Thêm mới đơn hàng
         public ActionResult ThemDH()
@@ -248,7 +248,7 @@ namespace Test02.Controllers
                     database.SaveChanges();
                     //THêm tổng tiền của đơn hàng
                     var dh = database.DonHangs.Find(chiTietDonHang.MaDH);
-                    dh.TongTien += chiTietDonHang.ThanhTien;
+                    dh.TongTien = chiTietDonHang.ThanhTien;
                     database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
                     database.SaveChanges();
 
