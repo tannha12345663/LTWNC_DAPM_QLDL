@@ -143,7 +143,6 @@
     <Compile Include="Controllers\KinhDoanhController.cs" />
     <Compile Include="Controllers\LoginDLController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
-    <Compile Include="Controllers\PhongKhoController.cs" />
     <Compile Include="Controllers\QTVController.cs" />
     <Compile Include="Controllers\TuChoiTruyCapController.cs" />
     <Compile Include="Global.asax.cs">

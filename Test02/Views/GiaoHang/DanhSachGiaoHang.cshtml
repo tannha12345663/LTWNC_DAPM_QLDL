@@ -9,5 +9,46 @@
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
 }
 
-<h2>DanhSachGiaoHang</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+
+                <div class="row element-button">
+                    @*<div class="col-sm-2">
+                            <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemDH"><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
+                        </div>*@
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
+                    </div>
+                    @*<div class="col-sm-2">
+                            <a class="btn btn-add btn-sm print-file js-textareacopybtn" type="button" target="_blank" title="Sao chép" href="https://docs.google.com/spreadsheets/d/1pXggMVohTvKevnA4Nm9-EOg5vnuT_eFYZjLzN3fJvOY/edit?usp=sharing"><i class="fas fa-address-book"></i> Tiếp nhận đơn hàng</a>
+                        </div>*@
+                </div>
+                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                @*//Phần render từng dòng trong C#*@
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 60px; text-align:center">Mã đơn hàng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 70px; text-align: center ">Ngày lập</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 50px; text-align: center ">Mã đại lý</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 80px; text-align: center ">Tổng tiền</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 100px; text-align: center ">Tình trạng thanh toán</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 100px; text-align: center ">Tên nhân viên giao</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 120px; text-align: center ">Nguyên nhân hoàn đơn</th>
+                                    </tr>
+                                </thead>
+                                @*BODY*@
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 

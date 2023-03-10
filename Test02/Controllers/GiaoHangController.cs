@@ -42,6 +42,26 @@ namespace Test02.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult BaoCaoPhongGiaoHang(BaoCao baocao)
+        {
+            if (ModelState.IsValid)
+            {
+
+                Random rd = new Random();
+                var mabc = "BC" + rd.Next(1, 1000);
+                baocao.MaBC = mabc;
+                var manv = (Test02.Models.NhanVien)Session["user"];
+                baocao.MaNV = manv.MaNV;
+                database.BaoCaos.Add(baocao);
+                database.SaveChanges();
+                return RedirectToAction("TrangChu");
+            }
+
+            return View(baocao);
+        }
+
         public ActionResult DanhSachShipper()
         {
             return View();
