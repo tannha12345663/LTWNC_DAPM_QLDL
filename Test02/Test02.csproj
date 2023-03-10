@@ -144,6 +144,7 @@
     <Compile Include="Controllers\KinhDoanhController.cs" />
     <Compile Include="Controllers\LoginDLController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
+    <Compile Include="Controllers\PhongKhoController.cs" />
     <Compile Include="Controllers\QTVController.cs" />
     <Compile Include="Controllers\TuChoiTruyCapController.cs" />
     <Compile Include="Global.asax.cs">
@@ -609,10 +610,11 @@
     <Content Include="Views\GiaoHang\BaoCaoLyDoHoanDon.cshtml" />
     <Content Include="Views\GiaoHang\BaoCaoPhongGiaoHang.cshtml" />
     <Content Include="Views\GiaoHang\DanhSachShipper.cshtml" />
+    <Content Include="Views\GiaoHang\ChinhsuaShipper.cshtml" />
+    <Content Include="Views\GiaoHang\ThemShipper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Img\SanPham\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Test01\Layout\" />
   </ItemGroup>

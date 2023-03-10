@@ -56,15 +56,60 @@ namespace Test02.Controllers
                 baocao.MaNV = manv.MaNV;
                 database.BaoCaos.Add(baocao);
                 database.SaveChanges();
-                return RedirectToAction("TrangChu");
+                return RedirectToAction("BaoCaoPhongGiaoHang");
             }
 
             return View(baocao);
         }
 
+
+        //------------------------------------------DANH SACH SHIPPER-----------------------------------------------------
         public ActionResult DanhSachShipper()
         {
+            return View(database.NhanViens.ToList().OrderByDescending(s => s.MaNV));
+        }
+
+        public ActionResult ThemShipper()
+        {
             return View();
+        }
+
+        //Them Shipper
+        [HttpPost]
+        public ActionResult ThemShipper(NhanVien nhanVien)
+        {
+            Random rd = new Random();
+            var manv = "SP" + rd.Next(1, 1000);
+            nhanVien.MaNV = manv;
+
+            database.NhanViens.Add(nhanVien);
+            database.SaveChanges();
+            return RedirectToAction("DanhSachShipper");
+        }
+
+        public ActionResult ChinhsuaShipper(String id)
+        {
+            return View(database.NhanViens.Where(s => s.MaNV == id).FirstOrDefault());
+        }
+        [HttpPost]
+        public ActionResult ChinhsuaShipper(String id, NhanVien nhanVien)
+        {
+            database.Entry(nhanVien).State = System.Data.Entity.EntityState.Modified;
+            database.SaveChanges();
+            return RedirectToAction("DanhSachShipper");
+        }
+
+        public ActionResult XoaShipper(String id)
+        {
+            return View(database.NhanViens.Where(s => s.MaNV == id).FirstOrDefault());
+        }
+        [HttpPost]
+        public ActionResult XoaShipper(String id, NhanVien nhanvien)
+        {
+            nhanvien = database.NhanViens.Where(s => s.MaNV == id).FirstOrDefault();
+            database.NhanViens.Remove(nhanvien);
+            database.SaveChanges();
+            return RedirectToAction("DanhSachShipper");
         }
 
     }

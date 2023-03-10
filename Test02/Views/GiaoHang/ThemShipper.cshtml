@@ -1,0 +1,72 @@
+﻿@model Test02.Models.NhanVien
+
+@{
+    ViewBag.Title = "ThemNV";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+}
+
+<div class="tile">
+    <h3 class="tile-title">Thêm nhân viên</h3>
+    <div class="tile-body">
+
+        <form class="row" action="#" method="post">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group col-md-4">
+                <strong>Chức vụ: </strong>
+                <div class="col-md-10">
+                    <select class="form-control" id="MaChucVu" name="MaChucVu">
+                        <option selected>NVKD</option>
+                        <option>NVKT</option>
+                        <option>NVK</option>
+                        <option>NVGH</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.MaChucVu, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <strong>Tên nhân viên: </strong>
+                @Html.EditorFor(model => model.TenNV, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenNV, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-4">
+                <strong>Tên đăng nhập: </strong>
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-4">
+                <strong>Mật khẩu: </strong>
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-md-4">
+                <strong>SDT: </strong>
+                @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group  col-md-4">
+                <strong>Địa chỉ: </strong>
+                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-4">
+                <strong>Email: </strong>
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-10">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Thêm nhân viên" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    <div>
+        @Html.ActionLink("Quay lại danh sách nhân viên", "DanhSachShipper")
+    </div>
+

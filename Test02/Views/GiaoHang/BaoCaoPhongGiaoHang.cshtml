@@ -1,12 +1,11 @@
-﻿@model IEnumerable<Test02.Models.BaoCao>
-@using Test02.Models;
+﻿@model Test02.Models.BaoCao
+
 @{
-    ViewBag.Title = "BaoCaoPhongGiaoHang";
+    ViewBag.Title = "BaoCao";
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
     ViewBag.gh_bc = "active";
-    ViewBag.nd = "Báo Cáo";
+    ViewBag.nd = "Báo cáo phòng giao hàng";
 }
-
 <script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
 <script type="text/javascript" src="~Content/ckeditor.js"></script>
 <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
@@ -74,7 +73,7 @@
 
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    @*@using (Html.BeginForm())
+                    @using (Html.BeginForm())
                     {
                         @Html.HiddenFor(model => model.MaBC)
                         @Html.HiddenFor(model => model.MaNV)
@@ -110,7 +109,7 @@
                                 </div>
                             </div>
                         </div>
-                    }*@
+                    }
                 </div>
             </div>
         </div>
@@ -118,7 +117,7 @@
 </div>
 
 <div>
-    @Html.ActionLink("Trở về trang chủ", "TrangChu")
+    @Html.ActionLink("Trở về trang chủ", "BaoCaoPhongGiaoHang")
 </div>
 <script src="~/Content/js/jquery-3.2.1.min.js"></script>
 <script src="~/Content/js/popper.min.js"></script>
