@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Test02.Models.BienBangKiemKe>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TenBienBang)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayLap)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kho.TenKho)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NhanVien.MaChucVu)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenBienBang)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayLap)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kho.TenKho)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NhanVien.MaChucVu)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaKK }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaKK }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaKK })
+        </td>
+    </tr>
+}
+
+</table>

@@ -134,6 +134,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BienBangKiemKesController.cs" />
     <Compile Include="Controllers\DaiLiesController.cs" />
     <Compile Include="Controllers\DonHangsController.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
@@ -288,15 +289,16 @@
     <Content Include="Content\Img\135017829_1026004181228801_2637032699560275_n.jpg" />
     <Content Include="Content\Img\account.png" />
     <Content Include="Content\Img\DiemKhang.jpg" />
-    <Content Include="Content\Img\SanPham\7up.jpg" />
-    <Content Include="Content\Img\SanPham\coca.png" />
-    <Content Include="Content\Img\SanPham\cocalight.jpg" />
-    <Content Include="Content\Img\SanPham\pepsi.jpg" />
-    <Content Include="Content\Img\SanPham\pepsi0calo.jpg" />
-    <Content Include="Content\Img\SanPham\sting.jpg" />
-    <Content Include="Content\Img\SanPham\stingVang.jpg" />
+    <Content Include="Content\Img\KhoHang\bg_createStorage.jpg" />
+    <Content Include="Data\Images\7up.jpg" />
+    <Content Include="Data\Images\coca.png" />
+    <Content Include="Data\Images\cocalight.jpg" />
+    <Content Include="Data\Images\pepsi.jpg" />
+    <Content Include="Data\Images\pepsi0calo.jpg" />
+    <Content Include="Data\Images\sting.jpg" />
+    <Content Include="Data\Images\stingVang.jpg" />
     <Content Include="Content\images\teamwork-la-gi-3.jpg" />
-    <Content Include="Content\Img\SanPham\traolong.png" />
+    <Content Include="Data\Images\traolong.png" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\jquery-3.2.1.min.js" />
     <Content Include="Content\js\main.js" />
@@ -589,10 +591,19 @@
     <Content Include="Views\KinhDoanh\TuChoiTruyCap.cshtml" />
     <Content Include="Views\TuChoiTruyCap\Layout\Error.cshtml" />
     <Content Include="Views\TuChoiTruyCap\TuChoiTruyCap.cshtml" />
+    <Content Include="Views\PhongKho\CreatePXuat.cshtml" />
+    <Content Include="Views\PhongKho\ChiTietDonHang.cshtml" />
+    <Content Include="Views\PhongKho\DetailsPXK.cshtml" />
+    <Content Include="Views\PhongKho\DeletePNX.cshtml" />
+    <Content Include="Views\BienBangKiemKes\Create.cshtml" />
+    <Content Include="Views\BienBangKiemKes\Delete.cshtml" />
+    <Content Include="Views\BienBangKiemKes\Details.cshtml" />
+    <Content Include="Views\BienBangKiemKes\Edit.cshtml" />
+    <Content Include="Views\BienBangKiemKes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Data\Images\" />
+    <Folder Include="Content\Img\SanPham\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Test01\Layout\" />
   </ItemGroup>
