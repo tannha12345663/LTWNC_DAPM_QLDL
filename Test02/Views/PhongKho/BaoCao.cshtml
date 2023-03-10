@@ -112,15 +112,15 @@
             <div>
                 <h3 class="tile-title">DANH SÁCH BIÊN BẢNG KIỂM KÊ</h3>
             </div>
-            <div class="tile-body">
-                <table class="table table-hover table-bordered" id="sampleTable">
+            <div class="tile-body table-responsive">
+                <table class="table table-hover table-striped table-bordered" id="sampleTable">
                     <thead>
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(model => model.MaKK)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.TenNV)
+                                @Html.DisplayNameFor(model => model.MaNVLap)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.TenBienBang)
@@ -132,7 +132,7 @@
                                 @Html.DisplayNameFor(model => model.NhanVien.MaChucVu)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.SanPham.TenSP)
+                                @Html.DisplayNameFor(model => model.MaKho)
                             </th>
                             <th></th>
                         </tr>
@@ -145,7 +145,7 @@
                                     @Html.DisplayFor(modelItem => item.MaKK)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.NhanVien.TenNV)
+                                    @Html.DisplayFor(modelItem => item.MaNVLap)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.TenBienBang)
@@ -157,7 +157,7 @@
                                     @Html.DisplayFor(modelItem => item.NhanVien.MaChucVu)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                                    @Html.DisplayFor(modelItem => item.MaKho)
                                 </td>
                                 <td>
                                     @Html.ActionLink("Chi tiết", "DetailsBB", new { id = item.MaKK }) |

@@ -8,12 +8,12 @@
 }
 
 
-<h3>Bạn muốn xóa chi tiết kho @Model.MaCTKho của kho @Model.MaKho?</h3>
+<h3>Bạn muốn xóa chi tiết kho @Model.STT của kho @Model.MaKho?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.NgayNhap)
+            Ngày nhập:
         </dt>
 
         <dd>
@@ -21,7 +21,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NgayXuat)
+            Ngày xuất gần nhất:
         </dt>
 
         <dd>
@@ -29,7 +29,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SoLuong)
+            Số lượng (thùng):
         </dt>
 
         <dd>
@@ -37,7 +37,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TinhTrang)
+            Tình trạng:
         </dt>
 
         <dd>
@@ -45,7 +45,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Kho.TenKho)
+            Tên kho:
         </dt>
 
         <dd>
@@ -53,7 +53,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SanPham.TenSP)
+            Tên sản phẩm:
         </dt>
 
         <dd>
@@ -67,10 +67,10 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Xóa vĩnh viễn" class="btn btn-danger" /> |
-            <a class="btn btn-danger btn-sm" href="/PhongKho/QuanLyKho" title="Thêm">
+            <input type="submit" value="Xóa vĩnh viễn" class="btn btn-outline-danger" /> 
+            <a class="btn btn-outline-dark btn-sm" href="/PhongKho/ChiTietKho/@Model.MaKho">
                 <i class="fas fa-retweet"></i>
-                Trở lại danh sách kho
+                Trở lại
             </a>
         </div>
     }

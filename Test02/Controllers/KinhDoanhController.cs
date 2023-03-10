@@ -8,6 +8,7 @@ using Test02.Models;
 using Test02.App_Start;
 using System.Data;
 using System.Net;
+using System.IO;
 
 namespace Test02.Controllers
 {
@@ -107,7 +108,7 @@ namespace Test02.Controllers
         //Quản lý đơn hàng
         public ActionResult QuanLyDH()
         {
-            return View(database.DonHangs.ToList().OrderByDescending(s => s.NgayLap));
+            return View(database.DonHangs.ToList().OrderBy(s => s.NgayLap));
         }
         //Thêm mới đơn hàng
         public ActionResult ThemDH()
@@ -184,7 +185,6 @@ namespace Test02.Controllers
         //Thêm mới chi tiết đơn hàng bán tự động
         public ActionResult ThemCTHD()
         {
-
             ViewBag.MaDH = new SelectList(database.DonHangs, "MaDH", "MaDL");
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
             return View();
@@ -246,6 +246,12 @@ namespace Test02.Controllers
                     }
                     database.ChiTietDonHangs.Add(chiTietDonHang);
                     database.SaveChanges();
+                    //THêm tổng tiền của đơn hàng
+                    var dh = database.DonHangs.Find(chiTietDonHang.MaDH);
+                    dh.TongTien = chiTietDonHang.ThanhTien;
+                    database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
+                    database.SaveChanges();
+
                     TempData["messageAlert"] = "Đã thêm mới đơn hàng";
                     TempData["themmadh"] = chiTietDonHang.MaDH;
                     return RedirectToAction("QuanLyDH");
@@ -376,7 +382,49 @@ namespace Test02.Controllers
                 {
                     chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia) * (chiTietDonHang.ChietKhau);
                 }
+                //Kiểm tra số lượng sản phẩm tồn trong kho
+                var checkslp = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
+                if (chiTietDonHang.SoLuong > checkslp.TongTon)
+                {
+                    var madh = database.DonHangs.Where(s => s.MaDH == chiTietDonHang.MaDH).FirstOrDefault();
+                    TempData["messageAlert"] = "Không đủ số lượng để đặt";
+                    return RedirectToAction("QuanLyDH");
+                }
+                else
+                {
+                    var ctk = database.ChiTietKhoes.Where(s => s.MaSP == chiTietDonHang.MaSP).ToList();
+                    var slsp = (int)chiTietDonHang.SoLuong;
+                    var checksl = -slsp;
+                    foreach (var udk in ctk)
+                    {
+                        checksl += (int)udk.SoLuong;
+                        if (checksl >= 0)
+                        {
+                            udk.SoLuong = checksl;
+                            if (udk.SoLuong < 1500)
+                            {
+                                udk.TinhTrang = "Sắp hết hàng";
+                            }
+                            database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
+                            database.SaveChanges();
+                            break;
+                        }
+                        else if (checksl < 0)
+                        {
+                            udk.TinhTrang = "Hết hàng";
+                            udk.SoLuong = 0;
+                            database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
+                            database.SaveChanges();
+                        }
+                    }
+                }
+                //Cập nhật thêm sản phẩm
                 database.ChiTietDonHangs.Add(chiTietDonHang);
+                database.SaveChanges();
+                //THêm tổng tiền của đơn hàng
+                var dh = database.DonHangs.Find(chiTietDonHang.MaDH);
+                dh.TongTien += chiTietDonHang.ThanhTien;
+                database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
                 TempData["messageAlert"] = "Đã cập nhật chi tiết đơn hàng";
                 TempData["capnhatdh"] = chiTietDonHang.MaDH;
@@ -495,15 +543,45 @@ namespace Test02.Controllers
         // POST: SanPhams/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
+        //Hàm lưu ảnh (Khi chuyển sang phòng khác nhớ đổi SanPham thành tên đối tượng cần được lưu ảnh  )
+        public void LuuAnh(SanPham sp , HttpPostedFileBase HinhAnh)
+        {
+            #region Hình ảnh
+            //Xác định đường dẫn lưu file : Url tương đói => tuyệt đói
+            var urlTuongdoi = "/Data/Images/";
+            var urlTuyetDoi = Server.MapPath(urlTuongdoi);// Lấy đường dẫn lưu file trên server
+
+            //Check trùng tên file => Đổi tên file  = tên file cũ (ko kèm đuôi)
+            //Ảnh.jpg = > ảnh + "-" + 1 + ".jpg" => ảnh-1.jpg
+
+            string fullDuongDan = urlTuyetDoi + HinhAnh.FileName;
+            int i = 1;
+            while (System.IO.File.Exists(fullDuongDan) == true)
+            {
+                // 1. Tách tên và đuôi 
+                var ten = Path.GetFileNameWithoutExtension(HinhAnh.FileName);
+                var duoi = Path.GetExtension(HinhAnh.FileName);
+                // 2. Sử dụng biến i để chạy và cộng vào tên file mới
+                fullDuongDan = urlTuyetDoi + ten + "-" + i + duoi;
+                i++;
+                // 3. Check lại 
+            }
+            #endregion
+            //Lưu file (Kiểm tra trùng file)
+            HinhAnh.SaveAs(fullDuongDan);
+            sp.HinhAnh = urlTuongdoi + Path.GetFileName(fullDuongDan);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemSP([Bind(Include = "TenSP,DonViTinh,Gia,HanSD,NgaySX")] SanPham sanPham)
+        public ActionResult ThemSP([Bind(Include = "TenSP,DonViTinh,Gia,HanSD,NgaySX,HinhAnh")] SanPham sanPham, HttpPostedFileBase HinhAnh)
         {
             if (ModelState.IsValid)
             {
+                LuuAnh(sanPham, HinhAnh);
                 Random rd = new Random();
                 var themSP = "SP" + rd.Next(1, 100);
-                sanPham.TongTon = 0;
+                
                 sanPham.MaSP = themSP;
                 database.SanPhams.Add(sanPham);
                 database.SaveChanges();
@@ -523,6 +601,7 @@ namespace Test02.Controllers
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
             SanPham sanPham = database.SanPhams.Find(id);
+
             if (sanPham == null)
             {
                 return HttpNotFound();
@@ -535,10 +614,11 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChinhSuaSP(SanPham sanPham)
+        public ActionResult ChinhSuaSP(SanPham sanPham, HttpPostedFileBase HinhAnh)
         {
             if (ModelState.IsValid)
             {
+                LuuAnh(sanPham, HinhAnh);
                 database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();
                 return RedirectToAction("QuanLySP");
@@ -616,5 +696,7 @@ namespace Test02.Controllers
         {
             return View();
         }
+        // Hình ảnh
+        
     }
 }

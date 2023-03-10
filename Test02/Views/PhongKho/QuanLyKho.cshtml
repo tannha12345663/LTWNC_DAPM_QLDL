@@ -5,6 +5,7 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Danh sách kho";
     ViewBag.qlk = "active";
+    
 
 }
 
@@ -45,17 +46,19 @@
     }
 }
 
+@* Danh sách kho hàng *@
 <div class="row">
     <div class="col-lg-12">
         <div class="tile">
-            <div class="tile-body">
+            <h3 class="tile-title" style="text-align:center;"><b>DANH SÁCH KHO HÀNG</b></h3>
+            <div class="tile-body table-responsive-sm">
                 <div class="row element-button">
-                    <a class="btn btn-add btn-sm" href="ThemKho" title="Thêm" style="margin-left:20px;">
+                    <a class="btn btn-add btn-sm" href="~/PhongKho/ThemKho" title="Thêm" style="margin-left:20px;">
                         <i class="fas fa-plus"></i>
                         Thêm kho mới
                     </a>
                 </div>
-                <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
                        id="sampleTable">
                     <thead>
                         <tr>
@@ -67,6 +70,9 @@
                             </th>
                             <th>
                                 Địa chỉ
+                            </th>
+                            <th>
+                                Số chi tiết kho
                             </th>
                             <th>
                                 Chức năng
@@ -87,9 +93,12 @@
                                     @Html.DisplayFor(modelItem => item.DiaChi)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Chỉnh sửa", "ChinhSuaKho", new { id = item.MaKho }) |
-                                    @Html.ActionLink("Chi tiết", "ChiTietKho", new { id = item.MaKho }) |
-                                    @Html.ActionLink("Xóa", "XoaKho", new { id = item.MaKho })
+                                    @Html.DisplayFor(modelItem => item.ChiTietKhoes.Count)
+                                </td>
+                                <td>
+                                    <a href="~/PhongKho/ChinhSuaKho/@item.MaKho" class="btn btn-outline-primary btn-sm" title="Chỉnh sửa"><i class="fa fa-edit"></i></a>
+                                    <a href="~/PhongKho/ChiTietKho/@item.MaKho" class="btn btn-outline-info btn-md" title="Chi tiết"> <i class="fa fa-info"></i> </a>
+                                    <a href="~/PhongKho/XoaKho/@item.MaKho" class="btn btn-outline-danger btn-sm" title="Xóa"><i class="fa fa-remove"></i></a>
                                 </td>
                             </tr>
                         }
@@ -99,6 +108,8 @@
         </div>
     </div>
 </div>
+@* /> danh sách kho *@
+
 
 
 <script>
@@ -113,6 +124,7 @@
         this.printTable = function () {
             var tab = document.getElementById('sampleTable');
             var win = window.open('', '', 'height=700,width=700');
+            
             win.document.write(tab.outerHTML);
             win.document.close();
             win.print();

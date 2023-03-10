@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "ChiTietPhieuXuatKho";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
-    ViewBag.hh = "active";
+    ViewBag.nk = "active";
     ViewBag.Name = "Chi tiết phiếu đề nghị xuất kho";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dsSP = db.SanPhams.ToList();
@@ -14,6 +14,8 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tile " id="printMe">
+            <p>Tên đơn vị: Công ty TNHH nước giải khát NQK</p>
+            <p>Mã số thuế: 03289456217</p>
             <h2 style="text-align:center" id="sample1">PHIẾU ĐỀ NGHỊ XUẤT KHO</h2>
             <form style="text-align:center">
                 <label for="date">Ngày:</label>
@@ -97,6 +99,12 @@
                                 }
                             </tbody>
                         </table>
+                        <h5 style="margin-left:82%;" id="sample1">Thủ kho</h5>
+                        <h6 style="margin-left:80%; font-style:italic;" id="sample1">(ký và ghi rõ họ tên)</h6>
+                        <br />
+                        <br />
+                        <br />
+                        <h6 style="margin-left:80%;" id="sample1">Nguyễn Thị Diễm Khang</h6>
                     </div>
                 </form>
             </div>
@@ -105,17 +113,19 @@
 </div>
 
 <p>
-    <a class="btn btn-actv btn-sm" href="/PhongKho/NhapKho" title="Trở lại">
+    <a class="btn btn-actv btn-sm" href="/PhongKho/NhapKho" id="btnReturn" title="Trở lại">
         <i class="fas fa-retweet"></i>
         Trở lại
     </a>
-    <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="printDiv('printMe')">
+    <a class="btn btn-delete btn-sm print-file" id="btnPrint" type="button" href="/PhongKho/NhapKho" title="In" onclick="printDiv('printMe')">
         <i class="fas fa-print"></i> In phiếu
     </a>
 </p>
 <script>
     //In dữ liệu
-        function printDiv(divName){
+    function printDiv(divName) {
+        document.getElementById("btnReturn").style.display = "none";
+        document.getElementById("btnPrint").style.display = "none";
             var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
 

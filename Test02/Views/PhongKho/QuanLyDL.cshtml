@@ -23,130 +23,221 @@
         </script>
     }
 }
+<div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home"><h4 class="btn btn-outline-info">Danh sách</h4></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu1"><h5 class="btn btn-outline-success">Sắp hết hàng</h5></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu2"><h6 class="btn btn-outline-warning">Tồn kho</h6></a>
+        </li>
+    </ul>
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="tile">
-            <div class="tile-body">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="printDiv('printMe')">
-                            <i class="fas fa-print"></i> In dữ liệu
-                        </a>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div id="home" class="tab-pane active">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="tile">
+                        <div class="tile-body">
+                            <div class="row element-button">
+                                <div class="col-sm-2">
+                                    <a class="btn btn-info" type="button" title="In" onclick="printDiv('printMe')">
+                                        <i class="fas fa-print"></i> In dữ liệu
+                                    </a>
+                                </div>
+                            </div>
+                            <div id="printMe" class="table-responsive">
+                                <h3 class="tile-title" id="sample1" style="text-align:center">DANH SÁCH SẢN PHẨM</h3>
+                                <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                                       id="sampleTable">
+                                    <thead>
+                                        <tr class="table-warning">
+                                            <th>Mã sản phẩm</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Hình minh họa</th>
+                                            <th>Giá</th>
+                                            <th>Đơn vị tính</th>
+                                            <th>Ngày sản xuất</th>
+                                            <th>Hạn sử dụng</th>
+                                            <th>Tổng tồn</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in dssp)
+                                        {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TenSP)
+                                            </td>
+                                            <td>
+                                                <img src="@item.HinhAnh" style="width:80px; height:100px;" />
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Gia)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DonViTinh)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NgaySX)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.HanSD)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TongTon)
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                <div id="printMe">
-                    <h3 class="tile-title" id="sample1" style="text-align:center">DANH SÁCH SẢN PHẨM</h3>
-                    <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
-                           id="sampleTable">
-                        <thead>
-                            <tr>
-                                <th>Mã sản phẩm</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Giá</th>
-                                <th>Đơn vị tính</th>
-                                <th>Ngày sản xuất</th>
-                                <th>Hạn sử dụng</th>
-                                <th>Tổng tồn</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in dssp)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MaSP)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TenSP)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Gia)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DonViTinh)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NgaySX)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.HanSD)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TongTon)
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+            </div>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tile">
+                        <div class="tile-body">
+                            <div class="row element-button">
+                                <div class="col-sm-2">
+                                    <a class="btn btn-add btn-sm" href="/PhongKho/TaoPhieuNhapKho" title="Thêm">
+                                        <i class="fas fa-plus"></i>
+                                        Tạo phiếu đề nghị nhập hàng hóa
+                                    </a>
+                                </div>
+                            </div>
+                            <h3 class="tile-title" style="text-align:center">DANH SÁCH SẢN PHẨM SẮP HẾT HÀNG / HẾT HÀNG</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                                       id="sampleTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã Kho</th>
+                                            <th>Mã sản phẩm</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Giá tiền</th>
+                                            <th>Đơn vị tính</th>
+                                            <th>Số lượng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in dsctk)
+                                        {
+                                            if (item.TinhTrang == "Sắp hết hàng" || item.TinhTrang == "Hết hàng")
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MaKho)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MaSP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SanPham.Gia)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SanPham.DonViTinh)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SoLuong)
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tile">
+                        <div class="row element-button">
+                            <div class="col-md-12">
+                                <a class="btn btn-warning" type="button" href="GiaiQuyetTonKho">
+                                    <i class="fas fa-retweet"></i> Giải quyết tất cả
+                                </a>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="tile-title" id="sample1" style="text-align:center">DANH SÁCH HÀNG TỒN KHO</h3>
+                        </div>
+                        <div class="tile-body table-responsive">
+                            <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                                       id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th>Mã Kho</th>
+                                        <th>Mã sản phẩm</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Giá tiền</th>
+                                        <th>Đơn vị tính</th>
+                                        <th>Số lượng</th>
+                                        <th>Tình trạng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in dsctk)
+                                    {
+                                        if (item.TinhTrang == "Tồn kho")
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaKho)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaSP)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SanPham.Gia)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SanPham.DonViTinh)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SoLuong)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TinhTrang)
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="tile">
-            <div class="tile-body">
-                <div class="row element-button">
-                    <div class="col-sm-2">
-                        <a class="btn btn-add btn-sm" href="TaoPhieuNhapKho" title="Thêm">
-                            <i class="fas fa-plus"></i>
-                            Tạo phiếu đề nghị nhập hàng hóa
-                        </a>
-                    </div>
-                </div>
-                <h3 class="tile-title" style="text-align:center">SẢN PHẨM SẮP HẾT HÀNG</h3>
-                <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
-                       id="sampleTable">
-                    <thead>
-                        <tr>
-                            <th>Mã Kho</th>
-                            <th>Mã sản phẩm</th>
-                            <th>Tên sản phẩm</th>
-                            <th>Giá tiền</th>
-                            <th>Đơn vị tính</th>
-                            <th>Số lượng</th>
-                            <th>Tình trạng</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in dsctk)
-                        {
-                            if (item.TinhTrang == "Sắp hết hàng" || item.TinhTrang == "Hết hàng")
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MaKho)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MaSP)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SanPham.TenSP)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SanPham.Gia)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SanPham.DonViTinh)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SoLuong)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TinhTrang)
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+
+
 
 <script>
     function deleteRow(r) {
@@ -224,3 +315,7 @@
 
     }
 </script>
+@* Bootstrap cho navs *@
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
