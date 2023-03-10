@@ -182,6 +182,7 @@ namespace Test02.Controllers
             TempData["messageAlert"] = "Đã thêm mới loại đại lý";
             return RedirectToAction("ThemDL");
         }
+        //Version 1.0 cũ
         //Thêm mới chi tiết đơn hàng bán tự động
         public ActionResult ThemCTHD()
         {
@@ -262,6 +263,91 @@ namespace Test02.Controllers
 
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
             return View(chiTietDonHang);
+        }
+        //Version 2.0 mới 
+        [HttpPost]
+        public ActionResult ThemDH02(DonHang dh , int id)
+        {
+            if (id > 0)
+            {
+                var user = (Test02.Models.NhanVien)Session["user"];
+                Random rd = new Random();
+                var madh = "DH" + rd.Next(1, 1000);
+                dh.MaDH = madh;
+                dh.NgayLap = System.DateTime.Now;
+                dh.MaNVLap = user.MaNV;
+                dh.TinhTrangThanhToan = "Chưa thanh toán";
+                dh.TrangThai = "Chưa xử lý";
+                dh.TongTien = 0;
+                database.DonHangs.Add(dh);
+                database.SaveChanges();
+                var loaidl = database.DaiLies.Find(dh.MaDL);
+                var ck = database.LoaiDLs.Where(s => s.MaLoaiDL == loaidl.MaLoaiDL).FirstOrDefault();
+                
+                for(int i = 1; i <= id; i++)
+                {
+                    ChiTietDonHang ctdh = new ChiTietDonHang();
+                    ctdh.MaDH = dh.MaDH;
+                    ctdh.MaSP = Request["MaSP"+i];
+                    ctdh.SoLuong =Convert.ToInt32( Request["SoLuong" + i]);
+                    ctdh.ChietKhau = ck.ChietKhau;
+                    var dg = database.SanPhams.Where(s => s.MaSP == ctdh.MaSP).FirstOrDefault();
+                    if (ctdh.ChietKhau == null)
+                    {
+                        ctdh.ThanhTien = (dg.Gia) * (ctdh.SoLuong);
+                    }
+                    else
+                    {
+                        ctdh.ThanhTien = (ctdh.SoLuong) * (dg.Gia) * (ctdh.ChietKhau);
+                    }
+                    //Kiểm tra số lượng sản phẩm tồn trong kho
+                    var checkslp = database.SanPhams.Where(s => s.MaSP == ctdh.MaSP).FirstOrDefault();
+                    if (ctdh.SoLuong > checkslp.TongTon)
+                    {
+                        TempData["messageAlert"] = "Không đủ số lượng để đặt";
+                        return RedirectToAction("QuanLyDH");
+                    }
+                    else
+                    {
+                        var ctk = database.ChiTietKhoes.Where(s => s.MaSP == ctdh.MaSP).ToList();
+                        var slsp = (int)ctdh.SoLuong;
+                        var checksl = -slsp;
+                        foreach (var udk in ctk)
+                        {
+                            checksl += (int)udk.SoLuong;
+                            if (checksl >= 0)
+                            {
+                                udk.SoLuong = checksl;
+                                if (udk.SoLuong < 1500)
+                                {
+                                    udk.TinhTrang = "Sắp hết hàng";
+                                }
+                                database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
+                                database.SaveChanges();
+                                break;
+                            }
+                            else if (checksl < 0)
+                            {
+                                udk.TinhTrang = "Hết hàng";
+                                udk.SoLuong = 0;
+                                database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
+                                database.SaveChanges();
+                            }
+                        }
+                    }
+                    dh.TongTien += ctdh.ThanhTien;
+                    database.Entry(dh).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.SaveChanges();
+                    database.ChiTietDonHangs.Add(ctdh);
+                    database.SaveChanges();
+                }
+                TempData["messageAlert"] = "Đã thêm mới đơn hàng";
+                TempData["themmadh"] = dh.MaDH;
+                return RedirectToAction("QuanLyDH");
+
+            }
+            TempData["messageAlert"] = "Không đủ số lượng để đặt";
+            return RedirectToAction("QuanLyDH");
         }
         public void LuudhvaoDB()
         {
@@ -429,7 +515,6 @@ namespace Test02.Controllers
                 TempData["messageAlert"] = "Đã cập nhật chi tiết đơn hàng";
                 TempData["capnhatdh"] = chiTietDonHang.MaDH;
                 return RedirectToAction("QuanLyDH");
-
             }
 
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);

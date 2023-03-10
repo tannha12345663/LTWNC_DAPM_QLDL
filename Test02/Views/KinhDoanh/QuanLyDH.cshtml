@@ -56,7 +56,7 @@
 
                 <div class="row element-button">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm nhap-tu-file" data-target="#myModal" data-toggle="modal" @*href="~/KinhDoanh/ThemDH"*@><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
+                        <a class="btn btn-delete btn-sm nhap-tu-file" onclick="resetpage()" data-target="#myModal" data-toggle="modal" @*href="~/KinhDoanh/ThemDH"*@><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
                     </div>
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
@@ -158,7 +158,7 @@
      data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="~/KinhDoanh/ThemLDL" method="post">
+            <form id="btnadd" action="/KinhDoanh/ThemDH02" method="post">
                 @Html.AntiForgeryToken()
                 <div class="modal-body">
                     <div class="row">
@@ -182,9 +182,9 @@
                             <label class="control-label">Địa điểm giao hàng</label>
                             <textarea class="form-control" type="text" name="DiemGiao" required></textarea>
                         </div>
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Thêm thông tin hóa đơn</label>
-                            <input class="form-check btn-add" id="themsp"  type="button" name="DiemGiao" value="true" onclick="themSP()" required />
+                        <div class="form-group col-md-12" style="text-align:center">
+                            <label style="font-size:20px" class="control-label">-------------THÔNG TIN HÓA ĐƠN--------------</label>
+                            
                         </div>
                         <div id="themdong">
                             @*<div class="form-group col-md-12">
@@ -202,11 +202,13 @@
                                     <label class="control-label">Nhập số lượng :</label>
                                     <input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />
                                 </div>*@
+
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-save" type="button">Lưu lại</button>
+                <div style="text-align:center" class="modal-footer">
+                    <input  class="btn btn-add" id="themsp" type="button" name="DiemGiao" value="Thêm SP" onclick="themSP()" required />
+                    <button class="btn btn-save" type="submit">Lưu lại</button>
                     <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
                 </div>
             </form>
@@ -214,20 +216,36 @@
     </div>
 </div>
 <script>
+    var i = 0;
     function themSP() {
-        var row = '<div class="form-group col-md-12">' +
+        i++;
+        if (i > 3) {
+            $("#themsp").attr("disabled", "disabled");
+            var text01 = '<p style="color:red;font-size:20px;text-align:center">Không đươc thêm quá 3 sản phẩm !</p>';
+            document.getElementById("themdong").innerHTML += text01;
+        }
+        else {
+            var row = '<div class="form-group col-md-12 ">'+
     '<label class="control-label">Tên sản phẩm</label>' +
-    ' <select class="form-control" name="MaSP" required>' +
+                ' <select class="form-control" name="MaSP' + i +'" required>' +
     '<option>-----Vui lòng chọn sản phẩm------</option>' +
     '@{ foreach (var item01 in dssp) {<option value="@item01.MaSP">@item01.MaSP</option> } }' +
     '</select>' + '</div>' +
     '<div class="form-group col-md-12">' +
     '<label class="control-label">Nhập số lượng :</label>' +
-    '<input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />' +
-    '</div>';
-        document.getElementById("themdong").innerHTML = row;
-        $("#themsp").attr("disabled", "disabled");
+    '<input class="form-control" type="number" name="SoLuong'+i+'" value="true" id="SoLuong" required />' +
+            '</div>';
+
+            document.getElementById("themdong").innerHTML += row;
+            $("#btnadd").attr("action", "/KinhDoanh/ThemDH02/" + i);
+        };
     }
+    function resetpage() {
+        i = 0;
+        $("#themsp").prop("disabled",false);
+        var resetp = '';
+        document.getElementById("themdong").innerHTML=resetp;
+    };
 </script>
 @* '<div class="form-group col-md-12">' +
     '<label class="control-label">Tên sản phẩm</label>' +
