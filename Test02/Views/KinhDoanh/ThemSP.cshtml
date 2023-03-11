@@ -6,6 +6,7 @@
     ViewBag.sp = "active";
     ViewBag.nd = "Thêm mới sản phẩm";
 }
+<link href="~/Content/Test01/UploadAnh.css" rel="stylesheet" />
 <div class="tile">
     <h3 class="tile-title">Tạo mới sản phẩm</h3>
     <div class="tile-body">
@@ -15,51 +16,108 @@
         <form enctype="multipart/form-data" class="row" action="~/KinhDoanh/ThemSP" method="post">
             @Html.AntiForgeryToken()
 
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                <div class="form-group col-md-4">
-                    @Html.LabelFor(model => model.TenSP, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
-                </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.TenSP, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
+            </div>
 
-                <div class="form-group col-md-4">
-                    @Html.LabelFor(model => model.DonViTinh, htmlAttributes: new { @class = "control-label " })
-                    <select class="form-control" id="DonViTinh" name="DonViTinh">
-                        <option value="Lốc">Lốc </option>
-                        <option value="Thùng">Thùng</option>
-                        <option value="Lon">Lon</option>
-                        <option value="Chai">Chai</option>
-                    </select>
-                    @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
-                </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.DonViTinh, htmlAttributes: new { @class = "control-label " })
+                <select class="form-control" id="DonViTinh" name="DonViTinh">
+                    <option value="Lốc">Lốc </option>
+                    <option value="Thùng">Thùng</option>
+                    <option value="Lon">Lon</option>
+                    <option value="Chai">Chai</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
+            </div>
 
-                <div class="form-group col-md-4">
-                    @Html.LabelFor(model => model.Gia, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-3">
-                    @Html.LabelFor(model => model.NgaySX, htmlAttributes: new { @class = "control-label " })
-                    <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayXuat must be a date." id="NgaySX" name="NgaySX" type="datetime-local" value="">
-                    @Html.ValidationMessageFor(model => model.NgaySX, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-3">
-                    @Html.LabelFor(model => model.HanSD, htmlAttributes: new { @class = "control-label " })
-                    <input class="form-control text-box single-line" data-val="true" data-val-date="The field HanSH must be a date." id="HanSD" name="HanSD" type="datetime-local" value="">
-                    @Html.ValidationMessageFor(model => model.HanSD, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-1">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.Gia, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.NgaySX, htmlAttributes: new { @class = "control-label " })
+                <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayXuat must be a date." id="NgaySX" name="NgaySX" type="datetime-local" value="">
+                @Html.ValidationMessageFor(model => model.NgaySX, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.HanSD, htmlAttributes: new { @class = "control-label " })
+                <input class="form-control text-box single-line" data-val="true" data-val-date="The field HanSH must be a date." id="HanSD" name="HanSD" type="datetime-local" value="">
+                @Html.ValidationMessageFor(model => model.HanSD, "", new { @class = "text-danger" })
+            </div>
+            @*<div class="form-group col-md-1">
                     <label class="control-label">Chọn hình ảnh</label>
                     <input type="file" name="HinhAnh"/>
+                </div>*@
+            <div class="form-group col-md-12">
+                <label class="control-label">Ảnh sản phẩm</label>
+                <div id="myfileupload">
+                    <input type="file" id="uploadfile" name="HinhAnh" onchange="readURL(this);" />
                 </div>
-                <div class="form-group col-md-12">
-                    <div class="col-md-offset-2 col-md-8">
-                        <input type="submit" value="Thêm mới sản phẩm" class="btn btn-save" />
-                        <a class="btn btn-cancel" href="~/KinhDoanh/QuanLySP">Hủy bỏ</a>
-                    </div>
+                <div id="thumbbox">
+                    <img height="450" width="400" alt="Thumb image" id="thumbimage" style="display: none" />
+                    <a class="removeimg" href="javascript:"></a>
                 </div>
+                <div id="boxchoice">
+                    <a href="javascript:" class="Choicefile"><i class="fas fa-cloud-upload-alt"></i> Chọn ảnh</a>
+                    <p style="clear:both"></p>
+                </div>
+
+            </div>
+            <div class="form-group col-md-12">
+                <div class="col-md-offset-2 col-md-8">
+                    <input type="submit" value="Thêm mới sản phẩm" class="btn btn-save" />
+                    <a class="btn btn-cancel" href="~/KinhDoanh/QuanLySP">Hủy bỏ</a>
+                </div>
+            </div>
         </form>
 
     </div>
 </div>
+@section script{
+    <script>
+
+        function readURL(input, thumbimage) {
+            if (input.files && input.files[0]) { //Sử dụng  cho Firefox - chrome
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#thumbimage").attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+            else { // Sử dụng cho IE
+                $("#thumbimage").attr('src', input.value);
+
+            }
+            $("#thumbimage").show();
+            $('.filename').text($("#uploadfile").val());
+            $('.Choicefile').css('background', '#14142B');
+            $('.Choicefile').css('cursor', 'default');
+            $(".removeimg").show();
+            $(".Choicefile").unbind('click');
+
+        }
+        $(document).ready(function () {
+            $(".Choicefile").bind('click', function () {
+                $("#uploadfile").click();
+
+            });
+            $(".removeimg").click(function () {
+                $("#thumbimage").attr('src', '').hide();
+                $("#myfileupload").html('<input type="file" id="uploadfile"  onchange="readURL(this);" />');
+                $(".removeimg").hide();
+                $(".Choicefile").bind('click', function () {
+                    $("#uploadfile").click();
+                });
+                $('.Choicefile').css('background', '#14142B');
+                $('.Choicefile').css('cursor', 'pointer');
+                $(".filename").text("");
+            });
+        })
+    </script>
+}

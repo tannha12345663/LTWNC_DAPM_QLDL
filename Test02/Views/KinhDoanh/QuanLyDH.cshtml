@@ -11,6 +11,7 @@
     var dssp = db.SanPhams.ToList();
 }
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Content/js/tableToExcel.js"></script>
 @{
     var checkmess = (string)TempData["messageAlert"];
     if (checkmess == "Đã thêm mới đơn hàng")
@@ -40,7 +41,7 @@
         <script>
             swal({
                 title: "Thêm đơn hàng không thành công \n Vui lòng kiểm tra lại ",
-                text: "Mã đơn hàng @TempData["capnhatdh"] đã được cập nhật",
+                text: "Mã đơn hàng @TempData["capnhatdh"] đã được hủy! ",
                 icon: "error",
                 button: "OK",
             });
@@ -64,40 +65,43 @@
                     <div class="col-sm-2">
                         <a class="btn btn-add btn-sm print-file js-textareacopybtn" type="button" target="_blank" title="Sao chép" href="https://docs.google.com/spreadsheets/d/1pXggMVohTvKevnA4Nm9-EOg5vnuT_eFYZjLzN3fJvOY/edit?usp=sharing"><i class="fas fa-address-book"></i> Tiếp nhận đơn hàng</a>
                     </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-excel btn-sm" id="button-excel" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</button>
+                    </div>
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                            <table  data-cols-width="20,20,20,30,20,20,20,20" class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Mã nhân viên lập</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Trạng thái đơn hàng</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa điểm giao hàng</th>
+                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
+                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick"  data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
+                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Mã nhân viên lập</th>
+                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
+                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Trạng thái đơn hàng</th>
+                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa điểm giao hàng</th>
 
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tổng tiền</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng thanh toán</th>
+                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tổng tiền</th>
+                                        <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng thanh toán</th>
 
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                        <th data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>
+                                            <td data-b-a-s="thin" >
                                                 @Html.DisplayFor(modelItem => item.MaDH)
                                             </td>
-                                            <td>
+                                            <td data-b-a-s="thin">
                                                 @Html.DisplayFor(modelItem => item.MaDL)
                                             </td>
-                                            <td>
+                                            <td data-b-a-s="thin">
                                                 @Html.DisplayFor(modelItem => item.MaNVLap)
-                                            </td>
+                                            </td >
                                             @*<td>
                                                     @{var tensp = db.SanPhams.Find(item.MaSP);
                                                     }
@@ -109,20 +113,20 @@
                                                     @{ var ThanhTien = string.Format("{0:0,0 vnđ}", madh.ThanhTien);}
                                                     @Html.DisplayFor(modelItem => ThanhTien)
                                                 </td>*@
-                                            <td>
+                                            <td data-b-a-s="thin">
                                                 @Html.DisplayFor(modelItem => item.NgayLap)
                                             </td>
-                                            <td>
+                                            <td data-b-a-s="thin">
                                                 @Html.DisplayFor(modelItem => item.TrangThai)
                                             </td>
-                                            <td>
+                                            <td data-b-a-s="thin">
                                                 @Html.DisplayFor(modelItem => item.DiemGiao)
                                             </td>
-                                            <td>
+                                            <td data-b-a-s="thin">
                                                 @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                                 @Html.DisplayFor(modelItem => ThanhTien)
                                             </td>
-                                            <td>
+                                            <td data-b-a-s="thin">
                                                 @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
                                             </td>
                                             <td>
@@ -184,7 +188,7 @@
                         </div>
                         <div class="form-group col-md-12" style="text-align:center">
                             <label style="font-size:20px" class="control-label">-------------THÔNG TIN HÓA ĐƠN--------------</label>
-                            
+
                         </div>
                         <div id="themdong">
                             @*<div class="form-group col-md-12">
@@ -202,15 +206,15 @@
                                     <label class="control-label">Nhập số lượng :</label>
                                     <input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />
                                 </div>*@
-
                         </div>
                     </div>
                 </div>
                 <div style="text-align:center" class="modal-footer">
-                    <input  class="btn btn-add" id="themsp" type="button" name="DiemGiao" value="Thêm SP" onclick="themSP()" required />
+                    <input class="btn btn-add" id="themsp" type="button" name="DiemGiao" value="Thêm SP" onclick="themSP()" required />
                     <button class="btn btn-save" type="submit">Lưu lại</button>
                     <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
                 </div>
+
             </form>
         </div>
     </div>
@@ -234,7 +238,7 @@
     '<div class="form-group col-md-12">' +
     '<label class="control-label">Nhập số lượng :</label>' +
     '<input class="form-control" type="number" name="SoLuong'+i+'" value="true" id="SoLuong" required />' +
-            '</div>';
+                '</div>' ;
 
             document.getElementById("themdong").innerHTML += row;
             $("#btnadd").attr("action", "/KinhDoanh/ThemDH02/" + i);
@@ -247,6 +251,14 @@
         document.getElementById("themdong").innerHTML=resetp;
     };
 </script>
+<script>
+    let button = document.querySelector("#button-excel");
+
+    button.addEventListener("click", e => {
+        let table = document.querySelector("#sampleTable");
+        TableToExcel.convert(table);
+    });
+</script>
 @* '<div class="form-group col-md-12">' +
     '<label class="control-label">Tên sản phẩm</label>' +
     ' <select class="form-control" name="MaSP" required>' +
@@ -257,3 +269,7 @@
     '<label class="control-label">Nhập số lượng :</label>' +
     '<input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />' +
     '/<div>'; *@
+@section script{
+
+
+}

@@ -304,6 +304,7 @@ namespace Test02.Controllers
                     var checkslp = database.SanPhams.Where(s => s.MaSP == ctdh.MaSP).FirstOrDefault();
                     if (ctdh.SoLuong > checkslp.TongTon)
                     {
+                        database.DonHangs.Remove(dh);
                         TempData["messageAlert"] = "Không đủ số lượng để đặt";
                         return RedirectToAction("QuanLyDH");
                     }
@@ -665,7 +666,7 @@ namespace Test02.Controllers
             {
                 LuuAnh(sanPham, HinhAnh);
                 Random rd = new Random();
-                var themSP = "SP" + rd.Next(1, 100);
+                var themSP = "SP" + rd.Next(0,9)+rd.Next(0,9)+rd.Next(0,9);
                 
                 sanPham.MaSP = themSP;
                 database.SanPhams.Add(sanPham);
