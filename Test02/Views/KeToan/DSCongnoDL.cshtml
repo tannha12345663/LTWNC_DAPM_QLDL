@@ -10,64 +10,20 @@
     List<HoaDon> ctdh = db.HoaDons.ToList();
 }
 
-@{
-    if (TempData["taocn"] != null)
-    {
-        <script>
-            swal({
-                title: "Tạo phiếu công nợ thành công !!!!",
-                icon: "success",
-                button: "Thoát",
-            });
-
-        </script>
-
-    }
-    if (TempData["xoacn"] != null)
-    {
-        <script>
-            swal({
-                title: "Xóa phiếu công nợ thành công !!!!",
-                icon: "success",
-                button: "Thoát",
-            });
-
-        </script>
-
-    }
-    if (TempData["chinhsuacn"] != null)
-    {
-        <script>
-            swal({
-                title: "Chỉnh sửa phiếu công nợ thành công !!!!",
-                icon: "success",
-                button: "Thoát",
-            });
-
-        </script>
-
-    }
-}
 
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-body">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Chưa thanh toán</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Đã thanh toán</a>
+                    </li>
 
-                <div class="row element-button">
-                    @*<div class="col-sm-2">
-                            <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/ThemCongno "><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
-                        </div>*@
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-copy"></i> Làm mới danh sách</a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
-                            <i class="fas fa-print"></i> In dữ liệu
-                        </a>
-                    </div>
-
-                </div>
+                </ul>
 
                 <div class="row">
                     <div class="col-sm-12">
@@ -114,14 +70,16 @@
                                             @Html.DisplayFor(modelItem => Tienno)
                                         </td>
                                         <td>
-                                            @{ var ngay = String.Format("{0:d/M/yyyy HH:mm:ss}", item.NgayLapCN); ;}
+                                            @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLapCN); ;}
                                             @Html.DisplayFor(modelItem => ngay)
 
 
 
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.HanTra)
+                                            @{ var han = String.Format("{0:d/M/yyyy}", item.HanTra);}
+                                            @Html.DisplayFor(modelItem => han)
+
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.TrangThai)
@@ -130,10 +88,7 @@
                                             <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-primary btn-sm edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="/KeToan/XoaCN/@item.MaCongNo" class="btn btn-primary btn-sm trash">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </a>
-
+                                            
                                             <a href="/KeToan/ChitietCN/@item.MaCongNo" class="btn btn-primary btn-sm add ">
                                                 <i class="fas fa-train"></i>
                                             </a>
@@ -146,8 +101,29 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+        <div class="row element-button">
+            @*<div class="col-sm-2">
+                <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/ThemCongno "><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
+            </div>*@
+            <div class="col-sm-2">
+                <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+            </div>
+            <div class="col-sm-2">
+                <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+                    <i class="fas fa-print"></i> In dữ liệu
+                </a>
+            </div>
+            <div class="col-sm-2">
+                <a href="/KeToan/DSDaiLy" class="btn btn-warning btn-sm" type="button" title="Back">
+                    Quay lại danh sách
+                </a>
+            </div>
+
         </div>
     </div>
+
 
 
 

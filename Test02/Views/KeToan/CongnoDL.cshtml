@@ -19,15 +19,26 @@
 
                     @foreach (var i in Model)
                     {
-                        <h3>DANH SÁCH ĐƠN HÀNG CHƯA THANH TOÁN CỦA ĐẠI LÝ @i.MaDL</h3>
-                        <p><strong>Mã đại lý:</strong> @Html.DisplayFor(modelItem => i.MaDL)</p>
-                        <p>
-                            <strong>Mã đại lý:</strong>
-                            @{
-                                var dh = db.DaiLies.Where(s => s.MaDL == i.MaDL).FirstOrDefault();
-                            }
-                            @Html.DisplayFor(modelItem => dh.TenDL)
-                        </p>
+                        <h3 style="text-align:center;padding:10px;">DANH SÁCH ĐƠN HÀNG CHƯA THANH TOÁN CỦA ĐẠI LÝ @i.MaDL</h3>
+                        <div class="row">
+
+                            <div class="col-sm-4">
+                                <p><strong>Mã đại lý:</strong> @Html.DisplayFor(modelItem => i.MaDL)</p>
+                            </div>
+                            <div class="col-sm-4">
+                                <p>
+                                    <strong>Mã đại lý:</strong>
+                                    @{
+                                        var dh = db.DaiLies.Where(s => s.MaDL == i.MaDL).FirstOrDefault();
+                                    }
+                                    @Html.DisplayFor(modelItem => dh.TenDL)
+                                </p>
+                            </div>
+                            <div class="col-sm-10">
+                                <p><strong>Loại đại lý:</strong> @Html.DisplayFor(modelItem =>dh.MaLoaiDL)</p>
+                            </div>
+
+                        </div>
                         break;
                     }
 
@@ -50,8 +61,8 @@
                                     @{ var id = "";
 
                                         var total = 0;
-                                        
-                                        }
+
+                                    }
                                     @foreach (var item in Model)
                                     {
                                         id = item.MaDL;
@@ -69,7 +80,10 @@
                                                 </td>
 
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.NgayLap)
+                                                    @{ 
+                                                        var ngay = String.Format("{0:d/M/yyyy}", item.NgayLap);
+                                                    }
+                                                    @Html.DisplayFor(modelItem => ngay)
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.DiemGiao)
@@ -90,7 +104,7 @@
                                         <th colspan="4">Tổng cộng hóa đơn :</th>
                                         @{ var TongCong = string.Format("{0:0,0 vnđ}", total);
 
-                                            }
+                                        }
                                         <td>@Html.DisplayFor(modelItem => TongCong)</td>
                                     </tr>
                                 </tbody>

@@ -37,24 +37,30 @@
 }*@
 <div class="row">
     <div class="col-md-12">
+
         <div class="tile">
+            
             <div class="tile-body">
 
                 <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Đơn chưa thanh toán</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="~/ketoan/QLDonNo">Đơn nợ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="~/ketoan/QLDonThanhToan">Đơn đã thanh toán</a>
-                    </li>
-                </ul>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Đơn chưa thanh toán</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="~/ketoan/QLDonNo">Đơn nợ</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="~/ketoan/QLDonThanhToan">Đơn đã thanh toán</a>
+            </li>
+           
+        </ul>
+               
+
 
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    <div class="row" style="padding-top:10px">
+                    <div class="row" style="padding-top:10px" id="printMe">
                         <div class="col-sm-12">
+                           
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
@@ -76,6 +82,7 @@
                                     }
                                     @foreach (var item in Model)
                                     {
+                                       
                                         if (item.TrangThai == "Đã xét duyệt" && item.TinhTrangThanhToan == "Chưa thanh toán")
                                         {
                                             <tr>
@@ -113,7 +120,7 @@
                                                     <a href="/KeToan/ChinhsuaHD/@item.MaDH" class="btn btn-outline-primary btn-sm " ata-toggle="tooltip" title="Chỉnh sửa hóa đơn đơn hàng">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                   
+
                                                     <a href="/KeToan/XuatHDBH/@item.MaDH" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
                                                         <i class="fas fa-train"></i>
                                                     </a>
@@ -137,7 +144,7 @@
                 <a class="btn btn-primary btn-sm" type="button" title="làm mới" href="~/ketoan/qldonhang"><i class="fas fa-copy"></i> làm mới danh sách</a>
             </div>*@
             <div class="col-sm-2">
-                <a class="btn btn-primary btn-sm " type="button" title="in" onclick="myapp.printtable()">
+                <a class="btn btn-primary btn-sm " type="button" title="in"  onclick="printDiv('printMe')">
                     <i class="fas fa-print"></i> in dữ liệu
                 </a>
             </div>
@@ -165,4 +172,16 @@
         $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
         e.stopImmediatePropagation();
     });
+
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+    }
 </script>

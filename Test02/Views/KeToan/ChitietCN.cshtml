@@ -20,7 +20,7 @@
                 var loaidaily = db.LoaiDLs.Where(s => s.MaLoaiDL == daily.MaLoaiDL).FirstOrDefault();
             }
 
-            <div>
+            <div style="padding:20px">
                 <div style="text-align:center">
                     <h4>PHIẾU CÔNG NỢ</h4>
                     <p> <strong>Ngày: </strong>@Html.DisplayFor(model => model.NgayLapCN)</p>
@@ -102,12 +102,19 @@
             </div>
         </div>
     </div>
-    <div class="row element-button">
+    <div class="row element-button" style="padding:20px">
         <div class="col-sm-12">
             <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
                 <i class="fas fa-print"></i> In dữ liệu
             </a>
-            @Html.ActionLink("Quay lại", "QLCongno")
+            <a href="/KeToan/XoaCN/@Model.MaCongNo" class="btn btn-primary btn-sm trash">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+            <a class="btn btn-warning btn-sm" title="Delete" href="/KeToan/DSCongnoDL/@Model.MaDL">
+                Quay lại danh sách
+            </a>
+
+
         </div>
 
     </div>

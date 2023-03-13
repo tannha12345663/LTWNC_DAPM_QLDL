@@ -156,10 +156,10 @@ namespace Test02.Controllers
 
 
 
-        public ActionResult QLCongno()
-        {
-            return View(database.PhieuCongNoes.ToList().OrderByDescending(s => s.MaCongNo));
-        }
+        //public ActionResult QLCongno()
+        //{
+        //    return View(database.PhieuCongNoes.ToList().OrderByDescending(s => s.MaCongNo));
+        //}
         //nhập tay
         //public ActionResult ThemCongno()
         //{
@@ -223,7 +223,7 @@ namespace Test02.Controllers
             TempData["taocn"] = "success";
             database.PhieuCongNoes.Add(phieuCongNo);
             database.SaveChanges();
-            return RedirectToAction("QLCongno");
+            return RedirectToAction("DSDaiLy");
 
         }
 
@@ -238,7 +238,7 @@ namespace Test02.Controllers
             TempData["chinhsuacn"] = "success";
             database.Entry(phieuCongNo).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();          
-            return RedirectToAction("QLCongno");
+            return RedirectToAction("DSDaiLy");
         }
 
         public ActionResult XoaCN(String id)
@@ -254,7 +254,7 @@ namespace Test02.Controllers
                 phieuCongNo = database.PhieuCongNoes.Where(s => s.MaCongNo == id).FirstOrDefault();
                 database.PhieuCongNoes.Remove(phieuCongNo);
                 database.SaveChanges();
-                return RedirectToAction("QLCongno");
+                return RedirectToAction("DSCongnoDL");
 
             }
             catch
