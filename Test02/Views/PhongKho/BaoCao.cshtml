@@ -1,9 +1,13 @@
 ﻿@model IEnumerable<Test02.Models.BienBangKiemKe>
+@using Test02.Models;
 @{
     ViewBag.Title = "BaoCao";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.bc = "active";
     ViewBag.Name = "Báo cáo kho hàng";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var dsnv = db.NhanViens.ToList();
+    var dscv = db.ChucVus.ToList();
 }
 @{
     var checkMessage = TempData["AlertMessage"];
@@ -117,53 +121,74 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.MaKK)
+                                Mã biên bảng
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.MaNVLap)
+                                Mã nhân viên lập
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.TenBienBang)
+                                Chức vụ
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.NgayLap)
+                                Tên biên bảng
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.NhanVien.MaChucVu)
+                                Ngày lập
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.MaKho)
+                                Mã kho
                             </th>
-                            <th></th>
+                            <th>Chức năng</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MaKK)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MaNVLap)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TenBienBang)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NgayLap)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NhanVien.MaChucVu)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MaKho)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Chi tiết", "DetailsBB", new { id = item.MaKK }) |
-                                    @Html.ActionLink("Xóa", "DeleteBBKK", new { id = item.MaKK })
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaKK)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaNVLap)
+                            </td>
+                            <td>
+                                @{ var kd = "NVKD"; var kho = "NVK"; var kt = "NVKT"; var gh = "NVGH"; var qtv = "QTHT";
+                                    if (item.NhanVien.MaChucVu == kd)
+                                    {
+                                        <p>Trưởng phòng kinh doanh</p>
+                                    }
+                                    else if (item.NhanVien.MaChucVu == kho)
+                                    {
+                                        <p>Quản kho</p>
+                                    }
+                                    else if (item.NhanVien.MaChucVu == kt)
+                                    {
+                                        <p>Kế toán</p>
+                                    }
+                                    else if (item.NhanVien.MaChucVu == gh)
+                                    {
+                                        <p>Nhân viên giao hàng</p>
+                                    }
+                                    else if (item.NhanVien.MaChucVu == qtv)
+                                    {
+                                        <p>Quản trị viên</p>
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenBienBang)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgayLap)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaKho)
+                            </td>
+                            <td>
+                                <a href="~/PhongKho/DetailsBB/@item.MaKK" class="btn btn-outline-info btn-md" title="Chi tiết"> <i class="fa fa-info"></i> </a>
+                                <a href="~/PhongKho/DeleteBBKK/@item.MaKK" class="btn btn-outline-danger btn-sm" title="Xóa"><i class="fa fa-remove"></i></a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
 

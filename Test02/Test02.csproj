@@ -134,7 +134,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\BienBangKiemKesController.cs" />
     <Compile Include="Controllers\DaiLiesController.cs" />
     <Compile Include="Controllers\DonHangsController.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
@@ -595,11 +594,6 @@
     <Content Include="Views\PhongKho\ChiTietDonHang.cshtml" />
     <Content Include="Views\PhongKho\DetailsPXK.cshtml" />
     <Content Include="Views\PhongKho\DeletePNX.cshtml" />
-    <Content Include="Views\BienBangKiemKes\Create.cshtml" />
-    <Content Include="Views\BienBangKiemKes\Delete.cshtml" />
-    <Content Include="Views\BienBangKiemKes\Details.cshtml" />
-    <Content Include="Views\BienBangKiemKes\Edit.cshtml" />
-    <Content Include="Views\BienBangKiemKes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

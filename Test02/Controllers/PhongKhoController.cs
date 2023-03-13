@@ -548,6 +548,8 @@ namespace Test02.Controllers
         //------------------------------------------Hết phần tồn kho - phiếu xuất---------------------------
         public ActionResult BaoCao()
         {
+            //Chức vụ nhân viên lập biên bảng kiểm kê
+            TempData["tencv1"] = TempData["tencv"];
             //tính tổng số kho
             var totalkho = database.Khoes.ToList().Count;
             TempData["TongKho"] = totalkho;
@@ -605,7 +607,7 @@ namespace Test02.Controllers
         public ActionResult CreateBBKK()
         {
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
-            ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu");
+            ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaNV");
             return View();
         }
 
@@ -614,47 +616,55 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateBBKK([Bind(Include = "MaKK,MaNVLap,MaKho,TenNV,TenBienBang,NgayLap")] BienBangKiemKe bienBangKiemKe)
+        public ActionResult CreateBBKK([Bind(Include = "MaKK,MaKho,MaNVLap,TenBienBang,NgayLap")] BienBangKiemKe bienBangKiemKe)
         {
+            DataTable bb = new DataTable();
+            if (Session["BBKK"] == null)
+            {
+                bb.Columns.Add("MaKK");
+                bb.Columns.Add("MaKho");
+                bb.Columns.Add("MaNVLap");
+                bb.Columns.Add("NgayLap");
+                bb.Columns.Add("TenBB");
+                //bb.Columns.Add("MaNVLap");
+                //Tạo xong lưu lại Session
+                Session["BBKK"] = bb;
+            }
+            else
+            {
+                //Lấy thông tin từ Session
+                bb = Session["BBKK"] as DataTable;
+            }
             if (ModelState.IsValid)
             {
-                DataTable bb = new DataTable();
-                if (Session["BBKK"] == null)
-                {
-                    bb.Columns.Add("MaKK");
-                    bb.Columns.Add("MaKho");
-                    bb.Columns.Add("MaNVLap");
-                    bb.Columns.Add("NgayLap");
-                    bb.Columns.Add("TenBB");
-                    //bb.Columns.Add("MaNVLap");
-                    //Tạo xong lưu lại Session
-                    Session["BBKK"] = bb;
-                }
-                else
-                {
-                    //Lấy thông tin từ Session
-                    bb = Session["BBKK"] as DataTable;
-                }
                 Random rd = new Random();
                 var mabb = "BB" + rd.Next(1, 1000);
                 bienBangKiemKe.MaKK = mabb;
                 Session["tempdata"] = mabb;
                 bienBangKiemKe.NgayLap = System.DateTime.Now;
-                DataRow dr = bb.NewRow();
-                dr["MaKK"] = bienBangKiemKe.MaKK;
-                dr["MaNVLap"] = bienBangKiemKe.MaNVLap;
-                dr["MaKho"] = bienBangKiemKe.MaKho;
-                dr["TenNV"] = bienBangKiemKe.NhanVien.TenNV;
-                dr["TenBB"] = bienBangKiemKe.TenBienBang;
-                dr["NgayLap"] = bienBangKiemKe.NgayLap;
-                bb.Rows.Add(dr);
-                //database.BienBangKiemKes.Add(bienBangKiemKe);
-                //database.SaveChanges();
-                return RedirectToAction("CreateCTBBKK");
+                if(bienBangKiemKe.TenBienBang != null)
+                {
+                    DataRow dr = bb.NewRow();
+                    dr["MaKK"] = bienBangKiemKe.MaKK;
+                    dr["MaNVLap"] = bienBangKiemKe.MaNVLap;
+                    dr["MaKho"] = bienBangKiemKe.MaKho;
+                    dr["TenBB"] = bienBangKiemKe.TenBienBang;
+                    dr["NgayLap"] = bienBangKiemKe.NgayLap;
+                    bb.Rows.Add(dr);
+                    //database.BienBangKiemKes.Add(bienBangKiemKe);
+                    //database.SaveChanges();
+                    
+                    return RedirectToAction("CreateCTBBKK");
+                }
+                else
+                {
+                    TempData["AlertMessage"] = "null";
+                    return RedirectToAction("CreateBBKK");
+                }
             }
 
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", bienBangKiemKe.MaKho);
-            ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu", bienBangKiemKe.MaNVLap);
+            ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaNV", bienBangKiemKe.MaNVLap);
             return View(bienBangKiemKe);
         }
 
@@ -662,6 +672,7 @@ namespace Test02.Controllers
         public ActionResult CreateCTBBKK()
         {
             ViewBag.MaKK = new SelectList(database.BienBangKiemKes, "MaKK", "MaKho");
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
             return View();
         }
 
@@ -670,37 +681,57 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateCTBBKK([Bind(Include = "MaCTBB,MaKK,SLTonKho,SLThucTe,ChenhLech,LyDo")] ChiTietBienBang chiTietBienBang)
+        public ActionResult CreateCTBBKK([Bind(Include = "STT,MaKK,MaSP,SLTonKho,SLThucTe,ChenhLech,LyDo")] ChiTietBienBang chiTietBienBang)
         {
             if (ModelState.IsValid)
             {
-                chiTietBienBang.MaKK = (string)Session["tempdata"];
-                //Random rd = new Random();
-                //var mactbb = "CTBB" + rd.Next(1, 1000);
-                //chiTietBienBang.STT = mactbb;
-                chiTietBienBang.ChenhLech = (int)chiTietBienBang.SLTonKho - (int)chiTietBienBang.SLThucTe;
-                BienBangKiemKe bienBangKiemKe = new BienBangKiemKe();
-                
-                DataTable bb = Session["BBKK"] as DataTable;
-                
-                foreach (DataRow dr in bb.Rows)
+                if(chiTietBienBang.SLThucTe != null && chiTietBienBang.LyDo != null)
                 {
-                    bienBangKiemKe.MaKK = dr["MaKK"].ToString();
-                    bienBangKiemKe.MaKho = dr["MaSP"].ToString();
-                    bienBangKiemKe.MaNVLap = dr["MaNVLap"].ToString();
-                    var date = Convert.ToDateTime(dr["NgayLap"]);
-                    bienBangKiemKe.NgayLap = date;
-                    bienBangKiemKe.TenBienBang = dr["TenBB"].ToString();
-                    bienBangKiemKe.MaNVLap = dr["TenNV"].ToString();
+                    chiTietBienBang.MaKK = (string)Session["tempdata"];
+                    Random rd = new Random();
+                    //var mactbb = "CTBB" + rd.Next(1, 1000);
+                    chiTietBienBang.STT = rd.Next(1, 1000);
+                    BienBangKiemKe bienBangKiemKe = new BienBangKiemKe();
+
+                    DataTable bb = Session["BBKK"] as DataTable;
+
+                    foreach (DataRow dr in bb.Rows)
+                    {
+                        bienBangKiemKe.MaKK = dr["MaKK"].ToString();
+                        bienBangKiemKe.MaKho = dr["MaKho"].ToString();
+                        bienBangKiemKe.MaNVLap = dr["MaNVLap"].ToString();
+                        var date = Convert.ToDateTime(dr["NgayLap"]);
+                        bienBangKiemKe.NgayLap = date;
+                        bienBangKiemKe.TenBienBang = dr["TenBB"].ToString();
+                    }
+                    var makhofromds = database.ChiTietKhoes.ToList();
+                    var slton = 0;
+                    foreach (var item in makhofromds)
+                    {
+                        if (item.MaKho == bienBangKiemKe.MaKho && item.MaSP == chiTietBienBang.MaSP)
+                        {
+                            slton += (int)item.SoLuong;
+                        }
+                    }
+                    chiTietBienBang.SLTonKho = slton;
+                    chiTietBienBang.ChenhLech = Math.Abs((int)chiTietBienBang.SLTonKho - (int)chiTietBienBang.SLThucTe) ;
+
+                    database.BienBangKiemKes.Add(bienBangKiemKe);
+                    database.SaveChanges();
+                    database.ChiTietBienBangs.Add(chiTietBienBang);
+                    database.SaveChanges();
+                    TempData["AlertMessage"] = "Đã thêm";
+                    return RedirectToAction("BaoCao");
                 }
-                database.BienBangKiemKes.Add(bienBangKiemKe);
-                database.SaveChanges();
-                database.ChiTietBienBangs.Add(chiTietBienBang);
-                database.SaveChanges();
-                TempData["AlertMessage"] = "Đã thêm";
-                return RedirectToAction("BaoCao");
+                else
+                {
+                    TempData["AlertMessage"] = "null";
+                    return RedirectToAction("CreateCTBBKK");
+                }
+                
             }
-            ViewBag.MaKK = new SelectList(database.BienBangKiemKes, "MaKK", "MaNVLap", chiTietBienBang.MaKK);
+            ViewBag.MaKK = new SelectList(database.BienBangKiemKes, "MaKK", "MaKho", chiTietBienBang.MaKK);
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietBienBang.MaSP); 
             return View(chiTietBienBang);
         }
 
@@ -712,11 +743,12 @@ namespace Test02.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             BienBangKiemKe bienBangKiemKe = database.BienBangKiemKes.Find(id);
+            ChiTietBienBang ctbienBangKiemKe = database.ChiTietBienBangs.Where(s => s.MaKK == bienBangKiemKe.MaKK).FirstOrDefault();
             if (bienBangKiemKe == null)
             {
                 return HttpNotFound();
             }
-            return View(bienBangKiemKe);
+            return View(ctbienBangKiemKe);
         }
 
         // POST: BienBangKiemKes/Delete/5
@@ -725,6 +757,7 @@ namespace Test02.Controllers
         public ActionResult DeleteBBKKConfirmed(string id)
         {
             BienBangKiemKe bienBangKiemKe = database.BienBangKiemKes.Find(id);
+            ChiTietBienBang ctbienBangKiemKe = database.ChiTietBienBangs.Where(s => s.MaKK == bienBangKiemKe.MaKK).FirstOrDefault();
             database.BienBangKiemKes.Remove(bienBangKiemKe);
             database.SaveChanges();
             TempData["AlertMessage"] = "Đã xóa";
@@ -741,11 +774,22 @@ namespace Test02.Controllers
             }
             TempData["makk"] = id;
             BienBangKiemKe bienBangKiemKe = database.BienBangKiemKes.Find(id);
+            ChiTietBienBang ctbienBangKiemKe = database.ChiTietBienBangs.Where(s => s.MaKK == bienBangKiemKe.MaKK).FirstOrDefault();
             if (bienBangKiemKe == null)
             {
                 return HttpNotFound();
             }
-            return View(bienBangKiemKe);
+
+            //var cv = database.ChucVus.ToList();
+            //foreach (var item in cv)
+            //{
+            //    if (bienBangKiemKe.NhanVien.MaChucVu == item.MaChucVu)
+            //    {
+            //        TempData["tencv"] = item.ChucVu1 + " " + item.ViTri;
+            //        break;
+            //    }
+            //}
+            return View(ctbienBangKiemKe);
             //ChiTietBienBang chiTietBienBang = database.ChiTietBienBangs.Find(id);
             //if (chiTietBienBang == null)
             //{
