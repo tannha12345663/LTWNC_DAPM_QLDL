@@ -17,9 +17,7 @@ namespace Test02.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Kho()
         {
-            this.BienBangKiemKes = new HashSet<BienBangKiemKe>();
             this.ChiTietKhoes = new HashSet<ChiTietKho>();
-            this.PhieuNhapXuats = new HashSet<PhieuNhapXuat>();
         }
     
         public string MaKho { get; set; }
@@ -27,10 +25,6 @@ namespace Test02.Models
         public string DiaChi { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BienBangKiemKe> BienBangKiemKes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietKho> ChiTietKhoes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhieuNhapXuat> PhieuNhapXuats { get; set; }
     }
 }

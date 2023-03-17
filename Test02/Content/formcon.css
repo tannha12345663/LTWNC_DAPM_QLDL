@@ -1,0 +1,22 @@
+﻿.modal-body{
+    padding:20px;
+}
+
+    .modal-body .modal-name {
+        text-align: center;
+        font-size: 20px;
+        font-weight:600
+    }
+.content-modal{
+    display:flex;
+    padding-right:30px;
+}
+.content-modal p {
+   
+    padding-right: 30px;
+}
+
+.infodl {
+    display:flex;
+    padding-top:10px;
+}

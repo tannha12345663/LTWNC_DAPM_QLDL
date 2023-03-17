@@ -89,31 +89,184 @@ namespace Test02.Controllers
 
         public ActionResult QLDonHang()
         {
+            BindDropDownList();
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
         }
+        [HttpPost]
+        public ActionResult QLDonHang(string thangs, string searchString)
+        {
+            BindDropDownList();
 
-        
+            List<DonHang> donhang = database.DonHangs.ToList();
+            List<DonHang> dh = new List<DonHang>();
+            if (thangs != "0")
+            {
+                for (int i = 0; i < donhang.Count; i++)
+                {
+                    DateTime day = (DateTime)donhang[i].NgayLap;
+                    var m = Convert.ToString(day.Month);
+
+                    if (thangs == m)
+                    {
+                        dh.Add(donhang[i]);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < donhang.Count; i++)
+                {
+                    dh.Add(donhang[i]);
+                }
+            }
+
+
+
+            return View(dh);
+
+
+
+        }
+
         public ActionResult QLDonNo()
         {
-            return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
+            //ViewBag.MaDL = new SelectList(database.DonHangs, "MaDL", "MaDL");
+            BindDropDownList();
+            var dh = database.DonHangs.ToList().OrderByDescending(s => s.MaDH);
+            return View(dh);
         }
+        private void BindDropDownList()
+        {
+            List<SelectListItem> m = new List<SelectListItem>();
+            m.Add(new SelectListItem { Text = "Select", Value = "0" });
+            m.Add(new SelectListItem { Text = "1", Value = "1" });
+            m.Add(new SelectListItem { Text = "2", Value = "2" });
+            m.Add(new SelectListItem { Text = "3", Value = "3" });
+            m.Add(new SelectListItem { Text = "4", Value = "4" });
+            m.Add(new SelectListItem { Text = "5", Value = "5" });
+            m.Add(new SelectListItem { Text = "6", Value = "6" });
+            m.Add(new SelectListItem { Text = "7", Value = "7" });
+            m.Add(new SelectListItem { Text = "8", Value = "8" });
+            m.Add(new SelectListItem { Text = "9", Value = "9" });
+            m.Add(new SelectListItem { Text = "10", Value = "10" });
+            m.Add(new SelectListItem { Text = "11", Value = "11" });
+            m.Add(new SelectListItem { Text = "12", Value = "12" });
 
+            TempData["thangs"] = m;
+
+            
+        }
+        [HttpPost]
+        public ActionResult QLDonNo(string thangs, string searchString)
+        {
+            BindDropDownList();
+           
+
+
+            List<DonHang> donhang = database.DonHangs.ToList();
+            List<DonHang> dh = new List<DonHang>();
+            if (thangs != "0")
+            {
+                for (int i = 0; i < donhang.Count; i++)
+                {
+                    DateTime day = (DateTime)donhang[i].NgayLap;
+                    var m =Convert.ToString(day.Month);
+
+                    if (thangs == m)
+                    {
+                        dh.Add(donhang[i]);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < donhang.Count; i++)
+                {
+                        dh.Add(donhang[i]);
+                }
+            }
+
+           
+
+            return View(dh);
+          
+            
+           
+        }
+        
         public ActionResult QLDonThanhToan()
         {
+            BindDropDownList();
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
-        }
-        public ActionResult ChinhsuaHD(String id)
-        {
-            return View(database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault());
         }
 
         [HttpPost]
-        public ActionResult ChinhsuaHD(DonHang donHang,String id)
+        public ActionResult QLDonThanhToan(string thangs)
         {
+            BindDropDownList();
+
+            List<DonHang> donhang = database.DonHangs.ToList();
+            List<DonHang> dh = new List<DonHang>();
+            if (thangs != "0")
+            {
+                for (int i = 0; i < donhang.Count; i++)
+                {
+                    DateTime day = (DateTime)donhang[i].NgayLap;
+                    var m = Convert.ToString(day.Month);
+
+                    if (thangs == m)
+                    {
+                        dh.Add(donhang[i]);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < donhang.Count; i++)
+                {
+                    dh.Add(donhang[i]);
+                }
+            }
+
+            return View(dh);
+
+
+
+        }
+        public ActionResult ChinhsuaHD(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            DonHang donHang = database.DonHangs.Find(id);
+            if (donHang == null)
+            {
+                return HttpNotFound();
+            }
+            
+            return View(donHang);
+        }
+
+        [HttpPost]
+        public ActionResult ChinhsuaHD(DonHang donHang)
+        {
+            if (ModelState.IsValid)
+            {
+                database.Entry(donHang).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
+
+                if(donHang.TinhTrangThanhToan=="Chưa thanh toán")
+                    return RedirectToAction("QLDonHang");
+                else if(donHang.TinhTrangThanhToan=="Đã thanh toán")
+                    return RedirectToAction("QLDonThanhToan");
+                else
+                    return RedirectToAction("QLDonNo");
+
+            }
            
-            database.Entry(donHang).State = System.Data.Entity.EntityState.Modified;
-            database.SaveChanges();
-            return RedirectToAction("QLDonHang");
+            return View(donHang);
+
         }
 
 
@@ -133,59 +286,27 @@ namespace Test02.Controllers
 
         public ActionResult CongnoDL(String id)
         {
-            return View(database.DonHangs.Where(s => s.MaDL == id).ToList());
-            //List<DonHang> dh = new List<DonHang>();
-
-            //for(int i=0;i<listdh.Count;i++)
-            //{
-            //    if(listdh[i].TinhTrangThanhToan=="Chưa thanh toán")
-            //    {
-            //        dh.Add(listdh[i]);
-            //    }    
-            //}    
-
-
-
-        }
-
-        public ActionResult DSCongnoDL(String id)
-        {
-            return View(database.PhieuCongNoes.Where(s => s.MaDL == id).ToList());
+            var dh=database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault();
+            
+            return View(dh);
              
         }
 
-
-
-        //public ActionResult QLCongno()
+        //public ActionResult DSCongnoDL(String id)
         //{
-        //    return View(database.PhieuCongNoes.ToList().OrderByDescending(s => s.MaCongNo));
+        //    return View(database.PhieuCongNoes.Where(s => s.MaDL == id).ToList());
+             
         //}
-        //nhập tay
-        //public ActionResult ThemCongno()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //public ActionResult ThemCongno(PhieuCongNo phieu)
-        //{
-        //    Random rd = new Random();
-        //    var macn = "CN" + rd.Next(1, 1000);
-        //    phieu.MaCongNo = macn;
 
-        //    TempData["taocn"] = "success";
-        //    database.PhieuCongNoes.Add(phieu);
-        //    database.SaveChanges();
-        //    return RedirectToAction("QLCongno");
-        //}
 
 
         //tao tu dong tu danh sách đại lý
-        public ActionResult TaoCongno(String id)
-        {
-            return View(database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault());
-        }
+        //public ActionResult TaoCongno(String id)
+        //{
+        //    return View(database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault());
+        //}
 
-        [HttpPost]
+       
         public ActionResult TaoCongno(String id, PhieuCongNo phieuCongNo, DonHang dh)
         {
             //NGÀY

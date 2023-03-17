@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Test02.Models.DonHang>
 @using Test02.Models;
 @{
-    ViewBag.Title = "QLDonHang";
+    ViewBag.Title = "Đơn hàng chưa thanh toán";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     ViewBag.qlhd = "active";
     ViewBag.nd = "Danh sách đơn hàng đã xét duyệt";
@@ -43,30 +43,55 @@
             <div class="tile-body">
 
                 <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Đơn chưa thanh toán</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="~/ketoan/QLDonNo">Đơn nợ</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="~/ketoan/QLDonThanhToan">Đơn đã thanh toán</a>
-            </li>
-           
-        </ul>
-               
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Đơn chưa thanh toán</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/ketoan/QLDonNo">Đơn nợ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/ketoan/QLDonThanhToan">Đơn đã thanh toán</a>
+                    </li>
+
+                </ul>
+                <div class="row" style="padding-top:10px;">
+                    <div class="col-sm-2">
+                        <a class="btn btn-secondary btn-sm print-file" title="In" onclick="myApp.printTable()">
+                            <i class="fas fa-print"></i> In dữ liệu
+                        </a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a class="btn btn-secondary btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KeToan/QLDonHang">
+                            <i class="fas fa-copy"></i> Làm mới danh sách
+                        </a>
+                    </div>
+                    <div class="col-sm-6">
+                        @using (Html.BeginForm("QLDonHang", "KeToan", FormMethod.Post, new { @class = "form-group-sm" }))
+                        {
+
+                            @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
+                            @*<input type="submit" value="Search" class="btn btn-danger btn-sm"/>*@
+                            @*<input type="Text" class="form-control mx-sm-3" value="@ViewBag.Keyword" name="searchString" placeholder="Nhập tên đại lý cần tìm">*@
+                            <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
+
+
+                        }
+                    </div>
+
+                </div>
+
 
 
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    <div class="row" style="padding-top:10px" id="printMe">
+                    <div class="row" id="printMe">
                         <div class="col-sm-12">
-                           
+
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã hóa đơn: activate to sort column ascending" style="width: 80px;">Mã đơn hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 60px;">Tên đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã hóa đơn: activate to sort column ascending" style="width: 20px;">Mã đơn hàng</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 100px;">Tên đại lý</th>
                                         <th class="100" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý: activate to sort column ascending" style="width: 100px;">Điểm điểm giao</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng tiền: activate to sort column ascending" style="width: 80px;">Tình trạng thanh toán</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 60px;">Mã nhân viên lập</th>
@@ -82,7 +107,7 @@
                                     }
                                     @foreach (var item in Model)
                                     {
-                                       
+
                                         if (item.TrangThai == "Đã xét duyệt" && item.TinhTrangThanhToan == "Chưa thanh toán")
                                         {
                                             <tr>
@@ -139,16 +164,7 @@
             </div>
 
         </div>
-        <div class="row element-button" style="padding-left:10px">
-            @*<div class="col-sm-2">
-                <a class="btn btn-primary btn-sm" type="button" title="làm mới" href="~/ketoan/qldonhang"><i class="fas fa-copy"></i> làm mới danh sách</a>
-            </div>*@
-            <div class="col-sm-2">
-                <a class="btn btn-primary btn-sm " type="button" title="in"  onclick="printDiv('printMe')">
-                    <i class="fas fa-print"></i> in dữ liệu
-                </a>
-            </div>
-        </div>
+        
 
 
     </div>
