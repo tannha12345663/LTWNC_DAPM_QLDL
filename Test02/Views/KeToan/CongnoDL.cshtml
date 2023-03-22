@@ -1,4 +1,4 @@
-﻿@model Test02.Models.DonHang
+﻿@model Test02.Models.DaiLy
 @using Test02.Models;
 
 @{
@@ -8,34 +8,44 @@
     ViewBag.dsdl = "active";
     ViewBag.nd = "Danh sách đơn hàng chưa thanh toán";
     var check = 0;
-    List<DonHang> donHangs = db.DonHangs.ToList();
+
 }
 
-<link href="~/Content/formcon.css" rel="stylesheet" />
-
+<link href="~/Content/KeToan/ketoan.css" rel="stylesheet" />
+<link href="~/Content/KeToan/formketoan.css" rel="stylesheet" />
 <div class="col-md-12">
     <div class="tile">
-        <h3 class="tile-title">DANH SÁCH ĐƠN HÀNG CHƯA THANH TOÁN</h3>
+        <h4 class="title-ketoan">THÔNG TIN ĐẠI LÝ</h4>
         <div class="tile-body">
-
-            <div class="infodl">
-               
-                <div class="col-sm-4">
+            @{ 
+                var loaidl = db.LoaiDLs.Where(s => s.MaLoaiDL == Model.MaLoaiDL).FirstOrDefault();
+                var tongno = string.Format("{0:0,0 vnđ}", ViewBag.TongCN);
+            }
+            <div class="detail-daily">
+                <p>
+                   <strong>Tên đại lý: </strong>@Html.DisplayFor(modelItem => Model.TenDL)
+                </p>
+                <div class="iddaily">
                     <p>
-                        <strong>Tên đại lý:</strong>
-                        @{
-                            var dh = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
-                        }
-                        @Html.DisplayFor(modelItem => dh.TenDL)
+                        <strong>Mã đại lý: </strong>@Html.DisplayFor(modelItem => Model.MaDL)
                     </p>
-                </div>
-                <div class="col-sm-6">
                     <p>
-                        <strong>Mã đại lý:</strong>@Html.DisplayFor(modelItem => Model.MaDL) - @Html.DisplayFor(modelItem => dh.MaLoaiDL)
-
+                        <strong>Loại đại lý: </strong>@Html.DisplayFor(modelItem => loaidl.TenDaiLy)
                     </p>
+                    
+                    
                 </div>
-               
+                <div class="thongtin-daily">
+                    <p>
+                        <strong>Địa chỉ </strong>@Html.DisplayFor(modelItem => Model.DiaChi)
+                    </p>
+                    <p>
+                        <strong>Liên lac: </strong>@Html.DisplayFor(modelItem => Model.SDT) - @Html.DisplayFor(modelItem => Model.Email)
+                    </p>
+
+                </div>
+
+
 
             </div>
 
@@ -45,62 +55,56 @@
                         @*//Phần render từng dòng trong C#*@
                         <thead>
                             <tr role="row">
-                                <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
-                                <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 100px;">Mã nhân viên lập</th>
-                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
-                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Điểm giao hàng</th>
-                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 100px;">Tổng tiền</th>
+                                <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Mã đơn hàng</th>
+                                <th class="sorting" tabindex="0" aria-controls="sampleTable"  style="width: 100px;">Mã nhân viên lập</th>
+                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Ngày lập</th>
+                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Điểm giao hàng</th>
+                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tổng tiền</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @{ var id = "";
-
+                            @{ 
                                 var total = 0;
-
+                                List<DonHang> donhang = db.DonHangs.Where(s => s.MaDL == Model.MaDL && s.TinhTrangThanhToan== "Chưa thanh toán" && s.TrangThai== "Đã xét duyệt").ToList();
+                                check = donhang.Count;
                             }
-                            @for (int i = 0; i < donHangs.Count; i++)
+                            @foreach (var item in donhang)
                             {
-
-                                if (donHangs[i].TinhTrangThanhToan == "Chưa thanh toán" && donHangs[i].TrangThai == "Đã xét duyệt")
-                                {
-
 
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => donHangs[i].MaDH)
+                                            @Html.DisplayFor(modelItem => item.MaDH)
                                         </td>
 
                                         <td>
-                                            @Html.DisplayFor(modelItem => donHangs[i].MaNVLap)
+                                            @Html.DisplayFor(modelItem => item.MaNVLap)
                                         </td>
 
                                         <td>
                                             @{
-                                                var ngay = String.Format("{0:d/M/yyyy}", donHangs[i].NgayLap);
+                                                var ngay = String.Format("{0:d/M/yyyy}", item.NgayLap);
                                             }
                                             @Html.DisplayFor(modelItem => ngay)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => donHangs[i].DiemGiao)
+                                            @Html.DisplayFor(modelItem => item.DiemGiao)
                                         </td>
                                         <td>
-                                            @{ total += Convert.ToInt32(donHangs[i].TongTien);
-                                                check = total;}
-                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", donHangs[i].TongTien);}
+                                          
+
+                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                             @Html.DisplayFor(modelItem => ThanhTien)
 
                                         </td>
                                     </tr>
-                                }
+                                
 
 
                             }
                             <tr>
                                 <th colspan="4">Tổng cộng hóa đơn :</th>
-                                @{ var TongCong = string.Format("{0:0,0 vnđ}", total);
-
-                                }
-                                <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                               
+                                <td>@Html.DisplayFor(modelItem => tongno)</td>
 
                             </tr>
                         </tbody>
@@ -114,38 +118,40 @@
         </div>
     </div>
 </div>
+<div class="btn-func">
+    <div class="row">
+        @{
+            if (check == 0)
+            {
+                <div class="col-sm-2">
+                    <a class="btn btn-warning btn-sm " type="button" title="Quay lại" href="~/KeToan/DSDaiLy"> Quay lại</a>
+                </div>
 
-
-<div class="row element-button">
-    @{
-        if (check == 0)
-        {
-            <div class="col-sm-2">
-                <a class="btn btn-warning btn-sm " type="button" title="Quay lại" href="~/KeToan/DSDaiLy"> Quay lại</a>
-            </div>
-
+            }
+            else
+            {
+                <div class="col-sm-2">
+                    <a class="btn btn-warning btn-sm " data-toggle="modal" data-target="#myModal">
+                        Thêm phiếu công nợ
+                    </a>
+                </div>
+                <div class="col-sm-2">
+                    <a class="btn btn-success btn-sm" type="button" title="In" onclick="myApp.printTable()">
+                        <i class="fas fa-print"></i> In dữ liệu
+                    </a>
+                </div>
+                <div class="col-sm-2">
+                    <a class="btn btn-delete btn-sm print-file" type="button" title="Quay lại" href="~/KeToan/DSDaiLy">Quay lại danh sách</a>
+                </div>
+            }
         }
-        else
-        {
-            <div class="col-sm-2">
-                <a class="btn btn-delete btn-sm nhap-tu-file" data-toggle="modal" data-target="#myModal">
-                    Thêm phiếu công nợ
-                </a>
-            </div>
-
-            <div class="col-sm-2">
-                <a class="btn btn-warning btn-sm " type="button" title="Quay lại" href="~/KeToan/DSDaiLy"><i class="fas fa-copy"></i> Quay lại</a>
-            </div>
-            <div class="col-sm-2">
-                <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
-                    <i class="fas fa-print"></i> In dữ liệu
-                </a>
-            </div>
-        }
-    }
 
 
+    </div>
 </div>
+
+
+
 <!-- The Modal -->
 <div class="modal" id="myModal">
     <div class="modal-dialog">
@@ -154,28 +160,29 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <p class="modal-name">THÊM PHIẾU CÔNG NỢ </p>
-                <div class="content-modal">
-                    <p><strong>Tên đại lý:</strong>@Html.DisplayFor(modelItem => dh.TenDL)</p>
-                    <p><strong>Mã đại lý:</strong>@Html.DisplayFor(modelItem => Model.MaDL)</p>
+                <div class="confirmation-dh">
+                    <p>
+                        Lập phiếu công nợ cho đại lý <span>@Model.TenDL - @Model.MaDL</span> ?!
+                    </p>
+                <p>
+                    <span>Tổng công nợ:</span> @tongno
+                </p>
+
 
                 </div>
-                <div class="content-modal">
-                    <p><strong>Loại:</strong>@Html.DisplayFor(modelItem => dh.MaLoaiDL)</p>
-                    <p><strong>Tổng công nợ:</strong>@Html.DisplayFor(modelItem => TongCong)</p>
 
-                </div>
             </div>
+
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <a  class="btn btn-danger" data-dismiss="modal">Close</a>
-                <a  class="btn btn-success" href="/KeToan/TaoCongno/@Model.MaDL" >Xuất công nợ</a>
+                <a class="btn btn-danger" data-dismiss="modal">Close</a>
+                <a class="btn btn-success" href="/KeToan/TaoCongno/@Model.MaDL">Xuất công nợ</a>
             </div>
 
         </div>
     </div>
 </div>
-
 
 
 <script>

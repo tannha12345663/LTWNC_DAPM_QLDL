@@ -26,62 +26,7 @@ namespace Test02.Controllers
         {
             return View(database.DonHangs.ToList());
         }
-        //chu y
-        //public ActionResult QLyDonHangKeToan(String id,DonHang dh)
-        //{
-
-        //    return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
-        //}
-
-        //public ActionResult TaoHD(String id)
-        // {
-        //     return View(database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault());
-        // }
-        // [HttpPost]
-        // public ActionResult TaoHD(String id,DonHang dh,HoaDon hoaDon)
-        // {
-        //     dh = database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault();
-        //     List<HoaDon> lisths = database.HoaDons.ToList();
-        //     for (int i = 0; i < lisths.Count; i++)
-        //     {
-        //         if (lisths[i].MaDH == dh.MaDH)
-        //         {
-        //             TempData["mess"] = "Mã đơn hàng bị trùng ";
-        //             return RedirectToAction("QlyDonHangKeToan");
-        //         }
-
-        //     }
-        //     var user = (Test02.Models.NhanVien)Session["user"];
-        //     Random rd = new Random();
-        //     var maHD = "HD" + rd.Next(1, 1000);
-        //     hoaDon.MaHD = maHD;
-        //     hoaDon.MaDH = dh.MaDH;
-
-        //     hoaDon.TongTien = dh.TongTien;
-        //     hoaDon.TenDVTiepNhan = user.MaNV;
-        //     hoaDon.NgayLap = System.DateTime.Now;
-
-        //     TempData["ktra"] = "thanhcong ";
-        //     database.HoaDons.Add(hoaDon);
-        //     database.SaveChanges();
-        //     return RedirectToAction("QLHoaDon");
-
-        // }
-
-        // public ActionResult XoaHD(String id)
-        // {
-        //     return View(database.HoaDons.Where(s => s.MaHD== id).FirstOrDefault());
-        // }
-        // [HttpPost]
-        // public ActionResult XoaHD(String id,HoaDon hoaDon)
-        // {
-        //     TempData["xoahd"] = "thanhcong ";
-        //     hoaDon = database.HoaDons.Where(s => s.MaHD == id).FirstOrDefault();
-        //     database.HoaDons.Remove(hoaDon);
-        //     database.SaveChanges();
-        //     return RedirectToAction("QLHoaDon");
-        // }
-
+        
         public ActionResult Thongbao()
         {
             return View(database.PhieuCongNoes.ToList());
@@ -92,37 +37,37 @@ namespace Test02.Controllers
             BindDropDownList();
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
         }
+        public List<DonHang> LayDonHang_TheoThang(string thang_chon)
+        {
+            List<DonHang> tatcadonhang= database.DonHangs.Where(s=>s.TrangThai== "Đã xét duyệt").ToList();
+            List<DonHang> dh = new List<DonHang>();
+            if (thang_chon != "0")
+            {
+                foreach(var locdh in tatcadonhang)
+                {
+                    DateTime day = (DateTime)locdh.NgayLap;
+                    var m = Convert.ToString(day.Month);
+
+                    if (thang_chon == m)
+                    {
+                        dh.Add(locdh);
+                    }
+                }    
+            }
+            else
+            {
+                dh = tatcadonhang;
+            }
+            return dh;
+
+        }
         [HttpPost]
         public ActionResult QLDonHang(string thangs, string searchString)
         {
             BindDropDownList();
 
-            List<DonHang> donhang = database.DonHangs.ToList();
-            List<DonHang> dh = new List<DonHang>();
-            if (thangs != "0")
-            {
-                for (int i = 0; i < donhang.Count; i++)
-                {
-                    DateTime day = (DateTime)donhang[i].NgayLap;
-                    var m = Convert.ToString(day.Month);
-
-                    if (thangs == m)
-                    {
-                        dh.Add(donhang[i]);
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < donhang.Count; i++)
-                {
-                    dh.Add(donhang[i]);
-                }
-            }
-
-
-
-            return View(dh);
+            List<DonHang> dhchon = LayDonHang_TheoThang(thangs);
+            return View(dhchon);
 
 
 
@@ -160,38 +105,8 @@ namespace Test02.Controllers
         public ActionResult QLDonNo(string thangs, string searchString)
         {
             BindDropDownList();
-           
-
-
-            List<DonHang> donhang = database.DonHangs.ToList();
-            List<DonHang> dh = new List<DonHang>();
-            if (thangs != "0")
-            {
-                for (int i = 0; i < donhang.Count; i++)
-                {
-                    DateTime day = (DateTime)donhang[i].NgayLap;
-                    var m =Convert.ToString(day.Month);
-
-                    if (thangs == m)
-                    {
-                        dh.Add(donhang[i]);
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < donhang.Count; i++)
-                {
-                        dh.Add(donhang[i]);
-                }
-            }
-
-           
-
-            return View(dh);
-          
-            
-           
+            List<DonHang> dhchon = LayDonHang_TheoThang(thangs);
+            return View(dhchon);
         }
         
         public ActionResult QLDonThanhToan()
@@ -204,35 +119,11 @@ namespace Test02.Controllers
         public ActionResult QLDonThanhToan(string thangs)
         {
             BindDropDownList();
-
-            List<DonHang> donhang = database.DonHangs.ToList();
-            List<DonHang> dh = new List<DonHang>();
-            if (thangs != "0")
-            {
-                for (int i = 0; i < donhang.Count; i++)
-                {
-                    DateTime day = (DateTime)donhang[i].NgayLap;
-                    var m = Convert.ToString(day.Month);
-
-                    if (thangs == m)
-                    {
-                        dh.Add(donhang[i]);
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < donhang.Count; i++)
-                {
-                    dh.Add(donhang[i]);
-                }
-            }
-
-            return View(dh);
+            List<DonHang> dhchon = LayDonHang_TheoThang(thangs);
+            return View(dhchon);}
 
 
 
-        }
         public ActionResult ChinhsuaHD(string id)
         {
             if (id == null)
@@ -255,8 +146,8 @@ namespace Test02.Controllers
             {
                 database.Entry(donHang).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
-
-                if(donHang.TinhTrangThanhToan=="Chưa thanh toán")
+                TempData["edithd"] = "oke";
+                if (donHang.TinhTrangThanhToan=="Chưa thanh toán")
                     return RedirectToAction("QLDonHang");
                 else if(donHang.TinhTrangThanhToan=="Đã thanh toán")
                     return RedirectToAction("QLDonThanhToan");
@@ -278,35 +169,45 @@ namespace Test02.Controllers
 
 
 
+        private double TinhTongDonHang(string madl)
+        {
+            double tinhtongdh = 0;
+            List<DonHang> donhang = database.DonHangs.Where(s => s.MaDL == madl && s.TinhTrangThanhToan == "Chưa thanh toán" && s.TrangThai == "Đã xét duyệt").ToList();
+            if (donhang != null)
+            {
+                foreach(var item in donhang)
+                {
+                    tinhtongdh += (double)item.TongTien;
+                    
+                }    
+            }
+            return tinhtongdh;
 
+        }
         public ActionResult DSDaiLy()
         {
             return View(database.DaiLies.ToList().OrderByDescending(s => s.MaDL));
         }
 
-        public ActionResult CongnoDL(String id)
+        public ActionResult CongnoDL(string id)
         {
-            var dh=database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault();
-            
-            return View(dh);
-             
+            var c = database.DaiLies.Where(s => s.MaDL == id).ToList().FirstOrDefault();
+            ViewBag.TongCN = TinhTongDonHang(id);
+
+            return View(c);
+
         }
 
-        //public ActionResult DSCongnoDL(String id)
-        //{
-        //    return View(database.PhieuCongNoes.Where(s => s.MaDL == id).ToList());
-             
-        //}
+        public ActionResult DSCongnoDL(String id)
+        {
+            return View(database.PhieuCongNoes.Where(s => s.MaDL == id).ToList());
 
-
-
-        //tao tu dong tu danh sách đại lý
-        //public ActionResult TaoCongno(String id)
-        //{
-        //    return View(database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault());
-        //}
-
-       
+        }
+        public List<DonHang> LayDonHang_ChuaThanhToan(string madl)
+        {
+            List<DonHang> donhang = database.DonHangs.Where(s =>s.MaDL==madl && s.TinhTrangThanhToan == "Chưa thanh toán" && s.TrangThai == "Đã xét duyệt").ToList();
+            return donhang;
+        }
         public ActionResult TaoCongno(String id, PhieuCongNo phieuCongNo, DonHang dh)
         {
             //NGÀY
@@ -315,27 +216,24 @@ namespace Test02.Controllers
 
 
             // lấy hóa đơn
-            List<DonHang> dl = database.DonHangs.ToList();
+            List<DonHang> dhcn = LayDonHang_ChuaThanhToan(id);
+            //var c = database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault();   
 
-               
-            var c = database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault();   
-            var tien = 0;
-            for (int i = 0; i < dl.Count; i++)
+            double tien = 0;
+            tien = (double)TinhTongDonHang(id);
+            foreach(var dhxet in dhcn)
             {
-                if (dl[i].MaDL == c.MaDL && dl[i].TinhTrangThanhToan == "Chưa thanh toán")
-                {
-                    tien = (int)(tien + dl[i].TongTien);
-                    dl[i].TinhTrangThanhToan = "Đang nợ";
-                }
-                   
-            }
+                dhxet.TinhTrangThanhToan = "Đang nợ";
+            }    
+            
 
 
             Random rd = new Random();
             var macn = "CN" + rd.Next(1, 1000);
+
             phieuCongNo.MaCongNo = macn;
             phieuCongNo.TrangThai = "Chưa thanh toán";
-            phieuCongNo.MaDL = c.MaDL;
+            phieuCongNo.MaDL = id;
             phieuCongNo.TienNo = tien;
             phieuCongNo.NgayLapCN = time;
            

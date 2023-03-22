@@ -1,0 +1,23 @@
+﻿.title-ketoan {
+    margin-bottom: 5px;
+    font-size: 20px;
+    border-bottom: 2px solid #FFD43B;
+    padding-bottom: 10px;
+    color: black;
+    text-align:center;
+}
+.detail-daily{
+    padding:10px 10px;
+}
+.iddaily {
+    display: flex;
+}
+.iddaily p{
+    padding-right:20px;
+}
+.daily-name{
+    padding-bottom:10px;
+}
+.btn-func{
+    padding-left:20px;
+}

@@ -280,7 +280,6 @@
     <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="Content\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
-    <Content Include="Content\formcon.css" />
     <Content Include="Content\images\backgroungteam.png" />
     <Content Include="Content\images\customerApp.png" />
     <Content Include="Content\images\fg-img.png" />
@@ -317,8 +316,9 @@
     <Content Include="Content\js\plugins\select2.min.js" />
     <Content Include="Content\js\plugins\sweetalert.min.js" />
     <Content Include="Content\js\popper.min.js" />
-    <Content Include="Content\ketoan.css" />
-    <Content Include="Content\QLHoadon.css" />
+    <Content Include="Content\KeToan\formketoan.css" />
+    <Content Include="Content\KeToan\ketoan.css" />
+    <Content Include="Content\KeToan\QLHoadon.css" />
     <Content Include="Content\soft-ui-dashboard.css" />
     <Content Include="Content\style01.css" />
     <Content Include="Content\Test01\all.min.css" />
@@ -475,7 +475,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\KeToan\ChinhsuCN.cshtml" />
-    <Content Include="Views\KeToan\CongnoDL.cshtml" />
     <Content Include="Views\KeToan\Doanhthu.cshtml" />
     <Content Include="Views\KeToan\DSDaiLy.cshtml" />
     <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
@@ -594,6 +593,7 @@
     <Content Include="Views\KeToan\DSCongnoDL.cshtml" />
     <Content Include="Views\KeToan\Thongbao.cshtml" />
     <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
+    <Content Include="Views\KeToan\CongnoDL.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

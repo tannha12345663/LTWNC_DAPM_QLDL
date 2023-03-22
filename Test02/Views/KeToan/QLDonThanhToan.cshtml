@@ -9,7 +9,22 @@
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
 
 }
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@{
+    var checkmess = (string)TempData["edithd"];
+    if (checkmess == "oke")
+    {
+        <script>
+            swal({
+                title: "Đã cập nhật đơn hàng đã thanh toán thành công",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    
+    
+}
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
@@ -77,7 +92,7 @@
                                     }
                                     @foreach (var item in Model)
                                     {
-                                        if (item.TrangThai == "Đã xét duyệt" && item.TinhTrangThanhToan == "Đã thanh toán")
+                                        if (item.TinhTrangThanhToan == "Đã thanh toán")
                                         {
                                             <tr>
                                                 <td>
@@ -115,8 +130,8 @@
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     @*<a href="/KeToan/XoaHD/@item.MaHD" class="btn btn-primary btn-sm trash">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </a>*@
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </a>*@
                                                     <a href="/KeToan/XuatHDBH/@item.MaDH" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
                                                         <i class="fas fa-train"></i>
                                                     </a>

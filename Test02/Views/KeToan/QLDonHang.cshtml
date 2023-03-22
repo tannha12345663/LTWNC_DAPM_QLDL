@@ -7,39 +7,29 @@
     ViewBag.nd = "Danh sách đơn hàng đã xét duyệt";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
-   
+
 }
-@*@{
-    if (TempData["ktra"] != null)
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@{
+    var checkmess = (string)TempData["edithd"];
+    if (checkmess == "oke")
     {
         <script>
             swal({
-                title: "Tạo hóa đơn thành công !!!!",
+                title: "Đã cập nhật đơn hàng chưa thanh toán thành công",
                 icon: "success",
-                button: "Thoát",
+                button: "OK",
             });
-
         </script>
-
     }
-    if (TempData["xoahd"] != null)
-    {
-        <script>
-            swal({
-                title: "Xóa hóa đơn thành công !!!!",
-                icon: "success",
-                button: "Thoát",
-            });
 
-        </script>
 
-    }
-}*@
+}
 <div class="row">
     <div class="col-md-12">
 
         <div class="tile">
-            
+
             <div class="tile-body">
 
                 <ul class="nav nav-tabs">
@@ -108,7 +98,7 @@
                                     @foreach (var item in Model)
                                     {
 
-                                        if (item.TrangThai == "Đã xét duyệt" && item.TinhTrangThanhToan == "Chưa thanh toán")
+                                        if (item.TinhTrangThanhToan == "Chưa thanh toán")
                                         {
                                             <tr>
                                                 <td>
@@ -164,7 +154,7 @@
             </div>
 
         </div>
-        
+
 
 
     </div>
