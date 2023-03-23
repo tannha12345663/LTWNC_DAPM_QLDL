@@ -186,6 +186,7 @@ namespace Test02.Controllers
         }
         public ActionResult DSDaiLy()
         {
+            
             return View(database.DaiLies.ToList().OrderByDescending(s => s.MaDL));
         }
 
@@ -198,11 +199,7 @@ namespace Test02.Controllers
 
         }
 
-        public ActionResult DSCongnoDL(String id)
-        {
-            return View(database.PhieuCongNoes.Where(s => s.MaDL == id).ToList());
-
-        }
+        
         public List<DonHang> LayDonHang_ChuaThanhToan(string madl)
         {
             List<DonHang> donhang = database.DonHangs.Where(s =>s.MaDL==madl && s.TinhTrangThanhToan == "Chưa thanh toán" && s.TrangThai == "Đã xét duyệt").ToList();
@@ -217,7 +214,7 @@ namespace Test02.Controllers
 
             // lấy hóa đơn
             List<DonHang> dhcn = LayDonHang_ChuaThanhToan(id);
-            //var c = database.DonHangs.Where(s => s.MaDL == id).ToList().FirstOrDefault();   
+            
 
             double tien = 0;
             tien = (double)TinhTongDonHang(id);
@@ -225,9 +222,6 @@ namespace Test02.Controllers
             {
                 dhxet.TinhTrangThanhToan = "Đang nợ";
             }    
-            
-
-
             Random rd = new Random();
             var macn = "CN" + rd.Next(1, 1000);
 
@@ -245,7 +239,13 @@ namespace Test02.Controllers
             return RedirectToAction("DSDaiLy");
 
         }
+        //Cong no chua thanh toan
+        public ActionResult DSCongnoNo(String id)
+        {
+            var dscongno = database.PhieuCongNoes.Where(s => s.MaDL == id && s.TrangThai=="Chưa thanh toán").ToList();
+            return View(dscongno);
 
+        }
         public ActionResult ChinhsuCN(String id)
         {
             return View(database.PhieuCongNoes.Where(s => s.MaCongNo == id).FirstOrDefault());

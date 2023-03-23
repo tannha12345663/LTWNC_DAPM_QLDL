@@ -1,0 +1,133 @@
+﻿@model IEnumerable<Test02.Models.PhieuCongNo>
+
+@using Test02.Models;
+@{
+    ViewBag.Title = "Công nợ đại lý";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.dsdl = "active";
+    ViewBag.nd = "Danh sách công nợ chưa thanh toán";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    List<HoaDon> ctdh = db.HoaDons.ToList();
+}
+<link href="~/Content/KeToan/ketoan.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                @*TABS*@
+                <div class="tabstatus">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Chưa thanh toán</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Đã thanh toán</a>
+                        </li>
+
+                    </ul>
+                </div>
+               
+                <div class="row" style="margin-top:20px">
+                    <div class="col-sm-12">
+                        <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                            @*//Phần render từng dòng trong C#*@
+                            <thead>
+                                <tr role="row">
+                                    <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 60px;">Mã CN</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable"style="width: 150px;">Tên đại lý</th>
+                                    <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable"style="width: 90px;">Mã Đại lý</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 124px;">Tổng nợ</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable"style="width: 124px;">Ngày tạo phiếu</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 124px;">Hạn trả</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 150px;">Tình trạng</th>
+                                    <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Chức năng</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaCongNo)
+                                        </td>
+                                        <td>
+                                            @{var tendl = db.DaiLies.Find(item.MaDL);
+                                            }
+                                            @Html.DisplayFor(modelItem => tendl.TenDL)
+
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaDL)
+                                        </td>
+                                       
+
+                                        <td>
+                                            @{ var Tienno = string.Format("{0:0,0 vnđ}", item.TienNo);}
+                                            @Html.DisplayFor(modelItem => Tienno)
+                                        </td>
+                                        <td>
+                                            @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLapCN); ;}
+                                            @Html.DisplayFor(modelItem => ngay)
+
+
+
+                                        </td>
+                                        <td>
+                                            @{ var han = String.Format("{0:d/M/yyyy}", item.HanTra);}
+                                            @Html.DisplayFor(modelItem => han)
+
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TrangThai)
+                                        </td>
+                                        <td>
+                                            <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+
+                                            <a href="/KeToan/ChitietCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
+                                                <i class="fas fa-train"></i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-func">
+            <div class="row">
+                <div class="col-sm-2">
+                    <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                </div>
+                <div class="col-sm-2">
+                    <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+                        <i class="fas fa-print"></i> In dữ liệu
+                    </a>
+                </div>
+                <div class="col-sm-2">
+                    <a href="/KeToan/DSDaiLy" class="btn btn-warning btn-sm" type="button" title="Back">
+                        Quay lại danh sách
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+

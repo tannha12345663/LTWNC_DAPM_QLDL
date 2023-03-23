@@ -316,6 +316,7 @@
     <Content Include="Content\js\plugins\select2.min.js" />
     <Content Include="Content\js\plugins\sweetalert.min.js" />
     <Content Include="Content\js\popper.min.js" />
+    <Content Include="Content\KeToan\badges.css" />
     <Content Include="Content\KeToan\formketoan.css" />
     <Content Include="Content\KeToan\ketoan.css" />
     <Content Include="Content\KeToan\QLHoadon.css" />
@@ -476,7 +477,6 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\KeToan\ChinhsuCN.cshtml" />
     <Content Include="Views\KeToan\Doanhthu.cshtml" />
-    <Content Include="Views\KeToan\DSDaiLy.cshtml" />
     <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
     <Content Include="Views\KeToan\QLCongno.cshtml" />
     <Content Include="Views\KeToan\QLDonHang.cshtml" />
@@ -590,10 +590,11 @@
     <Content Include="Views\KeToan\XuatCN.cshtml" />
     <Content Include="Views\KeToan\QLDonNo.cshtml" />
     <Content Include="Views\KeToan\QLDonThanhToan.cshtml" />
-    <Content Include="Views\KeToan\DSCongnoDL.cshtml" />
     <Content Include="Views\KeToan\Thongbao.cshtml" />
     <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
     <Content Include="Views\KeToan\CongnoDL.cshtml" />
+    <Content Include="Views\KeToan\DSCongnoNo.cshtml" />
+    <Content Include="Views\KeToan\DSDaiLy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
