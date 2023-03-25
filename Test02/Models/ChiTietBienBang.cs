@@ -14,7 +14,7 @@ namespace Test02.Models
     
     public partial class ChiTietBienBang
     {
-        public string MaCTBB { get; set; }
+        public string MaKho { get; set; }
         public string MaKK { get; set; }
         public Nullable<int> SLTonKho { get; set; }
         public Nullable<int> SLThucTe { get; set; }
@@ -22,5 +22,6 @@ namespace Test02.Models
         public string LyDo { get; set; }
     
         public virtual BienBangKiemKe BienBangKiemKe { get; set; }
+        public virtual Kho Kho { get; set; }
     }
 }

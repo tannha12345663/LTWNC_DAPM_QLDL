@@ -15,7 +15,7 @@ namespace Test02.Models
     public partial class ChiTietPhieuNhapXuat
     {
         public string MaCT { get; set; }
-        public string MaSP { get; set; }
+        public string MaPhieu { get; set; }
         public string MaKho { get; set; }
         public string MaNVLap { get; set; }
         public Nullable<int> SoLuongCT { get; set; }
@@ -24,7 +24,7 @@ namespace Test02.Models
         public string TinhTrang { get; set; }
         public int STT { get; set; }
     
+        public virtual Kho Kho { get; set; }
         public virtual PhieuNhapXuat PhieuNhapXuat { get; set; }
-        public virtual SanPham SanPham { get; set; }
     }
 }

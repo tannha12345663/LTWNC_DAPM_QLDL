@@ -8,6 +8,9 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dssp = db.SanPhams.ToList();
     var dsctk = db.ChiTietKhoes.ToList();
+    List<string> listSHH = new List<string>();
+    List<string> listHH = new List<string>();
+    int soluong = 0;
 }
 @{
     var checkMessage = TempData["AlertMessage"];
@@ -126,7 +129,9 @@
                                             <th>Tên sản phẩm</th>
                                             <th>Giá tiền</th>
                                             <th>Đơn vị tính</th>
+                                            <th>Ngày xuất gần nhất</th>
                                             <th>Số lượng</th>
+                                            <th>Tình trạng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -151,7 +156,22 @@
                                                         @Html.DisplayFor(modelItem => item.SanPham.DonViTinh)
                                                     </td>
                                                     <td>
+                                                        @Html.DisplayFor(modelItem => item.SanPham.NgaySX)
+                                                    </td>
+                                                    <td>
                                                         @Html.DisplayFor(modelItem => item.SoLuong)
+                                                    </td>
+                                                    <td>
+                                                        @if (item.TinhTrang == "Sắp hết hàng")
+                                                        {
+                                                            <span class="badge bg-success">@Html.DisplayFor(modelItem => item.TinhTrang)</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge bg-danger">@Html.DisplayFor(modelItem => item.TinhTrang)</span>
+                                                        }
+
+
                                                     </td>
                                                 </tr>
                                             }
@@ -218,7 +238,7 @@
                                                     @Html.DisplayFor(modelItem => item.SoLuong)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.TinhTrang)
+                                                    <span class="badge bg-info">@Html.DisplayFor(modelItem => item.TinhTrang)</span>
                                                 </td>
                                             </tr>
                                         }

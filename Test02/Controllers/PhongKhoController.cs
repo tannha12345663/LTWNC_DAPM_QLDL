@@ -638,8 +638,8 @@ namespace Test02.Controllers
                 DataRow dr = bb.NewRow();
                 dr["MaKK"] = bienBangKiemKe.MaKK;
                 dr["MaNVLap"] = bienBangKiemKe.MaNVLap;
-                dr["MaSP"] = bienBangKiemKe.MaSP;
-                dr["TenNV"] = bienBangKiemKe.TenNV;
+                //dr["MaSP"] = bienBangKiemKe.MaSP;
+                //dr["TenNV"] = bienBangKiemKe.TenNV;
                 dr["TenBB"] = bienBangKiemKe.TenBienBang;
                 dr["NgayLap"] = bienBangKiemKe.NgayLap;
                 bb.Rows.Add(dr);
@@ -649,7 +649,7 @@ namespace Test02.Controllers
             }
 
             ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "TenNV", bienBangKiemKe.MaNVLap);
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", bienBangKiemKe.MaSP);
+            //ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", bienBangKiemKe.MaSP);
             return View(bienBangKiemKe);
         }
 
@@ -684,12 +684,12 @@ namespace Test02.Controllers
                 foreach (DataRow dr in bb.Rows)
                 {
                     bienBangKiemKe.MaKK = dr["MaKK"].ToString();
-                    bienBangKiemKe.MaSP = dr["MaSP"].ToString();
+                    //bienBangKiemKe.MaSP = dr["MaSP"].ToString();
                     bienBangKiemKe.MaNVLap = dr["MaNVLap"].ToString();
                     var date = Convert.ToDateTime(dr["NgayLap"]);
                     bienBangKiemKe.NgayLap = date;
                     bienBangKiemKe.TenBienBang = dr["TenBB"].ToString();
-                    bienBangKiemKe.TenNV = dr["TenNV"].ToString();
+                    //bienBangKiemKe.TenNV = dr["TenNV"].ToString();
                 }
                 database.BienBangKiemKes.Add(bienBangKiemKe);
                 database.SaveChanges();
