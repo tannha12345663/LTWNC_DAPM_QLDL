@@ -14,7 +14,7 @@ namespace Test02.Models
     
     public partial class ChiTietKho
     {
-        public string MaCTKho { get; set; }
+        public int STT { get; set; }
         public string MaSP { get; set; }
         public string MaKho { get; set; }
         public Nullable<System.DateTime> NgayNhap { get; set; }

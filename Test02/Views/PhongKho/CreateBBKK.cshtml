@@ -1,4 +1,5 @@
 ﻿@model Test02.Models.BienBangKiemKe
+
 @{
     ViewBag.Title = "CreateBBKK";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
@@ -6,67 +7,160 @@
     ViewBag.Name = "Tạo biên bản";
 }
 
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-<div class="form-horizontal">
-    <h4>Tạo biên bản kiểm kê</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.MaKK)
-    @Html.HiddenFor(model => model.NgayLap)
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.MaNVLap, "MaNVLap", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("MaNVLap", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.MaNVLap, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.MaSP, "MaSP", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.TenNV, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.TenNV, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.TenNV, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.TenBienBang, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.TenBienBang, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.TenBienBang, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.NgayLap, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.NgayLap, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.NgayLap, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Tiếp tục" class="btn btn-default" />
-        </div>
-    </div>
-</div>
+@{
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "null")
+    {
+        <script>
+            swal({
+                title: "Tên biên bản trống!",
+                text: "Tên biên bảng không được để trống!",
+                icon: "warning",
+                button: "OK",
+            });
+        </script>
+    }
 }
 
-<div>
-    @Html.ActionLink("Hủy bỏ", "BaoCao")
+@* Style on/off button *@
+@*<style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 28px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 20px;
+                width: 20px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .slider {
+            background-color: #ffd800;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(30px);
+            -ms-transform: translateX(26px);
+            transform: translateX(29px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+    </style>*@
+@* </ *@
+
+
+
+<div class="row">
+    <div class="col-lg-3 col-md-2 col-sm-12"></div>
+    <div class="col-lg-6 col-md-8 col-sm-12">
+        <div class="tile">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4 class="text-center tile-title">Tạo biên bản kiểm kê</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.MaKK)
+                    @Html.HiddenFor(model => model.NgayLap)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MaNVLap, "Mã nhân viên lập", htmlAttributes: new { @class = "control-label col-md-12" })
+
+                        <div class="col-md-12">
+                            @Html.DropDownList("MaNVLap", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MaNVLap, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MaKho, "Tên kho", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownList("MaKho", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MaKho, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.TenNV, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.TenNV, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.TenNV, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TenBienBang, "Tên biên bảng", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.TenBienBang, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TenBienBang, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.NgayLap, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.NgayLap, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.NgayLap, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-12 text-center">
+                            <a class="btn btn-outline-danger" href="~/PhongKho/BaoCao">Hủy bỏ</a>
+                            <input type="submit" value="Tiếp tục" class="btn btn-outline-warning" />
+                            @*<label class="switch">
+                                    <input type="checkbox" onclick="myFunction()">
+                                    <span class="slider round"></span>
+                                </label><span class="">Tiếp tục</span>*@
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-2 col-sm-12"></div>
 </div>
+
+
+

@@ -62,6 +62,7 @@
                                         <tr class="table-warning">
                                             <th>Mã sản phẩm</th>
                                             <th>Tên sản phẩm</th>
+                                            <th>Hình minh họa</th>
                                             <th>Giá</th>
                                             <th>Đơn vị tính</th>
                                             <th>Ngày sản xuất</th>
@@ -72,29 +73,32 @@
                                     <tbody>
                                         @foreach (var item in dssp)
                                         {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.MaSP)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.TenSP)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Gia)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.DonViTinh)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.NgaySX)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.HanSD)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.TongTon)
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TenSP)
+                                            </td>
+                                            <td>
+                                                <img src="@item.HinhAnh" style="width:80px; height:100px;" />
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Gia)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DonViTinh)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NgaySX)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.HanSD)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TongTon)
+                                            </td>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -112,7 +116,7 @@
                         <div class="tile-body">
                             <div class="row element-button">
                                 <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm" href="TaoPhieuNhapKho" title="Thêm">
+                                    <a class="btn btn-add btn-sm" href="/PhongKho/TaoPhieuNhapKho" title="Thêm">
                                         <i class="fas fa-plus"></i>
                                         Tạo phiếu đề nghị nhập hàng hóa
                                     </a>
@@ -199,7 +203,7 @@
                         <div>
                             <h3 class="tile-title" id="sample1" style="text-align:center">DANH SÁCH HÀNG TỒN KHO</h3>
                         </div>
-                        <div class="tile-body">
+                        <div class="tile-body table-responsive">
                             <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
                                        id="sampleTable">
                                 <thead>

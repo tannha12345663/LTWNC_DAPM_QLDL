@@ -1,0 +1,144 @@
+﻿@model Test02.Models.PhieuNhapXuat
+    @using Test02.Models
+@{
+    ViewBag.Title = "DetailsPXK";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var kho = db.Khoes.ToList();
+    var ctdonhang = db.ChiTietDonHangs.ToList();
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile" id="printMe">
+            <p>Tên đơn vị: Công ty TNHH nước giải khát NQK</p>
+            <p>Mã số thuế: 03289456217</p>
+            <p>Theo mã đơn hàng số: @TempData["ctmadh"]</p>
+            <h2 style="text-align:center" id="sample1">PHIẾU XUẤT KHO KIÊM VẬN CHUYỂN NỘI BỘ</h2>
+            <form style="text-align:center">
+                <label for="date">Ngày:</label>
+                @Html.DisplayFor(model => model.NgayLap)<br>
+                <label for="date">Mã số:</label>
+                @Html.DisplayFor(model => model.MaPhieu)<br>
+                <label for="date">Người làm phiếu: </label>
+                @{
+                    var user = (Test02.Models.NhanVien)HttpContext.Current.Session["user"];
+                    <b>@user.MaChucVu - </b> <b>@user.TenNV</b> }
+            </form>
+                <div class="tile-body">
+                    <form class="row">
+                        <div class="form-group col-md-12" id="sample5">
+                            <label class="control-label" id="ThongTinKho1">Kho xuất hàng:</label><br />
+                            @Html.DisplayFor(model => model.MaKho) - @Html.DisplayFor(model => model.Kho.TenKho) - @Html.DisplayFor(model => model.Kho.DiaChi)
+                        </div>
+                        <div class="form-group col-md-12" id="sample3">
+                            <label class="control-label">Tên người giao hàng: </label>
+                            @Html.DisplayFor(model => model.NguoiGiaoHang)
+                        </div>
+                        <div class="form-group col-md-12" id="sample4">
+                            <label class="control-label">Phương tiện vận chuyển: </label>
+                            @Html.DisplayFor(model => model.PhuongTienGiaoHang)
+                        </div>
+                        <div class="form-group col-md-12" id="sample4">
+                            <label class="control-label">Đại lý nhận hàng: </label>
+                            @TempData["tenDL"]
+                        </div>
+                        <div class="form-group col-md-12" id="sample4">
+                            <label class="control-label">Địa chỉ nhận hàng: </label>
+                            @TempData["diemgiao"]
+                        </div>
+                        <div class="form-group col-md-12 table-responsive" id="sample6">
+
+                            <label class="control-label">Danh sách sản phẩm: </label> <br />
+                            <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
+                                @*//Phần render từng dòng trong C#*@
+                                <thead>
+                                    <tr>
+                                        <th>Mã sản phẩm</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Số lượng</th>
+                                        <th>Đơn giá</th>
+                                        <th>Đơn vị tính</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var total = 0;}
+                                    @{ var madhX = TempData["ctmadh"];}
+                                    @foreach (var item in ctdonhang)
+                                    {
+                                        if (item.MaDH == (string)madhX)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaSP)
+                                                </td>
+                                                <td>
+                                                    @{ var tensp = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => tensp.TenSP)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SoLuong)
+                                                </td>
+                                                <td>
+                                                    @{ var dongia = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
+                                                    @{ var chuyendoi = string.Format("{0:0,0 vnđ}", dongia.Gia);}
+                                                    @Html.DisplayFor(modelItem => chuyendoi)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => dongia.DonViTinh)
+                                                </td>
+                                                <td>
+                                                    @{ total += Convert.ToInt32(item.ThanhTien);}
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
+                                                    @Html.DisplayFor(modelItem => ThanhTien)
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    }
+                                    <tr>
+                                        <th colspan="5">
+                                            <p class="pull-right">Tổng cộng đơn hàng:</p>
+                                        </th>
+                                        @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                        <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                    </tr>
+                            </table>
+
+                        </div>
+                        <h5 style="margin-left:82%;" id="sample1">Thủ kho</h5>
+                        <h6 style="margin-left:80%; font-style:italic;" id="sample1">(ký và ghi rõ họ tên)</h6>
+                        <br />
+                        <br />
+                        <br />
+                        <h6 style="margin-left:80%;" id="sample1">Nguyễn Thị Diễm Khang</h6>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
+<p>
+    <a class="btn btn-actv btn-sm" id="btnReturn" href="/PhongKho/NhapKho" title="Trở lại">
+        <i class="fas fa-retweet"></i>
+        Trở lại
+    </a>
+    <a class="btn btn-delete btn-sm print-file" id="btnPrint" href="~/PhongKho/NhapKho" title="In" onclick="printDiv('printMe')">
+        <i class="fas fa-print"></i> In phiếu
+    </a>
+</p>
+<script>
+    //In dữ liệu
+    function printDiv(divName) {
+        document.getElementById("btnReturn").style.display = "none";
+        document.getElementById("btnPrint").style.display = "none";
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>

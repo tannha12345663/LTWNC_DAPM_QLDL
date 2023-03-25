@@ -9,12 +9,10 @@
     var dssp = db.SanPhams.ToList();
 
     //Sản phẩm chưa có trong kho
-
-
 }
 @{
     var checkMessage = TempData["AlertMessage"];
-    if (checkMessage == "check null")
+    if (checkMessage == "error null")
     {
         <script>
             swal({
@@ -35,7 +33,7 @@
         <div class="form-horizontal col-6">
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.MaCTKho)
+            @Html.HiddenFor(model => model.STT)
             @Html.HiddenFor(model => model.MaKho)
 
             <div class="form-group">

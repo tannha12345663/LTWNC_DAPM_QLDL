@@ -17,7 +17,6 @@ namespace Test02.Models
         public string MaCT { get; set; }
         public string MaPhieu { get; set; }
         public string MaKho { get; set; }
-        public string MaNVLap { get; set; }
         public Nullable<int> SoLuongCT { get; set; }
         public Nullable<int> SoLuongTT { get; set; }
         public Nullable<System.DateTime> ThoiGianTT { get; set; }

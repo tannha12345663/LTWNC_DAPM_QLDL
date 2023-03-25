@@ -17,6 +17,7 @@ namespace Test02.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SanPham()
         {
+            this.ChiTietBienBangs = new HashSet<ChiTietBienBang>();
             this.ChiTietDonHangs = new HashSet<ChiTietDonHang>();
             this.ChiTietKhoes = new HashSet<ChiTietKho>();
         }
@@ -30,6 +31,8 @@ namespace Test02.Models
         public Nullable<int> TongTon { get; set; }
         public string HinhAnh { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChiTietBienBang> ChiTietBienBangs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
