@@ -1,4 +1,4 @@
-﻿@model Test02.Models.DaiLy
+﻿@model IEnumerable<Test02.Models.DonHang>
 @using Test02.Models;
 
 @{
@@ -17,30 +17,33 @@
     <div class="tile">
         <h4 class="title-ketoan">THÔNG TIN ĐẠI LÝ</h4>
         <div class="tile-body">
-            @{ 
-                var loaidl = db.LoaiDLs.Where(s => s.MaLoaiDL == Model.MaLoaiDL).FirstOrDefault();
+            @{
+                var madly = Session["Madly"];
+                var loaidl = db.LoaiDLs.Where(s => s.MaLoaiDL == madly).FirstOrDefault();
+                var daily = db.DaiLies.Where(s => s.MaDL == madly).FirstOrDefault();
+
                 var tongno = string.Format("{0:0,0 vnđ}", ViewBag.TongCN);
             }
             <div class="detail-daily">
                 <p>
-                   <strong>Tên đại lý: </strong>@Html.DisplayFor(modelItem => Model.TenDL)
+                    <strong>Tên đại lý: </strong>@Html.DisplayFor(modelItem => daily.TenDL)
                 </p>
                 <div class="iddaily">
                     <p>
-                        <strong>Mã đại lý: </strong>@Html.DisplayFor(modelItem => Model.MaDL)
+                        <strong>Mã đại lý: </strong>@Html.DisplayFor(modelItem => Session["Madly"])
                     </p>
                     <p>
                         <strong>Loại đại lý: </strong>@Html.DisplayFor(modelItem => loaidl.TenDaiLy)
                     </p>
-                    
-                    
+
+
                 </div>
                 <div class="thongtin-daily">
                     <p>
-                        <strong>Địa chỉ </strong>@Html.DisplayFor(modelItem => Model.DiaChi)
+                        <strong>Địa chỉ </strong>@Html.DisplayFor(modelItem => daily.DiaChi)
                     </p>
                     <p>
-                        <strong>Liên lac: </strong>@Html.DisplayFor(modelItem => Model.SDT) - @Html.DisplayFor(modelItem => Model.Email)
+                        <strong>Liên lac: </strong>@Html.DisplayFor(modelItem => daily.SDT) - @Html.DisplayFor(modelItem => daily.Email)
                     </p>
 
                 </div>
@@ -48,7 +51,16 @@
 
 
             </div>
+            <div class="col-sm-6">
+                @using (Html.BeginForm("CongnoDL", "KeToan", FormMethod.Post, new { @class = "form-group-sm" }))
+                {
 
+                    @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" ,}) 
+                    <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
+
+
+                }
+            </div>
             <div class="row">
                 <div class="col-sm-12">
                     <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
@@ -56,20 +68,22 @@
                         <thead>
                             <tr role="row">
                                 <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Mã đơn hàng</th>
-                                <th class="sorting" tabindex="0" aria-controls="sampleTable"  style="width: 100px;">Mã nhân viên lập</th>
+                                <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Mã nhân viên lập</th>
                                 <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Ngày lập</th>
                                 <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Điểm giao hàng</th>
                                 <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tổng tiền</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @{ 
-                                var total = 0;
-                                List<DonHang> donhang = db.DonHangs.Where(s => s.MaDL == Model.MaDL && s.TinhTrangThanhToan== "Chưa thanh toán" && s.TrangThai== "Đã xét duyệt").ToList();
-                                check = donhang.Count;
+                            @{
+                                var total = Model.Count();
+                                //List<DonHang> donhang = db.DonHangs.Where(s => s.MaDL == Model.MaDL).ToList();
+
                             }
-                            @foreach (var item in donhang)
+                            @foreach (var item in Model)
                             {
+                                if (item.TinhTrangThanhToan == "Chưa thanh toán")
+                                {
 
                                     <tr>
                                         <td>
@@ -90,20 +104,23 @@
                                             @Html.DisplayFor(modelItem => item.DiemGiao)
                                         </td>
                                         <td>
-                                          
+
 
                                             @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                             @Html.DisplayFor(modelItem => ThanhTien)
 
                                         </td>
                                     </tr>
-                                
 
+
+
+
+                                }
 
                             }
                             <tr>
                                 <th colspan="4">Tổng cộng hóa đơn :</th>
-                               
+
                                 <td>@Html.DisplayFor(modelItem => tongno)</td>
 
                             </tr>
@@ -121,7 +138,7 @@
 <div class="btn-func">
     <div class="row">
         @{
-            if (check == 0)
+            if (total == 0)
             {
                 <div class="col-sm-2">
                     <a class="btn btn-warning btn-sm " type="button" title="Quay lại" href="~/KeToan/DSDaiLy"> Quay lại</a>
@@ -156,31 +173,70 @@
 <div class="modal" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
+            @using (Html.BeginForm("TaoCongNo", "KeToan", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                var phieucongno = db.PhieuCongNoes.Where(cn => cn.MaDL == daily.MaDL).FirstOrDefault();
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => phieucongno.MaCongNo)
+                @Html.HiddenFor(model => phieucongno.MaDL)
+                @Html.HiddenFor(model => phieucongno.TienNo)
+                @Html.HiddenFor(model => phieucongno.TrangThai)
 
-            <!-- Modal body -->
-            <div class="modal-body">
-                <p class="modal-name">THÊM PHIẾU CÔNG NỢ </p>
-                <div class="confirmation-dh">
-                    <p>
-                        Lập phiếu công nợ cho đại lý <span>@Model.TenDL - @Model.MaDL</span> ?!
-                    </p>
-                <p>
-                    <span>Tổng công nợ:</span> @tongno
-                </p>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="modal-name">THÊM PHIẾU CÔNG NỢ </p>
+                    <div class="confirmation-dh">
 
+
+
+                        <p>
+                            Lập phiếu công nợ tháng @Session["thangs"] cho đại lý <span>@daily.TenDL - @daily.MaDL </span> ?!
+                        </p>
+                        <div class="form-group col-sm-6">
+                            <strong>MaDL:</strong>
+                            <div class="col-md-10">
+                                <input name="MaDL" id="MaDL" value="@daily.MaDL" />
+
+                            </div>
+                        </div>
+                        @{ 
+                            DateTime time = DateTime.Now;
+                            DateTime maxtime = time.AddDays(30);
+                        }
+                        <div class="form-group col-sm-6">
+                            <strong>Ngày lập công nợ:</strong>
+                            <div class="col-md-10">
+                                <input name="NgayLapCN" id="NgayLapCN" type="datetime-local" />
+
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <strong>Hạn trả: </strong>
+                            <div class="col-md-10">
+                                <input name="Hantra" id="Hantra" type="date"  value="@DateTime.Now"/>
+
+                            </div>
+                        </div>
+                        <p>
+                            <span>Tổng công nợ:</span> @tongno
+                        </p>
+
+
+
+                    </div>
 
                 </div>
 
-            </div>
 
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <a class="btn btn-danger" data-dismiss="modal">Close</a>
-                <a class="btn btn-success" href="/KeToan/TaoCongno/@Model.MaDL">Xuất công nợ</a>
-            </div>
-
+                <!-- Modal footer -->
+        <div class="modal-footer">
+            <a class="btn btn-danger" data-dismiss="modal">Close</a>
+            @*<a class="btn btn-success" href="/KeToan/TaoCongno/@daily.MaDL">Xuất công nợ</a>*@
+            <input type="submit" value="Lưu" class="btn btn-default" />
         </div>
+            }
+            </div>
     </div>
 </div>
 

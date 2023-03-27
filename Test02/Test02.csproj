@@ -592,9 +592,9 @@
     <Content Include="Views\KeToan\QLDonThanhToan.cshtml" />
     <Content Include="Views\KeToan\Thongbao.cshtml" />
     <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
-    <Content Include="Views\KeToan\CongnoDL.cshtml" />
     <Content Include="Views\KeToan\DSCongnoNo.cshtml" />
     <Content Include="Views\KeToan\DSDaiLy.cshtml" />
+    <Content Include="Views\KeToan\CongnoDL.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
