@@ -44,24 +44,19 @@
                     </li>
 
                 </ul>
-                <div class="row" style="padding-top:10px;">
+                <div class="row" style="padding:10px;">
                     <div class="col-sm-2">
-                        <a class="btn btn-secondary btn-sm print-file" title="In" onclick="myApp.printTable()">
+                        <a class="btn btn-outline-success btn-sm" title="In" onclick="printDiv('printMe')">
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-secondary btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KeToan/QLDonHang">
-                            <i class="fas fa-copy"></i> Làm mới danh sách
-                        </a>
-                    </div>
+                  
                     <div class="col-sm-6">
                         @using (Html.BeginForm("QLDonHang", "KeToan", FormMethod.Post, new { @class = "form-group-sm" }))
                         {
 
                             @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
-                            @*<input type="submit" value="Search" class="btn btn-danger btn-sm"/>*@
-                            @*<input type="Text" class="form-control mx-sm-3" value="@ViewBag.Keyword" name="searchString" placeholder="Nhập tên đại lý cần tìm">*@
+                           
                             <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
 
 
@@ -80,14 +75,14 @@
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã hóa đơn: activate to sort column ascending" style="width: 20px;">Mã đơn hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 100px;">Tên đại lý</th>
-                                        <th class="100" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý: activate to sort column ascending" style="width: 100px;">Điểm điểm giao</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng tiền: activate to sort column ascending" style="width: 80px;">Tình trạng thanh toán</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 60px;">Mã nhân viên lập</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 90px;">Ngày lập đơn</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 100px;">Tổng tiền</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 80px;">Chức năng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable"  style="width: 20px;">Mã đơn hàng</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tên đại lý</th>
+                                        <th class="100" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Điểm điểm giao</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 80px;">Tình trạng thanh toán</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 60px;">Mã nhân viên lập</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable"  style="width: 90px;">Ngày lập đơn</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable"  style="width: 100px;">Tổng tiền</th>
+                                        <th style="width: 80px;" id="functionHD">Chức năng</th>
 
                                     </tr>
                                 </thead>
@@ -130,7 +125,7 @@
                                                     @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                                     @Html.DisplayFor(modelItem => ThanhTien)
                                                 </td>
-                                                <td>
+                                                <td id="btnHD">
 
                                                     <a href="/KeToan/ChinhsuaHD/@item.MaDH" class="btn btn-outline-primary btn-sm " ata-toggle="tooltip" title="Chỉnh sửa hóa đơn đơn hàng">
                                                         <i class="fa fa-edit"></i>
@@ -162,32 +157,20 @@
 
 
 <script>
-    //In dữ liệu
-    var myApp = new function () {
-        this.printTable = function () {
-            var tab = document.getElementById('sampleTable');
-            var win = window.open('', '', 'height=800px,width=1200px');
-            win.document.write(tab.outerHTML);
-            win.document.close();
-            win.print();
-        }
-    }
 
-    oTable = $('#sampleTable').dataTable();
-    $('#all').click(function (e) {
-        $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
-        e.stopImmediatePropagation();
-    });
 
-    function printDiv(divName) {
+        function printDiv(divName) {
+            document.getElementById("functionHD").style.display = "none";
+            document.getElementById("btnHD").style.display = "none";
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
-
+        
         document.body.innerHTML = printContents;
 
         window.print();
 
         document.body.innerHTML = originalContents;
+       
 
     }
 </script>

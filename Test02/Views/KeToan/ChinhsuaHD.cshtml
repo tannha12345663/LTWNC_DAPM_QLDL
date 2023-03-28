@@ -5,122 +5,163 @@
     ViewBag.Title = "ChinhsuaHD";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     ViewBag.qlhd = "active";
-    ViewBag.nd = "Danh sách đơn hàng đã xét duyệt";
+    ViewBag.nd = "Cập nhật đơn hàng";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
 }
 
 <link href="~/Content/ketoan.css" rel="stylesheet" />
-<div class="tile">
-    <h3 class="tile-title">CHỈNH SỬA THÔNG TIN HÓA ĐƠN</h3>
-    <div class="tile-body">
 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+<div class="container-sm">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile" id="body">
+                <h3 class="tile-title">CẬP NHẬT THÔNG TIN ĐƠN HÀNG</h3>
+                @{
+                    DateTime ngay = (DateTime)(Model.NgayLap);
+                    int thang = ngay.Month;
 
-        <div class="form-horizontal">
+                    var daily = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
+                    var loaidaily = db.LoaiDLs.Where(s => s.MaLoaiDL == daily.MaLoaiDL).FirstOrDefault();
+                }
 
-            <hr />
-            @Html.HiddenFor(model => model.MaDH)
-            @Html.HiddenFor(model => model.MaDL)
-            @Html.HiddenFor(model => model.MaNVLap)
-            @Html.HiddenFor(model => model.NgayLap)
-            @Html.HiddenFor(model => model.TrangThai)
-            @Html.HiddenFor(model => model.DiemGiao)
-            @Html.HiddenFor(model => model.TongTien)
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <h3> THÔNG TIN HÓA ĐƠN</h3>
-
-
-            <div class="title-hd">
-                <P><strong>Mã đơn hàng:</strong>@Html.DisplayFor(modelItem => Model.MaDH)</P>
-                <p>
-                    <strong>Ngày lập:</strong> @{ var ngay = String.Format("{0:d/M/yyyy}", Model.NgayLap); ;}
-                    @Html.DisplayFor(modelItem => ngay)
-                </p>
-            </div>
-            <table>
-                <tr>
-                    <th>THÔNG TIN</th>
-                    <th>ĐỊA CHỈ GIAO</th>
-                </tr>
-                <tr>
-                    <td>
-                        <strong>Tên đại lý:</strong>
-                        @{
-                            var dl = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
-                            var nv = db.NhanViens.Where(n => n.MaNV == Model.MaNVLap).FirstOrDefault();
+            <div style="padding:20px">
+                <div style="text-align:center">
+                    <h4>HÓA ĐƠN ĐƠN HÀNG</h4>
+                    <p> <strong>Ngày: </strong>@Html.DisplayFor(model => ngay)</p>
+                    <p> <strong>Mã đơn hàng: </strong>@Html.DisplayFor(model => model.MaDH)</p>
+                </div>
 
 
-                        }@Html.DisplayFor(modelItem => dl.TenDL)
-                    </td>
-                    <td rowspan="4">
-                        @Html.DisplayFor(modelItem => Model.DiemGiao)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <strong>Điện thoại: </strong> @Html.DisplayFor(modelItem => dl.SDT)
-                    </td>
+                <p> <strong>Tên đại lý: </strong>@Html.DisplayFor(model => daily.TenDL)</p>
+                <p> <strong>Loại đại lý: </strong>@Html.DisplayFor(model => loaidaily.MaLoaiDL)</p>
+                <p> <strong>Địa chỉ: </strong>@Html.DisplayFor(model => daily.DiaChi)</p>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                            @*//Phần render từng dòng trong C#*@
+                            <thead>
+                                <tr role="row" style="text-align:center">
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Mã CTDH</th>
+                                    <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Mã SP</th>
+                                    <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tên sản phẩm</th>
+                                    <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Số lượng</th>
+                                    <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 120px;">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var total = 0;
+                                    List<ChiTietDonHang> chiTietDonHangs = db.ChiTietDonHangs.Where(s => s.MaDH == Model.MaDH).ToList();
 
-                </tr>
-                <tr>
-                    <td>
-                        <strong>Nhân viên phụ trách</strong>: @Html.DisplayFor(modelItem => Model.MaNVLap) -  @Html.DisplayFor(modelItem => nv.TenNV)
-                    </td>
+                                }
+                                @foreach (var item in chiTietDonHangs)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaCTDH)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaSP)
+                                        </td>
+                                        @{
+                                            var sanpham = db.SanPhams.Where(sp => sp.MaSP == item.MaSP).FirstOrDefault();
+                                        }
+                                        <td>
+                                            @Html.DisplayFor(modelItem => sanpham.TenSP)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SoLuong)
+                                        </td>
 
 
-                </tr>
-                <tr>
-                    <td>
-                        <strong>Tổng hóa đơn :</strong>    @Html.DisplayFor(modelItem => Model.TongTien)
-                    </td>
+                                        <td>
+                                            @{ total += Convert.ToInt32(item.ThanhTien);}
+                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
+                                            @Html.DisplayFor(modelItem => ThanhTien)
 
+                                        </td>
 
-                </tr>
-            </table>
+                                    </tr>
 
-
-
-            <div class="row" style="padding-top:10px;">
-
-                <div class="form-group col-sm-6">
-                    <strong>Tình trạng thanh toán</strong>
-                    <div class="col-md-10">
-                        <select class="form-control" id="TinhTrangThanhToan" name="TinhTrangThanhToan">
-                            <option selected="@Model.TinhTrangThanhToan">@Model.TinhTrangThanhToan</option>
-                            <option>Đã thanh toán</option>
-                            <option>Chưa thanh toán</option>
-                            <option>Đang nợ</option>
-                        </select>
-                        @Html.ValidationMessageFor(model => model.TinhTrangThanhToan, "", new { @class = "text-danger" })
+                                }
+                                <tr>
+                                    <th colspan="3">Tổng cộng tiền nợ:</th>
+                                    @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                    <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                </tr>
+                        </table>
                     </div>
                 </div>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
 
+
+
+                    <hr />
+                    @Html.HiddenFor(model => model.MaDH)
+                    @Html.HiddenFor(model => model.MaDL)
+                    @Html.HiddenFor(model => model.MaNVLap)
+                    @Html.HiddenFor(model => model.NgayLap)
+                    @Html.HiddenFor(model => model.TrangThai)
+                    @Html.HiddenFor(model => model.DiemGiao)
+                    @Html.HiddenFor(model => model.TongTien)
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <h5> CẬP NHẬT THÔNG TIN ĐƠN HÀNG</h5>
+                    <div class="row">
+
+                        <div class="form-group col-sm-6">
+                            <strong>Tình trạng thanh toán</strong>
+                            <div class="col-md-10">
+                                <select class="form-control" id="TinhTrangThanhToan" name="TinhTrangThanhToan">
+                                    <option selected="@Model.TinhTrangThanhToan">@Model.TinhTrangThanhToan</option>
+                                    <option>Đã thanh toán</option>
+                                    <option>Chưa thanh toán</option>
+                                    <option>Đang nợ</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.TinhTrangThanhToan, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-2">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Lưu thay đổi" class="btn btn-success btn-sm" />
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <div class="col-md-offset-2 col-md-10">
+                                @if (Model.TinhTrangThanhToan == "Chưa thanh toán")
+                                {
+                                    <a class="btn btn-warning btn-sm" href="/KeToan/QLDonHang">Quay lại danh sách</a>
+                                }
+                                else if (Model.TinhTrangThanhToan == "Đã thanh toán")
+                                {
+                                    <a class="btn btn-warning btn-sm" href="/KeToan/QLDonThanhToan">Quay lại danh sách</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-warning btn-sm" href="/KeToan/QLDonNo">Quay lại danh sách</a>
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                   
+
+                }
             </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Lưu thay đổi" class="btn btn-success btn-sm" />
-                </div>
             </div>
-
-
-
-
-
-
-
-
-
 
 
         </div>
-        }
 
-    </div>
-</div>
-        <div>
-            @Html.ActionLink("Quay lại danh sách", "QLDonHang")
+               
+
+            </div>
         </div>
+   

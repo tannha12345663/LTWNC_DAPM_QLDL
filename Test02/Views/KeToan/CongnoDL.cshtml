@@ -10,11 +10,10 @@
     var check = 0;
 
 }
+<link href="~/Content/KeToan/StyleKeToan.css" rel="stylesheet" />
 
-<link href="~/Content/KeToan/ketoan.css" rel="stylesheet" />
-<link href="~/Content/KeToan/formketoan.css" rel="stylesheet" />
 <div class="col-md-12">
-    <div class="tile">
+    <div class="tile" id="printme">
         <h4 class="title-ketoan">THÔNG TIN ĐẠI LÝ</h4>
         <div class="tile-body">
             @{
@@ -51,7 +50,7 @@
 
 
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6" id="dropdownsort">
                 @using (Html.BeginForm("CongnoDL", "KeToan", FormMethod.Post, new { @class = "form-group-sm" }))
                 {
 
@@ -61,7 +60,7 @@
 
                 }
             </div>
-            <div class="row">
+            <div class="row" >
                 <div class="col-sm-12">
                     <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                         @*//Phần render từng dòng trong C#*@
@@ -153,7 +152,7 @@
                     </a>
                 </div>
                 <div class="col-sm-2">
-                    <a class="btn btn-success btn-sm" type="button" title="In" onclick="myApp.printTable()">
+                    <a class="btn btn-success btn-sm" type="button" title="In" onclick="printDiv('printme')">
                         <i class="fas fa-print"></i> In dữ liệu
                     </a>
                 </div>
@@ -187,43 +186,36 @@
                 <div class="modal-body">
                     <p class="modal-name">THÊM PHIẾU CÔNG NỢ </p>
                     <div class="confirmation-dh">
-
-
-
                         <p>
                             Lập phiếu công nợ tháng @Session["thangs"] cho đại lý <span>@daily.TenDL - @daily.MaDL </span> ?!
                         </p>
                         <div class="form-group col-sm-6">
-                            <strong>MaDL:</strong>
+                            <strong>Mã đại lý</strong>
                             <div class="col-md-10">
-                                <input name="MaDL" id="MaDL" value="@daily.MaDL" />
-
+                                <input name="MaDL" id="MaDL" value="@daily.MaDL" class="form-control col-md-12 text-box single-line"/>
                             </div>
                         </div>
                         @{ 
                             DateTime time = DateTime.Now;
                             DateTime maxtime = time.AddDays(30);
                         }
-                        <div class="form-group col-sm-6">
-                            <strong>Ngày lập công nợ:</strong>
+                        <div class="form-group col-sm-10">
+                            <strong>Ngày lập công nợ</strong>
                             <div class="col-md-10">
-                                <input name="NgayLapCN" id="NgayLapCN" type="datetime-local" />
-
+                             
+                                <input class="form-control col-md-12 text-box single-line datepicker" name="NgayLapCN" id="NgayLapCN" data-val="true" type="date" value="@time.ToString("yyyy-MM-dd")" required>
                             </div>
                         </div>
-                        <div class="form-group col-sm-6">
+                        <div class="form-group col-sm-10">
                             <strong>Hạn trả: </strong>
                             <div class="col-md-10">
-                                <input name="Hantra" id="Hantra" type="date"  value="@DateTime.Now"/>
-
+                                <input class="form-control col-md-12 text-box single-line datepicker" name="Hantra" id="Hantra" data-val="true"  type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@maxtime.ToString("yyyy-MM-dd")" required>
+                                
                             </div>
                         </div>
                         <p>
                             <span>Tổng công nợ:</span> @tongno
                         </p>
-
-
-
                     </div>
 
                 </div>
@@ -233,7 +225,7 @@
         <div class="modal-footer">
             <a class="btn btn-danger" data-dismiss="modal">Close</a>
             @*<a class="btn btn-success" href="/KeToan/TaoCongno/@daily.MaDL">Xuất công nợ</a>*@
-            <input type="submit" value="Lưu" class="btn btn-default" />
+            <input type="submit" value="Lập phiếu công nợ" class="btn btn-success" />
         </div>
             }
             </div>
@@ -243,17 +235,22 @@
 
 <script>
     //In dữ liệu
-    //var myApp = new function () {
-    //    this.printTable = function () {
-    //        var top = document.getElementById('sampleTable_wrapper');
-    //        var tab = document.getElementById('sampleTable');
-    //        var win = window.open('', '', 'height=700,width=700');
-    //        win.document.write(top.outerHTML);
-    //        win.document.close();
-    //        win.print();
 
-    //    }
-    //}
+
+    function printDiv(divName) {
+        
+        document.getElementById("dropdownsort").style.display = "none";
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+
+    }
 
 
 </script>

@@ -42,24 +42,19 @@
                     </li>
                 </ul>
 
-                <div class="row" style="padding-top:10px;">
+                <div class="row" style="padding:10px;">
                     <div class="col-sm-2">
-                        <a class="btn btn-secondary btn-sm print-file" title="In" onclick="myApp.printTable()">
+                        <a class="btn btn-outline-success btn-sm" title="In" onclick="printDiv('printMe')">
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-secondary btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KeToan/QLDonThanhToan">
-                            <i class="fas fa-copy"></i> Làm mới danh sách
-                        </a>
-                    </div>
+
                     <div class="col-sm-6">
                         @using (Html.BeginForm("QLDonThanhToan", "KeToan", FormMethod.Post, new { @class = "form-group-sm" }))
                         {
 
                             @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
-                            @*<input type="submit" value="Search" class="btn btn-danger btn-sm"/>*@
-                            @*<input type="Text" class="form-control mx-sm-3" value="@ViewBag.Keyword" name="searchString" placeholder="Nhập tên đại lý cần tìm">*@
+
                             <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
 
 
@@ -68,21 +63,22 @@
 
                 </div>
 
+
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row" style="padding-top:10px">
                         <div class="col-sm-12">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
-                                    <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã hóa đơn: activate to sort column ascending" style="width: 80px;">Mã đơn hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 60px;">Tên đại lý</th>
-                                        <th class="100" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên đại lý: activate to sort column ascending" style="width: 100px;">Điểm điểm giao</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tổng tiền: activate to sort column ascending" style="width: 80px;">Tình trạng thanh toán</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã đơn hàng: activate to sort column ascending" style="width: 60px;">Mã nhân viên lập</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 90px;">Ngày lập đơn</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Ngày lập: activate to sort column ascending" style="width: 100px;">Tổng tiền</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 80px;">Chức năng</th>
+                                    <tr role="row" id="printMe">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable"style="width: 80px;">Mã đơn hàng</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 60px;">Tên đại lý</th>
+                                        <th class="100" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Điểm điểm giao</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 80px;">Tình trạng thanh toán</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 60px;">Mã nhân viên lập</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 90px;">Ngày lập đơn</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tổng tiền</th>
+                                        <th  id="btnfunction"style="width: 80px;">Chức năng</th>
 
                                     </tr>
                                 </thead>
@@ -130,8 +126,8 @@
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     @*<a href="/KeToan/XoaHD/@item.MaHD" class="btn btn-primary btn-sm trash">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </a>*@
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>*@
                                                     <a href="/KeToan/XuatHDBH/@item.MaDH" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
                                                         <i class="fas fa-train"></i>
                                                     </a>

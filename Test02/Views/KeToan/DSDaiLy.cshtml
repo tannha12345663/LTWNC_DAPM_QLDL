@@ -53,21 +53,21 @@
         <div class="tile">
             <div class="tile-body">
 
-                <div class="row element-button">
+                @*<div class="btnin">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
+                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="printDiv('printme')">
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
 
 
-                </div>
-                <div class="row">
+                </div>*@
+                <div class="row" id="printme">
                     <div class="col-sm-12">
                         <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid">
                             @*//Phần render từng dòng trong C#*@
                             <thead>
-                                <tr role="row">
+                                <tr role="row" >
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 50px;">Mã đại lý</th>
                                     <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 150px;">Tên đại lý</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 160px;">Loại đại lý</th>
@@ -167,14 +167,18 @@
 
 <script>
     //In dữ liệu
-    var myApp = new function () {
-        this.printTable = function () {
-            var tab = document.getElementById('sampleTable');
-            var win = window.open('', '', 'height=800px,width=1200px');
-            win.document.write(tab.outerHTML);
-            win.document.close();
-            win.print();
-        }
+    function printDiv(divName) {
+      
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+
     }
 
     // tim kiem

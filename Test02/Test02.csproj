@@ -289,6 +289,7 @@
     <Content Include="Content\Img\account.png" />
     <Content Include="Content\Img\DiemKhang.jpg" />
     <Content Include="Content\Img\KhoHang\bg_createStorage.jpg" />
+    <Content Include="Content\KeToan\StyleKeToan.css" />
     <Content Include="Data\Images\7up.jpg" />
     <Content Include="Data\Images\coca.png" />
     <Content Include="Data\Images\cocalight.jpg" />
@@ -317,9 +318,6 @@
     <Content Include="Content\js\plugins\sweetalert.min.js" />
     <Content Include="Content\js\popper.min.js" />
     <Content Include="Content\KeToan\badges.css" />
-    <Content Include="Content\KeToan\formketoan.css" />
-    <Content Include="Content\KeToan\ketoan.css" />
-    <Content Include="Content\KeToan\QLHoadon.css" />
     <Content Include="Content\soft-ui-dashboard.css" />
     <Content Include="Content\style01.css" />
     <Content Include="Content\Test01\all.min.css" />
@@ -595,6 +593,7 @@
     <Content Include="Views\KeToan\DSCongnoNo.cshtml" />
     <Content Include="Views\KeToan\DSDaiLy.cshtml" />
     <Content Include="Views\KeToan\CongnoDL.cshtml" />
+    <Content Include="Views\PhongKho\DetailsPXK.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -20,7 +20,7 @@
 
     <script src="~/Views/KeToan/Layout/ketoan.js"></script>
 
-    //
+    
 
 
 
@@ -39,7 +39,7 @@
                 <a class="app-nav__item" href="@Url.Action("Logout","LoginUser")"><i class='bx bx-log-out bx-rotate-180'></i> </a>
 
             </li>
-            
+
         </ul>
     </header>
     <!-- Sidebar menu-->
@@ -75,11 +75,11 @@
                 </a>
             </li>
             @*<li>
-                <a class="app-menu__item @ViewBag.tb" href="~/KeToan/Thongbao">
-                    <i class='app-menu__icon bx bx-bell'></i>
-                    <span class="app-menu__label">Thông báo</span>
-                </a>
-            </li>*@
+                    <a class="app-menu__item @ViewBag.tb" href="~/KeToan/Thongbao">
+                        <i class='app-menu__icon bx bx-bell'></i>
+                        <span class="app-menu__label">Thông báo</span>
+                    </a>
+                </li>*@
             <li>
                 <a class="app-menu__item  @ViewBag.qlhd" href="~/KeToan/QLDonHang">
                     <i class='app-menu__icon bx bx-cart-alt'></i> <span class="app-menu__label">Đơn hàng </span>
@@ -91,10 +91,10 @@
                 </a>
             </li>
             @*<li>
-                <a class="app-menu__item @ViewBag.cn" href="~/KeToan/QLCongno">
-                    <i class='app-menu__icon bx bx-dollar'></i><span class="app-menu__label">Quản lý Công nợ</span>
-                </a>
-            </li>*@
+                    <a class="app-menu__item @ViewBag.cn" href="~/KeToan/QLCongno">
+                        <i class='app-menu__icon bx bx-dollar'></i><span class="app-menu__label">Quản lý Công nợ</span>
+                    </a>
+                </li>*@
             <li>
                 <a class="app-menu__item @ViewBag.dthu" href="~/KeToan/Doanhthu">
                     <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Doanh thu</span>
@@ -102,10 +102,10 @@
             </li>
 
             <li>
-                    <a class="app-menu__item @ViewBag.ln" href="~/KeToan/LoiNhuan">
-                        <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lợi Nhuận</span>
-                    </a>
-                </li>
+                <a class="app-menu__item @ViewBag.ln" href="~/KeToan/LoiNhuan">
+                    <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Lợi Nhuận</span>
+                </a>
+            </li>
 
         </ul>
     </aside>
@@ -219,5 +219,8 @@
             }
         }
     </script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 </body>
 </html>

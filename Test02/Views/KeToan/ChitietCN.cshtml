@@ -8,7 +8,10 @@
     ViewBag.cn = "active";
     ViewBag.nd = "Xuất phiếu công nợ";
 }
-<link href="~/Content/KeToan/formketoan.css" rel="stylesheet" />
+
+<link href="~/Content/KeToan/StyleKeToan.css" rel="stylesheet" />
+
+
 <div class="container-sm">
     <div class="row">
         <div class="col-md-12">
@@ -106,17 +109,17 @@
     </div>
     <div class="row" style="padding:5px 10px">
         <div class="col-sm-2">
-            <a class="btn btn-delete btn-sm " title="In" onclick="myApp.printTable()">
+            <a class="btn btn-delete btn-sm " title="In" id="btnin" onclick="printDiv('body')">
                 <i class="fas fa-print"></i> In dữ liệu
             </a>
         </div>
         <div class="col-sm-2">
-            <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
+            <a class="btn btn-danger btn-sm" id="btncn" data-toggle="modal" data-target="#myModal">
                 Thêm phiếu công nợ
             </a>
         </div>
         <div class="col-sm-2">
-            <a class="btn btn-warning btn-sm" title="Delete" href="/KeToan/DSCongnoNo/@Model.MaDL">
+            <a class="btn btn-warning btn-sm" id="btnback" title="Delete" href="/KeToan/DSCongnoNo/@Model.MaDL">
                 Quay lại danh sách
             </a>
 
@@ -143,7 +146,7 @@
                         Bạn muốn xóa phiếu công nợ @Model.MaCongNo của <span>@daily.TenDL - @daily.MaDL </span> ?!
                     </p>
                     <p>
-                        <span>Tổng công nợ:</span> @Model.TienNo
+                        <span>Tổng công nợ:</span> @tongien
                 </div>
 
             </div>
@@ -158,14 +161,21 @@
 </div>
 
 <script>
-    //In dữ liệu
-    var myApp = new function () {
-        this.printTable = function () {
-            var tab = document.getElementById('body');
-            var win = window.open('', '', 'height=800px,width=1200px');
-            win.document.write(tab.outerHTML);
-            win.document.close();
-            win.print();
-        }
+    function printDiv(divName) {
+
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.getElementById("btnin").style.display = "none";
+        document.getElementById("btncn").style.display = "none";
+        document.getElementById("btnback").style.display = "none";
+
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
     }
 </script>
