@@ -1,22 +1,26 @@
 ﻿@model IEnumerable<Test02.Models.PhieuNhapXuat>
+@using Test02.Models
 @{
     ViewBag.Title = "QuanLyPhieuNhapXuat";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.nk = "active";
     ViewBag.Name = "Quản lý phiếu nhập xuất";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var listDH = db.DonHangs.ToList();
 }
-@{ 
+@{
     var checkMessage = TempData["AlertMessage"];
+
     if (checkMessage == "Đã xóa")
     {
-        <script >
+        <script>
             swal({
                 title: "Xóa thành công",
-                text: "Đã xóa phiếu @TempData["MaCTKkk"]!",
+                text: "Đã xóa phiếu @TempData["xoamphieu"]!",
                 icon: "success",
                 button: "OK",
             });
-        </script >
+        </script>
     }
 }
 <div class="row">
@@ -56,51 +60,180 @@
                                 @{ string str = item.MaPhieu.Substring(0, 2);}
                                 @if (str == "PX")
                                 {
-                                    @Html.ActionLink("Chi tiết", "ChiTietPhieuXuatKho", new { id = item.MaPhieu })
-                                    <span> || </span>
-                                    @Html.ActionLink("Xóa", "XoaPhieuXuatKho", new { id = item.MaPhieu })
+                                    <a href="~/PhongKho/ChiTietPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-info" title=" Chi tiết"> <i class="fa fa-info"></i> </a>
+                                    <a href="/PhongKho/XoaPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+                                }
+                                else if (str == "PN")
+                                {
+                                    <a href="~/PhongKho/ChiTietPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-info" title="Chi tiết"> <i class="fa fa-info"></i> </a>
+                                    <a href="/PhongKho/XoaPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
                                 }
                                 else
                                 {
-                                    @Html.ActionLink("Chi tiết", "ChiTietPhieuNhapKho", new { id = item.MaPhieu })
-                                    <span> || </span>
-                                    @Html.ActionLink("Xóa", "XoaPhieuNhapKho", new { id = item.MaPhieu })
+                                    <a href="~/PhongKho/DetailsPXK/@item.MaPhieu" class="btn btn-outline-info" title="Chi tiết"> <i class="fa fa-info"></i> </a>
+                                    <a href="/PhongKho/DeletePNX/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
                                 }
                             </td>
                         </tr>
                     }
+                </table>
+                @* Ẩn cột trong table *@
+                <!--<input type="hidden" id="hiddenPhieu" />-->
+                @* Model *@
+                <!--<div class="container">
+                    <div class="modal fade" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" class="" data-dismiss="modal">&times;</a>
+                                    <h2>Cảnh báo!</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <h4>Bạn có chắc muốn xóa phiếu xuất kho của đơn hàng này?</h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-cancel" data-dismiss="modal">Hủy bỏ</a>
+                                    <a href="#" class="btn btn-danger" onclick="DeletePhieu()">Vẫn xóa</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@* <Danh sách đơn hàng đã xét duyệt *@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="tile">
+            <h3 class="tile-title" style="text-align:center;"><b>DANH SÁCH ĐƠN HÀNG ĐÃ XÉT DUYỆT</b></h3>
+            <div class="tile-body table-responsive-sm">
+                <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                       id="sampleTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                Mã đại lý
+                            </th>
+                            <th>
+                                Mã đơn hàng
+                            </th>
+                            <th>
+                                Nhân viên xét duyệt
+                            </th>
+                            <th>
+                                Ngày lập đơn
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>
+                                Kho ưu tiên
+                            </th>
+                            <th>
+                                Điểm giao
+                            </th>
+                            <th>
+                                Tổng tiền
+                            </th>
+                            <th>
+                                Chi tiết
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in listDH)
+                        {
+                            if (item.TrangThai == "Đã xét duyệt")
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaDL)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaDH)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NhanVien.TenNV)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NgayLap)
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-success">@Html.DisplayFor(modelItem => item.TrangThai)</span>
+                                    </td>
+                                    <td>
+                                        null
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DiemGiao)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TongTien)
+                                    </td>
+                                    <td>
+                                        <a href="~/PhongKho/ChiTietDonHang/@item.MaDH" class="btn btn-outline-info btn-md" title="Chi tiết"> <i class="fa fa-info"></i> </a>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
 
+
 @*<script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>*@
 <!-- The javascript plugin to display page loading on top-->
-<script src="~/Scripts/pace.min.js"></script>
+<!--<script src="~/Scripts/pace.min.js"></script>-->
 <!-- Page specific javascripts-->
-<script type="text/javascript" src="~/Scripts/chart.js"></script>
+<!--<script type="text/javascript" src="~/Scripts/chart.js"></script>-->
+@*<script>
+        // Get the modal
+        var modal = document.getElementById('id01');
 
-<!-- Google analytics script-->
-<script type="text/javascript">
-    if (document.location.hostname == 'pratikborsadiya.in') {
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-72504830-1', 'auto');
-        ga('send', 'pageview');
-    }
-</script>
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>*@
 
 
+@* model confirm delete *@
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        var ConfirmDelete = function (MaPhieu) {
+            $("#hiddenPhieu").val(MaPhieu);
+            $("#myModal").modal('show');
+
+        }
+
+        var Deletephieu = function () {
+            var maPhieu = $("#hiddenPhieu").val();
+            $.ajax({
+                type: "POST",
+                url: "/PhongKho/DeletePNXConfirm",
+                data: { MaPhieu: maPhieu },
+                success: function () {
+                    $("#myModal").modal("hide");
+                }
+            });
+        }
+    })
+    
+    
+</script>*@

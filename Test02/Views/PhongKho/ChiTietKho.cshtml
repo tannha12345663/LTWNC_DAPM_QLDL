@@ -47,7 +47,7 @@
             <h3>Danh sách chi tiết của kho @TempData["makho"]</h3>
             <div class="tile-body">
                 <div class="row element-button">
-                    <a class="btn btn-add btn-sm" href="/PhongKho/CreateCTKho/@TempData["makho"]" title="Thêm" style="margin-left:20px;">
+                    <a class="btn btn-success btn-sm" href="/PhongKho/CreateCTKho/@TempData["makho"]" title="Thêm chi tiết kho" style="margin-left:20px;">
                         <i class="fas fa-plus"></i>
                         Thêm chi tiết kho
                     </a>
@@ -58,7 +58,7 @@
                         <thead>
                             <tr>
                                 <th>
-                                    Mã chi tiết kho
+                                    STT
                                 </th>
                                 <th>
                                     Mã sản phẩm
@@ -88,7 +88,7 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.MaCTKho)
+                                        @Html.DisplayFor(modelItem => item.STT)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.MaSP)
@@ -110,10 +110,10 @@
                                     </td>
 
                                     <td>
-                                        <a href="/PhongKho/EditCTKho//@item.MaCTKho" class="btn btn-primary btn-sm edit" title="Chỉnh sửa">
+                                        <a href="/PhongKho/EditCTKho/@item.STT" class="btn btn-primary btn-sm edit" title="Chỉnh sửa">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="/PhongKho/DeleteCTKho//@item.MaCTKho" class="btn btn-primary btn-sm trash" title="Xóa kho">
+                                        <a href="/PhongKho/DeleteCTKho/@item.STT" class="btn btn-primary btn-sm trash" title="Xóa kho">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </td>

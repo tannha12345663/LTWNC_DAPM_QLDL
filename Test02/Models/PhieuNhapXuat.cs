@@ -21,11 +21,17 @@ namespace Test02.Models
         }
     
         public string MaPhieu { get; set; }
+        public string MaKho { get; set; }
         public Nullable<System.DateTime> NgayLap { get; set; }
         public string LoaiPhieu { get; set; }
         public string MaNVLap { get; set; }
+        public string NguoiGiaoHang { get; set; }
+        public string PhuongTienGiaoHang { get; set; }
+        public string MaDH { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietPhieuNhapXuat> ChiTietPhieuNhapXuats { get; set; }
+        public virtual Kho Kho { get; set; }
+        public virtual NhanVien NhanVien { get; set; }
     }
 }

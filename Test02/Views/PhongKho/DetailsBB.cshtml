@@ -1,5 +1,5 @@
-﻿
-    @using Test02.Models
+﻿@model Test02.Models.ChiTietBienBang
+@using Test02.Models
 @{
     ViewBag.Title = "DetailsBB";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
@@ -10,93 +10,147 @@
     var BBKK = db.BienBangKiemKes.ToList();
 }
 
-<h2>Chi tiết biên bản @TempData["makk"]</h2>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
 
-        @foreach (var item in ctBBKK)
-        {
-            if ((string)item.MaKK == (string)TempData["makk"])
-            {
-                <dt>
-                    Mã chi tiết biên bản:
-                </dt>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile" id="printMe">
+            <h2 style="text-align:center">BIÊN BẢNG KIỂM KÊ HÀNG HÓA</h2>
+            <form style="text-align:center" id="sample2">
+                <label for="date">Ngày:</label>
+                @Html.DisplayFor(model => model.BienBangKiemKe.NgayLap)<br>
+                <label for="date">Mã số:</label>
+                @Html.DisplayFor(model => model.MaKK)<span>_</span>
+                @Html.DisplayFor(model => model.STT)<br>
+            </form>
+            <div class="tile-body">
+                <form class="row">
+                    <div class="form-group col-md-12">
+                        <label class="control-label"> Tên biên bản: </label>
+                        @Html.DisplayFor(model => model.BienBangKiemKe.TenBienBang)
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Nhân viên kiểm kê: </label>
+                        @Html.DisplayFor(item => item.BienBangKiemKe.MaNVLap) -
+                        @Html.DisplayFor(item => item.BienBangKiemKe.NhanVien.TenNV)
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="row">
+                            <div class="col-md-2"><label class="control-label">Thông tin kho: </label> <br /></div>
+                            <div class="col-md-10">
+                                <label class="control-label">-  Mã kho: </label>
+                                @Html.DisplayFor(item => item.BienBangKiemKe.MaKho) <br />
+                                <label class="control-label">-  Tên kho: </label>
+                                @Html.DisplayFor(item => item.BienBangKiemKe.Kho.TenKho) <br />
+                                <label class="control-label">-  Địa chỉ kho: </label>
+                                @Html.DisplayFor(item => item.BienBangKiemKe.Kho.DiaChi)
+                            </div>
+                        </div>
 
-                <dd>
-                    @Html.DisplayFor(@modelItem => item.MaCTBB)
-                </dd>
-                <dt>
-                    Tên biên bản:
-                </dt>
 
-                <dd>
-                    @Html.DisplayFor(@modelItem => item.BienBangKiemKe.TenBienBang)
-                </dd>
-                <dt>
-                    Ngày lập:
-                </dt>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="control-label"> Thông tin sản phẩm: </label> <br />
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="text-align:center">Mã sản phẩm</th>
+                                    <th rowspan="2" style="text-align:center">Tên sản phẩm</th>
+                                    <th rowspan="2" style="text-align:center">Đơn vị tính</th>
+                                    <th rowspan="2" style="text-align:center">Đơn giá</th>
+                                    <th rowspan="2" style="text-align:center">Ngày sản xuất</th>
+                                    <th rowspan="2" style="text-align:center">Hạn sử dụng</th>
+                                    <th colspan="2" style="text-align:center">Theo sổ kho</th>
+                                    <th colspan="2" style="text-align:center">Theo kiểm kê</th>
+                                    <th colspan="2" style="text-align:center">Chênh lệnh</th>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:center">Số lượng</th>
+                                    <th style="text-align:center">Thành tiền</th>
+                                    <th style="text-align:center">Số lượng</th>
+                                    <th style="text-align:center">Thành tiền</th>
+                                    <th style="text-align:center">Số lượng</th>
+                                    <th style="text-align:center">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center">@Html.DisplayFor(model => model.MaSP)</td>
+                                    <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.TenSP)</td>
+                                    <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.DonViTinh)</td>
+                                    <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.Gia)</td>
+                                    <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.NgaySX)</td>
+                                    <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.HanSD)</td>
+                                    <td style="text-align:center">@Html.DisplayFor(model => model.SLTonKho)</td>
+                                    <td style="text-align:center">
+                                        @{
+                                            var sl = Model.SLTonKho;
+                                            var gia = Model.SanPham.Gia;
 
-                <dd>
-                    @Html.DisplayFor(@modelItem => item.BienBangKiemKe.NgayLap)
-                </dd>
-                <dt>
-                    Mã NV lập - Tên nhân viên:
-                </dt>
+                                            var result = sl * gia;
+                                        }
+                                        @string.Format("{0:#,##0}", result)
+                                    </td>
+                                    <td style="text-align:center">@Html.DisplayFor(model => model.SLThucTe)</td>
+                                    <td style="text-align:center">
+                                        @{
+                                            var sl1 = Model.SLThucTe;
+                                            var gia1 = Model.SanPham.Gia;
 
-                <dd>
-                    @Html.DisplayFor(@modelItem => item.BienBangKiemKe.MaNVLap) -
-                    @Html.DisplayFor(@modelItem => item.BienBangKiemKe.NhanVien.TenNV)
-                </dd>
-                <dt>
-                    Mã Sản phẩm - Tên sản phẩm:
-                </dt>
+                                            var result1 = sl1 * gia1;
+                                        }
+                                        @string.Format("{0:#,##0}", result1)
+                                    </td>
+                                    <td style="text-align:center">@Html.DisplayFor(model => model.ChenhLech)</td>
+                                    <td style="text-align:center">
+                                        @{
+                                            var sl2 = Model.ChenhLech;
+                                            var gia2 = Model.SanPham.Gia;
 
-                <dd>
-                    @Html.DisplayFor(@modelItem => item.BienBangKiemKe.MaSP) -
-                    @Html.DisplayFor(@modelItem => item.BienBangKiemKe.SanPham.TenSP)
-                </dd>
-
-                <dt>
-                    Số lượng tồn / @Html.DisplayFor(@modelItem => item.BienBangKiemKe.SanPham.DonViTinh)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(@modelItem => item.SLTonKho)
-                </dd>
-
-                <dt>
-                    Số lượng thực tế /  @Html.DisplayFor(@modelItem => item.BienBangKiemKe.SanPham.DonViTinh)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(@modelItem => item.SLThucTe)
-                </dd>
-
-                <dt>
-                    Chênh lệch / @Html.DisplayFor(@modelItem => item.BienBangKiemKe.SanPham.DonViTinh)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(@modelItem => item.ChenhLech)
-                </dd>
-
-                <dt>
-                    Lý do:
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(@modelItem => item.LyDo)
-                </dd>
-            }
-
-        }
-    </dl>
+                                            var result2 = sl2 * gia2;
+                                        }
+                                        @string.Format("{0:#,##0}", result2)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Chi tiết: </label>
+                        @Html.DisplayFor(model => model.LyDo)
+                    </div>
+                    <h5 style="margin-left:82%;" id="sample1">Thủ kho</h5>
+                    <h6 style="margin-left:80%; font-style:italic;" id="sample1">(ký và ghi rõ họ tên)</h6>
+                    <br />
+                    <br />
+                    <br />
+                    <h6 style="margin-left:80%;" id="sample1">Nguyễn Thị Diễm Khang</h6>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 <p>
-    <a class="btn btn-danger btn-sm" href="/PhongKho/BaoCao" title="Trở lại">
+    <a class="btn btn-actv btn-sm" id="btnReturn" href="/PhongKho/BaoCao" title="Trở lại">
         <i class="fas fa-retweet"></i>
         Trở lại
     </a>
+    <a class="btn btn-delete btn-sm print-file" id="btnPrint" href="~/PhongKho/BaoCao" title="In" onclick="printDiv('printMe')">
+        <i class="fas fa-print"></i> In phiếu
+    </a>
 </p>
+<script>
+    //In dữ liệu
+    function printDiv(divName) {
+        document.getElementById("btnReturn").style.display = "none";
+        document.getElementById("btnPrint").style.display = "none";
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>
