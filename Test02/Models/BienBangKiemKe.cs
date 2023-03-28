@@ -14,6 +14,12 @@ namespace Test02.Models
     
     public partial class BienBangKiemKe
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public BienBangKiemKe()
+        {
+            this.ChiTietBienBangs = new HashSet<ChiTietBienBang>();
+        }
+    
         public string MaKK { get; set; }
         public string MaKho { get; set; }
         public string MaNVLap { get; set; }

@@ -114,10 +114,10 @@ namespace Test02.Controllers
             Session["Mactkho"] = mactk.STT;
             Session["Makho"] = mactk.MaKho;
             
-        //    ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
-        //    ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
-        //    //return View(mactk);
-        //}
+            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
+              return View(mactk);
+        }
 
         // POST: ChiTietKhoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
