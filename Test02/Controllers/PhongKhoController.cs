@@ -854,16 +854,16 @@ namespace Test02.Controllers
 
             PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
             TempData["maPhieuXuattheodonhang"] = id;
-            var maDH = phieuNhapXuat.MaDH;
-            TempData["ctmadh"] = phieuNhapXuat.MaDH;
-            foreach (var item in database.DonHangs)
-            {
-                if (maDH == item.MaDH)
-                {
-                    TempData["tenDL"] = item.DaiLy.TenDL;
-                    TempData["diemgiao"] = item.DiemGiao;
-                }
-            }
+            //var maDH = phieuNhapXuat.MaDH;
+            //TempData["ctmadh"] = phieuNhapXuat.MaDH;
+            //foreach (var item in database.DonHangs)
+            //{
+            //    if (maDH == item.MaDH)
+            //    {
+            //        TempData["tenDL"] = item.DaiLy.TenDL;
+            //        TempData["diemgiao"] = item.DiemGiao;
+            //    }
+            //}
             if (phieuNhapXuat == null)
             {
                 return HttpNotFound();

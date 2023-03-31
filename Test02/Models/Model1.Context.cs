@@ -33,15 +33,17 @@ namespace Test02.Models
         public virtual DbSet<ChiTietPhieuNhapXuat> ChiTietPhieuNhapXuats { get; set; }
         public virtual DbSet<ChucVu> ChucVus { get; set; }
         public virtual DbSet<DaiLy> DaiLies { get; set; }
-        public virtual DbSet<DanhSachGiaoHang> DanhSachGiaoHangs { get; set; }
         public virtual DbSet<DoanhSo> DoanhSoes { get; set; }
         public virtual DbSet<DonHang> DonHangs { get; set; }
+        public virtual DbSet<DonHangGiao> DonHangGiaos { get; set; }
         public virtual DbSet<HoaDon> HoaDons { get; set; }
         public virtual DbSet<Kho> Khoes { get; set; }
         public virtual DbSet<LoaiDL> LoaiDLs { get; set; }
         public virtual DbSet<NhanVien> NhanViens { get; set; }
+        public virtual DbSet<NhanVienGH> NhanVienGHs { get; set; }
         public virtual DbSet<PhieuCongNo> PhieuCongNoes { get; set; }
         public virtual DbSet<PhieuNhapXuat> PhieuNhapXuats { get; set; }
+        public virtual DbSet<PhuongTienGH> PhuongTienGHs { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
     }
 }

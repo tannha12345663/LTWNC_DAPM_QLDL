@@ -1,15 +1,17 @@
-﻿@model Test02.Models.NhanVien
+﻿@model Test02.Models.NhanVienGH
 
 @{
-    ViewBag.Title = "ChinhsuaNV";
+    ViewBag.Title = "NhanVienGiaoHang";
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
-    ViewBag.qtnv = "active";
-    ViewBag.nd = "Chỉnh sửa thông tin nhân viên giao hàng";
+    ViewBag.gh_dsdh = "active";
+    ViewBag.nd = "Cập nhật thông tin nhân viên giao";
 }
+
+
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
-            <h4 style="text-align:center">Nhân viên @Model.MaNV</h4>
+            <h4 style="text-align:center">NHÂN VIÊN GIAO HÀNG @Model.MaNV</h4>
 
             @using (Html.BeginForm())
             {
@@ -24,22 +26,6 @@
                         <strong>Mã nhân viên: </strong>
                         @Html.DisplayFor(modelItem => Model.MaNV)
                     </p>
-
-                    <div class="form-group">
-                        <strong>Mã chức vụ: </strong>
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.MaChucVu, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.MaChucVu, "", new { @class = "text-danger" })
-                        </div>
-                    </div>                    
-
-                    <div class="form-group">
-                        <strong>Mã nhân viên: </strong>
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <strong>Tên nhân viên: </strong>
@@ -66,24 +52,29 @@
                     </div>
 
                     <div class="form-group">
-                        <strong>Email: </strong>
+                        <strong>Tình trạng làm việc: </strong>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            @*@Html.EditorFor(model => model.TinhTrang, new { htmlAttributes = new { @class = "form-control" } })*@
+                            <select class="form-control" name="tinhtrang">                     
+                                <option>----Chọn nhân viên giao hàng----</option>
+                                <option>Sẵn sàng</option>
+                                <option>Đang giao hàng</option>
+                                <option>Nghỉ phép</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Lưu" class="btn btn-default" />
+                    <div class="row element-button">
+                        <div class="col-sm-2">
+                            <input style="background-color:#27a300" type="submit" value="Lưu" class="btn btn-default" />
+                        </div>
+                        <div class="col-sm-2">
+                            <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachShipper"><i class=""></i> Quay lại</a>
                         </div>
                     </div>
                 </div>
             }
-
-            <div>
-                @Html.ActionLink("Quay lại", "DanhSachShipper")
-            </div>
         </div>
     </div>
 </div>
+

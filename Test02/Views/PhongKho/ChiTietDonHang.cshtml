@@ -7,6 +7,7 @@
     ViewBag.Name = "Danh sách chi tiết đơn hàng";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
+
 @{
     var checkMessage = TempData["AlertMessage"];
     if (checkMessage == "Đã thêm")
@@ -21,12 +22,13 @@
         </script>
     }
 }
+
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-body">
                 <div class="row element-button">
-                    <h3>Danh sách chi tiết của đơn hàng @TempData["madh"]</h3>
+                    <h3>Danh sách chi tiết của đơn hàng @*@TempData["madh"]*@ </h3>
                 </div>
                 <h6>Mã đơn hàng số: <span class="badge bg-info">@TempData["madh"]</span></h6>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">

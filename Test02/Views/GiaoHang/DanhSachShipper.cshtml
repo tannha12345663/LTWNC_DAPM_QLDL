@@ -1,13 +1,14 @@
-﻿@model IEnumerable<Test02.Models.NhanVien>
+﻿@model IEnumerable<Test02.Models.NhanVienGH>
 @using Test02.Models;
+
 @{
-    ViewBag.Title = "QLNhanVien";
+    ViewBag.Title = "DonHangMoi";
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
-    ViewBag.qtnv = "active";
+    ViewBag.gh_shippers = "active";
     ViewBag.nd = "Danh sách nhân viên giao hàng";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    List<ChucVu> cv = db.ChucVus.ToList();
 }
+
 
 <div class="row">
     <div class="col-md-12">
@@ -16,7 +17,7 @@
 
                 <div class="row element-button">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm nhap-tu-file" href="/QTV/ThemNV"><i class="fas fa-file-upload"></i> Thêm nhân viên mới</a>
+                        <a class="btn btn-delete btn-sm nhap-tu-file" href="/GiaoHang/ThemShipper"><i class="fas fa-file-upload"></i> Thêm nhân viên mới</a>
                     </div>
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
@@ -24,64 +25,56 @@
                         </a>
                     </div>
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDL"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
                     </div>
 
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    <div class="row">
 
-
-                        <div class="col-md-1">
-                            <div id="sampleTable_filter" class="dataTables_filter">
-                                <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
+                        <h2 style="margin-left:29%">DANH SÁCH NHÂN VIÊN GIAO HÀNG</h2>
                         <div class="col-sm-12">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
-                                @*//Phần render từng dòng trong C#*@
+
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã nhân viên: activate to sort column ascending" style="width: 50px;">Mã nhân viên</th>
-                                        <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã chức vụ: activate to sort column ascending" style="width: 150px;">Mã chức vụ</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên chức vụ: activate to sort column ascending" style="width: 160px;">Tên chức vụ</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên nhân viên: activate to sort column ascending" style="width: 124px;">Tên nhân viên</th>
-                                        @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="UserName: activate to sort column ascending" style="width: 124px;">UserName</th>*@
-                                        <th width="100" class="sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 30px; text-align:center">Mã nhân viên</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tên nhân viên giao hàng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Số điện thoại</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 200px; text-align: center ">Địa chỉ</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Tình trạng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Cập nhật</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td style="width: 150px;">
+                                            <td>
                                                 @Html.DisplayFor(modelItem => item.MaNV)
                                             </td>
-                                            <td style="width: 150px;">
-                                                @Html.DisplayFor(modelItem => item.MaChucVu)
-                                            </td>   
                                             <td>
-                                                @{var tencv = db.ChucVus.Find(item.MaChucVu);
-                                                }
-                                                @Html.DisplayFor(modelItem => tencv.ViTri)
-                                            </td>
-                                            <td style="width: 150px;">
                                                 @Html.DisplayFor(modelItem => item.TenNV)
                                             </td>
-                                            @*<td style="width: 150px;">
-                                                @Html.DisplayFor(modelItem => item.UserName)
-                                            </td>*@
+
                                             <td>
-                                                <a href="/GiaoHang/ChinhsuaShipper/@item.MaNV" class="btn btn-primary btn-sm edit">
-                                                    <i class="fa fa-edit"></i>
+                                                @Html.DisplayFor(modelItem => item.SDT)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DiaChi)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TinhTrang)
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                <a href="/GiaoHang/ChinhSuaShipper/@item.MaNV" class="btn btn-primary btn-sm edit">
+                                                    <i class='bx bxs-edit-alt'></i>
                                                 </a>
                                                 <a href="/GiaoHang/XoaShipper/@item.MaNV" class="btn btn-primary btn-sm deleted">
-                                                    <i class="fas fa-trash-alt"></i>
+                                                    <i class="bx bxs-trash-alt"></i>
                                                 </a>
-
                                             </td>
                                         </tr>
                                     }
@@ -94,15 +87,3 @@
         </div>
     </div>
 </div>
-<script>
-    //In dữ liệu
-    var myApp = new function () {
-        this.printTable = function () {
-            var tab = document.getElementById('sampleTable');
-            var win = window.open('', '', 'height=800px,width=1200px');
-            win.document.write(tab.outerHTML);
-            win.document.close();
-            win.print();
-        }
-    }
-</script>

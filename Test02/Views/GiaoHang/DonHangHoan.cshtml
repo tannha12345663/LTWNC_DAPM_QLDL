@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Test02.Models.DonHang>
+@using Test02.Models;
+@{
+    ViewBag.Title = "DonHangHoan";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+    ViewBag.gh_donhangmoi = "active";
+    ViewBag.nd = "Danh sách đơn hàng hoàn";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                <div class="row element-button">
+
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
+                            <i class="fas fa-print"></i> In dữ liệu
+                        </a>
+                    </div>
+                </div>
+                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                    <div class="row">
+                        <h2 style="margin-left:29%">DANH SÁCH ĐƠN HÀNG HOÀN</h2>
+
+                        <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                            <thead>
+                                <tr role="row">                                
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Mã Đơn hàng </th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Tên đại lý</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Số điện thoại đại lý</th>                                    
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Địa chỉ giao</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 80px; text-align: center ">Tình trạng thanh toán</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 80px; text-align: center ">Tình trạng giao</th>
+                                    @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Cập nhật</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    if (item.PhieuXuatKho == true && item.XuatHoaDon == true && item.TinhTrangGH != null && item.TinhTrangGH == "Hoàn đơn")
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaDH)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DaiLy.TenDL)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DaiLy.SDT)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DiemGiao)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TinhTrangGH)
+                                            </td>                                        
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <div class="col-sm-2">
+                            <a class="btn btn-danger" type="button" title="Quay lại " href="/GiaoHang/DonGiaoHang"><i class=""></i> Quay lại</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
