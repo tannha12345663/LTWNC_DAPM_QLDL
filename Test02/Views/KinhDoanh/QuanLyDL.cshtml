@@ -10,6 +10,7 @@
 }
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Content/js/tableToExcel.js"></script> <!--Xuất file Excel-->
 <!--Modal-->
 
 @{
@@ -43,20 +44,22 @@
             <div class="col-sm-2">
                 <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDL"><i class="fas fa-copy"></i> Làm mới danh sách</a>
             </div>
-
+            <div class="col-sm-2">
+                <button class="btn btn-excel btn-sm" id="button-excel" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</button>
+            </div>
         </div>
-        <div>
-            <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+        <div class="table-responsive" >
+            <table data-cols-width="20,20,20,40,20,20,20" class="table table-hover table-bordered js-copytextarea " cellpadding="0" cellspacing="0" border="0"
                    id="sampleTable">
                 <thead>
                     <tr>
-                        <th>Mã đại lý</th>
-                        <th>Tên đại lý</th>
-                        <th>Loại đại lý</th>
-                        <th>Địa chỉ</th>
-                        <th>Số điện thoại</th>
-                        <th>Địa chỉ email</th>
-                        <th>Ngày tiếp nhận</th>
+                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true">Mã đại lý</th>
+                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true">Tên đại lý</th>
+                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true">Loại đại lý</th>
+                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true">Địa chỉ</th>
+                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true">Số điện thoại</th>
+                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true">Địa chỉ email</th>
+                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true">Ngày tiếp nhận</th>
                         <th>Chức năng</th>
                     </tr>
                 </thead>
@@ -64,27 +67,27 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>
+                            <td data-b-a-s="thin">
                                 @Html.DisplayFor(modelItem => item.MaDL)
                             </td>
-                            <td>
+                            <td data-b-a-s="thin">
                                 @{var tenldk = database.LoaiDLs.Find(item.MaLoaiDL);
                                 }
                                 @Html.DisplayFor(modelItem => tenldk.TenDaiLy)
                             </td>
-                            <td>
+                            <td data-b-a-s="thin">
                                 @Html.DisplayFor(modelItem => item.TenDL)
                             </td>
-                            <td>
+                            <td data-b-a-s="thin">
                                 @Html.DisplayFor(modelItem => item.DiaChi)
                             </td>
-                            <td>
+                            <td data-b-a-s="thin">
                                 @Html.DisplayFor(modelItem => item.SDT)
                             </td>
-                            <td>
+                            <td data-b-a-s="thin">
                                 @Html.DisplayFor(modelItem => item.Email)
                             </td>
-                            <td>
+                            <td data-b-a-s="thin">
                                 @Html.DisplayFor(modelItem => item.NgayTao)
                             </td>
                             <td>
@@ -123,4 +126,12 @@
         e.stopImmediatePropagation();
     });
 
+</script>
+<script>
+    let button = document.querySelector("#button-excel");
+
+    button.addEventListener("click", e => {
+        let table = document.querySelector("#sampleTable");
+        TableToExcel.convert(table);
+    });
 </script>

@@ -47,6 +47,17 @@
             });
         </script>
     }
+    else if (checkmess == "Đã xóa đơn hàng")
+    {
+        <script>
+            swal({
+                title: "Đã xóa đơn hàng không thành công \n Vui lòng kiểm tra lại ",
+                text: "Mã đơn hàng @TempData["capnhatdh"] đã được xóa! ",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
     ;
 }
 
@@ -63,21 +74,18 @@
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
                     </div>
                     <div class="col-sm-2">
-                        <a class="btn btn-add btn-sm print-file js-textareacopybtn" type="button" target="_blank" title="Sao chép" href="https://docs.google.com/spreadsheets/d/1pXggMVohTvKevnA4Nm9-EOg5vnuT_eFYZjLzN3fJvOY/edit?usp=sharing"><i class="fas fa-address-book"></i> Tiếp nhận đơn hàng</a>
-                    </div>
-                    <div class="col-sm-2">
                         <button class="btn btn-excel btn-sm" id="button-excel" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</button>
                     </div>
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <table  data-cols-width="20,20,20,30,20,20,20,20" class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                            <table data-cols-width="20,20,20,30,20,20,20,20,20,20,20" class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
                                         <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
-                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick"  data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
+                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
                                         <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Mã nhân viên lập</th>
                                         <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
                                         <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Trạng thái đơn hàng</th>
@@ -85,15 +93,17 @@
 
                                         <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tổng tiền</th>
                                         <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng thanh toán</th>
-
-                                        <th data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                        <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng xuất kho</th>
+                                        <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng xuất hóa đơn</th>
+                                        <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng giao hàng</th>
+                                        <th data-exclude="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td data-b-a-s="thin" >
+                                            <td data-b-a-s="thin">
                                                 @Html.DisplayFor(modelItem => item.MaDH)
                                             </td>
                                             <td data-b-a-s="thin">
@@ -101,7 +111,7 @@
                                             </td>
                                             <td data-b-a-s="thin">
                                                 @Html.DisplayFor(modelItem => item.MaNVLap)
-                                            </td >
+                                            </td>
                                             @*<td>
                                                     @{var tensp = db.SanPhams.Find(item.MaSP);
                                                     }
@@ -129,7 +139,16 @@
                                             <td data-b-a-s="thin">
                                                 @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
                                             </td>
-                                            <td>
+                                            <td data-b-a-s="thin" data-t:"b">
+                                                @item.PhieuXuatKho
+                                            </td>
+                                            <td data-b-a-s="thin" data-t:"b">
+                                                @item.XuatHoaDon
+                                            </td>
+                                            <td data-b-a-s="thin" data-t:"b">
+                                                @item.TinhTrangGH
+                                            </td>
+                                            <td data-exclude="true">
                                                 <a href="/KinhDoanh/ChinhSuaDH/@item.MaDH" class="btn btn-primary btn-sm edit">
                                                     <i class="fa fa-edit"></i>
                                                 </a> ||
@@ -174,7 +193,7 @@
                         <div class="form-group col-md-8">
                             <label class="control-label">Chọn mã đại lý</label>
                             <select class="form-control" name="MaDL" required>
-                                <option>-----Vui lòng chọn------</option>
+                                <option selected disabled>-----Vui lòng chọn------</option>
                                 @{ foreach (var item01 in dsdl)
                                     {
                                         <option value="@item01.MaDL">@item01.MaDL</option>
@@ -186,11 +205,11 @@
                             <label class="control-label">Địa điểm giao hàng</label>
                             <textarea class="form-control" type="text" name="DiemGiao" required></textarea>
                         </div>
-                        <div class="form-group col-md-12" style="text-align:center">
+                        <div class="form-group col-md-12 " style="text-align:center">
                             <label style="font-size:20px" class="control-label">-------------THÔNG TIN HÓA ĐƠN--------------</label>
 
                         </div>
-                        <div id="themdong">
+                        <div id="themdong" class="row" style="margin-left:4px">
                             @*<div class="form-group col-md-12">
                                     <label class="control-label">Tên sản phẩm</label>
                                     <select class="form-control" name="MaSP" required>
@@ -211,7 +230,8 @@
                 </div>
                 <div style="text-align:center" class="modal-footer">
                     <input class="btn btn-add" id="themsp" type="button" name="DiemGiao" value="Thêm SP" onclick="themSP()" required />
-                    <button class="btn btn-save" type="submit">Lưu lại</button>
+                    <input class="btn btn-cancel" id="xoasp" type="button" name="DiemGiao" disabled value="Xóa SP" onclick="xoaSP()" required />
+                    <button class="btn btn-save" type="submit">Thêm mới đơn hàng</button>
                     <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
                 </div>
 
@@ -222,26 +242,39 @@
 <script>
     var i = 0;
     function themSP() {
-        i++;
-        if (i > 3) {
+        if (i >= 3) {
             $("#themsp").attr("disabled", "disabled");
-            var text01 = '<p style="color:red;font-size:20px;text-align:center">Không đươc thêm quá 3 sản phẩm !</p>';
-            document.getElementById("themdong").innerHTML += text01;
         }
         else {
-            var row = '<div class="form-group col-md-12 ">'+
+            i++;
+            var row = '<div class="row" id="nd'+i+'">'+ '<div class="form-group col-md-8 ">'+
     '<label class="control-label">Tên sản phẩm</label>' +
                 ' <select class="form-control" name="MaSP' + i +'" required>' +
-    '<option>-----Vui lòng chọn sản phẩm------</option>' +
-    '@{ foreach (var item01 in dssp) {<option value="@item01.MaSP">@item01.MaSP</option> } }' +
+    '<option selected disabled>---------------Vui lòng chọn sản phẩm-------------</option>' +
+    '@{ foreach (var item01 in dssp) {<option value="@item01.MaSP">@item01.MaSP - @item01.TenSP - SL: @item01.TongTon</option> } }' +
     '</select>' + '</div>' +
-    '<div class="form-group col-md-12">' +
-    '<label class="control-label">Nhập số lượng :</label>' +
+    '<div class="form-group col-md-3">' +
+    '<label class="control-label">Số lượng:</label>' +
     '<input class="form-control" type="number" name="SoLuong'+i+'" value="true" id="SoLuong" required />' +
-                '</div>' ;
-
+                '</div>' +'</div>';
+            $("#xoasp").prop('disabled', false);
             document.getElementById("themdong").innerHTML += row;
+
+            console.log(i);
             $("#btnadd").attr("action", "/KinhDoanh/ThemDH02/" + i);
+        };
+
+    }
+    function xoaSP() {
+
+        if (i > 0) {
+            $("#themsp").prop('disabled', false);
+            document.getElementById('nd'+i).remove();
+            i--;
+            console.log(i);
+            $("#btnadd").attr("action", "/KinhDoanh/ThemDH02/" + i);
+        } else if (i = 0) {
+            $("#xoasp").attr("disabled", "disabled");
         };
     }
     function resetpage() {

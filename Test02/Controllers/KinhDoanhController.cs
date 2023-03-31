@@ -595,8 +595,11 @@ namespace Test02.Controllers
         public ActionResult XoaDHConfirm(string id)
         {
             DonHang donHang = database.DonHangs.Find(id);
+            TempData["capnhatdh"] = donHang.MaDH;
             database.DonHangs.Remove(donHang);
             database.SaveChanges();
+            TempData["messageAlert"] = "Đã xóa đơn hàng";
+            
             return RedirectToAction("QuanLyDH");
         }
 
@@ -704,9 +707,20 @@ namespace Test02.Controllers
         {
             if (ModelState.IsValid)
             {
-                LuuAnh(sanPham, HinhAnh);
-                database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
-                database.SaveChanges();
+                if(HinhAnh == null)
+                {
+                    var hac = database.SanPhams.AsNoTracking().Where(s=>s.MaSP==sanPham.MaSP).FirstOrDefault();
+                    sanPham.HinhAnh = hac.HinhAnh;
+                    database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.SaveChanges();
+                }
+                else
+                {
+                    LuuAnh(sanPham, HinhAnh);
+                    database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.SaveChanges();
+
+                }
                 return RedirectToAction("QuanLySP");
             }
             return View(sanPham);

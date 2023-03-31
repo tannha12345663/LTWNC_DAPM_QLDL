@@ -38,12 +38,18 @@
                 <form class="row" action="~/KinhDoanh/ThemDL" method="post">
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group col-md-4">
-                        @Html.LabelFor(model => model.MaLoaiDL, "MaLoaiDL", htmlAttributes: new { @class = "control-label" })
-                        @Html.DropDownList("MaLoaiDL", null, htmlAttributes: new { @class = "form-control" })
+                    <div class="form-group col-md-2">
+                        <label class="control-label" for="MaLoaiDL">Mã loại đại lý</label>
+                        <select class="form-control" id="MaLoaiDL" name="MaLoaiDL" required>
+                            <option selected="selected" disabled>--Chọn-----</option>
+                            <option value="LDL01">Đại lý lớn </option>
+                            <option value="LDL02">Đại lý vừa</option>
+                            <option value="LDL03">Đại lý nhỏ</option>
+                        </select>
                         @Html.ValidationMessageFor(model => model.MaLoaiDL, "", new { @class = "text-danger" })
                     </div>
-                    <div class="form-group col-md-4">
+                    <!--Cho thông tin tài khoảng UserName và Password tự động sinh ra và gửi Email-->
+                    @*<div class="form-group col-md-4">
                         @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })
                         @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
@@ -52,25 +58,25 @@
                         @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
                         @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                    </div>
+                    </div>*@
                     <div class="form-group  col-md-4">
-                        @Html.LabelFor(model => model.TenDL, htmlAttributes: new { @class = "control-label" })
-                        @Html.EditorFor(model => model.TenDL, new { htmlAttributes = new { @class = "form-control" } })
+                        <label class="control-label" for="MaLoaiDL">Tên đại lý</label>
+                        @Html.EditorFor(model => model.TenDL, new { htmlAttributes = new { @class = "form-control", type = "text", required = "true" } })
                         @Html.ValidationMessageFor(model => model.TenDL, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group col-md-4">
-                        @Html.LabelFor(model => model.SDT, htmlAttributes: new { @class = "control-label" })
-                        @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
+                        <label class="control-label" for="MaLoaiDL">Số điện thoại</label>
+                        @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", type = "number", required = "true" } })
                         @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
                     </div>
-                    <div class="form-group  col-md-4">
-                        @Html.LabelFor(model => model.DiaChi, htmlAttributes: new { @class = "control-label" })
-                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="form-group  col-md-6">
+                        <label class="control-label" for="MaLoaiDL">Địa chỉ</label>
+                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", type = "text", required = "true" } })
                         @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group col-md-4">
-                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        <label class="control-label" for="MaLoaiDL">Email</label>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control",type="email", required="true" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group col-md-10">
