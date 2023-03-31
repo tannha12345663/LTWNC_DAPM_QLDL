@@ -1,12 +1,10 @@
 ﻿@model IEnumerable<Test02.Models.PhieuNhapXuat>
-@using Test02.Models
+
 @{
     ViewBag.Title = "QuanLyPhieuNhapXuat";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.nk = "active";
     ViewBag.Name = "Quản lý phiếu nhập xuất";
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    var listDH = db.DonHangs.ToList();
 }
 @{
     var checkMessage = TempData["AlertMessage"];
@@ -107,89 +105,6 @@
 
 
 
-@* <Danh sách đơn hàng đã xét duyệt *@
-<div class="row">
-    <div class="col-lg-12">
-        <div class="tile">
-            <h3 class="tile-title" style="text-align:center;"><b>DANH SÁCH ĐƠN HÀNG ĐÃ XÉT DUYỆT</b></h3>
-            <div class="tile-body table-responsive-sm">
-                <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
-                       id="sampleTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                Mã đại lý
-                            </th>
-                            <th>
-                                Mã đơn hàng
-                            </th>
-                            <th>
-                                Nhân viên xét duyệt
-                            </th>
-                            <th>
-                                Ngày lập đơn
-                            </th>
-                            <th>
-                                Trạng thái
-                            </th>
-                            <th>
-                                Kho ưu tiên
-                            </th>
-                            <th>
-                                Điểm giao
-                            </th>
-                            <th>
-                                Tổng tiền
-                            </th>
-                            <th>
-                                Chi tiết
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach (var item in listDH)
-                        {
-                            if (item.TrangThai == "Đã xét duyệt")
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MaDL)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MaDH)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NhanVien.TenNV)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NgayLap)
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-success">@Html.DisplayFor(modelItem => item.TrangThai)</span>
-                                    </td>
-                                    <td>
-                                        null
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DiemGiao)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TongTien)
-                                    </td>
-                                    <td>
-                                        <a href="~/PhongKho/ChiTietDonHang/@item.MaDH" class="btn btn-outline-info btn-md" title="Chi tiết"> <i class="fa fa-info"></i> </a>
-                                    </td>
-                                </tr>
-                            }
-
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 @*<script src="js/jquery-3.2.1.min.js"></script>

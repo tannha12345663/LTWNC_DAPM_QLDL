@@ -22,8 +22,7 @@ namespace Test02.Controllers
             return View();
         }
 
-    // Quản lý kho
-
+        // Quản lý kho
         public ActionResult QuanLyKho()
         {
             return View(database.Khoes.ToList().OrderByDescending(s => s.TenKho));
@@ -231,6 +230,20 @@ namespace Test02.Controllers
                 return RedirectToAction("QuanLyKho");
             }
             return View(kho);
+        }
+
+        public JsonResult CheckTenKhoAvailability(string tenkho)
+        {
+            System.Threading.Thread.Sleep(200);
+            var tenKho = database.Khoes.Where(s => s.TenKho == tenkho).SingleOrDefault();
+            if(tenKho != null)
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(0);
+            }
         }
 
         // GET: Khoes/Edit/5
@@ -842,10 +855,11 @@ namespace Test02.Controllers
                 phieuNhapXuat.MaDH = (string)Session["madhxk"];
                 var user = (Test02.Models.NhanVien)HttpContext.Session["user"];
                 phieuNhapXuat.MaNVLap = user.MaNV;
-                
+                var donhang = database.DonHangs.Where(s => s.MaDH == phieuNhapXuat.MaDH).FirstOrDefault();
                 if (ThongTinKho1 != "----chọn kho----")
                 {
                     TempData["makho001"] = ThongTinKho1;
+                    donhang.PhieuXuatKho = true;
                     database.PhieuNhapXuats.Add(phieuNhapXuat);
                     database.SaveChanges();
                     TempData["AlertMessage"] = "Đã thêm";
@@ -867,6 +881,10 @@ namespace Test02.Controllers
         }
 
         //đơn hàng
+        public ActionResult DSDonHang()
+        {
+            return View();
+        }
         public ActionResult ChiTietDonHang(string id)
         {
             Session["madhxk"] = id;

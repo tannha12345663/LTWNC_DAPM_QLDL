@@ -18,7 +18,7 @@ namespace Test02.Models
         public DonHang()
         {
             this.ChiTietDonHangs = new HashSet<ChiTietDonHang>();
-            this.DanhSachGiaoHangs = new HashSet<DanhSachGiaoHang>();
+            this.DonHangGiaos = new HashSet<DonHangGiao>();
             this.HoaDons = new HashSet<HoaDon>();
         }
     
@@ -30,13 +30,16 @@ namespace Test02.Models
         public string TinhTrangThanhToan { get; set; }
         public string DiemGiao { get; set; }
         public Nullable<double> TongTien { get; set; }
+        public Nullable<bool> PhieuXuatKho { get; set; }
+        public Nullable<bool> XuatHoaDon { get; set; }
+        public string TinhTrangGH { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public virtual DaiLy DaiLy { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DanhSachGiaoHang> DanhSachGiaoHangs { get; set; }
         public virtual NhanVien NhanVien { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DonHangGiao> DonHangGiaos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HoaDon> HoaDons { get; set; }
     }

@@ -65,7 +65,7 @@
             <PropertyRef Name="STT" />
           </Key>
           <Property Name="MaCT" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="MaPhieu" Type="varchar" MaxLength="10" />
+          <Property Name="MaSP" Type="varchar" MaxLength="10" />
           <Property Name="MaKho" Type="varchar" MaxLength="10" />
           <Property Name="SoLuongCT" Type="int" />
           <Property Name="SoLuongTT" Type="int" />
@@ -96,20 +96,6 @@
           <Property Name="NgayTao" Type="datetime" />
           <Property Name="HinhAnh" Type="nvarchar" MaxLength="500" />
         </EntityType>
-        <EntityType Name="DanhSachGiaoHang">
-          <Key>
-            <PropertyRef Name="MaGH" />
-          </Key>
-          <Property Name="MaGH" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="MaDH" Type="varchar" MaxLength="10" />
-          <Property Name="MaNV" Type="varchar" MaxLength="10" />
-          <Property Name="TenNV" Type="nvarchar" MaxLength="50" />
-          <Property Name="DiemGiao" Type="nvarchar" MaxLength="50" />
-          <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
-          <Property Name="NgayGiao" Type="datetime" />
-          <Property Name="TienThu" Type="float" />
-          <Property Name="XacNhan" Type="nvarchar" MaxLength="50" />
-        </EntityType>
         <EntityType Name="DoanhSo">
           <Key>
             <PropertyRef Name="ThoiGian" />
@@ -125,11 +111,31 @@
           <Property Name="MaDH" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="MaDL" Type="varchar" MaxLength="10" />
           <Property Name="MaNVLap" Type="varchar" MaxLength="10" />
-          <Property Name="NgayLap" Type="date" />
+          <Property Name="NgayLap" Type="datetime" />
           <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
           <Property Name="TinhTrangThanhToan" Type="nvarchar" MaxLength="50" />
           <Property Name="DiemGiao" Type="nvarchar" MaxLength="50" />
           <Property Name="TongTien" Type="float" />
+          <Property Name="PhieuXuatKho" Type="bit" />
+          <Property Name="XuatHoaDon" Type="bit" />
+          <Property Name="TinhTrangGH" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DonHangGiao">
+          <Key>
+            <PropertyRef Name="STT" />
+            <PropertyRef Name="MaGH" />
+          </Key>
+          <Property Name="STT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaGH" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MaDH" Type="varchar" MaxLength="10" />
+          <Property Name="MaNV" Type="varchar" MaxLength="10" />
+          <Property Name="MaPT" Type="varchar" MaxLength="10" />
+          <Property Name="DiemGiao" Type="nvarchar" MaxLength="50" />
+          <Property Name="TrangThaiXD" Type="bit" />
+          <Property Name="NgayGiao" Type="datetime" />
+          <Property Name="TienThu" Type="float" />
+          <Property Name="XacNhanGH" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgayLap" Type="datetime" />
         </EntityType>
         <EntityType Name="HoaDon">
           <Key>
@@ -171,6 +177,16 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="HinhAnh" Type="nvarchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="NhanVienGH">
+          <Key>
+            <PropertyRef Name="MaNV" />
+          </Key>
+          <Property Name="MaNV" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenNV" Type="nvarchar" MaxLength="50" />
+          <Property Name="SDT" Type="nvarchar" MaxLength="50" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
+          <Property Name="TinhTrang" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="PhieuCongNo">
           <Key>
             <PropertyRef Name="MaCongNo" />
@@ -194,6 +210,14 @@
           <Property Name="NguoiGiaoHang" Type="varchar" MaxLength="50" />
           <Property Name="PhuongTienGiaoHang" Type="varchar" MaxLength="50" />
           <Property Name="MaDH" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="PhuongTienGH">
+          <Key>
+            <PropertyRef Name="MaPT" />
+          </Key>
+          <Property Name="MaPT" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenPT" Type="nvarchar" MaxLength="50" />
+          <Property Name="TinhTrang" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="SanPham">
           <Key>
@@ -256,11 +280,11 @@
           </End>
           <End Role="ChiTietBienBang" Type="Self.ChiTietBienBang" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Kho">
-              <PropertyRef Name="MaKho" />
+            <Principal Role="BienBangKiemKe">
+              <PropertyRef Name="MaKK" />
             </Principal>
             <Dependent Role="ChiTietBienBang">
-              <PropertyRef Name="MaKho" />
+              <PropertyRef Name="MaKK" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -334,15 +358,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ChiTietPhieuNhapXuat_Kho">
-          <End Role="Kho" Type="Self.Kho" Multiplicity="0..1" />
+        <Association Name="FK_ChiTietPhieuNhapXuat_PhieuNhapXuat">
+          <End Role="PhieuNhapXuat" Type="Self.PhieuNhapXuat" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ChiTietPhieuNhapXuat" Type="Self.ChiTietPhieuNhapXuat" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Kho">
-              <PropertyRef Name="MaKho" />
+            <Principal Role="PhieuNhapXuat">
+              <PropertyRef Name="MaPhieu" />
             </Principal>
             <Dependent Role="ChiTietPhieuNhapXuat">
-              <PropertyRef Name="MaKho" />
+              <PropertyRef Name="MaCT" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -352,11 +378,11 @@
           </End>
           <End Role="ChiTietPhieuNhapXuat" Type="Self.ChiTietPhieuNhapXuat" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PhieuNhapXuat">
-              <PropertyRef Name="MaPhieu" />
+            <Principal Role="SanPham">
+              <PropertyRef Name="MaSP" />
             </Principal>
             <Dependent Role="ChiTietPhieuNhapXuat">
-              <PropertyRef Name="MaPhieu" />
+              <PropertyRef Name="MaSP" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -371,20 +397,6 @@
             </Principal>
             <Dependent Role="DaiLy">
               <PropertyRef Name="MaLoaiDL" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DanhSachGiaoHang_DonHang">
-          <End Role="DonHang" Type="Self.DonHang" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="DanhSachGiaoHang" Type="Self.DanhSachGiaoHang" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DonHang">
-              <PropertyRef Name="MaDH" />
-            </Principal>
-            <Dependent Role="DanhSachGiaoHang">
-              <PropertyRef Name="MaDH" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -427,6 +439,48 @@
             </Principal>
             <Dependent Role="DonHang">
               <PropertyRef Name="MaNVLap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DonHangGiao_DonHang">
+          <End Role="DonHang" Type="Self.DonHang" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DonHangGiao" Type="Self.DonHangGiao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DonHang">
+              <PropertyRef Name="MaDH" />
+            </Principal>
+            <Dependent Role="DonHangGiao">
+              <PropertyRef Name="MaDH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DonHangGiao_NhanVienGH">
+          <End Role="NhanVienGH" Type="Self.NhanVienGH" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DonHangGiao" Type="Self.DonHangGiao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhanVienGH">
+              <PropertyRef Name="MaNV" />
+            </Principal>
+            <Dependent Role="DonHangGiao">
+              <PropertyRef Name="MaNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DonHangGiao_PhuongTienGH">
+          <End Role="PhuongTienGH" Type="Self.PhuongTienGH" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DonHangGiao" Type="Self.DonHangGiao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhuongTienGH">
+              <PropertyRef Name="MaPT" />
+            </Principal>
+            <Dependent Role="DonHangGiao">
+              <PropertyRef Name="MaPT" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -509,15 +563,17 @@
           <EntitySet Name="ChiTietPhieuNhapXuat" EntityType="Self.ChiTietPhieuNhapXuat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChucVu" EntityType="Self.ChucVu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DaiLy" EntityType="Self.DaiLy" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DanhSachGiaoHang" EntityType="Self.DanhSachGiaoHang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DoanhSo" EntityType="Self.DoanhSo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DonHang" EntityType="Self.DonHang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DonHangGiao" EntityType="Self.DonHangGiao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HoaDon" EntityType="Self.HoaDon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kho" EntityType="Self.Kho" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoaiDL" EntityType="Self.LoaiDL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NhanVienGH" EntityType="Self.NhanVienGH" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhieuCongNo" EntityType="Self.PhieuCongNo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhieuNhapXuat" EntityType="Self.PhieuNhapXuat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhuongTienGH" EntityType="Self.PhuongTienGH" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BaoCao_NhanVien" Association="Self.FK_BaoCao_NhanVien">
             <End Role="NhanVien" EntitySet="NhanVien" />
@@ -526,7 +582,6 @@
           <AssociationSet Name="FK_BienBangKiemKe_Kho" Association="Self.FK_BienBangKiemKe_Kho">
             <End Role="Kho" EntitySet="Kho" />
             <End Role="BienBangKiemKe" EntitySet="BienBangKiemKe" />
-            <End Role="ChiTietBienBang" EntitySet="ChiTietBienBang" />
           </AssociationSet>
           <AssociationSet Name="FK_BienBangKiemKe_NhanVien1" Association="Self.FK_BienBangKiemKe_NhanVien1">
             <End Role="NhanVien" EntitySet="NhanVien" />
@@ -556,8 +611,8 @@
             <End Role="SanPham" EntitySet="SanPham" />
             <End Role="ChiTietKho" EntitySet="ChiTietKho" />
           </AssociationSet>
-          <AssociationSet Name="FK_ChiTietPhieuNhapXuat_Kho" Association="Self.FK_ChiTietPhieuNhapXuat_Kho">
-            <End Role="Kho" EntitySet="Kho" />
+          <AssociationSet Name="FK_ChiTietPhieuNhapXuat_PhieuNhapXuat" Association="Self.FK_ChiTietPhieuNhapXuat_PhieuNhapXuat">
+            <End Role="PhieuNhapXuat" EntitySet="PhieuNhapXuat" />
             <End Role="ChiTietPhieuNhapXuat" EntitySet="ChiTietPhieuNhapXuat" />
           </AssociationSet>
           <AssociationSet Name="FK_ChiTietPhieuNhapXuat_SanPham1" Association="Self.FK_ChiTietPhieuNhapXuat_SanPham1">
@@ -567,10 +622,6 @@
           <AssociationSet Name="FK_DaiLy_LoaiDL" Association="Self.FK_DaiLy_LoaiDL">
             <End Role="LoaiDL" EntitySet="LoaiDL" />
             <End Role="DaiLy" EntitySet="DaiLy" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DanhSachGiaoHang_DonHang" Association="Self.FK_DanhSachGiaoHang_DonHang">
-            <End Role="DonHang" EntitySet="DonHang" />
-            <End Role="DanhSachGiaoHang" EntitySet="DanhSachGiaoHang" />
           </AssociationSet>
           <AssociationSet Name="FK_DoanhSo_DaiLy" Association="Self.FK_DoanhSo_DaiLy">
             <End Role="DaiLy" EntitySet="DaiLy" />
@@ -583,6 +634,18 @@
           <AssociationSet Name="FK_DonHang_NhanVien" Association="Self.FK_DonHang_NhanVien">
             <End Role="NhanVien" EntitySet="NhanVien" />
             <End Role="DonHang" EntitySet="DonHang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DonHangGiao_DonHang" Association="Self.FK_DonHangGiao_DonHang">
+            <End Role="DonHang" EntitySet="DonHang" />
+            <End Role="DonHangGiao" EntitySet="DonHangGiao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DonHangGiao_NhanVienGH" Association="Self.FK_DonHangGiao_NhanVienGH">
+            <End Role="NhanVienGH" EntitySet="NhanVienGH" />
+            <End Role="DonHangGiao" EntitySet="DonHangGiao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DonHangGiao_PhuongTienGH" Association="Self.FK_DonHangGiao_PhuongTienGH">
+            <End Role="PhuongTienGH" EntitySet="PhuongTienGH" />
+            <End Role="DonHangGiao" EntitySet="DonHangGiao" />
           </AssociationSet>
           <AssociationSet Name="FK_HoaDon_DonHang" Association="Self.FK_HoaDon_DonHang">
             <End Role="DonHang" EntitySet="DonHang" />
@@ -680,7 +743,7 @@
             <PropertyRef Name="STT" />
           </Key>
           <Property Name="MaCT" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="MaPhieu" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MaSP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MaKho" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="SoLuongCT" Type="Int32" />
           <Property Name="SoLuongTT" Type="Int32" />
@@ -718,21 +781,6 @@
           <NavigationProperty Name="DonHangs" Relationship="Self.FK_DonHang_DaiLy" FromRole="DaiLy" ToRole="DonHang" />
           <NavigationProperty Name="PhieuCongNoes" Relationship="Self.FK_PhieuCongNo_DaiLy" FromRole="DaiLy" ToRole="PhieuCongNo" />
         </EntityType>
-        <EntityType Name="DanhSachGiaoHang">
-          <Key>
-            <PropertyRef Name="MaGH" />
-          </Key>
-          <Property Name="MaGH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="MaDH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="MaNV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="TenNV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DiemGiao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NgayGiao" Type="DateTime" Precision="3" />
-          <Property Name="TienThu" Type="Double" />
-          <Property Name="XacNhan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DonHang" Relationship="Self.FK_DanhSachGiaoHang_DonHang" FromRole="DanhSachGiaoHang" ToRole="DonHang" />
-        </EntityType>
         <EntityType Name="DoanhSo">
           <Key>
             <PropertyRef Name="ThoiGian" />
@@ -749,16 +797,39 @@
           <Property Name="MaDH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MaDL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MaNVLap" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="NgayLap" Type="DateTime" Precision="0" />
+          <Property Name="NgayLap" Type="DateTime" Precision="3" />
           <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TinhTrangThanhToan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DiemGiao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TongTien" Type="Double" />
+          <Property Name="PhieuXuatKho" Type="Boolean" />
+          <Property Name="XuatHoaDon" Type="Boolean" />
+          <Property Name="TinhTrangGH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ChiTietDonHangs" Relationship="Self.FK_ChiTietDonHang_DonHang" FromRole="DonHang" ToRole="ChiTietDonHang" />
           <NavigationProperty Name="DaiLy" Relationship="Self.FK_DonHang_DaiLy" FromRole="DonHang" ToRole="DaiLy" />
-          <NavigationProperty Name="DanhSachGiaoHangs" Relationship="Self.FK_DanhSachGiaoHang_DonHang" FromRole="DonHang" ToRole="DanhSachGiaoHang" />
           <NavigationProperty Name="NhanVien" Relationship="Self.FK_DonHang_NhanVien" FromRole="DonHang" ToRole="NhanVien" />
+          <NavigationProperty Name="DonHangGiaos" Relationship="Self.FK_DonHangGiao_DonHang" FromRole="DonHang" ToRole="DonHangGiao" />
           <NavigationProperty Name="HoaDons" Relationship="Self.FK_HoaDon_DonHang" FromRole="DonHang" ToRole="HoaDon" />
+        </EntityType>
+        <EntityType Name="DonHangGiao">
+          <Key>
+            <PropertyRef Name="STT" />
+            <PropertyRef Name="MaGH" />
+          </Key>
+          <Property Name="STT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaGH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaDH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MaNV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MaPT" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DiemGiao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TrangThaiXD" Type="Boolean" />
+          <Property Name="NgayGiao" Type="DateTime" Precision="3" />
+          <Property Name="TienThu" Type="Double" />
+          <Property Name="XacNhanGH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgayLap" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DonHang" Relationship="Self.FK_DonHangGiao_DonHang" FromRole="DonHangGiao" ToRole="DonHang" />
+          <NavigationProperty Name="NhanVienGH" Relationship="Self.FK_DonHangGiao_NhanVienGH" FromRole="DonHangGiao" ToRole="NhanVienGH" />
+          <NavigationProperty Name="PhuongTienGH" Relationship="Self.FK_DonHangGiao_PhuongTienGH" FromRole="DonHangGiao" ToRole="PhuongTienGH" />
         </EntityType>
         <EntityType Name="HoaDon">
           <Key>
@@ -810,6 +881,17 @@
           <NavigationProperty Name="DonHangs" Relationship="Self.FK_DonHang_NhanVien" FromRole="NhanVien" ToRole="DonHang" />
           <NavigationProperty Name="PhieuNhapXuats" Relationship="Self.FK_PhieuNhapXuat_NhanVien" FromRole="NhanVien" ToRole="PhieuNhapXuat" />
         </EntityType>
+        <EntityType Name="NhanVienGH">
+          <Key>
+            <PropertyRef Name="MaNV" />
+          </Key>
+          <Property Name="MaNV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TenNV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SDT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TinhTrang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DonHangGiaos" Relationship="Self.FK_DonHangGiao_NhanVienGH" FromRole="NhanVienGH" ToRole="DonHangGiao" />
+        </EntityType>
         <EntityType Name="PhieuCongNo">
           <Key>
             <PropertyRef Name="MaCongNo" />
@@ -837,6 +919,15 @@
           <NavigationProperty Name="ChiTietPhieuNhapXuats" Relationship="Self.FK_ChiTietPhieuNhapXuat_PhieuNhapXuat" FromRole="PhieuNhapXuat" ToRole="ChiTietPhieuNhapXuat" />
           <NavigationProperty Name="Kho" Relationship="Self.FK_PhieuNhapXuat_Kho" FromRole="PhieuNhapXuat" ToRole="Kho" />
           <NavigationProperty Name="NhanVien" Relationship="Self.FK_PhieuNhapXuat_NhanVien" FromRole="PhieuNhapXuat" ToRole="NhanVien" />
+        </EntityType>
+        <EntityType Name="PhuongTienGH">
+          <Key>
+            <PropertyRef Name="MaPT" />
+          </Key>
+          <Property Name="MaPT" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TenPT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TinhTrang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DonHangGiaos" Relationship="Self.FK_DonHangGiao_PhuongTienGH" FromRole="PhuongTienGH" ToRole="DonHangGiao" />
         </EntityType>
         <EntityType Name="SanPham">
           <Key>
@@ -903,11 +994,11 @@
           </End>
           <End Role="ChiTietBienBang" Type="Self.ChiTietBienBang" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Kho">
-              <PropertyRef Name="MaKho" />
+            <Principal Role="BienBangKiemKe">
+              <PropertyRef Name="MaKK" />
             </Principal>
             <Dependent Role="ChiTietBienBang">
-              <PropertyRef Name="MaKho" />
+              <PropertyRef Name="MaKK" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -981,15 +1072,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ChiTietPhieuNhapXuat_Kho">
-          <End Role="Kho" Type="Self.Kho" Multiplicity="0..1" />
+        <Association Name="FK_ChiTietPhieuNhapXuat_PhieuNhapXuat">
+          <End Role="PhieuNhapXuat" Type="Self.PhieuNhapXuat" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ChiTietPhieuNhapXuat" Type="Self.ChiTietPhieuNhapXuat" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Kho">
-              <PropertyRef Name="MaKho" />
+            <Principal Role="PhieuNhapXuat">
+              <PropertyRef Name="MaPhieu" />
             </Principal>
             <Dependent Role="ChiTietPhieuNhapXuat">
-              <PropertyRef Name="MaKho" />
+              <PropertyRef Name="MaCT" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -999,11 +1092,11 @@
           </End>
           <End Role="ChiTietPhieuNhapXuat" Type="Self.ChiTietPhieuNhapXuat" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PhieuNhapXuat">
-              <PropertyRef Name="MaPhieu" />
+            <Principal Role="SanPham">
+              <PropertyRef Name="MaSP" />
             </Principal>
             <Dependent Role="ChiTietPhieuNhapXuat">
-              <PropertyRef Name="MaPhieu" />
+              <PropertyRef Name="MaSP" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1077,20 +1170,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DanhSachGiaoHang_DonHang">
-          <End Role="DonHang" Type="Self.DonHang" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="DanhSachGiaoHang" Type="Self.DanhSachGiaoHang" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DonHang">
-              <PropertyRef Name="MaDH" />
-            </Principal>
-            <Dependent Role="DanhSachGiaoHang">
-              <PropertyRef Name="MaDH" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DonHang_NhanVien">
           <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1105,6 +1184,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DonHangGiao_DonHang">
+          <End Role="DonHang" Type="Self.DonHang" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DonHangGiao" Type="Self.DonHangGiao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DonHang">
+              <PropertyRef Name="MaDH" />
+            </Principal>
+            <Dependent Role="DonHangGiao">
+              <PropertyRef Name="MaDH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_HoaDon_DonHang">
           <End Role="DonHang" Type="Self.DonHang" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1116,6 +1209,34 @@
             </Principal>
             <Dependent Role="HoaDon">
               <PropertyRef Name="MaDH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DonHangGiao_NhanVienGH">
+          <End Role="NhanVienGH" Type="Self.NhanVienGH" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DonHangGiao" Type="Self.DonHangGiao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhanVienGH">
+              <PropertyRef Name="MaNV" />
+            </Principal>
+            <Dependent Role="DonHangGiao">
+              <PropertyRef Name="MaNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DonHangGiao_PhuongTienGH">
+          <End Role="PhuongTienGH" Type="Self.PhuongTienGH" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DonHangGiao" Type="Self.DonHangGiao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhuongTienGH">
+              <PropertyRef Name="MaPT" />
+            </Principal>
+            <Dependent Role="DonHangGiao">
+              <PropertyRef Name="MaPT" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1156,15 +1277,17 @@
           <EntitySet Name="ChiTietPhieuNhapXuats" EntityType="Self.ChiTietPhieuNhapXuat" />
           <EntitySet Name="ChucVus" EntityType="Self.ChucVu" />
           <EntitySet Name="DaiLies" EntityType="Self.DaiLy" />
-          <EntitySet Name="DanhSachGiaoHangs" EntityType="Self.DanhSachGiaoHang" />
           <EntitySet Name="DoanhSoes" EntityType="Self.DoanhSo" />
           <EntitySet Name="DonHangs" EntityType="Self.DonHang" />
+          <EntitySet Name="DonHangGiaos" EntityType="Self.DonHangGiao" />
           <EntitySet Name="HoaDons" EntityType="Self.HoaDon" />
           <EntitySet Name="Khoes" EntityType="Self.Kho" />
           <EntitySet Name="LoaiDLs" EntityType="Self.LoaiDL" />
           <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
+          <EntitySet Name="NhanVienGHs" EntityType="Self.NhanVienGH" />
           <EntitySet Name="PhieuCongNoes" EntityType="Self.PhieuCongNo" />
           <EntitySet Name="PhieuNhapXuats" EntityType="Self.PhieuNhapXuat" />
+          <EntitySet Name="PhuongTienGHs" EntityType="Self.PhuongTienGH" />
           <EntitySet Name="SanPhams" EntityType="Self.SanPham" />
           <AssociationSet Name="FK_BaoCao_NhanVien" Association="Self.FK_BaoCao_NhanVien">
             <End Role="NhanVien" EntitySet="NhanViens" />
@@ -1177,10 +1300,9 @@
           <AssociationSet Name="FK_BienBangKiemKe_NhanVien1" Association="Self.FK_BienBangKiemKe_NhanVien1">
             <End Role="NhanVien" EntitySet="NhanViens" />
             <End Role="BienBangKiemKe" EntitySet="BienBangKiemKes" />
-            <End Role="ChiTietBienBang" EntitySet="ChiTietBienBangs" />
           </AssociationSet>
-          <AssociationSet Name="FK_ChiTietBienBang_Kho" Association="Self.FK_ChiTietBienBang_Kho">
-            <End Role="Kho" EntitySet="Khoes" />
+          <AssociationSet Name="FK_ChiTietBienBang_BienBangKiemKe1" Association="Self.FK_ChiTietBienBang_BienBangKiemKe1">
+            <End Role="BienBangKiemKe" EntitySet="BienBangKiemKes" />
             <End Role="ChiTietBienBang" EntitySet="ChiTietBienBangs" />
           </AssociationSet>
           <AssociationSet Name="FK_ChiTietBienBang_SanPham1" Association="Self.FK_ChiTietBienBang_SanPham1">
@@ -1203,8 +1325,8 @@
             <End Role="SanPham" EntitySet="SanPhams" />
             <End Role="ChiTietKho" EntitySet="ChiTietKhoes" />
           </AssociationSet>
-          <AssociationSet Name="FK_ChiTietPhieuNhapXuat_Kho" Association="Self.FK_ChiTietPhieuNhapXuat_Kho">
-            <End Role="Kho" EntitySet="Khoes" />
+          <AssociationSet Name="FK_ChiTietPhieuNhapXuat_PhieuNhapXuat" Association="Self.FK_ChiTietPhieuNhapXuat_PhieuNhapXuat">
+            <End Role="PhieuNhapXuat" EntitySet="PhieuNhapXuats" />
             <End Role="ChiTietPhieuNhapXuat" EntitySet="ChiTietPhieuNhapXuats" />
           </AssociationSet>
           <AssociationSet Name="FK_ChiTietPhieuNhapXuat_SanPham1" Association="Self.FK_ChiTietPhieuNhapXuat_SanPham1">
@@ -1231,17 +1353,25 @@
             <End Role="DaiLy" EntitySet="DaiLies" />
             <End Role="PhieuCongNo" EntitySet="PhieuCongNoes" />
           </AssociationSet>
-          <AssociationSet Name="FK_DanhSachGiaoHang_DonHang" Association="Self.FK_DanhSachGiaoHang_DonHang">
-            <End Role="DonHang" EntitySet="DonHangs" />
-            <End Role="DanhSachGiaoHang" EntitySet="DanhSachGiaoHangs" />
-          </AssociationSet>
           <AssociationSet Name="FK_DonHang_NhanVien" Association="Self.FK_DonHang_NhanVien">
             <End Role="NhanVien" EntitySet="NhanViens" />
             <End Role="DonHang" EntitySet="DonHangs" />
           </AssociationSet>
+          <AssociationSet Name="FK_DonHangGiao_DonHang" Association="Self.FK_DonHangGiao_DonHang">
+            <End Role="DonHang" EntitySet="DonHangs" />
+            <End Role="DonHangGiao" EntitySet="DonHangGiaos" />
+          </AssociationSet>
           <AssociationSet Name="FK_HoaDon_DonHang" Association="Self.FK_HoaDon_DonHang">
             <End Role="DonHang" EntitySet="DonHangs" />
             <End Role="HoaDon" EntitySet="HoaDons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DonHangGiao_NhanVienGH" Association="Self.FK_DonHangGiao_NhanVienGH">
+            <End Role="NhanVienGH" EntitySet="NhanVienGHs" />
+            <End Role="DonHangGiao" EntitySet="DonHangGiaos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DonHangGiao_PhuongTienGH" Association="Self.FK_DonHangGiao_PhuongTienGH">
+            <End Role="PhuongTienGH" EntitySet="PhuongTienGHs" />
+            <End Role="DonHangGiao" EntitySet="DonHangGiaos" />
           </AssociationSet>
           <AssociationSet Name="FK_PhieuNhapXuat_Kho" Association="Self.FK_PhieuNhapXuat_Kho">
             <End Role="Kho" EntitySet="Khoes" />
@@ -1322,7 +1452,7 @@
             <EntityTypeMapping TypeName="QuanLyDLModel.ChiTietPhieuNhapXuat">
               <MappingFragment StoreEntitySet="ChiTietPhieuNhapXuat">
                 <ScalarProperty Name="MaCT" ColumnName="MaCT" />
-                <ScalarProperty Name="MaPhieu" ColumnName="MaPhieu" />
+                <ScalarProperty Name="MaSP" ColumnName="MaSP" />
                 <ScalarProperty Name="MaKho" ColumnName="MaKho" />
                 <ScalarProperty Name="SoLuongCT" ColumnName="SoLuongCT" />
                 <ScalarProperty Name="SoLuongTT" ColumnName="SoLuongTT" />
@@ -1357,21 +1487,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DanhSachGiaoHangs">
-            <EntityTypeMapping TypeName="QuanLyDLModel.DanhSachGiaoHang">
-              <MappingFragment StoreEntitySet="DanhSachGiaoHang">
-                <ScalarProperty Name="MaGH" ColumnName="MaGH" />
-                <ScalarProperty Name="MaDH" ColumnName="MaDH" />
-                <ScalarProperty Name="MaNV" ColumnName="MaNV" />
-                <ScalarProperty Name="TenNV" ColumnName="TenNV" />
-                <ScalarProperty Name="DiemGiao" ColumnName="DiemGiao" />
-                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
-                <ScalarProperty Name="NgayGiao" ColumnName="NgayGiao" />
-                <ScalarProperty Name="TienThu" ColumnName="TienThu" />
-                <ScalarProperty Name="XacNhan" ColumnName="XacNhan" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DoanhSoes">
             <EntityTypeMapping TypeName="QuanLyDLModel.DoanhSo">
               <MappingFragment StoreEntitySet="DoanhSo">
@@ -1392,6 +1507,26 @@
                 <ScalarProperty Name="TinhTrangThanhToan" ColumnName="TinhTrangThanhToan" />
                 <ScalarProperty Name="DiemGiao" ColumnName="DiemGiao" />
                 <ScalarProperty Name="TongTien" ColumnName="TongTien" />
+                <ScalarProperty Name="PhieuXuatKho" ColumnName="PhieuXuatKho" />
+                <ScalarProperty Name="XuatHoaDon" ColumnName="XuatHoaDon" />
+                <ScalarProperty Name="TinhTrangGH" ColumnName="TinhTrangGH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DonHangGiaos">
+            <EntityTypeMapping TypeName="QuanLyDLModel.DonHangGiao">
+              <MappingFragment StoreEntitySet="DonHangGiao">
+                <ScalarProperty Name="STT" ColumnName="STT" />
+                <ScalarProperty Name="MaGH" ColumnName="MaGH" />
+                <ScalarProperty Name="MaDH" ColumnName="MaDH" />
+                <ScalarProperty Name="MaNV" ColumnName="MaNV" />
+                <ScalarProperty Name="MaPT" ColumnName="MaPT" />
+                <ScalarProperty Name="DiemGiao" ColumnName="DiemGiao" />
+                <ScalarProperty Name="TrangThaiXD" ColumnName="TrangThaiXD" />
+                <ScalarProperty Name="NgayGiao" ColumnName="NgayGiao" />
+                <ScalarProperty Name="TienThu" ColumnName="TienThu" />
+                <ScalarProperty Name="XacNhanGH" ColumnName="XacNhanGH" />
+                <ScalarProperty Name="NgayLap" ColumnName="NgayLap" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1439,6 +1574,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="NhanVienGHs">
+            <EntityTypeMapping TypeName="QuanLyDLModel.NhanVienGH">
+              <MappingFragment StoreEntitySet="NhanVienGH">
+                <ScalarProperty Name="MaNV" ColumnName="MaNV" />
+                <ScalarProperty Name="TenNV" ColumnName="TenNV" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="TinhTrang" ColumnName="TinhTrang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PhieuCongNoes">
             <EntityTypeMapping TypeName="QuanLyDLModel.PhieuCongNo">
               <MappingFragment StoreEntitySet="PhieuCongNo">
@@ -1462,6 +1608,15 @@
                 <ScalarProperty Name="NguoiGiaoHang" ColumnName="NguoiGiaoHang" />
                 <ScalarProperty Name="PhuongTienGiaoHang" ColumnName="PhuongTienGiaoHang" />
                 <ScalarProperty Name="MaDH" ColumnName="MaDH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhuongTienGHs">
+            <EntityTypeMapping TypeName="QuanLyDLModel.PhuongTienGH">
+              <MappingFragment StoreEntitySet="PhuongTienGH">
+                <ScalarProperty Name="MaPT" ColumnName="MaPT" />
+                <ScalarProperty Name="TenPT" ColumnName="TenPT" />
+                <ScalarProperty Name="TinhTrang" ColumnName="TinhTrang" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -58,7 +58,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NgayXuat, "Ngày xuất:", htmlAttributes: new { @class = "control-label col-md-1" }) @Html.DisplayFor(model => model.NgayXuat)<span> (Ngày xuất gần nhất)</span>
             <div class="col-md-12">
-                <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayXuat must be a date." id="NgayXuat" name="NgayXuat" type="datetime-local" required>
+                <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayXuat must be a date." id="NgayXuat" name="NgayXuat" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
                 @Html.ValidationMessageFor(model => model.NgayXuat, "", new { @class = "text-danger" })
             </div>
         </div>
