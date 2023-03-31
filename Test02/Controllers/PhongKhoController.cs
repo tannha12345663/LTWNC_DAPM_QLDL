@@ -815,19 +815,58 @@ namespace Test02.Controllers
         // GET: PhieuNhapXuats/Create
         public ActionResult CreatePXuat(string id)
         {
-            
             TempData["mahdx"] = id;
             TempData["ngaylap"] = System.DateTime.Now;
             var maDH = id;
+            var donhang = database.DonHangs.Where(s => s.MaDH == maDH).FirstOrDefault();
+            List<ChiTietDonHang> ctdonhang = database.ChiTietDonHangs.Where(s => s.MaDH == maDH).ToList();
+            var kho = database.Khoes.ToList();
+            
+            List<Kho> khouutien = new List<Kho>();//set danh sách kho uu tien
+            int i = 0; // Biến đếm 
+            //kiểm tra kho có chứa sản phẩm của đơn hàng không?
+            foreach (var item in kho)
+            {
+                //tạo danh sách chi tiết kho của kho item
+                List<ChiTietKho> ctk1 = database.ChiTietKhoes.Where(s=> s.MaKho == item.MaKho).ToList();
+                foreach(var item2 in ctk1)
+                {
+                    foreach(var itemdh in ctdonhang)
+                    {
+                        //Kiểm tra sản phẩm có số lượng trong kho phải >= số lượng sản phẩm của đơn hàng
+                        if(item2.MaSP == itemdh.MaSP && item2.SoLuong >= itemdh.SoLuong)
+                        {
+                            //Nếu thỏa thì tăng i lên 1
+                            i += 1;
+                            break;
+                        }
+                    }
+                }
+                //Nếu i = số lượng đơn hàng thì add kho item vào ds kho ưu tiên
+                if (i >= ctdonhang.Count())
+                {
+                    i = 0; //trả lại i=0 để xét tiếp kho tiếp theo
+                    khouutien.Add(item);
+                }
+                else i = 0;
+            }
+            
             foreach (var item in database.DonHangs)
             {
                 if (maDH == item.MaDH)
                 {
+                    TempData["maDL"] = item.DaiLy.MaDL;
                     TempData["tenDL"] =  item.DaiLy.TenDL;
                     TempData["diemgiao"] =  item.DiemGiao;
                 }
             }
-            ViewBag.MaKho = new SelectList(database.Khoes, "TenKho", "MaKho");
+            ViewBag.MaKho = new SelectList(khouutien, "MaKho", "MaKho");
+            if(khouutien.Count() == 0)
+            {
+                ViewBag.MaKho = " ";
+                TempData["AlertMessage"] = "noKho";
+                return View("DSDonHang");
+            }
             ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu");
             ViewBag.MaHD = new SelectList(database.DonHangs, "MaDH", "MaDH");
             return View();
@@ -838,7 +877,7 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePXuat([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu,MaNVLap")] PhieuNhapXuat phieuNhapXuat, string ThongTinKho1, string vanchuyen, string nguoigiaohang)
+        public ActionResult CreatePXuat([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu,MaNVLap")] PhieuNhapXuat phieuNhapXuat, string ThongTinKho1)
         {
             if (ModelState.IsValid)
             {
@@ -850,16 +889,32 @@ namespace Test02.Controllers
                 phieuNhapXuat.LoaiPhieu = "Phiếu xuất kho theo đơn hàng số "+ Session["madhxk"];
                 var mk = ThongTinKho1;
                 phieuNhapXuat.MaKho = mk;
-                phieuNhapXuat.NguoiGiaoHang = nguoigiaohang;
-                phieuNhapXuat.PhuongTienGiaoHang = vanchuyen;
                 phieuNhapXuat.MaDH = (string)Session["madhxk"];
                 var user = (Test02.Models.NhanVien)HttpContext.Session["user"];
                 phieuNhapXuat.MaNVLap = user.MaNV;
                 var donhang = database.DonHangs.Where(s => s.MaDH == phieuNhapXuat.MaDH).FirstOrDefault();
+                List<ChiTietDonHang> ctdonhang = database.ChiTietDonHangs.Where(s => s.MaDH == phieuNhapXuat.MaDH).ToList();
+                var khoxuat = database.Khoes.Where(s => s.MaKho == phieuNhapXuat.MaKho).FirstOrDefault();
+                List<ChiTietKho> ctk = khoxuat.ChiTietKhoes.ToList();
+
+
                 if (ThongTinKho1 != "----chọn kho----")
                 {
                     TempData["makho001"] = ThongTinKho1;
                     donhang.PhieuXuatKho = true;
+                    foreach(var item in ctk)
+                    {
+                        foreach(var item2 in ctdonhang)
+                        {
+                            if(item.MaSP == item2.MaSP && item.SoLuong >= item2.SoLuong)
+                            {
+                                item.SoLuong -= item2.SoLuong;
+                                break;
+                            }
+                        }
+                        
+                        
+                    }
                     database.PhieuNhapXuats.Add(phieuNhapXuat);
                     database.SaveChanges();
                     TempData["AlertMessage"] = "Đã thêm";
@@ -922,6 +977,7 @@ namespace Test02.Controllers
             {
                 if (maDH == item.MaDH)
                 {
+                    TempData["maDL"] = item.MaDL;
                     TempData["tenDL"] = item.DaiLy.TenDL;
                     TempData["diemgiao"] = item.DiemGiao;
                 }

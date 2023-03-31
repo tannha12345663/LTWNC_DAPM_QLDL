@@ -27,8 +27,9 @@
             <div>
                 <h3 class="tile-title">DANH SÁCH PHIẾU ĐÃ LƯU</h3>
             </div>
-            <div class="tile-body">
-                <table class="table table-hover table-bordered" id="sampleTable">
+            <div class="tile-body table-responsive">
+                <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                       id="sampleTable">
                     <tr>
                         <th>
                             @Html.DisplayNameFor(model => model.MaPhieu)
@@ -75,80 +76,9 @@
                         </tr>
                     }
                 </table>
-                @* Ẩn cột trong table *@
-                <!--<input type="hidden" id="hiddenPhieu" />-->
-                @* Model *@
-                <!--<div class="container">
-                    <div class="modal fade" id="myModal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" class="" data-dismiss="modal">&times;</a>
-                                    <h2>Cảnh báo!</h2>
-                                </div>
-                                <div class="modal-body">
-                                    <h4>Bạn có chắc muốn xóa phiếu xuất kho của đơn hàng này?</h4>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="#" class="btn btn-cancel" data-dismiss="modal">Hủy bỏ</a>
-                                    <a href="#" class="btn btn-danger" onclick="DeletePhieu()">Vẫn xóa</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </div>
     </div>
 </div>
 
 
-
-
-
-
-@*<script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>*@
-<!-- The javascript plugin to display page loading on top-->
-<!--<script src="~/Scripts/pace.min.js"></script>-->
-<!-- Page specific javascripts-->
-<!--<script type="text/javascript" src="~/Scripts/chart.js"></script>-->
-@*<script>
-        // Get the modal
-        var modal = document.getElementById('id01');
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>*@
-
-
-@* model confirm delete *@
-@*<script type="text/javascript">
-    $(document).ready(function () {
-        var ConfirmDelete = function (MaPhieu) {
-            $("#hiddenPhieu").val(MaPhieu);
-            $("#myModal").modal('show');
-
-        }
-
-        var Deletephieu = function () {
-            var maPhieu = $("#hiddenPhieu").val();
-            $.ajax({
-                type: "POST",
-                url: "/PhongKho/DeletePNXConfirm",
-                data: { MaPhieu: maPhieu },
-                success: function () {
-                    $("#myModal").modal("hide");
-                }
-            });
-        }
-    })
-    
-    
-</script>*@

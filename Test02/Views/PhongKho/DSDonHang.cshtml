@@ -7,7 +7,20 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var listDH = db.DonHangs.ToList();
 }
-
+@{
+    var checkMessage = TempData["AlertMessage"];
+     if (checkMessage == "noKho")
+    {
+        <script>
+            swal({
+                title: "Kho không đủ",
+                text: "Không có kho nào đáp ứng đủ cho đơn hàng @Session["madhxk"]!",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+}
 @* <Danh sách đơn hàng đã xét duyệt *@
 <div class="row">
     <div class="col-lg-12">
@@ -35,9 +48,6 @@
                             </th>
                             <th>
                                 Đã tạo phiếu
-                            </th>
-                            <th>
-                                Kho ưu tiên
                             </th>
                             <th>
                                 Điểm giao
@@ -100,9 +110,6 @@
                                             }
                                         }
 
-                                    </td>
-                                    <td>
-                                        null
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.DiemGiao)

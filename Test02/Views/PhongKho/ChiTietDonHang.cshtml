@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "ChiTietDonHang";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
-    ViewBag.nk = "active";
+    ViewBag.dhxdd = "active";
     ViewBag.Name = "Danh sách chi tiết đơn hàng";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
@@ -20,6 +20,7 @@
             });
         </script>
     }
+    
 }
 <div class="row">
     <div class="col-md-12">
@@ -100,7 +101,7 @@
                         </table>
 
                         <div class="row justify-content-between" style="margin:8px;">
-                            <a class="btn btn-outline-dark m-10" href="~/PhongKho/NhapKho">Trở lại</a>
+                            <a class="btn btn-outline-dark m-10" href="~/PhongKho/DSDonHang">Trở lại</a>
                             <a class="btn btn-danger btn-sm" href="/PhongKho/CreatePXuat/@TempData["madh"]" title="Thêm phiếu xuất kho">
                                 <i class="fas fa-plus"></i>
                                 Tạo phiếu xuất

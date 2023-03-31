@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Tạo phiếu xuất kho";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
-    ViewBag.nk = "active";
+    ViewBag.dhxdd = "active";
     ViewBag.Name = "Tạo phiếu xuất kho";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var kho = db.Khoes.ToList();
@@ -31,9 +31,8 @@
     <div class="col-md-12">
         <div class="tile">
             <p>Tên đơn vị: Công ty TNHH nước giải khát NQK</p>
-            <p>Mã số thuế: 03289456217</p>
             <p>Theo mã đơn hàng số: @Session["madhxk"]</p>
-            <h2 style="text-align:center" id="sample1">PHIẾU XUẤT KHO KIÊM VẬN CHUYỂN NỘI BỘ</h2>
+            <h2 style="text-align:center" id="sample1">PHIẾU XUẤT KHO THEO ĐƠN HÀNG</h2>
             <form style="text-align:center">
                 <label for="date">Ngày:</label>
                 @TempData["ngaylap"]<br>
@@ -51,26 +50,13 @@
                 <div class="tile-body">
                     <form class="row">
                         <div class="form-group col-md-12" id="sample5">
-                            <label class="control-label" id="ThongTinKho1">Kho xuất hàng:</label><br />
-                            <select class="form-control" name="ThongTinKho1">
-                                <option>----chọn kho----</option>
-                                @foreach (var item in kho)
-                                {
-                                    <option>@item.MaKho</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="form-group col-md-12" id="sample3">
-                            <label class="control-label" id="nguoigiaohang">Tên người giao hàng: </label>
-                            <input class="form-control" type="text" id="kinhgui" name="nguoigiaohang" required>
-                        </div>
-                        <div class="form-group col-md-12" id="sample4">
-                            <label class="control-label" id="vanchuyen">Phương tiện vận chuyển: </label> <br />
-                            <input class="form-control" type="text" name="vanchuyen" required>
+                            <label class="control-label" id="ThongTinKho1">Kho xuất hàng:</label>
+                             @Html.DropDownList("ThongTinKho1", (IEnumerable<SelectListItem>)ViewBag.MaKho, null, new { @class = "form-control" })
+
                         </div>
                         <div class="form-group col-md-12" id="sample4">
                             <label class="control-label">Đại lý nhận hàng: </label>
-                            @TempData["tenDL"]
+                            @TempData["maDL"] - @TempData["tenDL"]
                         </div>
                         <div class="form-group col-md-12" id="sample4">
                             <label class="control-label">Địa chỉ nhận hàng: </label>
