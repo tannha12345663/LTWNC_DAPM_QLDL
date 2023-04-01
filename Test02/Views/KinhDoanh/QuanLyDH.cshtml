@@ -196,7 +196,7 @@
                                 <option selected disabled>-----Vui lòng chọn------</option>
                                 @{ foreach (var item01 in dsdl)
                                     {
-                                        <option value="@item01.MaDL">@item01.MaDL</option>
+                                        <option value="@item01.MaDL">@item01.MaDL - @item01.MaLoaiDL - @item01.TenDL</option>
                                     }
                                 }
                             </select>
@@ -206,40 +206,36 @@
                             <textarea class="form-control" type="text" name="DiemGiao" required></textarea>
                         </div>
                         <div class="form-group col-md-12 " style="text-align:center">
-                            <label style="font-size:20px" class="control-label">-------------THÔNG TIN HÓA ĐƠN--------------</label>
+                            <label style="font-size:20px" class="control-label">---------THÔNG TIN HÓA ĐƠN-------</label>
 
                         </div>
-                        <div id="themdong" class="row" style="margin-left:4px">
-                            @*<div class="form-group col-md-12">
-                                    <label class="control-label">Tên sản phẩm</label>
-                                    <select class="form-control" name="MaSP" required>
-                                        <option>-----Vui lòng chọn sản phẩm------</option>
-                                        @{ foreach (var item01 in dssp)
-                                            {
-                                                <option value="@item01.MaSP">@item01.MaSP</option>
+                        <div class="form-group col-md-12" id="themdong">
+                                @*<div class="form-group col-md-12">
+                                        <label class="control-label">Tên sản phẩm</label>
+                                        <select class="form-control" name="MaSP" required>
+                                            <option>-----Vui lòng chọn sản phẩm------</option>
+                                            @{ foreach (var item01 in dssp)
+                                                {
+                                                    <option value="@item01.MaSP">@item01.MaSP</option>
+                                                }
                                             }
-                                        }
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label class="control-label">Nhập số lượng :</label>
-                                    <input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />
-                                </div>*@
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label class="control-label">Nhập số lượng :</label>
+                                        <input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />
+                                    </div>*@
                         </div>
                     </div>
                 </div>
-                <div style="text-align:center" class="modal-footer">
+                <div  class="modal-footer ">
                     <div class="row">
-                        <div class="col-lg-2">
+                        <div class="col-lg-12">
                             <input class="btn btn-add" id="themsp" type="button" name="DiemGiao" value="Thêm SP" onclick="themSP()" required />
-                        </div>
-                        <div class="col-lg-2">
                             <input class="btn btn-cancel" id="xoasp" type="button" name="DiemGiao" disabled value="Xóa SP" onclick="xoaSP()" required />
                         </div>
-                        <div class="col-lg-5">
+                        <div style="text-align:end" class="col-lg-12">
                             <button class="btn btn-save" style="margin-left:15px" type="submit">Thêm mới đơn hàng</button>
-                        </div>
-                        <div class="col-lg-6">
                             <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
                         </div>
                     </div>
@@ -257,10 +253,10 @@
         }
         else {
             i++;
-            var row = '<div class="row" id="nd'+i+'">'+ '<div class="form-group col-md-8 ">'+
+            var row = '<div class="row" id="nd'+i+'">'+ '<div class="form-group col-lg-8">'+
     '<label class="control-label">Tên sản phẩm</label>' +
                 ' <select class="form-control" name="MaSP' + i +'" required>' +
-    '<option selected disabled>---------------Vui lòng chọn sản phẩm-------------</option>' +
+    '<option selected disabled>----Vui lòng chọn sản phẩm----</option>' +
     '@{ foreach (var item01 in dssp) {<option value="@item01.MaSP">@item01.MaSP - @item01.TenSP - SL: @item01.TongTon</option> } }' +
     '</select>' + '</div>' +
     '<div class="form-group col-md-3">' +
