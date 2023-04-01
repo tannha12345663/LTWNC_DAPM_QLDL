@@ -340,7 +340,7 @@ input[type=submit]{
   }
 
   .login100-pic {
-    width: 35%;
+    width: 95%;
   }
 
   .login100-form {
@@ -353,7 +353,7 @@ input[type=submit]{
   }
 
   .login100-pic {
-    display: none;
+    
   }
 
   .login100-form {

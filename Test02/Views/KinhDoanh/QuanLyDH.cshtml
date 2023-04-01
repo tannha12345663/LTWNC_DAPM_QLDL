@@ -229,10 +229,20 @@
                     </div>
                 </div>
                 <div style="text-align:center" class="modal-footer">
-                    <input class="btn btn-add" id="themsp" type="button" name="DiemGiao" value="Thêm SP" onclick="themSP()" required />
-                    <input class="btn btn-cancel" id="xoasp" type="button" name="DiemGiao" disabled value="Xóa SP" onclick="xoaSP()" required />
-                    <button class="btn btn-save" type="submit">Thêm mới đơn hàng</button>
-                    <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <input class="btn btn-add" id="themsp" type="button" name="DiemGiao" value="Thêm SP" onclick="themSP()" required />
+                        </div>
+                        <div class="col-lg-2">
+                            <input class="btn btn-cancel" id="xoasp" type="button" name="DiemGiao" disabled value="Xóa SP" onclick="xoaSP()" required />
+                        </div>
+                        <div class="col-lg-5">
+                            <button class="btn btn-save" style="margin-left:15px" type="submit">Thêm mới đơn hàng</button>
+                        </div>
+                        <div class="col-lg-6">
+                            <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                        </div>
+                    </div>
                 </div>
 
             </form>
