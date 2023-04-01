@@ -1,12 +1,12 @@
 ﻿@model Test02.Models.PhieuCongNo
 @using Test02.Models;
 @{
-    ViewBag.Title = "ChitietCN";
+    ViewBag.Title = "Xuất phiếu công nợ";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.dsdl = "active";
+    ViewBag.nd = "Xuất phiếu công nợ";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 
-    ViewBag.cn = "active";
-    ViewBag.nd = "Xuất phiếu công nợ";
 }
 
 <link href="~/Content/KeToan/StyleKeToan.css" rel="stylesheet" />
@@ -60,7 +60,7 @@
                                 </thead>
                                 <tbody>
                                     @{ var total = 0;
-                                        List<DonHang> donhang = db.DonHangs.Where(s => s.MaDL == Model.MaDL).ToList();
+                                        List<DonHang> donhang = db.DonHangs.Where(s => s.MaDL == Model.MaDL && s.TinhTrangThanhToan=="Chưa thanh toán" && s.TrangThai=="Đã xét duyệt").ToList();
                                     }
                                     @foreach (var item in donhang)
                                     {
@@ -115,7 +115,7 @@
         </div>
         <div class="col-sm-2">
             <a class="btn btn-danger btn-sm" id="btncn" data-toggle="modal" data-target="#myModal">
-                Thêm phiếu công nợ
+                Xóa phiếu công nợ
             </a>
         </div>
         <div class="col-sm-2">

@@ -22,9 +22,78 @@ namespace Test02.Controllers
         {
             return View();
         }
+     
+        public double maxno(string maloai)
+        {
+            double maxcn = 0;
+            if (maloai == "LDL01")
+            {
+                maxcn = 500000000;
+            }
+            else if (maloai == "LDL02")
+            {
+                maxcn = 250000000;
+            }
+            else
+            {
+                maxcn = 100000000;
 
+            }
+            return maxcn;
+        }
+
+        public int DemDL(double tongno,double maxcndl)
+        {
+            int count = 0;
+            double dangercn = maxcndl - (maxcndl * 0.1);
+            double warningcn = maxcndl - (maxcndl * 0.3);
+            if (tongno > dangercn || (maxcndl > warningcn && maxcndl < dangercn))
+            {
+                count++;
+            }    
+             
+            return count;
+        }
+        public int SoTinhTrangDaiLy()
+        {
+            double tongno = 0;
+            int countdl = 0;
+            List<DaiLy> dly = database.DaiLies.ToList();
+            foreach(var item in dly)
+            {
+                var congno = database.PhieuCongNoes.Where(n => n.MaDL == item.MaDL && n.TrangThai == "Chưa thanh toán");
+                foreach (var cn in congno)
+                {
+                    tongno += (double)cn.TienNo;
+                }
+               double maxcndl = maxno(item.MaLoaiDL);
+                countdl = DemDL(tongno,maxcndl);
+            }
+            return countdl;
+        }
+
+        public double TinhDoanhThu()
+        {
+            double doanhthu = 0;
+            DateTime homnay = DateTime.Now;
+            
+            List<DonHang> donhang = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && s.TinhTrangThanhToan == "Đã thanh toán").ToList();
+            foreach(var item in donhang)
+            {
+                DateTime thang = (DateTime)item.NgayLap;
+                if(homnay.Month==thang.Month)
+                {
+                    doanhthu += (double)item.TongTien;
+                }    
+               
+            }
+            return doanhthu;
+        }
         public ActionResult TrangChuKeToan()
         {
+            int dem = SoTinhTrangDaiLy();
+            Session["demdl"] = dem;
+            Session["doanhthu"] = TinhDoanhThu();
             return View(database.DonHangs.ToList());
         }
         
@@ -32,12 +101,79 @@ namespace Test02.Controllers
         {
             return View(database.PhieuCongNoes.ToList());
         }
+        private void BindDropDownList()
+        {
 
+            List<SelectListItem> m = new List<SelectListItem>();
+            m.Add(new SelectListItem { Text = "All", Value = "0" });
+            m.Add(new SelectListItem { Text = "1", Value = "1" });
+            m.Add(new SelectListItem { Text = "2", Value = "2" });
+            m.Add(new SelectListItem { Text = "3", Value = "3" });
+            m.Add(new SelectListItem { Text = "4", Value = "4" });
+            m.Add(new SelectListItem { Text = "5", Value = "5" });
+            m.Add(new SelectListItem { Text = "6", Value = "6" });
+            m.Add(new SelectListItem { Text = "7", Value = "7" });
+            m.Add(new SelectListItem { Text = "8", Value = "8" });
+            m.Add(new SelectListItem { Text = "9", Value = "9" });
+            m.Add(new SelectListItem { Text = "10", Value = "10" });
+            m.Add(new SelectListItem { Text = "11", Value = "11" });
+            m.Add(new SelectListItem { Text = "12", Value = "12" });
+
+            TempData["thangs"] = m;
+
+
+        }
+        private void Tinhtangdonhang()
+        {
+
+            List<SelectListItem> tinhtrang = new List<SelectListItem>();
+            tinhtrang.Add(new SelectListItem { Text = "Chưa thanh toán", Value = "Chưa thanh toán" });
+            tinhtrang.Add(new SelectListItem { Text = "Đang nợ", Value = "Đang nợ" });
+            tinhtrang.Add(new SelectListItem { Text = "Đã thanh toán", Value = "Đã thanh toán" });
+
+
+            TempData["tinhtrangdh"] = tinhtrang;
+
+
+        }
         public ActionResult QLDonHang()
         {
             BindDropDownList();
-            List<DonHang> donhangchuathanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && s.TinhTrangThanhToan == "Chưa thanh toán").ToList();
+            Tinhtangdonhang();
+            List<DonHang> donhangchuathanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH=="Chờ giao").ToList();
             return View(donhangchuathanhtoan);
+        }
+
+        public List<DonHang> LocDonHang_TheoDK(string thang_chon, List<DonHang> tatcadonhang,string ttrang)
+        {
+
+            List<DonHang> dh = new List<DonHang>();
+            if (thang_chon != "0")
+            {
+                foreach (var locdh in tatcadonhang)
+                {
+                    DateTime day = (DateTime)locdh.NgayLap;
+                    var m = Convert.ToString(day.Month);
+
+                    if (thang_chon == m && locdh.TinhTrangThanhToan==ttrang)
+                    {
+                        dh.Add(locdh);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var locdh in tatcadonhang)
+                {
+                    if (locdh.TinhTrangThanhToan == ttrang)
+                    {
+                        dh.Add(locdh);
+                    }
+                }
+                
+            }
+            return dh;
+
         }
         public List<DonHang> LayDonHang_TheoThang(string thang_chon,List<DonHang>tatcadonhang)
         {
@@ -64,89 +200,54 @@ namespace Test02.Controllers
 
         }
         [HttpPost]
-        public ActionResult QLDonHang(string thangs, string searchString)
+        public ActionResult QLDonHang(string thangs,string tinhtrangdh)
         {
           
             BindDropDownList();
+            Tinhtangdonhang();
 
-            List<DonHang> donhangchuathanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && s.TinhTrangThanhToan=="Chưa thanh toán").ToList();
-            List<DonHang> dhchon = LayDonHang_TheoThang(thangs,donhangchuathanhtoan);
+            List<DonHang> tatca = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Chờ giao").ToList();
+            List<DonHang> dhchon = LocDonHang_TheoDK(thangs,tatca, tinhtrangdh);
+            return View(dhchon);
+        }
+
+
+        public ActionResult QLDonDaGiao()
+        {
+            BindDropDownList();
+            Tinhtangdonhang();
+            List<DonHang> donhangchuathanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao hàng").ToList();
+            return View(donhangchuathanhtoan);
+        }
+        [HttpPost]
+        public ActionResult QLDonDaGiao(string thangs, string tinhtrangdh)
+        {
+
+            BindDropDownList();
+            Tinhtangdonhang();
+
+            List<DonHang> tatca = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao hàng").ToList();
+            List<DonHang> dhchon = LocDonHang_TheoDK(thangs, tatca, tinhtrangdh);
             return View(dhchon);
 
 
 
         }
 
-        
-        private void BindDropDownList()
-        {
+        //public ActionResult ChinhsuaHD(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+        //    }
+        //    DonHang donHang = database.DonHangs.Find(id);
+        //    if (donHang == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
             
-            List<SelectListItem> m = new List<SelectListItem>();
-            m.Add(new SelectListItem { Text = "All", Value = "0" });
-            m.Add(new SelectListItem { Text = "1", Value = "1" });
-            m.Add(new SelectListItem { Text = "2", Value = "2" });
-            m.Add(new SelectListItem { Text = "3", Value = "3" });
-            m.Add(new SelectListItem { Text = "4", Value = "4" });
-            m.Add(new SelectListItem { Text = "5", Value = "5" });
-            m.Add(new SelectListItem { Text = "6", Value = "6" });
-            m.Add(new SelectListItem { Text = "7", Value = "7" });
-            m.Add(new SelectListItem { Text = "8", Value = "8" });
-            m.Add(new SelectListItem { Text = "9", Value = "9" });
-            m.Add(new SelectListItem { Text = "10", Value = "10" });
-            m.Add(new SelectListItem { Text = "11", Value = "11" });
-            m.Add(new SelectListItem { Text = "12", Value = "12" });
-
-            TempData["thangs"] = m;
-
-            
-        }
-        public ActionResult QLDonNo()
-        {
-            //ViewBag.MaDL = new SelectList(database.DonHangs, "MaDL", "MaDL");
-            BindDropDownList();
-            List<DonHang> donhangno = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && s.TinhTrangThanhToan == "Đang nợ").ToList();
-            return View(donhangno);
-        }
-        [HttpPost]
-        public ActionResult QLDonNo(string thangs, string searchString)
-        {
-            BindDropDownList();
-            List<DonHang> donhangno = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && s.TinhTrangThanhToan == "Đang nợ").ToList();
-            List<DonHang> dhchon = LayDonHang_TheoThang(thangs,donhangno);
-            return View(dhchon);
-        }
-        
-        public ActionResult QLDonThanhToan()
-        {
-            BindDropDownList();
-            List<DonHang> dhthanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && s.TinhTrangThanhToan == "Đã thanh toán").ToList();
-            return View(dhthanhtoan);
-        }
-
-        [HttpPost]
-        public ActionResult QLDonThanhToan(string thangs)
-        {
-            BindDropDownList();
-            List<DonHang> dhthanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && s.TinhTrangThanhToan == "Đã thanh toán").ToList();
-            List<DonHang> dhchon = LayDonHang_TheoThang(thangs,dhthanhtoan);
-            return View(dhchon);}
-
-
-
-        public ActionResult ChinhsuaHD(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
-            }
-            DonHang donHang = database.DonHangs.Find(id);
-            if (donHang == null)
-            {
-                return HttpNotFound();
-            }
-            
-            return View(donHang);
-        }
+        //    return View(donHang);
+        //}
 
         [HttpPost]
         public ActionResult ChinhsuaHD(DonHang donHang)
@@ -156,12 +257,10 @@ namespace Test02.Controllers
                 database.Entry(donHang).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
                 TempData["edithd"] = "oke";
-                if (donHang.TinhTrangThanhToan=="Chưa thanh toán")
+                if (donHang.TinhTrangGH=="Chờ giao")
                     return RedirectToAction("QLDonHang");
-                else if(donHang.TinhTrangThanhToan=="Đã thanh toán")
-                    return RedirectToAction("QLDonThanhToan");
                 else
-                    return RedirectToAction("QLDonNo");
+                    return RedirectToAction("QLDonDaGiao");
 
             }
            
@@ -203,6 +302,7 @@ namespace Test02.Controllers
             return tinhtongdh;
 
         }
+
         public ActionResult DSDaiLy()
         {
             
@@ -362,7 +462,7 @@ namespace Test02.Controllers
                 Session["matim"] = phieuCongNo.MaDL;
                 database.PhieuCongNoes.Remove(phieuCongNo);
                 database.SaveChanges();
-                TempData["xoacn"] = "success";
+                
                 return RedirectToAction("DSCongnoNo", new RouteValueDictionary(
                                        new { controller = "KeToan", action = "DSCongnoNo", Id = Session["matim"] }));
 

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Test02.Models.DonHang>
 @using Test02.Models;
 @{
-    ViewBag.Title = "Đơn hàng thanh toán";
+    ViewBag.Title = "Đơn hàng đã giao";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     ViewBag.qlhd = "active";
-    ViewBag.nd = "Danh sách đơn hàng đã xét duyệt";
+    ViewBag.nd = "Danh sách đơn hàng đã giao";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
 
@@ -16,69 +16,74 @@
     {
         <script>
             swal({
-                title: "Đã cập nhật đơn hàng đã thanh toán thành công",
+                title: "Đã cập nhật đơn hàng chưa thanh toán thành công",
                 icon: "success",
                 button: "OK",
             });
         </script>
     }
-    
-    
+
+
 }
 <div class="row">
     <div class="col-md-12">
+
         <div class="tile">
+
             <div class="tile-body">
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link" href="~/ketoan/QLDonHang">Đơn chưa thanh toán</a>
+                        <a class="nav-link "  href="/KeToan/QLDonHang" >Đơn chưa giao</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="~/ketoan/QLDonNo">Đơn nợ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Đơn đã thanh toán</a>
+                        <a class="nav-link active" aria-current="page" href="#">Đơn đã giao</a>
                     </li>
                 </ul>
-
                 <div class="row" style="padding:10px;">
                     <div class="col-sm-2">
-                        <a class="btn btn-outline-success btn-sm" title="In" onclick="printDiv('printMe')">
+                        <a class="btn btn-outline-dark btn-sm" title="In" onclick="printDiv('printMe')">
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
-
-                    <div class="col-sm-6">
-                        @using (Html.BeginForm("QLDonThanhToan", "KeToan", FormMethod.Post, new { @class = "form-group-sm" }))
+                    <div class="col-sm-5">
+                        @using (Html.BeginForm("QLDonDaGiao", "KeToan", FormMethod.Post, new { @clas = "" }))
                         {
-
-                            @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
-
-                            <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
-
-
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.DropDownList("tinhtrangdh", (IEnumerable<SelectListItem>)TempData["tinhtrangdh"], htmlAttributes: new { @class = "form-control-sm", })
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
+                                </div>
+                            </div>
                         }
                     </div>
+
 
                 </div>
 
 
+
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    <div class="row" style="padding-top:10px">
+                    <div class="row" id="printMe">
                         <div class="col-sm-12">
+
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
-                                    <tr role="row" id="printMe">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable"style="width: 80px;">Mã đơn hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 60px;">Tên đại lý</th>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 20px;">Mã đơn hàng</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tên đại lý</th>
                                         <th class="100" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Điểm điểm giao</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 80px;">Tình trạng thanh toán</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 60px;">Mã nhân viên lập</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 90px;">Ngày lập đơn</th>
                                         <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tổng tiền</th>
-                                        <th  id="btnfunction"style="width: 80px;">Chức năng</th>
+                                        <th style="width: 80px;" id="functionHD">Chức năng</th>
 
                                     </tr>
                                 </thead>
@@ -88,7 +93,7 @@
                                     }
                                     @foreach (var item in Model)
                                     {
-                                        if (item.TinhTrangThanhToan == "Đã thanh toán")
+                                        if (item.TinhTrangGH == "Đã giao hàng")
                                         {
                                             <tr>
                                                 <td>
@@ -120,20 +125,20 @@
                                                     @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                                     @Html.DisplayFor(modelItem => ThanhTien)
                                                 </td>
-                                                <td>
+                                                <td id="btnHD">
 
-                                                    <a href="/KeToan/ChinhsuaHD/@item.MaDH" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Chỉnh sửa hóa đơn đơn hàng">
+                                                    <a href="/KeToan/ChinhsuaHD/@item.MaDH" class="btn btn-outline-primary btn-sm " ata-toggle="tooltip" title="Chỉnh sửa hóa đơn đơn hàng">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    @*<a href="/KeToan/XoaHD/@item.MaHD" class="btn btn-primary btn-sm trash">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </a>*@
+
                                                     <a href="/KeToan/XuatHDBH/@item.MaDH" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
                                                         <i class="fas fa-train"></i>
                                                     </a>
+
                                                 </td>
 
                                             </tr>
+
                                         }
                                     }
                                 </tbody>
@@ -145,16 +150,7 @@
             </div>
 
         </div>
-        <div class="row element-button" style="padding-left:10px">
-            @*<div class="col-sm-2">
-                    <a class="btn btn-primary btn-sm" type="button" title="làm mới" href="~/ketoan/qldonhang"><i class="fas fa-copy"></i> làm mới danh sách</a>
-                </div>*@
-            <div class="col-sm-2">
-                <a class="btn btn-primary btn-sm " type="button" title="in" onclick="myapp.printtable()">
-                    <i class="fas fa-print"></i> in dữ liệu
-                </a>
-            </div>
-        </div>
+
 
 
     </div>
@@ -162,20 +158,20 @@
 
 
 <script>
-    //In dữ liệu
-    var myApp = new function () {
-        this.printTable = function () {
-            var tab = document.getElementById('sampleTable');
-            var win = window.open('', '', 'height=800px,width=1200px');
-            win.document.write(tab.outerHTML);
-            win.document.close();
-            win.print();
-        }
-    }
 
-    oTable = $('#sampleTable').dataTable();
-    $('#all').click(function (e) {
-        $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
-        e.stopImmediatePropagation();
-    });
+
+        function printDiv(divName) {
+            document.getElementById("functionHD").style.display = "none";
+            document.getElementById("btnHD").style.display = "none";
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+
+    }
 </script>

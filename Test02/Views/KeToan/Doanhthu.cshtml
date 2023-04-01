@@ -7,17 +7,13 @@
     ViewBag.nd = "Báo cáo doanh thu";
 }
 
-<h2>Doanhthu</h2>
-
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-body">
 
                 <div class="row element-button">
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KeToan/Doanhthu"><i class="fas fa-copy"></i> Làm mới danh sách</a>
-                    </div>
+                   
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
                             <i class="fas fa-print"></i> In dữ liệu
@@ -36,15 +32,13 @@
                 </div>
 
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    <div class="row">
-
-
+                    @*<div class="row">
                         <div class="col-md-1">
                             <div id="sampleTable_filter" class="dataTables_filter">
                                 <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="row">
                         <div class="col-sm-12">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
@@ -66,30 +60,30 @@
                                         if (item.TinhTrangThanhToan == "Đã thanh toán")
                                         {
 
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.MaDH)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.MaDL)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.MaNVLap)
-                                                </td>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaDH)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaDL)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaNVLap)
+                                        </td>
+                                        @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLap);}
+                                        <td>
+                                            @Html.DisplayFor(modelItem => ngay)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DiemGiao)
+                                        </td>
+                                        <td>
+                                            @{ total += Convert.ToInt32(item.TongTien);}
+                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                            @Html.DisplayFor(modelItem => ThanhTien)
 
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.NgayLap)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
-                                                </td>
-                                                <td>
-                                                    @{ total += Convert.ToInt32(item.TongTien);}
-                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
-                                                    @Html.DisplayFor(modelItem => ThanhTien)
-
-                                                </td>
-                                            </tr>
+                                        </td>
+                                    </tr>
 
                                                             }
 

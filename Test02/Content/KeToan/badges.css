@@ -19,3 +19,17 @@
         background-color: red;
         color: white;
     }
+
+
+/*  TRANG CHỦ*/
+.stat-card {
+    background: #fff;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+}

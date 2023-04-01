@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Test02.Models.DonHang>
 @using Test02.Models;
 @{
-    ViewBag.Title = "Đơn hàng chưa thanh toán";
+    ViewBag.Title = "Đơn hàng chưa giao";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     ViewBag.qlhd = "active";
-    ViewBag.nd = "Danh sách đơn hàng đã xét duyệt";
+    ViewBag.nd = "Danh sách đơn hàng chưa giao";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
 
@@ -27,41 +27,40 @@
 }
 <div class="row">
     <div class="col-md-12">
-
         <div class="tile">
-
             <div class="tile-body">
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Đơn chưa thanh toán</a>
+                        <a class="nav-link active" aria-current="page" href="#">Đơn chưa giao</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="~/ketoan/QLDonNo">Đơn nợ</a>
+                        <a class="nav-link" href="/KeToan/QLDonDaGiao">Đơn đã giao</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="~/ketoan/QLDonThanhToan">Đơn đã thanh toán</a>
-                    </li>
-
                 </ul>
                 <div class="row" style="padding:10px;">
                     <div class="col-sm-2">
-                        <a class="btn btn-outline-success btn-sm" title="In" onclick="printDiv('printMe')">
+                        <a class="btn btn-outline-dark btn-sm" title="In" onclick="printDiv('printMe')">
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
-                  
-                    <div class="col-sm-6">
-                        @using (Html.BeginForm("QLDonHang", "KeToan", FormMethod.Post, new { @class = "form-group-sm" }))
+                    <div class="col-sm-5">
+                        @using (Html.BeginForm("QLDonHang", "KeToan", FormMethod.Post, new { @clas=""}))
                         {
-
-                            @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
-                           
-                            <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
-
-
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.DropDownList("tinhtrangdh", (IEnumerable<SelectListItem>)TempData["tinhtrangdh"], htmlAttributes: new { @class = "form-control-sm", })
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
+                                </div>
+                            </div>
                         }
                     </div>
+
 
                 </div>
 
@@ -87,13 +86,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @{
-
-                                    }
                                     @foreach (var item in Model)
                                     {
-
-                                        if (item.TinhTrangThanhToan == "Chưa thanh toán")
+                                        if (item.TinhTrangGH == "Chờ giao")
                                         {
                                             <tr>
                                                 <td>
@@ -125,19 +120,20 @@
                                                     @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                                     @Html.DisplayFor(modelItem => ThanhTien)
                                                 </td>
-                                                <td id="btnHD">
+                                                <td style="text-align:center">
 
-                                                    <a href="/KeToan/ChinhsuaHD/@item.MaDH" class="btn btn-outline-primary btn-sm " ata-toggle="tooltip" title="Chỉnh sửa hóa đơn đơn hàng">
+                                                    @*<a href="/KeToan/ChinhsuaHD/@item.MaDH" class="btn btn-outline-primary btn-sm " ata-toggle="tooltip" title="Chỉnh sửa hóa đơn đơn hàng">
                                                         <i class="fa fa-edit"></i>
-                                                    </a>
+                                                    </a>*@
 
                                                     <a href="/KeToan/XuatHDBH/@item.MaDH" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
-                                                        <i class="fas fa-train"></i>
+                                                        <i class="fas fa-info-circle"></i>
                                                     </a>
 
                                                 </td>
 
                                             </tr>
+
                                         }
                                     }
                                 </tbody>
