@@ -1,172 +1,423 @@
 ﻿@model IEnumerable<Test02.Models.DonHang>
 @using Test02.Models;
 @{
-    ViewBag.Title = "Đơn hàng chưa giao";
+    ViewBag.Title = "Đơn hàng ";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     ViewBag.qlhd = "active";
-    ViewBag.nd = "Danh sách đơn hàng chưa giao";
+    ViewBag.nd = "Danh sách đơn hàng ";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
 
 }
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-@{
-    var checkmess = (string)TempData["edithd"];
-    if (checkmess == "oke")
-    {
-        <script>
-            swal({
-                title: "Đã cập nhật đơn hàng chưa thanh toán thành công",
-                icon: "success",
-                button: "OK",
-            });
-        </script>
-    }
 
+<div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" aria-current="page" href="#donduyet">Đơn duyệt</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#donchogiao">Đơn chờ giao</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#donhanggiao">Đơn đã giao</a>
+        </li>
+    </ul>
 
-}
-<div class="row">
-    <div class="col-md-12">
-        <div class="tile">
-            <div class="tile-body">
-
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Đơn chưa giao</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/KeToan/QLDonDaGiao">Đơn đã giao</a>
-                    </li>
-                </ul>
-                <div class="row" style="padding:10px;">
-                    <div class="col-sm-2">
-                        <a class="btn btn-outline-dark btn-sm" title="In" onclick="printDiv('printMe')">
-                            <i class="fas fa-print"></i> In dữ liệu
-                        </a>
-                    </div>
-                    <div class="col-sm-5">
-                        @using (Html.BeginForm("QLDonHang", "KeToan", FormMethod.Post, new { @clas=""}))
-                        {
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
-                                </div>
-                                <div class="col-sm-2">
-                                    @Html.DropDownList("tinhtrangdh", (IEnumerable<SelectListItem>)TempData["tinhtrangdh"], htmlAttributes: new { @class = "form-control-sm", })
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
-                                </div>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div id="donduyet" class="tab-pane active">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tile">
+                        <div class="row" style="padding:10px;">
+                            <div class="col-sm-2">
+                                <a class="btn btn-outline-dark btn-sm" title="In" onclick="printDiv('printMe')">
+                                    <i class="fas fa-print"></i> In dữ liệu
+                                </a>
                             </div>
-                        }
-                    </div>
-
-
-                </div>
-
-
-
-                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    <div class="row" id="printMe">
-                        <div class="col-sm-12">
-
-                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
-                                @*//Phần render từng dòng trong C#*@
-                                <thead>
-                                    <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable"  style="width: 20px;">Mã đơn hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tên đại lý</th>
-                                        <th class="100" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Điểm điểm giao</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 80px;">Tình trạng thanh toán</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 60px;">Mã nhân viên lập</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable"  style="width: 90px;">Ngày lập đơn</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable"  style="width: 100px;">Tổng tiền</th>
-                                        <th style="width: 80px;" id="functionHD">Chức năng</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        if (item.TinhTrangGH == "Chờ giao")
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.MaDH)
-                                                </td>
-                                                <td>
-                                                    @{var tendl = db.DaiLies.Where(s => s.MaDL == item.MaDL).FirstOrDefault();
-
-                                                    }
-                                                    @Html.DisplayFor(modelItem => tendl.TenDL)
-                                                </td>
-
-
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
-                                                </td>
-
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.MaNVLap)
-                                                </td>
-                                                <td>
-                                                    @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLap); ;}
-                                                    @Html.DisplayFor(modelItem => ngay)
-                                                </td>
-                                                <td>
-                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
-                                                    @Html.DisplayFor(modelItem => ThanhTien)
-                                                </td>
-                                                <td style="text-align:center">
-
-                                                    @*<a href="/KeToan/ChinhsuaHD/@item.MaDH" class="btn btn-outline-primary btn-sm " ata-toggle="tooltip" title="Chỉnh sửa hóa đơn đơn hàng">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>*@
-
-                                                    <a href="/KeToan/XuatHDBH/@item.MaDH" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
-                                                        <i class="fas fa-info-circle"></i>
-                                                    </a>
-
-                                                </td>
+                            <div class="col-sm-10">
+                                @using (Html.BeginForm("QLDonHang", "KeToan", FormMethod.Post, new { @clas = "" }))
+                                {
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
+                                        </div>
+                                        <div class="col-sm-2">
+                                            @Html.DropDownList("tinhtrangdh", (IEnumerable<SelectListItem>)TempData["tinhtrangdh"], htmlAttributes: new { @class = "form-control-sm", })
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                            <div class="row" id="printMe">
+                                <div class="col-sm-12  table-responsive">
+                                    <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                        @*//Phần render từng dòng trong C#*@
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã đơn hàng</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Đại lý</th>
+                                                <th tabindex="0" aria-controls="sampleTable">Điểm điểm giao</th>
+                                                <th tabindex="0" aria-controls="sampleTable">Tình trạng thanh toán</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Ngày lập đơn</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng tiền</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Xuất hóa đơn</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Xuất kho</th>
+                                                <th class="sorting" id="functionHD">Chức năng</th>
 
                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.TinhTrangGH == null)
+                                                {
+                                                    <tr style="text-align:center">
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.MaDH)
+                                                        </td>
+                                                        <td>
+                                                            @{var tendl = db.DaiLies.Where(s => s.MaDL == item.MaDL).FirstOrDefault();
 
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                                                            }
+                                                            @Html.DisplayFor(modelItem => tendl.TenDL)
+                                                        </td>
+
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                        </td>
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                        </td>
+
+                                                        <td>
+                                                            @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLap); ;}
+                                                            @Html.DisplayFor(modelItem => ngay)
+                                                        </td>
+                                                        <td>
+                                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                            @Html.DisplayFor(modelItem => ThanhTien)
+                                                        </td>
+                                                        <td>
+                                                            @if (item.XuatHoaDon == true)
+                                                            {
+                                                                <span class="badge badge-success">Đã xuất</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-warning">Chưa xuất</span>
+                                                            }
+
+                                                        </td>
+                                                        <td>
+                                                            @if (item.PhieuXuatKho == true)
+                                                            {
+                                                                <span class="badge badge-success">Đã xuất</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-warning">Chưa xuất</span>
+                                                            }
+
+                                                        </td>
+                                                        <td>
+
+                                                            <a href="/KeToan/XuatHDBH/@item.MaDH" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
+                                                                <i class="fas fa-info-circle"></i>
+                                                            </a>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
+            </div>
+        </div>
+        <div id="donchogiao" class="tab-pane fade">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tile">
+                        <div class="row" style="padding:10px;">
+                            <div class="col-sm-2">
+                                <a class="btn btn-outline-dark btn-sm" title="In" onclick="printDiv('printMe')">
+                                    <i class="fas fa-print"></i> In dữ liệu
+                                </a>
+                            </div>
+                            <div class="col-sm-10">
+                                @using (Html.BeginForm("QLDonHang", "KeToan", FormMethod.Post, new { @clas = "" }))
+                                {
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
+                                        </div>
+                                        <div class="col-sm-2">
+                                            @Html.DropDownList("tinhtrangdh", (IEnumerable<SelectListItem>)TempData["tinhtrangdh"], htmlAttributes: new { @class = "form-control-sm", })
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                            <div class="row" id="printMe">
+                                <div class="col-sm-12  table-responsive">
+                                    <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                        @*//Phần render từng dòng trong C#*@
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã đơn hàng</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Đại lý</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Điểm điểm giao</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Tình trạng thanh toán</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Ngày lập đơn</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng tiền</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Xuất hóa đơn</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Xuất kho</th>
+                                                <th class="sorting" id="functionHD">Chức năng</th>
 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.TinhTrangGH == "Chờ giao")
+                                                {
+                                                    <tr style="text-align:center">
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.MaDH)
+                                                        </td>
+                                                        <td>
+                                                            @{var tendl = db.DaiLies.Where(s => s.MaDL == item.MaDL).FirstOrDefault();
+
+                                                            }
+                                                            @Html.DisplayFor(modelItem => tendl.TenDL)
+                                                        </td>
+
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                        </td>
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                        </td>
+
+                                                        <td>
+                                                            @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLap); ;}
+                                                            @Html.DisplayFor(modelItem => ngay)
+                                                        </td>
+                                                        <td>
+                                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                            @Html.DisplayFor(modelItem => ThanhTien)
+                                                        </td>
+                                                        <td>
+                                                            @if (item.XuatHoaDon == true)
+                                                            {
+                                                                <span class="badge badge-success">Đã xuất</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-warning">Chưa xuất</span>
+                                                            }
+
+                                                        </td>
+                                                        <td>
+                                                            @if (item.PhieuXuatKho == true)
+                                                            {
+                                                                <span class="badge badge-success">Đã xuất</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-warning">Chưa xuất</span>
+                                                            }
+
+                                                        </td>
+                                                        <td>
+
+                                                            <a href="/KeToan/XuatHDBH/@item.MaDH" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
+                                                                <i class="fas fa-info-circle"></i>
+                                                            </a>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="donhanggiao" class="tab-pane fade">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tile">
+                        <div class="row" style="padding:10px;">
+                            <div class="col-sm-2">
+                                <a class="btn btn-outline-dark btn-sm" title="In" onclick="printDiv('printMe')">
+                                    <i class="fas fa-print"></i> In dữ liệu
+                                </a>
+                            </div>
+                            <div class="col-sm-10">
+                                @using (Html.BeginForm("QLDonHang", "KeToan", FormMethod.Post, new { @clas = "" }))
+                                {
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
+                                        </div>
+                                        <div class="col-sm-2">
+                                            @Html.DropDownList("tinhtrangdh", (IEnumerable<SelectListItem>)TempData["tinhtrangdh"], htmlAttributes: new { @class = "form-control-sm", })
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                            <div class="row" id="printMe">
+                                <div class="col-sm-12  table-responsive">
+                                    <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                        @*//Phần render từng dòng trong C#*@
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã đơn hàng</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Đại lý</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Điểm điểm giao</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Tình trạng thanh toán</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Ngày lập đơn</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng tiền</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Xuất hóa đơn</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Xuất kho</th>
+                                                <th class="sorting" id="functionHD">Chức năng</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.TinhTrangGH == "Đã giao hàng")
+                                                {
+                                                    <tr style="text-align:center">
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.MaDH)
+                                                        </td>
+                                                        <td>
+                                                            @{var tendl = db.DaiLies.Where(s => s.MaDL == item.MaDL).FirstOrDefault();
+
+                                                            }
+                                                            @Html.DisplayFor(modelItem => tendl.TenDL)
+                                                        </td>
+
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                        </td>
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                        </td>
+
+                                                        <td>
+                                                            @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLap); ;}
+                                                            @Html.DisplayFor(modelItem => ngay)
+                                                        </td>
+                                                        <td>
+                                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                            @Html.DisplayFor(modelItem => ThanhTien)
+                                                        </td>
+                                                        <td>
+                                                            @if (item.XuatHoaDon == true)
+                                                            {
+                                                                <span class="badge badge-success">Đã xuất</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-warning">Chưa xuất</span>
+                                                            }
+
+                                                        </td>
+                                                        <td>
+                                                            @if (item.PhieuXuatKho == true)
+                                                            {
+                                                                <span class="badge badge-success">Đã xuất</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-warning">Chưa xuất</span>
+                                                            }
+
+                                                        </td>
+                                                        <td>
+
+                                                            <a href="/KeToan/XuatHDBH/@item.MaDH" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
+                                                                <i class="fas fa-info-circle"></i>
+                                                            </a>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+                </div>
             </div>
 
-        </div>
+            <script>
+                //In dữ liệu
+                function printDiv(divName) {
+                    var printContents = document.getElementById(divName).innerHTML;
+                    var originalContents = document.body.innerHTML;
+
+                    document.body.innerHTML = printContents;
+
+                    window.print();
+
+                    document.body.innerHTML = originalContents;
+
+                }
+            </script>
+            @* Bootstrap cho navs *@
+            <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 
-
-    </div>
-</div>
-
-
-<script>
-
-
-        function printDiv(divName) {
-            document.getElementById("functionHD").style.display = "none";
-            document.getElementById("btnHD").style.display = "none";
-        var printContents = document.getElementById(divName).innerHTML;
-        var originalContents = document.body.innerHTML;
-        
-        document.body.innerHTML = printContents;
-
-        window.print();
-
-        document.body.innerHTML = originalContents;
-       
-
-    }
-</script>

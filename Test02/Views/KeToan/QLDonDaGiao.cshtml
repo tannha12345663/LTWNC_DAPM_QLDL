@@ -1,40 +1,23 @@
 ﻿@model IEnumerable<Test02.Models.DonHang>
 @using Test02.Models;
 @{
-    ViewBag.Title = "Đơn hàng đã giao";
+    ViewBag.Title = "Đơn hàng chưa giao";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     ViewBag.qlhd = "active";
-    ViewBag.nd = "Danh sách đơn hàng đã giao";
+    ViewBag.nd = "Danh sách đơn hàng chưa giao";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
 
 }
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-@{
-    var checkmess = (string)TempData["edithd"];
-    if (checkmess == "oke")
-    {
-        <script>
-            swal({
-                title: "Đã cập nhật đơn hàng chưa thanh toán thành công",
-                icon: "success",
-                button: "OK",
-            });
-        </script>
-    }
 
-
-}
 <div class="row">
     <div class="col-md-12">
-
         <div class="tile">
-
             <div class="tile-body">
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link "  href="/KeToan/QLDonHang" >Đơn chưa giao</a>
+                        <a class="nav-link" href="/KeToan/QLDonHang">Đơn duyệt giao</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Đơn đã giao</a>
@@ -46,7 +29,7 @@
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-10">
                         @using (Html.BeginForm("QLDonDaGiao", "KeToan", FormMethod.Post, new { @clas = "" }))
                         {
                             <div class="row">
@@ -70,27 +53,25 @@
 
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row" id="printMe">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12  table-responsive">
 
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 20px;">Mã đơn hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tên đại lý</th>
-                                        <th class="100" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Điểm điểm giao</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 80px;">Tình trạng thanh toán</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 60px;">Mã nhân viên lập</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 90px;">Ngày lập đơn</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tổng tiền</th>
-                                        <th style="width: 80px;" id="functionHD">Chức năng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã đơn hàng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Tên đại lý</th>
+                                        <th tabindex="0" aria-controls="sampleTable">Điểm điểm giao</th>
+                                        <th tabindex="0" aria-controls="sampleTable">Tình trạng thanh toán</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã nhân viên lập</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Ngày lập đơn</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng tiền</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Xuất hóa đơn</th>
+                                        <th class="sorting" id="functionHD">Chức năng</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @{
-
-                                    }
                                     @foreach (var item in Model)
                                     {
                                         if (item.TinhTrangGH == "Đã giao hàng")
@@ -125,14 +106,21 @@
                                                     @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                                     @Html.DisplayFor(modelItem => ThanhTien)
                                                 </td>
-                                                <td id="btnHD">
+                                                <td>
+                                                    @if (item.XuatHoaDon == true)
+                                                    {
+                                                        <span class="badge badge-success">Đã xuất</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge badge-warning">Chưa xuất</span>
+                                                    }
 
-                                                    <a href="/KeToan/ChinhsuaHD/@item.MaDH" class="btn btn-outline-primary btn-sm " ata-toggle="tooltip" title="Chỉnh sửa hóa đơn đơn hàng">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
+                                                </td>
+                                                <td>
 
                                                     <a href="/KeToan/XuatHDBH/@item.MaDH" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
-                                                        <i class="fas fa-train"></i>
+                                                        <i class="fas fa-info-circle"></i>
                                                     </a>
 
                                                 </td>
@@ -160,9 +148,9 @@
 <script>
 
 
-        function printDiv(divName) {
-            document.getElementById("functionHD").style.display = "none";
-            document.getElementById("btnHD").style.display = "none";
+    function printDiv(divName) {
+        document.getElementById("functionHD").style.display = "none";
+        document.getElementById("btnHD").style.display = "none";
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
 

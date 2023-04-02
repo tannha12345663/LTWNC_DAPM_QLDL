@@ -1,21 +1,19 @@
 ﻿@model IEnumerable<Test02.Models.DonHang>
 
 @{
-    ViewBag.Title = "Doanhthu";
+    ViewBag.Title = "Doanh thu";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     ViewBag.dthu = "active";
     ViewBag.nd = "Báo cáo doanh thu";
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 container-fluid">
         <div class="tile">
             <div class="tile-body">
-
-                <div class="row element-button">
-                   
+                <div class="row element-button" style="padding-left:10px">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
+                        <a class="btn btn-outline-dark btn-sm" type="button" title="In" onclick="printDiv('printme')">
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
@@ -39,27 +37,25 @@
                             </div>
                         </div>
                     </div>*@
-                    <div class="row">
-                        <div class="col-sm-12">
+                    <div class="row" id="printme">
+                        <div class="col-sm-12  table-responsive">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable"style="width: 100px;">Mã đơn hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable"  style="width: 100px;">Mã đại lý</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable"  style="width: 100px;">Mã nhân viên lập</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable"  style="width: 100px;">Ngày lập</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable"  style="width: 100px;">Điểm giao hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tổng tiền</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã đơn hàng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã nhân viên lập</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Ngày lập</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Điểm giao hàng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng tiền</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @{ var total = 0;}
                                     @foreach (var item in Model)
                                     {
-                                        if (item.TinhTrangThanhToan == "Đã thanh toán")
-                                        {
-
+                     
                                     <tr>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.MaDH)
@@ -85,7 +81,7 @@
                                         </td>
                                     </tr>
 
-                                                            }
+                                                            
 
                                                         }
                                         <tr>
@@ -105,13 +101,17 @@
 </div>
 <script>
     //In dữ liệu
-    var myApp = new function () {
-        this.printTable = function () {
-            var tab = document.getElementById('sampleTable');
-            var win = window.open('', '', 'height=700,width=700');
-            win.document.write(tab.outerHTML);
-            win.document.close();
-            win.print();
-        }
+    function printDiv(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+
     }
 </script>

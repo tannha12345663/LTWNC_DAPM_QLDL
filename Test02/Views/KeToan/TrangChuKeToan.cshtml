@@ -6,9 +6,7 @@
     ViewBag.homekt = "active";
     ViewBag.nd = "Trang chủ";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    List<DonHang> donhang = db.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt"
-    && s.TinhTrangThanhToan == "Chưa thanh toán").ToList();
-
+    
 
 }
 
@@ -43,40 +41,82 @@
             font-size: 30px;
         }
 </style>
-@{
-    int count = 0;
-    int countgh = 0;
-    foreach (var item in donhang)
+
+
+
+@{ 
+    List<DonHang> dhngay = Session["dsdonngay"] as List<DonHang>;
+    int countcho = 0;
+    int countgiao = 0;
+    int countduyet = 0;
+    foreach (var item in dhngay)
     {
-        if(item.TinhTrangGH=="Chờ giao")
+        if (item.TinhTrangGH == "Chờ giao")
+        { countcho++; }
+        else if (item.TinhTrangGH == "Đã giao hàng")
         {
-            count++;
+            countgiao++;
+        }
+        else if (item.TinhTrangGH == null)
+        {
+            countduyet++;
         }
 
-        else if(item.TinhTrangGH=="Đã giao hàng")
-        {
-            countgh++;
-        }
 
     }
-
-    DateTime ngayhomnay = System.DateTime.Now;
-    List<DonHang> dh = db.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" &&
-    s.TinhTrangThanhToan == "Chưa thanh toán" && s.NgayLap == ngayhomnay).ToList();
-    int c = dh.Count;
-
+    List<DonHang> donHangs = db.DonHangs.Where(s =>s.TrangThai == "Đã xét duyệt").ToList();
+    int cchoduyet = 0;
+    int cdagiao = 0;
+    int cchogiao = 0;
+    foreach(var item in donHangs)
+    {
+        if(item.TinhTrangGH==null)
+        {
+            cchoduyet++;
+        }
+        else if(item.TinhTrangGH=="Chờ giao")
+        {
+            cchogiao++;
+        }
+        else if (item.TinhTrangGH == "Đã giao hàng")
+        {
+            cdagiao++;
+        }
+    }
 }
 <div class="tongquan">
     <div class="container">
         <div class="row">
+            @*NULL*@
             <div class="col-sm-4">
                 <a href="/KeToan/QLDonHang">
                     <div class="stat-card">
                         <div class="stat-card__content">
                             <p class="text-uppercase mb-1 text-muted">ĐƠN HÀNG ĐẠI LÝ</p>
-                            <h4>@count đơn chưa giao</h4>
+                            <h4>@cchoduyet đơn chờ duyệt</h4>
                             <div style="font-size:16px">
-                                <span class="text-success font-weight-bold ">+@c</span>
+                                <span class="text-success font-weight-bold ">+@countduyet</span>
+                                <span class="text-muted">đơn mới trong ngày</span>
+                            </div>
+                        </div>
+                        <div class="stat-card__icon stat-card__icon--success">
+                            <div class="stat-card__icon-circle" style=" background: rgba(0, 123, 255, 0.2);">
+                                <i class="fa fa-clipboard-check" style="color: rgb(0, 28, 64);"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+            @*CHỜ GIAO*@
+            <div class="col-sm-4">
+                <a href="#idcho">
+                    <div class="stat-card">
+                        <div class="stat-card__content">
+                            <p class="text-uppercase mb-1 text-muted">ĐƠN HÀNG ĐẠI LÝ</p>
+                            <h4>@cchogiao đơn chờ giao</h4>
+                            <div style="font-size:16px">
+                                <span class="text-success font-weight-bold ">+@countcho</span>
                                 <span class="text-muted">đơn mới trong ngày</span>
                             </div>
                         </div>
@@ -94,10 +134,10 @@
                     <div class="stat-card">
                         <div class="stat-card__content">
                             <p class="text-uppercase mb-1 text-muted">ĐƠN HÀNG ĐẠI LÝ</p>
-                            <h4>@countgh đơn đã giao</h4>
+                            <h4>@cdagiao đơn đã giao</h4>
                             <div style="font-size:16px">
-                                <span class="text-success font-weight-bold ">+@c</span>
-                                <span class="text-muted">đơn mới trong ngày</span>
+                                <span class="text-success font-weight-bold ">+@countgiao</span>
+                                <span class="text-muted"> đơn mới trong ngày</span>
                             </div>
                         </div>
                         <div class="stat-card__icon stat-card__icon--success">
@@ -133,9 +173,10 @@
 
             </div>
             @{
+                DateTime aDatetime = DateTime.Now;
                 List<PhieuCongNo> phieucn = db.PhieuCongNoes.Where(s => s.TrangThai == "Chưa thanh toán").ToList();
                 List<PhieuCongNo> cnhan = new List<PhieuCongNo>();
-                DateTime aDatetime = DateTime.Now;
+
                 foreach (var item in phieucn)
                 {
                     TimeSpan interval = aDatetime.Subtract((DateTime)item.NgayLapCN);
@@ -171,7 +212,7 @@
                     <div class="stat-card">
                         <div class="stat-card__content">
                             <p class="text-uppercase mb-1 text-muted">DOANH THU</p>
-                            @{ 
+                            @{
                                 var doanhthu = string.Format("{0:0,0 vnđ}", Session["doanhthu"]);
                             }
                             <h4>@doanhthu</h4>
@@ -194,12 +235,12 @@
         </div>
     </div>
 </div>
-
+@*CONGNO*@
 <div class="col-md-12" id="congno">
     <div class="tile">
         <h3 class="tile-title">Danh sách công nợ sắp tới hạn</h3>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12 table-responsive">
                 <table class="table table-hover table-bordered js-copytextarea" role="grid">
                     <thead>
                         <tr role="row">
@@ -264,8 +305,8 @@
         <h3 class="tile-title" style="padding-bottom:10px;">Tình trạng đại lý</h3>
         <a href="/KeToan/DSDaiLy" class="btn btn-success btn-sm">Xem chi tiết</a>
         <div class="row">
-            <div class="col-sm-12" style="padding-top:10px;">
-                <table class="table table-hover table-bordered js-copytextarea"role="grid">
+            <div class="col-sm-12 table-responsive" style="padding-top:10px;">
+                <table class="table table-hover table-bordered js-copytextarea" role="grid">
                     @*//Phần render từng dòng trong C#*@
                     <thead>
                         <tr role="row">
@@ -297,16 +338,16 @@
 
                                 <td>
                                     @{
-                                            double tongno = 0;
-                                            var congno = db.PhieuCongNoes.Where(n => n.MaDL == item.MaDL && n.TrangThai == "Chưa thanh toán");
-                                            foreach (var cn in congno)
-                                            {
-                                                tongno += (double)cn.TienNo;
-                                            }
-                                            
-                                            var tiencongnno = string.Format("{0:0,0 vnđ}", tongno);
-
+                                        double tongno = 0;
+                                        var congno = db.PhieuCongNoes.Where(n => n.MaDL == item.MaDL && n.TrangThai == "Chưa thanh toán");
+                                        foreach (var cn in congno)
+                                        {
+                                            tongno += (double)cn.TienNo;
                                         }
+
+                                        var tiencongnno = string.Format("{0:0,0 vnđ}", tongno);
+
+                                    }
 
                                     @Html.DisplayFor(modelItem => tiencongnno)
 
@@ -315,43 +356,43 @@
 
 
                                 @{
-                                        int tongdonhang = 0;
-                                        double maxcn = 0;
+                                    int tongdonhang = 0;
+                                    double maxcn = 0;
 
 
-                                        if (item.MaLoaiDL == "LDL01")
-                                        {
-                                            maxcn = 500000000;
-                                        }
-                                        else if (item.MaLoaiDL == "LDL02")
-                                        {
-                                            maxcn = 250000000;
-                                        }
-                                        else
-                                        {
-                                            maxcn = 100000000;
-
-                                        }
-                                        double dangercn = maxcn - (maxcn * 0.1);
-                                        double warningcn = maxcn - (maxcn * 0.3);
+                                    if (item.MaLoaiDL == "LDL01")
+                                    {
+                                        maxcn = 500000000;
                                     }
+                                    else if (item.MaLoaiDL == "LDL02")
+                                    {
+                                        maxcn = 250000000;
+                                    }
+                                    else
+                                    {
+                                        maxcn = 100000000;
+
+                                    }
+                                    double dangercn = maxcn - (maxcn * 0.1);
+                                    double warningcn = maxcn - (maxcn * 0.3);
+                                }
                                 <td style="text-align:center">
 
-                                        @if (tongno > dangercn)
-                                        {
-                                            <span class="badge badge-danger">Nguy cơ</span>
-                                        }
-                                        else if (tongno >= warningcn && tongno <= dangercn)
-                                        {
-                                            <span class="badge badge-warning">Cảnh báo</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge badge-success">Bình thường</span>
-                                        }
-                                    </td>
-                              
-                                
+                                    @if (tongno > dangercn)
+                                    {
+                                        <span class="badge badge-danger">Nguy cơ</span>
+                                    }
+                                    else if (tongno >= warningcn && tongno <= dangercn)
+                                    {
+                                        <span class="badge badge-warning">Cảnh báo</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-success">Bình thường</span>
+                                    }
+                                </td>
+
+
                             </tr>
                         }
                     </tbody>
@@ -361,7 +402,7 @@
         </div>
     </div>
 </div>
-  
+
 
 
 

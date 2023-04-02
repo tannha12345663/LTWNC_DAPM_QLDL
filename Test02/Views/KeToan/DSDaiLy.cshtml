@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Test02.Models.DaiLy>
 @using Test02.Models
 @{
-    ViewBag.Title = "DSDaiLy";
+    ViewBag.Title = "Danh sách đại lý";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     ViewBag.dsdl = "active";
     ViewBag.nd = "Danh sách đại lý";
@@ -22,7 +22,7 @@
         </script>
 
     }
-    @*if (TempData["xoacn"] != null)
+    if (TempData["xoacn"] != null)
     {
         <script>
             swal({
@@ -45,7 +45,7 @@
 
         </script>
 
-    }*@
+    }
 }
 
 <div class="row">
@@ -53,28 +53,28 @@
         <div class="tile">
             <div class="tile-body">
 
-                @*<div class="btnin">
+                <div class="btnin">
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="printDiv('printme')">
+                        <a class="btn btn-outline-dark btn-sm" title="In" onclick="printDiv('printme')">
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
 
 
-                </div>*@
+                </div>
                 <div class="row" id="printme">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12  table-responsive">
                         <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid">
                             @*//Phần render từng dòng trong C#*@
                             <thead>
                                 <tr role="row">
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 50px;">Mã đại lý</th>
-                                    <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 150px;">Tên đại lý</th>
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 160px;">Loại đại lý</th>
-                                    <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tổng công nợ</th>
-                                    <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Trạng thái</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã đại lý</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Tên đại lý</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Loại đại lý</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng công nợ</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Trạng thái</th>
 
-                                    <th width="100" class="sorting" tabindex="0" style="width: 100px;">Chức năng</th>
+                                    <th class="sorting" tabindex="0" style="width: 100px;">Chức năng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,7 +82,7 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td style="width: 150px;">
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.MaDL)
                                         </td>
                                         <td>
@@ -92,7 +92,7 @@
                                         <td>
                                             @{var tenldk = database.LoaiDLs.Find(item.MaLoaiDL);
                                             }
-                                            @Html.DisplayFor(modelItem => tenldk.TenDaiLy) - @Html.DisplayFor(modelItem =>item.MaLoaiDL)
+                                            @Html.DisplayFor(modelItem => tenldk.TenDaiLy)  @Html.DisplayFor(modelItem =>item.MaLoaiDL)
                                         </td>
 
                                         <td>
@@ -112,12 +112,10 @@
                                             @Html.DisplayFor(modelItem => tiencongnno)
 
                                         </td>
-                                      
-                                       
-
                                         @{
                                             int tongdonhang = 0;
-                                            var donhangdl = database.DonHangs.Where(dh => dh.MaDL == item.MaDL && dh.TinhTrangThanhToan == "Chưa thanh toán" && dh.TrangThai == "Đã xét duyệt");
+                                            var donhangdl = database.DonHangs.Where(dh => dh.MaDL == item.MaDL && dh.TinhTrangThanhToan == "Chưa thanh toán"
+                                            && dh.TrangThai == "Đã xét duyệt" && dh.TinhTrangGH == "Đã giao hàng");
                                             tongdonhang = donhangdl.Count();
                                             double maxcn = 0;
 
@@ -150,7 +148,7 @@
                                         } 
                                         else
                                         {
-                                                <span class="badge badge-success">Bình thường</span>
+                                         <span class="badge badge-success">Bình thường</span>
                                         }
                                     </td>
                                     <td style="text-align:center">
@@ -179,11 +177,6 @@
                                                 }
                                             }
                                         </a>
-
-
-
-
-
                                     </td>
                                     </tr>
                                 }

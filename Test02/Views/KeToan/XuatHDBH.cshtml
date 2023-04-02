@@ -8,7 +8,21 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ct = db.ChiTietDonHangs.ToList();
 }
+@{
+    var checkmess = (string)TempData["edithd"];
+    if (checkmess == "oke")
+    {
+        <script>
+            swal({
+                title: "Đã cập nhật đơn hàng thành công",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
 
+
+}
 <link href="~/Content/KeToan/StyleKeToan.css" rel="stylesheet" />
 
 <div class="container-sm">
@@ -36,16 +50,16 @@
                     <p> <strong>Loại đại lý: </strong>@Html.DisplayFor(model => loaidaily.MaLoaiDL)</p>
                     <p> <strong>Địa chỉ: </strong>@Html.DisplayFor(model => daily.DiaChi)</p>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12  table-responsive" >
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row" style="text-align:center">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Mã CTDH</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Mã SP</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tên sản phẩm</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Số lượng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 120px;">Thành tiền</th>
+                                        <th>Mã CTDH</th>
+                                        <th>Mã SP</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -106,7 +120,7 @@
     </div>
     <div class="row" style="padding-left:10px" id="btnin">
         <div class="col-sm-2">
-            <a class="btn btn-warning btn-sm " data-toggle="modal" data-target="#myModal" >
+            <a class="btn btn-warning btn-sm " data-toggle="modal" data-target="#myModal">
                 Cập thông tin đơn hàng
             </a>
         </div>
@@ -117,11 +131,11 @@
         </div>
         <div class="col-sm-2">
 
-            @if (Model.TinhTrangGH == "Chờ giao")
+            @if (Model.TinhTrangGH == null)
             {
                 <a class="btn btn-danger btn-sm" type="button" title="Quay lại " href="~/KeToan/QLDonHang">Quay lại</a>
             }
-            else
+            else if(Model.TinhTrangGH == "Đã giao hàng")
             {
                 <a class="btn btn-danger btn-sm" type="button" title="Quay lại " href="~/KeToan/QLDonDaGiao">Quay lại</a>
             }

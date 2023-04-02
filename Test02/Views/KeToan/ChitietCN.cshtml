@@ -47,20 +47,23 @@
 
 
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 table-responsive">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
-                                    <tr role="row" style="text-align:center">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Mã đơn hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Ngày lập</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Địa điểm giao hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 120px;">Thành tiền</th>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã đơn hàng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Ngày lập</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Địa điểm giao hàng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Thành tiền</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @{ var total = 0;
-                                        List<DonHang> donhang = db.DonHangs.Where(s => s.MaDL == Model.MaDL && s.TinhTrangThanhToan=="Chưa thanh toán" && s.TrangThai=="Đã xét duyệt").ToList();
+                                    @{ 
+                                        var total = 0;
+                                        List<DonHang> donhang = db.DonHangs.Where(s => s.MaDL == Model.MaDL
+                                        && s.TinhTrangThanhToan == "Đang nợ"
+                                        && s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao hàng").ToList();
                                     }
                                     @foreach (var item in donhang)
                                     {

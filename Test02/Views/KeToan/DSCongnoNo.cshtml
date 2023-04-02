@@ -10,7 +10,21 @@
     List<HoaDon> ctdh = db.HoaDons.ToList();
 }
 <link href="~/Content/KeToan/ketoan.css" rel="stylesheet" />
+@{
+    var checkmess = (string)TempData["edithd"];
+    if (checkmess == "oke")
+    {
+        <script>
+            swal({
+                title: "Đã cập nhật đơn hàng thành công",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
 
+
+}
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
@@ -29,9 +43,9 @@
                 </div>
                 <div class="btn-func" style="padding:10px;">
                     <div class="row">
-                        
+
                         <div class="col-sm-2">
-                            <a class="btn btn-info btn-sm" role="button" title="In" onclick="printDiv('printhere')">
+                            <a class="btn btn-outline-dark btn-sm" role="button" title="In" onclick="printDiv('printhere')">
                                 <i class="fas fa-print"></i> In dữ liệu
                             </a>
                         </div>
@@ -45,20 +59,20 @@
 
                 </div>
 
-                <div class="row" id="printhere" >
-                    <div class="col-sm-12">
+                <div class="row" id="printhere">
+                    <div class="col-sm-12  table-responsive">
                         <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                             @*//Phần render từng dòng trong C#*@
                             <thead>
                                 <tr role="row">
-                                    <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 60px;">Mã CN</th>
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 150px;">Tên đại lý</th>
-                                    <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 90px;">Mã Đại lý</th>
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 124px;">Tổng nợ</th>
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 124px;">Ngày tạo phiếu</th>
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 124px;">Hạn trả</th>
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 150px;">Tình trạng</th>
-                                    <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Chức năng</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã CN</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Tên đại lý</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã Đại lý</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng nợ</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Ngày tạo phiếu</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Hạn trả</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Tình trạng</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Chức năng</th>
                                 </tr>
                             </thead>
 
@@ -96,8 +110,27 @@
                                             @Html.DisplayFor(modelItem => han)
 
                                         </td>
+
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.TrangThai)
+                                            @{
+                                                DateTime aDatetime = DateTime.Now;
+                                                DateTime hant = (DateTime)item.HanTra;
+                                                TimeSpan interval = hant.Subtract(aDatetime);
+
+                                                if (interval.Days <= 0)
+                                                {
+                                                    <span class="badge badge-danger">Đến hạn</span>
+                                                }
+                                                else if (interval.Days > 0 && interval.Days <= 7)
+                                                {
+                                                    <span class="badge badge-warning">Sắp đến hạn</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-success">Còn hạn</span>
+                                                }
+
+                                            }
                                         </td>
                                         <td>
                                             <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
@@ -118,7 +151,7 @@
             </div>
         </div>
 
-    
+
 
     </div>
 </div>
