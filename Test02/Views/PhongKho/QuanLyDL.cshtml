@@ -9,20 +9,9 @@
     List<string> listSHH = new List<string>();
     List<string> listHH = new List<string>();
     int soluong = 0;
-    //set tổng tồn từng sp theo từng chi tiết kho
     var chiTietKhos = db.ChiTietKhoes.ToList();
     var sanPhams = db.SanPhams.ToList();
-    //foreach (var sp in sanPhams)
-    //{
-    //    sp.TongTon = 0;
-    //    foreach (var ctk in chiTietKhos)
-    //    {
-    //        if (sp.MaSP == ctk.MaSP)
-    //        {
-    //            sp.TongTon += ctk.SoLuong;
-    //        }
-    //    }
-    //}
+    
 }
 @{
     var checkMessage = TempData["AlertMessage"];
