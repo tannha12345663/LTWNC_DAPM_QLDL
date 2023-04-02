@@ -10,8 +10,10 @@
     var dsdl = db.DaiLies.ToList();
     var dssp = db.SanPhams.ToList();
 }
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="~/Content/js/tableToExcel.js"></script>
+
+
 @{
     var checkmess = (string)TempData["messageAlert"];
     if (checkmess == "Đã thêm mới đơn hàng")
@@ -60,112 +62,363 @@
     }
     ;
 }
+<ul class="nav nav-tabs">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home"><h4 class="btn btn-outline-info">Danh sách đơn hàng</h4></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu1"><h5 class="btn btn-outline-danger">Đơn hàng chưa xét duyệt</h5></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu2"><h6 class="btn btn-outline-success">Đơn hàng đã xét duyệt</h6></a>
+        </li>
+    </ul>
+</ul>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="tile">
-            <div class="tile-body">
+<div class="tab-content">
+    <div id="home" class="tab-pane active">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm nhap-tu-file" onclick="resetpage()" data-target="#myModal" data-toggle="modal" @*href="~/KinhDoanh/ThemDH"*@><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-excel btn-sm" id="button-excel" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</button>
+                            </div>
+                        </div>
+                        <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12 table-responsive">
+                                    <table data-cols-width="20,20,20,30,20,20,20,20,20,20,20" class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                        @*//Phần render từng dòng trong C#*@
+                                        <thead>
+                                            <tr role="row">
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Mã nhân viên lập</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Trạng thái đơn hàng</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa điểm giao hàng</th>
 
-                <div class="row element-button">
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm nhap-tu-file" onclick="resetpage()" data-target="#myModal" data-toggle="modal" @*href="~/KinhDoanh/ThemDH"*@><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
-                    </div>
-                    <div class="col-sm-2">
-                        <button class="btn btn-excel btn-sm" id="button-excel" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</button>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tổng tiền</th>
+                                                <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng thanh toán</th>
+                                                <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng xuất kho</th>
+                                                <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng xuất hóa đơn</th>
+                                                <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng giao hàng</th>
+                                                <th data-exclude="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td data-b-a-s="thin">
+                                                        @Html.DisplayFor(modelItem => item.MaDH)
+                                                    </td>
+                                                    <td data-b-a-s="thin">
+                                                        @Html.DisplayFor(modelItem => item.MaDL)
+                                                    </td>
+                                                    <td data-b-a-s="thin">
+                                                        @Html.DisplayFor(modelItem => item.MaNVLap)
+                                                    </td>
+                                                    @*<td>
+                                                            @{var tensp = db.SanPhams.Find(item.MaSP);
+                                                            }
+                                                            @Html.DisplayFor(modelItem => tensp.TenSP)
+                                                        </td>*@
+                                                    @*<td>
+                                                            @{var madh = db.ChiTietDonHangs.Find(item.MaDH);
+                                                            }
+                                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", madh.ThanhTien);}
+                                                            @Html.DisplayFor(modelItem => ThanhTien)
+                                                        </td>*@
+                                                    <td data-b-a-s="thin">
+                                                        @Html.DisplayFor(modelItem => item.NgayLap)
+                                                    </td>
+                                                    <td data-b-a-s="thin">
+                                                        @Html.DisplayFor(modelItem => item.TrangThai)
+                                                    </td>
+                                                    <td data-b-a-s="thin">
+                                                        @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                    </td>
+                                                    <td data-b-a-s="thin">
+                                                        @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                        @Html.DisplayFor(modelItem => ThanhTien)
+                                                    </td>
+                                                    <td data-b-a-s="thin">
+                                                        @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                    </td>
+                                                    <td data-b-a-s="thin" data-t:"b">
+                                                        @item.PhieuXuatKho
+                                                    </td>
+                                                    <td data-b-a-s="thin" data-t:"b">
+                                                        @item.XuatHoaDon
+                                                    </td>
+                                                    <td data-b-a-s="thin" data-t:"b">
+                                                        @item.TinhTrangGH
+                                                    </td>
+                                                    <td data-exclude="true">
+                                                        <a href="/KinhDoanh/ChinhSuaDH/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a> ||
+                                                        @*<a href="/KinhDoanh/ChinhSuaCTDH/@item.MaDH" class="btn btn-outline-primary btn-sm edit">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a> ||*@
+                                                        <a href="/KinhDoanh/XoaDH/@item.MaDH" class="btn btn-primary btn-sm trash">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </a> ||
+                                                        <a href="/KinhDoanh/DanhSachCTDH/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                            <i class="fas fa-train"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    <div class="row">
-                        <div class="col-sm-12 table-responsive">
-                            <table data-cols-width="20,20,20,30,20,20,20,20,20,20,20" class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
-                                @*//Phần render từng dòng trong C#*@
-                                <thead>
-                                    <tr role="row">
-                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
-                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
-                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Mã nhân viên lập</th>
-                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
-                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Trạng thái đơn hàng</th>
-                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa điểm giao hàng</th>
+            </div>
+        </div>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm nhap-tu-file" onclick="resetpage()" data-target="#myModal" data-toggle="modal" @*href="~/KinhDoanh/ThemDH"*@><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-excel btn-sm" id="button-excel01" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</button>
+                            </div>
+                        </div>
+                        <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12 table-responsive">
+                                    <table data-cols-width="20,20,20,30,20,20,20,20,20,20,20" class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable01" role="grid" aria-describedby="sampleTable_info">
+                                        @*//Phần render từng dòng trong C#*@
+                                        <thead>
+                                            <tr role="row">
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Mã nhân viên lập</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Trạng thái đơn hàng</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa điểm giao hàng</th>
 
-                                        <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tổng tiền</th>
-                                        <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng thanh toán</th>
-                                        <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng xuất kho</th>
-                                        <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng xuất hóa đơn</th>
-                                        <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng giao hàng</th>
-                                        <th data-exclude="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td data-b-a-s="thin">
-                                                @Html.DisplayFor(modelItem => item.MaDH)
-                                            </td>
-                                            <td data-b-a-s="thin">
-                                                @Html.DisplayFor(modelItem => item.MaDL)
-                                            </td>
-                                            <td data-b-a-s="thin">
-                                                @Html.DisplayFor(modelItem => item.MaNVLap)
-                                            </td>
-                                            @*<td>
-                                                    @{var tensp = db.SanPhams.Find(item.MaSP);
-                                                    }
-                                                    @Html.DisplayFor(modelItem => tensp.TenSP)
-                                                </td>*@
-                                            @*<td>
-                                                    @{var madh = db.ChiTietDonHangs.Find(item.MaDH);
-                                                    }
-                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", madh.ThanhTien);}
-                                                    @Html.DisplayFor(modelItem => ThanhTien)
-                                                </td>*@
-                                            <td data-b-a-s="thin">
-                                                @Html.DisplayFor(modelItem => item.NgayLap)
-                                            </td>
-                                            <td data-b-a-s="thin">
-                                                @Html.DisplayFor(modelItem => item.TrangThai)
-                                            </td>
-                                            <td data-b-a-s="thin">
-                                                @Html.DisplayFor(modelItem => item.DiemGiao)
-                                            </td>
-                                            <td data-b-a-s="thin">
-                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
-                                                @Html.DisplayFor(modelItem => ThanhTien)
-                                            </td>
-                                            <td data-b-a-s="thin">
-                                                @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
-                                            </td>
-                                            <td data-b-a-s="thin" data-t:"b">
-                                                @item.PhieuXuatKho
-                                            </td>
-                                            <td data-b-a-s="thin" data-t:"b">
-                                                @item.XuatHoaDon
-                                            </td>
-                                            <td data-b-a-s="thin" data-t:"b">
-                                                @item.TinhTrangGH
-                                            </td>
-                                            <td data-exclude="true">
-                                                <a href="/KinhDoanh/ChinhSuaDH/@item.MaDH" class="btn btn-primary btn-sm edit">
-                                                    <i class="fa fa-edit"></i>
-                                                </a> ||
-                                                @*<a href="/KinhDoanh/ChinhSuaCTDH/@item.MaDH" class="btn btn-outline-primary btn-sm edit">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a> ||*@
-                                                <a href="/KinhDoanh/XoaDH/@item.MaDH" class="btn btn-primary btn-sm trash">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a> ||
-                                                <a href="/KinhDoanh/DanhSachCTDH/@item.MaDH" class="btn btn-primary btn-sm edit">
-                                                    <i class="fas fa-train"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tổng tiền</th>
+                                                <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng thanh toán</th>
+                                                <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng xuất kho</th>
+                                                <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng xuất hóa đơn</th>
+                                                <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng giao hàng</th>
+                                                <th data-exclude="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.TrangThai == "Chưa xử lý")
+                                                {
+                                                    <tr>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.MaDH)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.MaDL)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.MaNVLap)
+                                                        </td>
+                                                        @*<td>
+                                                                @{var tensp = db.SanPhams.Find(item.MaSP);
+                                                                }
+                                                                @Html.DisplayFor(modelItem => tensp.TenSP)
+                                                            </td>*@
+                                                        @*<td>
+                                                                @{var madh = db.ChiTietDonHangs.Find(item.MaDH);
+                                                                }
+                                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", madh.ThanhTien);}
+                                                                @Html.DisplayFor(modelItem => ThanhTien)
+                                                            </td>*@
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.NgayLap)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.TrangThai)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                            @Html.DisplayFor(modelItem => ThanhTien)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                        </td>
+                                                        <td data-b-a-s="thin" data-t:"b">
+                                                            @item.PhieuXuatKho
+                                                        </td>
+                                                        <td data-b-a-s="thin" data-t:"b">
+                                                            @item.XuatHoaDon
+                                                        </td>
+                                                        <td data-b-a-s="thin" data-t:"b">
+                                                            @item.TinhTrangGH
+                                                        </td>
+                                                        <td data-exclude="true">
+                                                            <a href="/KinhDoanh/ChinhSuaDH/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a> ||
+                                                            @*<a href="/KinhDoanh/ChinhSuaCTDH/@item.MaDH" class="btn btn-outline-primary btn-sm edit">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </a> ||*@
+                                                            <a href="/KinhDoanh/XoaDH/@item.MaDH" class="btn btn-primary btn-sm trash">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </a> ||
+                                                            <a href="/KinhDoanh/DanhSachCTDH/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                                <i class="fas fa-train"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="menu2" class="tab-content fade">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm nhap-tu-file" onclick="resetpage()" data-target="#myModal" data-toggle="modal" @*href="~/KinhDoanh/ThemDH"*@><i class="fas fa-file-upload"></i> Thêm mới đơn hàng</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-excel btn-sm" id="button-excel02" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</button>
+                            </div>
+                        </div>
+                        <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12 table-responsive">
+                                    <table data-cols-width="20,20,20,30,20,20,20,20,20,20,20" class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable02" role="grid" aria-describedby="sampleTable_info">
+                                        @*//Phần render từng dòng trong C#*@
+                                        <thead>
+                                            <tr role="row">
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Mã đại lý</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Mã nhân viên lập</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Trạng thái đơn hàng</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 124px;">Địa điểm giao hàng</th>
+
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tổng tiền</th>
+                                                <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng thanh toán</th>
+                                                <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng xuất kho</th>
+                                                <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng xuất hóa đơn</th>
+                                                <th data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Tình trạng giao hàng</th>
+                                                <th data-exclude="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.TrangThai == "Đã xét duyệt")
+                                                {
+                                                    <tr>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.MaDH)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.MaDL)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.MaNVLap)
+                                                        </td>
+                                                        @*<td>
+                                                                @{var tensp = db.SanPhams.Find(item.MaSP);
+                                                                }
+                                                                @Html.DisplayFor(modelItem => tensp.TenSP)
+                                                            </td>*@
+                                                        @*<td>
+                                                                @{var madh = db.ChiTietDonHangs.Find(item.MaDH);
+                                                                }
+                                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", madh.ThanhTien);}
+                                                                @Html.DisplayFor(modelItem => ThanhTien)
+                                                            </td>*@
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.NgayLap)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.TrangThai)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                            @Html.DisplayFor(modelItem => ThanhTien)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                        </td>
+                                                        <td data-b-a-s="thin" data-t:"b">
+                                                            @item.PhieuXuatKho
+                                                        </td>
+                                                        <td data-b-a-s="thin" data-t:"b">
+                                                            @item.XuatHoaDon
+                                                        </td>
+                                                        <td data-b-a-s="thin" data-t:"b">
+                                                            @item.TinhTrangGH
+                                                        </td>
+                                                        <td data-exclude="true">
+                                                            <a href="/KinhDoanh/ChinhSuaDH/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a> ||
+                                                            @*<a href="/KinhDoanh/ChinhSuaCTDH/@item.MaDH" class="btn btn-outline-primary btn-sm edit">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </a> ||*@
+                                                            <a href="/KinhDoanh/XoaDH/@item.MaDH" class="btn btn-primary btn-sm trash">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </a> ||
+                                                            <a href="/KinhDoanh/DanhSachCTDH/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                                <i class="fas fa-train"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -173,7 +426,6 @@
         </div>
     </div>
 </div>
-
 
 <!--Form thêm thông mới đơn hàng-->
 <!-- The Modal -->
@@ -210,25 +462,25 @@
 
                         </div>
                         <div class="form-group col-md-12" id="themdong">
-                                @*<div class="form-group col-md-12">
-                                        <label class="control-label">Tên sản phẩm</label>
-                                        <select class="form-control" name="MaSP" required>
-                                            <option>-----Vui lòng chọn sản phẩm------</option>
-                                            @{ foreach (var item01 in dssp)
-                                                {
-                                                    <option value="@item01.MaSP">@item01.MaSP</option>
-                                                }
+                            @*<div class="form-group col-md-12">
+                                    <label class="control-label">Tên sản phẩm</label>
+                                    <select class="form-control" name="MaSP" required>
+                                        <option>-----Vui lòng chọn sản phẩm------</option>
+                                        @{ foreach (var item01 in dssp)
+                                            {
+                                                <option value="@item01.MaSP">@item01.MaSP</option>
                                             }
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label class="control-label">Nhập số lượng :</label>
-                                        <input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />
-                                    </div>*@
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Nhập số lượng :</label>
+                                    <input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />
+                                </div>*@
                         </div>
                     </div>
                 </div>
-                <div  class="modal-footer ">
+                <div class="modal-footer ">
                     <div class="row">
                         <div class="col-lg-12">
                             <input class="btn btn-add" id="themsp" type="button" name="DiemGiao" value="Thêm SP" onclick="themSP()" required />
@@ -297,6 +549,18 @@
         let table = document.querySelector("#sampleTable");
         TableToExcel.convert(table);
     });
+
+    let button01 = document.querySelector("#button-excel01");
+    button01.addEventListener("click", e => {
+        let table = document.querySelector("#sampleTable01");
+        TableToExcel.convert(table);
+    });
+
+    let button02 = document.querySelector("#button-excel02");
+    button02.addEventListener("click", e => {
+        let table = document.querySelector("#sampleTable02");
+        TableToExcel.convert(table);
+    });
 </script>
 @* '<div class="form-group col-md-12">' +
     '<label class="control-label">Tên sản phẩm</label>' +
@@ -309,6 +573,6 @@
     '<input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />' +
     '/<div>'; *@
 @section script{
-
+    <script src="~/Content/js/tableToExcel.js"></script>
 
 }
