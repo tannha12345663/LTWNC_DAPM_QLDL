@@ -22,59 +22,64 @@
     }
 }
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-lg-12">
         <div class="tile">
-            <div>
-                <h3 class="tile-title">DANH SÁCH PHIẾU ĐÃ LƯU</h3>
+            <div class="tile-title">
+                <h3 >DANH SÁCH PHIẾU ĐÃ LƯU</h3>
             </div>
-            <div class="tile-body table-responsive">
+            <div class="col-md-12 table-responsive">
                 <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
                        id="sampleTable">
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.MaPhieu)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.NgayLap)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.LoaiPhieu)
-                        </th>
-                        <th>Lựa chọn</th>
-                    </tr>
-
-                    @foreach (var item in Model)
-                    {
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MaPhieu)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NgayLap)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LoaiPhieu)
-                            </td>
-                            <td class="element-button">
-                                @{ string str = item.MaPhieu.Substring(0, 2);}
-                                @if (str == "PX")
-                                {
-                                    <a href="~/PhongKho/ChiTietPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-info" title=" Chi tiết"> <i class="fa fa-info"></i> </a>
-                                    <a href="/PhongKho/XoaPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
-                                }
-                                else if (str == "PN")
-                                {
-                                    <a href="~/PhongKho/ChiTietPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-info" title="Chi tiết"> <i class="fa fa-info"></i> </a>
-                                    <a href="/PhongKho/XoaPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
-                                }
-                                else
-                                {
-                                    <a href="~/PhongKho/DetailsPXK/@item.MaPhieu" class="btn btn-outline-info" title="Chi tiết"> <i class="fa fa-info"></i> </a>
-                                    <a href="/PhongKho/DeletePNX/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
-                                }
-                            </td>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaPhieu)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NgayLap)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.LoaiPhieu)
+                            </th>
+                            <th>Lựa chọn</th>
                         </tr>
-                    }
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaPhieu)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NgayLap)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LoaiPhieu)
+                                </td>
+                                <td class="element-button">
+                                    @{ string str = item.MaPhieu.Substring(0, 2);}
+                                    @if (str == "PX")
+                                    {
+                                        <a href="~/PhongKho/ChiTietPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-info" title=" Chi tiết"> <i class="fa fa-info"></i> </a>
+                                        <a href="/PhongKho/XoaPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+                                    }
+                                    else if (str == "PN")
+                                    {
+                                        <a href="~/PhongKho/ChiTietPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-info" title="Chi tiết"> <i class="fa fa-info"></i> </a>
+                                        <a href="/PhongKho/XoaPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <a href="~/PhongKho/DetailsPXK/@item.MaPhieu" class="btn btn-outline-info" title="Chi tiết"> <i class="fa fa-info"></i> </a>
+                                        <a href="/PhongKho/DeletePNX/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
                 </table>
             </div>
         </div>

@@ -21,6 +21,31 @@ namespace Test02.Controllers
         {
             return View();
         }
+        public ActionResult QuanLyDL()
+        {
+            return View();
+        }
+
+        public ActionResult updateTongTon()
+        {
+            //set tổng tồn từng sp theo từng chi tiết kho
+            var chiTietKhos = database.ChiTietKhoes.ToList();
+            var sanPhams = database.SanPhams.ToList();
+            foreach (var sp in sanPhams)
+            {
+                sp.TongTon = 0;
+                foreach (var ctk in chiTietKhos)
+                {
+                    if (sp.MaSP == ctk.MaSP)
+                    {
+                        sp.TongTon += ctk.SoLuong;
+                    }
+                }
+                database.Entry(sp).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                database.SaveChanges();
+            }
+            return View();
+        }
 
         // Quản lý kho
         public ActionResult QuanLyKho()
@@ -86,8 +111,10 @@ namespace Test02.Controllers
                     DateTime ngayDf = new DateTime(2000, 01, 01);
                     chiTietKho.NgayXuat = ngayDf;
                 }
+                
                 database.ChiTietKhoes.Add(chiTietKho);
                 database.SaveChanges();
+                updateTongTon();
                 TempData["AlertMessage"] = "Đã thêm";
                 TempData["MaCTKkk"] = chiTietKho.STT;
                 return RedirectToAction("ChiTietKho", new RouteValueDictionary(
@@ -153,6 +180,7 @@ namespace Test02.Controllers
                 }
                 database.Entry(chiTietKho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();
+                updateTongTon();
                 TempData["AlertMessage"] = "Đã cập nhật";
                 TempData["MaCTKkk"] = Session["Mactkho"];
                 return RedirectToAction("Chitietkho", new RouteValueDictionary(
@@ -183,6 +211,7 @@ namespace Test02.Controllers
             var mactk = database.ChiTietKhoes.Where(s => s.STT == id).FirstOrDefault();
             database.ChiTietKhoes.Remove(mactk);
             database.SaveChanges();
+            updateTongTon();
             TempData["AlertMessage"] = "Đã xóa";
             TempData["MaCTKkk"] = mactk.STT;
             return RedirectToAction("QuanLyKho");
@@ -232,10 +261,10 @@ namespace Test02.Controllers
             return View(kho);
         }
 
-        public JsonResult CheckTenKhoAvailability(string tenkho)
+        public JsonResult CheckTenKhoAvailability(string namekho)
         {
             System.Threading.Thread.Sleep(200);
-            var tenKho = database.Khoes.Where(s => s.TenKho == tenkho).SingleOrDefault();
+            var tenKho = database.Khoes.Where(s => s.TenKho == namekho).SingleOrDefault();
             if(tenKho != null)
             {
                 return Json(1);
@@ -246,8 +275,22 @@ namespace Test02.Controllers
             }
         }
 
+        public JsonResult CheckDiaChiAvailability(string diachi)
+        {
+            System.Threading.Thread.Sleep(200);
+            var diaChi = database.Khoes.Where(s => s.DiaChi == diachi).SingleOrDefault();
+            if (diaChi != null)
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(0);
+            }
+        }
+
         // GET: Khoes/Edit/5
-        
+
         public ActionResult ChinhSuaKho(string id)
         {
             if (id == null)
@@ -386,11 +429,7 @@ namespace Test02.Controllers
 
             return View(database.Khoes.ToList());
         }
-        public ActionResult QuanLyDL()
-        {
-            return View();
-        }
-
+        
 
         ////----------------------------------------------------------------------
         //// GET: PhieuNhapXuats/Create
@@ -829,9 +868,9 @@ namespace Test02.Controllers
             {
                 //tạo danh sách chi tiết kho của kho item
                 List<ChiTietKho> ctk1 = database.ChiTietKhoes.Where(s=> s.MaKho == item.MaKho).ToList();
-                foreach(var item2 in ctk1)
+                foreach(var itemdh in ctdonhang)
                 {
-                    foreach(var itemdh in ctdonhang)
+                    foreach(var item2 in ctk1)
                     {
                         //Kiểm tra sản phẩm có số lượng trong kho phải >= số lượng sản phẩm của đơn hàng
                         if(item2.MaSP == itemdh.MaSP && item2.SoLuong >= itemdh.SoLuong)
@@ -892,28 +931,51 @@ namespace Test02.Controllers
                 phieuNhapXuat.MaDH = (string)Session["madhxk"];
                 var user = (Test02.Models.NhanVien)HttpContext.Session["user"];
                 phieuNhapXuat.MaNVLap = user.MaNV;
-                var donhang = database.DonHangs.Where(s => s.MaDH == phieuNhapXuat.MaDH).FirstOrDefault();
-                List<ChiTietDonHang> ctdonhang = database.ChiTietDonHangs.Where(s => s.MaDH == phieuNhapXuat.MaDH).ToList();
-                var khoxuat = database.Khoes.Where(s => s.MaKho == phieuNhapXuat.MaKho).FirstOrDefault();
-                List<ChiTietKho> ctk = khoxuat.ChiTietKhoes.ToList();
-
-
+                
                 if (ThongTinKho1 != "----chọn kho----")
                 {
+                    var donhang = database.DonHangs.Where(s => s.MaDH == phieuNhapXuat.MaDH).FirstOrDefault();
+                    List<ChiTietDonHang> ctdonhang = database.ChiTietDonHangs.Where(s => s.MaDH == phieuNhapXuat.MaDH).ToList();
+                    var khoxuat = database.Khoes.Where(s => s.MaKho == phieuNhapXuat.MaKho).FirstOrDefault();
+                    List<ChiTietKho> ctk = khoxuat.ChiTietKhoes.ToList();
+                    
+                    
                     TempData["makho001"] = ThongTinKho1;
                     donhang.PhieuXuatKho = true;
-                    foreach(var item in ctk)
+                    donhang.TinhTrangGH = "Chờ giao";
+
+                    foreach (var itemdh in ctdonhang)
                     {
-                        foreach(var item2 in ctdonhang)
+                        foreach (var item in ctk)
                         {
-                            if(item.MaSP == item2.MaSP && item.SoLuong >= item2.SoLuong)
+                            if (item.MaSP == itemdh.MaSP && item.SoLuong >= itemdh.SoLuong)
                             {
-                                item.SoLuong -= item2.SoLuong;
+                                item.SoLuong -= itemdh.SoLuong;
+                                var sp = database.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();
+                                sp.TongTon -= itemdh.SoLuong;
+                                //ngày xuất cập nhật khi trừ số lượng
+                                item.NgayXuat = DateTime.Today;
+                                //cập nhật lại tình trạng
+                                if (item.SoLuong <= 100 && item.SoLuong > 0)
+                                {
+                                    item.TinhTrang = "Sắp hết hàng";
+                                }
+                                else if (item.SoLuong > 100 && item.SoLuong < 1000)
+                                {
+                                    item.TinhTrang = "Còn hàng";
+                                }
+                                //var ktra = (System.DateTime.Now - chiTietKho.NgayXuat);
+                                else if (item.SoLuong >= 1000)
+                                {
+                                    item.TinhTrang = "Tồn kho";
+                                }
+                                else if (item.SoLuong == 0)
+                                {
+                                    item.TinhTrang = "Hết hàng";
+                                }
                                 break;
                             }
                         }
-                        
-                        
                     }
                     database.PhieuNhapXuats.Add(phieuNhapXuat);
                     database.SaveChanges();

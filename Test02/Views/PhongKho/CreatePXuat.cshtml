@@ -51,8 +51,22 @@
                     <form class="row">
                         <div class="form-group col-md-12" id="sample5">
                             <label class="control-label" id="ThongTinKho1">Kho xuất hàng:</label>
-                             @Html.DropDownList("ThongTinKho1", (IEnumerable<SelectListItem>)ViewBag.MaKho, null, new { @class = "form-control" })
-
+                            @*@Html.DropDownList("ThongTinKho1", (IEnumerable<SelectListItem>)ViewBag.MaKho, null, new { @class = "form-control" })*@
+                            <select class="form-control" name="ThongTinKho1" required>
+                                @{ foreach (var item01 in (IEnumerable<SelectListItem>)ViewBag.MaKho)
+                                    {
+                                        var text = "";
+                                         foreach (var itemkkho in kho)
+                                        {
+                                            if( itemkkho.MaKho == item01.Value){
+                                                text = itemkkho.MaKho + " - " + itemkkho.DiaChi;
+                                                break;
+                                            }
+                                        }
+                                        <option value="@item01.Value">@text</option>
+                                    }
+                                }
+                            </select>
                         </div>
                         <div class="form-group col-md-12" id="sample4">
                             <label class="control-label">Đại lý nhận hàng: </label>
