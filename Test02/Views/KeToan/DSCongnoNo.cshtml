@@ -7,7 +7,7 @@
     ViewBag.dsdl = "active";
     ViewBag.nd = "Danh sách công nợ chưa thanh toán";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    List<HoaDon> ctdh = db.HoaDons.ToList();
+
 }
 <link href="~/Content/KeToan/ketoan.css" rel="stylesheet" />
 @{
@@ -29,21 +29,9 @@
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-body">
-                @*TABS*@
-                <div class="tabstatus">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Chưa thanh toán</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Đã thanh toán</a>
-                        </li>
-
-                    </ul>
-                </div>
-                <div class="btn-func" style="padding:10px;">
+              
+                <div class="btn-func col-sm-12" style="padding:10px;">
                     <div class="row">
-
                         <div class="col-sm-2">
                             <a class="btn btn-outline-dark btn-sm" role="button" title="In" onclick="printDiv('printhere')">
                                 <i class="fas fa-print"></i> In dữ liệu
@@ -53,6 +41,22 @@
                             <a href="/KeToan/DSDaiLy" class="btn btn-warning btn-sm" type="button" title="Back">
                                 Quay lại danh sách
                             </a>
+                        </div>
+                        <div class="col-sm-8">
+                            @using (Html.BeginForm("DSCongnoNo", "KeToan", FormMethod.Post, new { @clas = "" }))
+                            {
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.DropDownList("tinhtrangcn", (IEnumerable<SelectListItem>)TempData["tinhtrangcn"], htmlAttributes: new { @class = "form-control-sm", })
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
+                                    </div>
+                                </div>
+                            }
                         </div>
 
                     </div>

@@ -163,7 +163,7 @@ namespace Test02.Controllers
             BindDropDownList();
             Tinhtangdonhang();
             List<DonHang> donhangchuathanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" 
-            && s.TinhTrangThanhToan=="Chưa thanh toán").ToList();
+            && s.TinhTrangThanhToan=="Chưa thanh toán" && s.TinhTrangGH==null).ToList();
 
             return View(donhangchuathanhtoan);
         }
@@ -223,6 +223,7 @@ namespace Test02.Controllers
             return dh;
 
         }
+        
         [HttpPost]
         public ActionResult QLDonHang(string thangs,string tinhtrangdh)
         {
@@ -230,10 +231,55 @@ namespace Test02.Controllers
             BindDropDownList();
             Tinhtangdonhang();
 
-            List<DonHang> tatca = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt").ToList();
+            List<DonHang> tatca = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt"
+            && s.TinhTrangGH == null).ToList();
             List<DonHang> dhchon = LocDonHang_TheoDK(thangs,tatca, tinhtrangdh).ToList();
             return View(dhchon);
         }
+
+        public ActionResult QLDonChoGiao()
+        {
+            BindDropDownList();
+            Tinhtangdonhang();
+            List<DonHang> donhangchuathanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt"
+            && s.TinhTrangThanhToan == "Chưa thanh toán" && s.TinhTrangGH == "Chờ giao").ToList();
+
+            return View(donhangchuathanhtoan);
+        }
+        [HttpPost]
+        public ActionResult QLDonChoGiao(string thangs, string tinhtrangdh)
+        {
+
+            BindDropDownList();
+            Tinhtangdonhang();
+            List<DonHang> tatca = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" 
+           && s.TinhTrangGH == "Chờ giao").ToList();
+            List<DonHang> dhchon = LocDonHang_TheoDK(thangs, tatca, tinhtrangdh).ToList();
+            return View(dhchon);
+        }
+
+        public ActionResult QLDonDaGiao()
+        {
+            BindDropDownList();
+            Tinhtangdonhang();
+            List<DonHang> donhangchuathanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt"
+            && s.TinhTrangThanhToan == "Chưa thanh toán" && s.TinhTrangGH == "Đã giao hàng").ToList();
+
+            return View(donhangchuathanhtoan);
+        }
+        [HttpPost]
+        public ActionResult QLDonDaGiao(string thangs, string tinhtrangdh)
+        {
+
+            BindDropDownList();
+            Tinhtangdonhang();
+            List<DonHang> tatca = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt"
+           ).ToList();
+            List<DonHang> dhchon = LocDonHang_TheoDK(thangs, tatca, tinhtrangdh).ToList();
+            return View(dhchon);
+        }
+
+
 
 
         [HttpPost]
@@ -359,7 +405,7 @@ namespace Test02.Controllers
             return dhmoi;
         }
 
-      [HttpPost]
+      
         public ActionResult TaoCongno(string MaDL, PhieuCongNo phieuCongNo,DateTime Hantra,DateTime NgayLapCN)
         {
             //NGÀY
@@ -409,11 +455,64 @@ namespace Test02.Controllers
 
         }
         //Cong no chua thanh toan
+        private void TinhtangCongno()
+        {
+
+            List<SelectListItem> tinhtrang = new List<SelectListItem>();
+            tinhtrang.Add(new SelectListItem { Text = "Chưa thanh toán", Value = "Chưa thanh toán" });
+            tinhtrang.Add(new SelectListItem { Text = "Đã thanh toán", Value = "Đã thanh toán" });
+            TempData["tinhtrangcn"] = tinhtrang;
+        }
         public ActionResult DSCongnoNo(String id)
         {
             Session["madailycn"] = id;
+            BindDropDownList();
+            TinhtangCongno();
             var dscongno = database.PhieuCongNoes.Where(s => s.MaDL == id && s.TrangThai=="Chưa thanh toán").ToList();
             return View(dscongno);
+
+        }
+        public List<PhieuCongNo> LocCongno_TheoDK(string thang_chon, List<PhieuCongNo> tatcacn, string ttrang)
+        {
+
+            List<PhieuCongNo> congno = new List<PhieuCongNo>();
+            if (thang_chon != "0")
+            {
+                foreach (var locdh in tatcacn)
+                {
+                    DateTime day = (DateTime)locdh.NgayLapCN;
+                    var m = Convert.ToString(day.Month);
+
+                    if (thang_chon == m && locdh.TrangThai == ttrang)
+                    {
+                        congno.Add(locdh);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var locdh in tatcacn)
+                {
+                    if (locdh.TrangThai == ttrang)
+                    {
+                        congno.Add(locdh);
+                    }
+                }
+
+            }
+            return congno;
+
+        }
+        [HttpPost]
+        public ActionResult DSCongnoNo(String id,string thangs,string tinhtrangcn)
+        {
+            BindDropDownList();
+            TinhtangCongno();
+            var dscongno = database.PhieuCongNoes.Where(s => s.MaDL == id).ToList();
+            List<PhieuCongNo> cnchon =LocCongno_TheoDK(thangs, dscongno, tinhtrangcn).ToList();
+            
+            Session["madailycn"] = id;
+            return View(cnchon);
 
         }
         public ActionResult ChinhsuCN(String id)
@@ -437,13 +536,7 @@ namespace Test02.Controllers
                     {
                         item.TinhTrangThanhToan = "Đã thanh toán";
                     }    
-                }else
-                {
-                    foreach (var item in donhang)
-                    {
-                        item.TinhTrangThanhToan = "Chưa thanh toán";
-                    }
-                }    
+                }  
                 
                 database.SaveChanges();
                 TempData["chinhsuacn"] = "chinhthanhcong";

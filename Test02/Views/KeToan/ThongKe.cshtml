@@ -66,8 +66,8 @@
                                             List<ChiTietDonHang> chiTietDonHangs = database.ChiTietDonHangs.Where(s => s.MaSP == item.MaSP).ToList();
                                             foreach (var ct in chiTietDonHangs)
                                             {
-                                                var dh = database.DonHangs.Where(h => h.MaDH == ct.MaDH).FirstOrDefault();
-                                                if (dh.TinhTrangThanhToan == "Đã thanh toán")
+                                                var dh = database.DonHangs.Where(s=>s.MaDH == ct.MaDH).FirstOrDefault();
+                                                if (dh.TinhTrangThanhToan=="Đã thanh toán")
                                                 {
                                                     soluongban = (int)ct.SoLuong + soluongban;
                                                 }

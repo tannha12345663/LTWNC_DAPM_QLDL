@@ -221,9 +221,6 @@
     <Compile Include="Models\PhuongTienGH.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\pr_SapxepDonHang_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\SanPham.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -595,16 +592,15 @@
     <Content Include="Views\TuChoiTruyCap\TuChoiTruyCap.cshtml" />
     <Content Include="Views\KeToan\ChitietCN.cshtml" />
     <Content Include="Views\KeToan\XuatCN.cshtml" />
-    <Content Include="Views\KeToan\QLDonNo.cshtml" />
     <Content Include="Views\KeToan\Thongbao.cshtml" />
     <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
     <Content Include="Views\KeToan\DSCongnoNo.cshtml" />
     <Content Include="Views\KeToan\DSDaiLy.cshtml" />
     <Content Include="Views\KeToan\CongnoDL.cshtml" />
     <Content Include="Views\PhongKho\DetailsPXK.cshtml" />
-    <Content Include="Views\KeToan\QLDonDaGiao.cshtml" />
-    <Content Include="Views\KeToan\QLDonCho.cshtml" />
     <Content Include="Views\KeToan\ThongKe.cshtml" />
+    <Content Include="Views\KeToan\QLDonChoGiao.cshtml" />
+    <Content Include="Views\KeToan\QLDonDaGiao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
