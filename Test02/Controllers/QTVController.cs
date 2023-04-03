@@ -25,19 +25,28 @@ namespace Test02.Controllers
 
         public ActionResult ThemNV()
         {
+            ViewBag.MaChucVu = new SelectList(database.ChucVus, "MaChucVu", "MaChucVu");
+           
             return View();
         }
 
         [HttpPost]
         public ActionResult ThemNV(NhanVien nhanVien)
         {
-            Random rd = new Random();
-            var manv = "NV" + rd.Next(1, 1000);
-            nhanVien.MaNV = manv;
+            if (ModelState.IsValid)
+            {
+                Random rd = new Random();
+                var manv = "NV" + rd.Next(1, 1000);
+                nhanVien.MaNV = manv;
+
+                database.NhanViens.Add(nhanVien);
+                database.SaveChanges();
+                return RedirectToAction("QLNhanVien");
+            }
             
-            database.NhanViens.Add(nhanVien);
-            database.SaveChanges();
-            return RedirectToAction("QLNhanVien");
+            return View(nhanVien);
+            
+           
         }
 
         public ActionResult ChinhsuaNV(String id)
