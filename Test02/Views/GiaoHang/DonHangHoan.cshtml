@@ -34,16 +34,16 @@
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Mã Đơn hàng </th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Tên đại lý</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Số điện thoại đại lý</th>                                    
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Địa chỉ giao</th>
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 80px; text-align: center ">Tình trạng thanh toán</th>
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 80px; text-align: center ">Tình trạng giao</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 150px; text-align: center ">Địa chỉ giao</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tình trạng thanh toán</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 60px; text-align: center ">Tình trạng giao</th>
                                     @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Cập nhật</th>*@
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    if (item.PhieuXuatKho == true && item.XuatHoaDon == true && item.TinhTrangGH != null && item.TinhTrangGH == "Hoàn đơn")
+                                    if (item.PhieuXuatKho == true && item.XuatHoaDon == true && item.TinhTrangGH != null && item.TinhTrangGH == "Chờ giao")
                                     {
                                         <tr>
                                             <td>
@@ -62,10 +62,11 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
                                             </td>
-
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.TinhTrangGH)
-                                            </td>                                        
+                                                <span class="badge bg-secondary" @*style="width:100px"*@>
+                                                    @Html.DisplayFor(modelItem => item.TinhTrangGH)
+                                                </span>
+                                            </td>                                       
                                         </tr>
                                     }
                                 }

@@ -30,6 +30,7 @@
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align:center">Mã phương tiện</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tên phương tiện</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Trọng tải</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Tình trạng</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Cập nhật</th>
                                     </tr>
@@ -37,46 +38,49 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaPT)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TenPT)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TrongTai)
+                                        </td>
+                                        @if (item.TinhTrang == "Sẵn sàng")
+                                        {
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.MaPT)
+                                                <span class="badge bg-success" style="width:100px">
+                                                    @Html.DisplayFor(modelItem => item.TinhTrang)
+                                                </span>
                                             </td>
+                                        }
+                                        else if (item.TinhTrang == "Sử dụng")
+                                        {
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.TenPT)
+                                                <span class="badge bg-dark" style="width:100px">
+                                                    @Html.DisplayFor(modelItem => item.TinhTrang)
+                                                </span>
                                             </td>
-                                            @if (item.TinhTrang == "Sẵn sàng")
-                                            {
-                                                <td>
-                                                    <span class="badge bg-success" style="width:100px">
-                                                        @Html.DisplayFor(modelItem => item.TinhTrang)
-                                                    </span>
-                                                </td>
-                                            }
-                                            else if (item.TinhTrang == "Sử dụng")
-                                            {
-                                                <td>
-                                                    <span class="badge bg-dark" style="width:100px">
-                                                        @Html.DisplayFor(modelItem => item.TinhTrang)
-                                                    </span>
-                                                </td>
-                                            }
-                                            else if (item.TinhTrang == "Bảo trì")
-                                            {
-                                                <td>
-                                                    <span class="badge bg-danger" style="width:100px">
-                                                        @Html.DisplayFor(modelItem => item.TinhTrang)
-                                                    </span>
-                                                </td>
-                                            }
-                                            <td style="text-align:center">
-                                                <a href="/GiaoHang/ChinhSuaPhuongTienGiaoHang/@item.MaPT" class="btn btn-primary btn-sm edit">
-                                                    <i class='bx bxs-edit-alt'></i>
-                                                </a>
-                                                <a href="/GiaoHang/XoaPhuongTienGiaoHang/@item.MaPT" class="btn btn-primary btn-sm deleted">
-                                                    <i class="bx bxs-trash-alt"></i>
-                                                </a>
+                                        }
+                                        else if (item.TinhTrang == "Bảo trì")
+                                        {
+                                            <td>
+                                                <span class="badge bg-danger" style="width:100px">
+                                                    @Html.DisplayFor(modelItem => item.TinhTrang)
+                                                </span>
                                             </td>
-                                        </tr>
+                                        }
+                                        <td style="text-align:center">
+                                            <a href="/GiaoHang/ChinhSuaPhuongTienGiaoHang/@item.MaPT" class="btn btn-primary btn-sm edit">
+                                                <i class='bx bxs-edit-alt'></i>
+                                            </a>
+                                            <a href="/GiaoHang/XoaPhuongTienGiaoHang/@item.MaPT" class="btn btn-primary btn-sm deleted">
+                                                <i class="bx bxs-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

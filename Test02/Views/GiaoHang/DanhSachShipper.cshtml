@@ -49,34 +49,55 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MaNV)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TenNV)
-                                            </td>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaNV)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TenNV)
+                                        </td>
 
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.SDT)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.DiaChi)
-                                            </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SDT)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DiaChi)
+                                        </td>
 
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TinhTrang)
-                                            </td>
 
-                                            <td style="text-align:center">
-                                                <a href="/GiaoHang/ChinhSuaShipper/@item.MaNV" class="btn btn-primary btn-sm edit">
-                                                    <i class='bx bxs-edit-alt'></i>
-                                                </a>
-                                                <a href="/GiaoHang/XoaShipper/@item.MaNV" class="btn btn-primary btn-sm deleted">
-                                                    <i class="bx bxs-trash-alt"></i>
-                                                </a>
+                                        @if (item.TinhTrang == "Sẵn sàng")
+                                        {
+                                            <td>
+                                                <span class="badge bg-success" style="width:100px">
+                                                    @Html.DisplayFor(modelItem => item.TinhTrang)
+                                                </span>
                                             </td>
-                                        </tr>
+                                        }
+                                        else if (item.TinhTrang == "Đang giao hàng")
+                                        {
+                                            <td>
+                                                <span class="badge bg-warning" style="width:100px">
+                                                    @Html.DisplayFor(modelItem => item.TinhTrang)
+                                                </span>
+                                            </td>
+                                        }
+                                        else if (item.TinhTrang == "Nghỉ phép")
+                                        {
+                                            <td>
+                                                <span class="badge bg-danger" style="width:100px">
+                                                    @Html.DisplayFor(modelItem => item.TinhTrang)
+                                                </span>
+                                            </td>
+                                        }
+                                        <td style="text-align:center">
+                                            <a href="/GiaoHang/ChinhSuaShipper/@item.MaNV" class="btn btn-primary btn-sm edit">
+                                                <i class='bx bxs-edit-alt'></i>
+                                            </a>
+                                            <a href="/GiaoHang/XoaShipper/@item.MaNV" class="btn btn-primary btn-sm deleted">
+                                                <i class="bx bxs-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

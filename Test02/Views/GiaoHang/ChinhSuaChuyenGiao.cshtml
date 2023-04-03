@@ -1,0 +1,93 @@
+﻿@model Test02.Models.ChuyenGiao
+@using Test02.Models
+
+@{
+    ViewBag.Title = "ChinhSuaChuyenGiao";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+    ViewBag.dh = "active";
+    ViewBag.nd = "Chỉnh sửa chuyến giao";
+}
+
+
+<div class="tile">
+    <h2 style="text-align:center">Cập nhật chuyến giao @Model.MaGH</h2>
+    <div class="tile-body">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MaGH)
+            @Html.HiddenFor(model => model.MaNVLap)
+            @Html.HiddenFor(model => model.NgayLap)
+            @Html.HiddenFor(model => model.TienThu)
+
+            <div class="form-group">
+                <h5>Nhân viên giao hàng:</h5>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MaNVGiao, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MaNVGiao, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h5>Phương tiện giao:</h5>
+                <div class="col-md-10" name="MaPT">
+                    @Html.EditorFor(model => model.MaPT, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MaPT, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <h5>Tình trạng chuyến giao:</h5>
+                <div class="col-md-10">
+                    <select class="form-control" id="TrangThai" name="TrangThai">
+                        <option selected="@Model.TrangThai">@Model.TrangThai</option>
+                        <option>Đang giao</option>
+                        <option>Đã giao</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h5>Khu vực giao:</h5>
+                <div class="col-md-10">
+                    <select class="form-control" id="KhuVucGiao" name="KhuVucGiao">
+                        <option selected="@Model.KhuVucGiao">@Model.KhuVucGiao</option>
+                        <option>TP HCM</option>
+                        <option>Thủ Đức</option>
+                        <option>Đồng Nai</option>
+                        <option>Bình Dương</option>
+                        <option>Bến Tre</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h5>Ngày giao:</h5>
+                <div class="col-md-10" name="NgayGiao">
+                    @Html.EditorFor(model => model.NgayGiao, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NgayGiao, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Lưu đơn hàng @Model.MaGH" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+<div>
+    <div class="col-sm-2">
+        <a class="btn btn-danger" type="button" title="Quay lại " href="/GiaoHang/DanhSachCacChuyenGiaoHang"><i class=""></i> Quay lại</a>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Test02.Models.ChuyenGiao>
+@using Test02.Models;
+@{
+    ViewBag.Title = "XepDon";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+    ViewBag.gh_donhangmoi = "active";
+    ViewBag.nd = "Danh sách các chuyến giao hàng";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+}
+
+

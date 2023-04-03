@@ -20,20 +20,20 @@ namespace Test02.Controllers
         // GET: GiaoHang
 
 
-        //------------------------------------------DANH SACH DON HANG MOI CAN XET DUYET GIAO-------------------------------------------------------------
+        //Danh sach don hang moi can xet duyet
         public ActionResult DonHangMoi()
         {
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
         }
 
-
         //Hien thi chi tiet don giao hang
         public ActionResult ChiTietDonGiaoHang(string id)
         {
-             return View(database.ChiTietDonHangs.ToList().Where(s => s.MaDH == id));
+            TempData["gh_ctdonhang"] = database.DonHangs.ToList().Where(s => s.MaDH == id);
+            return View(TempData["gh_ctdonhang"]);      
         }
-
-       //Hien thi danh sach don hang giao
+        
+        //Hien thi danh sach don hang giao
         public ActionResult DonGiaoHang()
         {
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
@@ -44,7 +44,6 @@ namespace Test02.Controllers
         {
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
         }
-
 
         //Hien thi danh sach don da giao
         public ActionResult DonDaGiao()
@@ -58,27 +57,149 @@ namespace Test02.Controllers
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
         }
 
-        //-------------------------------------VIEW IN PHIEU XUAT KHO--------------------------------------------------
-        public ActionResult InPhieuXuatKho(string id)
+        
+
+
+        //--------------------------LAP CAC CHUYEN GIAO HANG(gom nhieu don hang)------------------------------------
+
+        //Danh sach cac chuyen giao 
+        public ActionResult DanhSachCacChuyenGiao()
         {
-            return View(database.PhieuNhapXuats.Where(s => s.MaPhieu == id));
+            TempData["ngaylapcg"] = System.DateTime.Now;
+            TempData["dschuyengiao"] = database.ChuyenGiaos.ToList().OrderByDescending(s => s.MaGH);
+            return View(TempData["dschuyengiao"]);
+        }
+
+        //Chinh sua chuyen giao
+        public ActionResult ChinhSuaChuyenGiao(string id)
+        {
+            return View(database.ChuyenGiaos.Where(s => s.MaGH == id).FirstOrDefault());
+        }
+
+        [HttpPost, ActionName("ChinhSuaChuyenGiao")]
+        public ActionResult ChinhSuaChuyenGiao(ChuyenGiao chuyengiao)
+        {
+            database.Entry(chuyengiao).State = System.Data.Entity.EntityState.Modified;
+            database.SaveChanges();
+            return RedirectToAction("DanhSachCacChuyenGiao");
         }
 
 
 
-        //--------------------------LAP DANH SACH DON HANG GIAO(gom nhieu don hang)------------------------------------
-        public ActionResult DanhSachDonHangGiao()
+        //Them chuyen giao
+        public ActionResult ThemChuyenGiaoHang()
         {
-            TempData["ngaylapdgh"] = System.DateTime.Now;
-
-
-            return View(database.DonHangGiaos.ToList().OrderByDescending(s => s.MaGH));
+            return View();
         }
 
-        //Xet duyet don giao hang
+        [HttpPost]
+        public ActionResult ThemChuyenGiaoHang([Bind(Include = "MaNVLap,MaNVGiao,MaPT,NgayLap,TrangThai,NgayGiao")] ChuyenGiao chuyenggiao)
+        {
+            if (chuyenggiao.MaPT == null || chuyenggiao.MaNVGiao == null)
+            {
+                TempData["AlertMessage"] = "check null";
+                return RedirectToAction("ThemChuyenGiaoHang");
+            }
+            else
+            {               
+                //ViewBag.ngaylap = TempData["ngaylapcg"] = System.DateTime.Now;
+                Random rd = new Random();
+                var cg = "GH" + rd.Next(1, 1000);
+                chuyenggiao.MaGH = cg;
+                chuyenggiao.TrangThai = Convert.ToString("Chờ giao");
+                chuyenggiao.NgayLap = System.DateTime.Now;
+                database.ChuyenGiaos.Add(chuyenggiao);
+                database.SaveChanges();
+                TempData["messageAlert"] = "Đã thêm mới đơn hàng";
+                return RedirectToAction("DanhSachCacChuyenGiao");
+            }
+            return View(chuyenggiao);
+        }
+    
+        //Chi tiet chuyen giao
+        public ActionResult ChiTietChuyenGiaoHang(string id)
+        {
+            return View(database.ChiTietChuyenGiaos.ToList().Where(s => s.MaGH == id));
+
+
+
+
+
+
+
+
+
+
+        }
+
+        //Huy chuyen giao
+        public ActionResult HuyChuyenGiao(String id)
+        {
+
+            return View(database.ChuyenGiaos.Where(s => s.MaGH == id).FirstOrDefault());
+        }
+
+        [HttpPost]
+        public ActionResult HuyChuyenGiao(String id, ChuyenGiao chuyengiao)
+        {
+            chuyengiao = database.ChuyenGiaos.Where(s => s.MaGH == id).FirstOrDefault();
+            database.ChuyenGiaos.Remove(chuyengiao);
+            database.SaveChanges();
+            TempData["AlertMessage"] = "Xóa thành công";
+            return RedirectToAction("DanhSachCacChuyenGiao");
+
+        }
+
+
+        //Xep don (test)
+        public ActionResult XepDon()
+        {
+            database.ChuyenGiaos.ToList().OrderByDescending(s => s.MaGH);
+            return View(TempData["gh_ctdonhang"]);
+        }
+
+        //Them don hang vao chuyen giao (test)
+        public ActionResult ThemDonHangVaoChuyenGiao(string id1, string id2)
+        {
+            Session["macg1"] = id1;
+            Session["macg2"] = id2;
+            ViewBag.MaCTDVC = new SelectList(database.ChiTietChuyenGiaos, "MaCTDVC", "MaCTDVC");
+            ViewBag.MaGH = new SelectList(database.ChiTietChuyenGiaos, "MaGH", "MaGH");
+            ViewBag.MaDH = new SelectList(database.SanPhams, "MaDH", "MaDH");
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ThemDonHangVaoChuyenGiao([Bind(Include = "MaCTDVC,MaDH,MaGH")] ChiTietChuyenGiao chiTietChuyenGiao, ChuyenGiao chuyenGiao, DonHang donhang)
+        {
+
+            if (ModelState.IsValid)
+            {
+                chiTietChuyenGiao.MaCTDVC = (int)Session["makho1"];
+                chuyenGiao.MaGH = (string)Session["makho2"];
+                if (donhang.TinhTrangGH == "Chờ giao")
+                {
+                    donhang.TinhTrangGH = Convert.ToString("Đang giao");
+                }                
+              
+                database.ChiTietChuyenGiaos.Add(chiTietChuyenGiao);
+                database.SaveChanges();
+                TempData["AlertMessage"] = "Đã thêm";
+                TempData["MaCTKkk"] = chiTietChuyenGiao.MaCTDVC;
+                return RedirectToAction("ChiTietChuyenGiaoHang", 
+                    new RouteValueDictionary(new { controller = "GiaoHang", 
+                        action = "ChiTietChuyenGiaoHang", Id = chiTietChuyenGiao.MaGH }));
+            }
+            return View();
+        }
+
+
+
+        //Xet duyet don giao hang (test)
         public ActionResult XetDuyetDonGiaoHang(string id)
         {
-            //TempData["madhxd"] = id;
             TempData["ngayduyet"] = System.DateTime.Now;
             var maDH = id;
             foreach (var item in database.DonHangs)
@@ -144,23 +265,25 @@ namespace Test02.Controllers
             return View(dsxetduyetgiaohang);
         }
 
-        //--------------------------------------------CAP NHAT TRANG THAI DON HANG---------------------------------------------------
+        
+
+        //Cap nhat trang thai don hang
         public ActionResult CapNhatTrangThaiDonHang(string id)
         {
             return View(database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault());
         }
 
-        [HttpPost]
-        public ActionResult CapNhatTrangThaiDonHang(String id, DonHang donHang)
-        {
-            database.Entry(donHang).State = System.Data.Entity.EntityState.Modified;
+        [HttpPost, ActionName("CapNhatTrangThaiDonHang")]
+        public ActionResult CapNhatTrangThaiDonHang(DonHang donhang)
+        {          
+            database.Entry(donhang).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
             return RedirectToAction("DonGiaoHang");
         }
 
 
 
-        //----------------------------------------------------DON HANG HOAN------------------------------------------------------------
+        //Don hang hoan
         public ActionResult DanhSachDonHoan()
         {
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
@@ -172,35 +295,38 @@ namespace Test02.Controllers
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
         }
 
-        public ActionResult BaoCaoPhongGiaoHang()
-        {
-            return View();
-        }
 
 
-        //---------------------------------------------BAO CAO PHONG GIAO HANG-------------------------------------------------------
-        [HttpPost]
-        [ValidateInput(false)]
-        public ActionResult BaoCaoPhongGiaoHang(BaoCao baocao)
-        {
-            if (ModelState.IsValid)
-            {
 
-                Random rd = new Random();
-                var mabc = "BC" + rd.Next(1, 1000);
-                baocao.MaBC = mabc;
-                var manv = (Test02.Models.NhanVien)Session["user"];
-                baocao.MaNV = manv.MaNV;
-                database.BaoCaos.Add(baocao);
-                database.SaveChanges();
-                return RedirectToAction("BaoCaoPhongGiaoHang");
-            }
+        ////---------------------------------------------BAO CAO PHONG GIAO HANG-------------------------------------------
+        //[HttpPost]
+        //[ValidateInput(false)]
+        //public ActionResult BaoCaoPhongGiaoHang(BaoCao baocao)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
 
-            return View(baocao);
-        }
+        //        Random rd = new Random();
+        //        var mabc = "BC" + rd.Next(1, 1000);
+        //        baocao.MaBC = mabc;
+        //        var manv = (Test02.Models.NhanVien)Session["user"];
+        //        baocao.MaNV = manv.MaNV;
+        //        database.BaoCaos.Add(baocao);
+        //        database.SaveChanges();
+        //        return RedirectToAction("BaoCaoPhongGiaoHang");
+        //    }
+
+        //    return View(baocao);
+        //}
+        //public ActionResult BaoCaoPhongGiaoHang()
+        //{
+        //    return View();
+        //}
 
 
-        //------------------------------------------DANH SACH SHIPPER-----------------------------------------------------
+        //-------------------------------------------------SHIPPER-----------------------------------------------------
+
+        //Danh sach shipper
         public ActionResult DanhSachShipper()
         {
             return View(database.NhanVienGHs.ToList().OrderByDescending(s => s.MaNV));
@@ -208,6 +334,7 @@ namespace Test02.Controllers
 
         public ActionResult ThemShipper()
         {
+            
             return View();
         }
 
@@ -221,9 +348,11 @@ namespace Test02.Controllers
 
             database.NhanVienGHs.Add(nhanVien);
             database.SaveChanges();
+            TempData["AlertMessage"] = "Thêm nhân viên giao hàng thành công";
             return RedirectToAction("DanhSachShipper");
         }
 
+        //chinh sua shipper
         public ActionResult ChinhsuaShipper(String id)
         {
             return View(database.NhanVienGHs.Where(s => s.MaNV == id).FirstOrDefault());
@@ -233,11 +362,14 @@ namespace Test02.Controllers
         {
             database.Entry(nhanVien).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
+            TempData["AlertMessage"] = "Chỉnh sửa thành công";
             return RedirectToAction("DanhSachShipper");
         }
 
+        //xoa shipper
         public ActionResult XoaShipper(String id)
         {
+            
             return View(database.NhanVienGHs.Where(s => s.MaNV == id).FirstOrDefault());
         }
         [HttpPost]
@@ -246,22 +378,25 @@ namespace Test02.Controllers
             nhanvien = database.NhanVienGHs.Where(s => s.MaNV == id).FirstOrDefault();
             database.NhanVienGHs.Remove(nhanvien);
             database.SaveChanges();
+            TempData["AlertMessage"] = "Xóa thành công";
             return RedirectToAction("DanhSachShipper");
 
         }
 
         //-----------------------------------------------PHUONG TIEN GIAO HANG------------------------------------------
+
+        //Danh sach phuong tien giao hang
         public ActionResult DanhSachPhuongTienGiaoHang()
         {
             return View(database.PhuongTienGHs.ToList().OrderByDescending(s => s.MaPT));
         }
      
+
+        //Them phuong tien giao hang
         public ActionResult ThemPhuongTienGiaoHang()
         {
             return View();
         }
-
-
         [HttpPost]
         public ActionResult ThemPhuongTienGiaoHang(PhuongTienGH phuongtien)
         {
@@ -273,13 +408,11 @@ namespace Test02.Controllers
             return RedirectToAction("DanhSachPhuongTienGiaoHang");
         }
 
-
+        //Chinh sua phuong tien giao hang
         public ActionResult ChinhSuaPhuongTienGiaoHang(String id)
         {
             return View(database.PhuongTienGHs.Where(s => s.MaPT == id).FirstOrDefault());
         }
-
-
         [HttpPost]
         public ActionResult ChinhSuaPhuongTienGiaoHang(String id, PhuongTienGH pt)
         {
@@ -288,13 +421,11 @@ namespace Test02.Controllers
             return RedirectToAction("DanhSachPhuongTienGiaoHang");
         }
 
-
+        //Xoa phuong tien giao hang
         public ActionResult XoaPhuongTienGiaoHang(String id)
         {
             return View(database.PhuongTienGHs.Where(s => s.MaPT == id).FirstOrDefault());
         }
-
-
         [HttpPost]
         public ActionResult XoaPhuongTienGiaoHang(String id, PhuongTienGH pt)
         {
@@ -302,6 +433,25 @@ namespace Test02.Controllers
             database.PhuongTienGHs.Remove(pt);
             database.SaveChanges();
             return RedirectToAction("DanhSachPhuongTienGiaoHang");
+        }
+
+
+        //----------------------------------------------IN PHIEU--------------------------------------------------
+        public ActionResult InPhieuXuatKho(string id)
+        { 
+            return View(database.PhieuNhapXuats.ToList().Where(s => s.MaPhieu == id));
+        }
+
+        public ActionResult InHoaDon(string id)
+        {
+            return View(database.PhieuNhapXuats.ToList().Where(s => s.MaPhieu == id));
+        }
+
+
+        //-------------------------------------TEST DEMO-------------------------------------------
+        public ActionResult ThemDonHang(string id)
+        {
+            return View();
         }
 
     }

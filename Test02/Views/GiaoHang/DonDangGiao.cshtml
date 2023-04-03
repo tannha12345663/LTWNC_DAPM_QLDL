@@ -31,13 +31,10 @@
                         <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                             <thead>
                                 <tr role="row">
-                                    @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 60px; text-align:center">Mã đơn giao hàng</th>*@
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Mã Đơn hàng </th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Tên đại lý</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Số điện thoại đại lý</th>
-                                    @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 120px; text-align: center ">Kho lấy hàng</th>*@
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Địa chỉ giao</th>
-                                    @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Ngày giao</th>*@
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 150px; text-align: center ">Địa chỉ giao</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 80px; text-align: center ">Tình trạng thanh toán</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 80px; text-align: center ">Tình trạng giao</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Cập nhật</th>
@@ -46,43 +43,40 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    if (item.XuatHoaDon == true && item.PhieuXuatKho == true && item.TrangThai == "Đã xét duyệt" && item.TinhTrangGH == "Đang giao hàng")
+                                    if (item.XuatHoaDon == true && item.PhieuXuatKho == true && item.TrangThai == "Đã xét duyệt" && item.TinhTrangGH == "Đang giao")
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MaDH)
-                                            </td>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaDH)
+                                    </td>
 
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.DaiLy.TenDL)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.DaiLy.SDT)
-                                            </td>
-                                            @*<td>
-                                @Html.DisplayFor(modelItem => item.DanhSachGiaoHangs.NgayGiao)
-                            </td>*@
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.DiemGiao)
-                                            </td>
-                                            @*<td>
-                                @Html.DisplayFor(modelItem => item.NgayGiao)
-                            </td>*@
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
-                                            </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DaiLy.TenDL)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DaiLy.SDT)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DiemGiao)
+                                    </td>
 
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TinhTrangGH)
-                                            </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                    </td>
+
+                                    <td>
+                                        <span class="badge bg-warning" style="width:100px">
+                                            @Html.DisplayFor(modelItem => item.TinhTrangGH)
+                                        </span>
+                                    </td>
 
 
-                                            <td style="text-align:center">
-                                                <a href="/GiaoHang/ChiTietDonGiaoHang/@item.MaDH" class="btn btn-primary btn-sm edit">
-                                                    <i class='bx bxs-check-square'></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                    <td style="text-align:center">
+                                        <a href="/GiaoHang/CapNhatTrangThaiDonHang/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                            <i class='bx bxs-log-in-circle'></i>
+                                        </a>
+                                    </td>
+                                </tr>
                                     }
                                 }
 

@@ -5,7 +5,7 @@
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
     ViewBag.gh_donhangmoi = "active";
     ViewBag.nd = "Danh sách đơn hàng mới cần giao";
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();  
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
 
 
@@ -14,10 +14,10 @@
         <div class="tile">
             <div class="tile-body">
                 <div class="row element-button">
-                   
+
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
-                    </div>      
+                    </div>
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
                             <i class="fas fa-print"></i> In dữ liệu
@@ -33,11 +33,12 @@
                                 <thead>
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align:center">Mã đơn hàng</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Ngày lập </th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Ngày lên đơn</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 40px; text-align: center ">Mã đại lý </th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tên đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Số điện thoại đại lý</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 120px; text-align: center ">Địa điểm giao hàng</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tình trạng thanh toán</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 150px; text-align: center ">Địa điểm giao hàng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Tình trạng thanh toán</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Thành tiền</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Xếp đơn</th>
                                     </tr>
@@ -46,7 +47,7 @@
                                     @foreach (var item in Model)
                                     {
 
-                                        if (item.XuatHoaDon == true && item.PhieuXuatKho == true && item.TrangThai == "Đã xét duyệt" && item.TinhTrangGH == null )
+                                        if (item.XuatHoaDon == true && item.PhieuXuatKho == true && item.TrangThai == "Đã xét duyệt" && item.TinhTrangGH == "Chờ giao")
                                         {
                                             <tr>
 
@@ -55,6 +56,9 @@
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.NgayLap)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DaiLy.MaDL)
                                                 </td>
 
                                                 <td>
@@ -66,9 +70,25 @@
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.DiemGiao)
                                                 </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
-                                                </td>
+
+
+                                                @if (item.TinhTrangThanhToan == "Chưa thanh toán")
+                                                {
+                                                    <td>
+                                                        <span class="badge bg-danger" style="width:100px">
+                                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                        </span>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <span class="badge bg-success" style="width:100px">
+                                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                        </span>
+                                                    </td>
+                                                }
+
                                                 <td>
                                                     @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                                     @Html.DisplayFor(modelItem => ThanhTien)

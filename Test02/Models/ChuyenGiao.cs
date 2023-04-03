@@ -12,20 +12,27 @@ namespace Test02.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PhuongTienGH
+    public partial class ChuyenGiao
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PhuongTienGH()
+        public ChuyenGiao()
         {
-            this.ChuyenGiaos = new HashSet<ChuyenGiao>();
+            this.ChiTietChuyenGiaos = new HashSet<ChiTietChuyenGiao>();
         }
     
+        public string MaGH { get; set; }
+        public string MaNVLap { get; set; }
+        public string MaNVGiao { get; set; }
         public string MaPT { get; set; }
-        public string TenPT { get; set; }
-        public string TinhTrang { get; set; }
-        public Nullable<double> TrongTai { get; set; }
+        public Nullable<System.DateTime> NgayGiao { get; set; }
+        public Nullable<double> TienThu { get; set; }
+        public string TrangThai { get; set; }
+        public Nullable<System.DateTime> NgayLap { get; set; }
+        public string KhuVucGiao { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChuyenGiao> ChuyenGiaos { get; set; }
+        public virtual ICollection<ChiTietChuyenGiao> ChiTietChuyenGiaos { get; set; }
+        public virtual NhanVienGH NhanVienGH { get; set; }
+        public virtual PhuongTienGH PhuongTienGH { get; set; }
     }
 }

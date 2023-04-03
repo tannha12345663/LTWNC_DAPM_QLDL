@@ -10,6 +10,16 @@
 
 
 <div class="row">
+
+    <div class="col-md-6 col-lg-4">
+        <div class="widget-small danger coloured-icon">
+            <img src="~/Content/Img/logictic/delivery-truck.png" style="width:25%; margin-left:10px" />
+            <div class="info">
+                <a href="/GiaoHang/DonHangHoan" style="text-align: center; color: #060054; font-weight: 1000; margin-left: 55px">ĐƠN CHỜ GIAO</a>
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-6 col-lg-4">
         <div class="widget-small info coloured-icon">
             <img src="~/Content/Img/logictic/fast-delivery.png" style="width:25%; margin-left:10px" />
@@ -18,6 +28,7 @@
             </div>
         </div>
     </div>
+
     <div class="col-md-6 col-lg-4">
         <div class="widget-small warning coloured-icon">
             <img src="~/Content/Img/logictic/shipped.png" style="width:25%; margin-left:10px" />
@@ -26,14 +37,8 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6 col-lg-4">
-        <div class="widget-small danger coloured-icon">
-            <img src="~/Content/Img/logictic/fail.png" style="width:25%; margin-left:10px" />
-            <div class="info">
-                <a href="/GiaoHang/DonHangHoan" style="text-align: center; color: #060054; font-weight: 1000; margin-left: 55px">ĐƠN HOÀN</a>
-            </div>
-        </div>
-    </div>
+
+
 </div>
 
 
@@ -62,7 +67,7 @@
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 30px; text-align: center ">Mã Đơn hàng </th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Mã đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Số điện thoại đại lý</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Địa chỉ giao</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 150px; text-align: center ">Địa chỉ giao</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tình trạng thanh toán</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 60px; text-align: center ">Tình trạng giao</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Cập nhật</th>
@@ -73,34 +78,72 @@
                                     {
                                         if (item.PhieuXuatKho == true && item.XuatHoaDon == true && item.TinhTrangGH != null && item.TrangThai == "Đã xét duyệt")
                                         {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.MaDH)
-                                                </td>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaDH)
+                                        </td>
 
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.DaiLy.TenDL)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.DaiLy.SDT)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
-                                                </td>
-                                                <td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DaiLy.TenDL)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DaiLy.SDT)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DiemGiao)
+                                        </td>
+
+
+                                        @if (item.TinhTrangThanhToan == "Chưa thanh toán")
+                                        {
+                                            <td>
+                                                <span class="badge bg-danger" style="width:100px">
                                                     @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.TinhTrangGH)
-                                                </td>
-                                                <td style="text-align:center">
-                                                    <a href="/GiaoHang/CapNhatTrangThaiDonHang/@item.MaDH" class="btn btn-primary btn-sm edit">
-                                                        <i class='bx bxs-check-square'></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                                </span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <span class="badge bg-success" style="width:100px">
+                                                    @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                </span>
+                                            </td>                                         
                                         }
 
+
+                                        @if (item.TinhTrangGH == "Đã giao")
+                                        {
+                                            <td>
+                                                <span class="badge bg-success" style="width:100px">
+                                                    @Html.DisplayFor(modelItem => item.TinhTrangGH)
+                                                </span>
+                                            </td>
+                                        }
+                                        else if (item.TinhTrangGH == "Đang giao")
+                                        {
+                                            <td>
+                                                <span class="badge bg-warning" style="width:100px">
+                                                    @Html.DisplayFor(modelItem => item.TinhTrangGH)
+                                                </span>
+                                            </td>
+                                        }
+                                        else if (item.TinhTrangGH == "Chờ giao")
+                                        {
+                                            <td>
+                                                <span class="badge bg-dark" style="width:100px">
+                                                    @Html.DisplayFor(modelItem => item.TinhTrangGH)
+                                                </span>
+                                            </td>
+                                        }
+
+                                        <td style="text-align:center">
+                                            <a href="/GiaoHang/CapNhatTrangThaiDonHang/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                <i class='bx bxs-log-in-circle'></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                        }
                                     }
                                 </tbody>
                             </table>

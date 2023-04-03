@@ -87,6 +87,7 @@ namespace Test02.Controllers
                     DateTime ngayDf = new DateTime(2000, 01, 01);
                     chiTietKho.NgayXuat = ngayDf;
                 }
+
                 database.ChiTietKhoes.Add(chiTietKho);
                 database.SaveChanges();
                 TempData["AlertMessage"] = "Đã thêm";

@@ -1,0 +1,166 @@
+﻿@model IEnumerable<Test02.Models.ChiTietChuyenGiao>
+
+@using Test02.Models;
+@{
+    ViewBag.Title = "ChiTietChuyenGiao";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+    ViewBag.gh_cg = "active";
+    ViewBag.nd = "Chi tiết chuyến giao hàng";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    //List<ChiTietChuyenGiao> ct = db.ChiTietChuyenGiaos.ToList();
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body" id="hd">
+
+                <h3 style="text-align:center">CHI TIẾT CHUYẾN GIAO HÀNG</h3>
+                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+
+                    @foreach (var item in Model)
+                    {
+                        @*<a class="btn btn-danger" href="/GiaoHang/HuyChuyenGiao/@item.MaGH">Hủy chuyến</a>*@
+                        <p style="text-align:center">
+                            <span>
+                                @{
+                                    var cg = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                                    var dgh = db.ChiTietChuyenGiaos.Where(s => s.MaGH == cg.MaGH).FirstOrDefault();}
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Mã giao hàng: </strong> @{
+                                var magh = db.ChuyenGiaos.Where(s => s.MaGH == cg.MaGH).FirstOrDefault();}
+                            @Html.DisplayFor(modelItem => magh.MaGH)
+                        </p>
+                        <p>
+                            <strong>Nhân viên giao hàng: </strong> @{
+                                var nvgh = db.ChuyenGiaos.Where(s => s.MaGH == cg.MaGH).FirstOrDefault();}
+                            @Html.DisplayFor(modelItem => nvgh.NhanVienGH.TenNV)
+                        </p>
+                        <p>
+                            <strong>Phương tiện giao hàng: </strong> @{
+                                var ptgh = db.ChuyenGiaos.Where(s => s.MaGH == cg.MaGH).FirstOrDefault();}
+                            @Html.DisplayFor(modelItem => ptgh.PhuongTienGH.MaPT) - @{var tenpt = db.ChuyenGiaos.Where(s => s.MaGH == cg.MaGH).FirstOrDefault();}
+                            @Html.DisplayFor(modelItem => tenpt.PhuongTienGH.TenPT)
+                        </p>
+                        <p>
+                            <strong>Khu vực giao: </strong> @{
+                                var kvg = db.ChuyenGiaos.Where(s => s.MaGH == cg.MaGH).FirstOrDefault();}
+                            @Html.DisplayFor(modelItem => kvg.KhuVucGiao)
+                        </p>
+
+                        <p>
+                            <a class="btn btn-outline-dark" href="/GiaoHang/ChinhSuaChuyenGiao/@item.MaGH"> Chỉnh sửa</a>
+                        </p>
+
+                        break;
+
+
+                    }
+
+                    <div class="row">
+
+                        <div class="col-sm-12">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                <thead>
+                                    <tr role="row" style="text-align:center">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px;">Mã đơn hàng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" style="width: 100px;">Tên đại lý nhận</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" style="width: 100px;">Số điện thoại</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px;">Địa chỉ giao</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px;">Tình trạng thanh toán</th>
+                                        @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px;">Thành tiền</th>*@
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" style="width: 120px;">Tổng tiền thu</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var total = 0;
+                                    }
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <tr>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaDH)
+                                            </td>
+                                            <td>
+                                                @{ var tendl = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
+                                                @Html.DisplayFor(modelItem => tendl.DaiLy.TenDL)
+                                            </td>
+                                            <td>
+                                                @{ var sdt = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
+                                                @Html.DisplayFor(modelItem => sdt.DaiLy.SDT)
+                                            </td>
+                                            <td>
+                                                @{ var diemgiao = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
+                                                @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
+                                            </td>
+                                            <td>
+                                                @{ var tttt = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
+                                                @Html.DisplayFor(modelItem => tttt.TinhTrangThanhToan)
+                                            </td>
+
+                                            @if (item.DonHang.TinhTrangThanhToan == "Đã thanh toán")
+                                            {
+                                                <td>
+                                                    @{var tien = string.Format("{0:0,0 vnđ}", item.DonHang.TongTien);
+                                                        @Html.DisplayFor(modelItem => tien)}
+                                                </td>
+
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    @{ total += Convert.ToInt32(item.DonHang.TongTien);}
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.DonHang.TongTien);}
+                                                    @Html.DisplayFor(modelItem => ThanhTien)
+                                                </td>
+                                            }
+                                        </tr>
+
+                                    }
+                                    <tr>
+                                        <th colspan="5">Tổng cộng hóa đơn:</th>
+                                        @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                        <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                    </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h5 style="margin-left:78%;" id="sample1">Người thực hiện giao</h5>
+            <h6 style="margin-left:80%; font-style:italic;" id="sample1">(ký và ghi rõ họ tên)</h6>
+            <br />
+            <br />
+            <h6 style="margin-left:82%;" id="sample1">--------------</h6>
+
+            <div class="row element-button">
+                <div class="col-sm-2">
+                    <a class="btn btn-success" href="/GiaoHang/ThemDonHangVaoChuyenGiao"> Thêm đơn hàng</a>
+                </div>
+                <div class="col-sm-2">
+                    <a class="btn btn-warning" title="In" onclick="myApp.printTable()">
+                        <i class="fas fa-print"></i> In dữ liệu
+                    </a>
+                </div>
+                @*<div class="col-sm-2">
+                    <a class="btn btn-outline-dark" href="/GiaoHang/ChinhSuaChuyenGiao"> Chỉnh sửa</a>
+                </div>*@
+                @*<div class="col-sm-2">
+                        <a class="btn btn-danger" href="/GiaoHang/HuyChuyenGiao">Hủy chuyến</a>
+                    </div>*@
+                <div class="col-sm-2">
+                    <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachCacChuyenGiao"><i class=""></i> Quay lại</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -24,7 +24,7 @@
     <header class="app-header">
         <!-- Sidebar toggle button-->
         <a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
-                                        aria-label="Hide Sidebar"></a>
+           aria-label="Hide Sidebar"></a>
         <!-- Navbar Right Menu-->
         <ul class="app-nav">
             <!-- User Menu-->
@@ -48,14 +48,16 @@
                             @user.TenNV}
                     </b>
                 </p>
-                <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
+                <p class="app-sidebar__user-designation">Hello!</p>
+                @*<p>Chúc bạn một ngày mới làm việc vui vẻ.</p>*@
+
             </div>
         </div>
         <hr>
         <ul class="app-menu">
             <li>
                 <a class="app-menu__item haha">
-                    <i class='app-menu__icon bx bx-cart-alt'></i>
+                    <i class='app-menu__icon bx bxl-go-lang'></i>
                     <span class="">PHÒNG GIAO HÀNG</span>
                 </a>
             </li>
@@ -70,6 +72,11 @@
                 </a>
             </li>
             <li>
+                <a class="app-menu__item  @ViewBag.gh_cg" href="~/GiaoHang/DanhSachCacChuyenGiao">
+                    <i class='app-menu__icon bx bx-map-alt'></i><span class="app-menu__label">Chuyến giao hàng</span>
+                </a>
+            </li>
+            <li>
                 <a class="app-menu__item @ViewBag.gh_shippers" href="~/GiaoHang/DanhSachShipper">
                     <i class='app-menu__icon bx bxs-user-account'></i><span class="app-menu__label">Nhân viên giao</span>
                 </a>
@@ -79,12 +86,6 @@
                     <i class='app-menu__icon bx bxs-car'></i><span class="app-menu__label">Phương tiện</span>
                 </a>
             </li>
-            @*<li>
-                <a class="app-menu__item  @ViewBag.gh_bc" href="~/GiaoHang/BaoCaoPhongGiaoHang">
-                    <i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Báo cáo</span>
-                </a>
-            </li>*@
-
         </ul>
     </aside>
     <main class="app-content">
@@ -116,6 +117,7 @@
     <script type="text/javascript" src="~/Content/js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Content/js/plugins/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
+    <script type="text/javascript">$('#sampleTable1').DataTable();</script>
     <script type="text/javascript">
         var data = {
             labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6"],
@@ -200,7 +202,6 @@
         }
     </script>
     <script src="~/Content/ckeditor/ckeditor.js"></script>
-
 </body>
 </html>
 

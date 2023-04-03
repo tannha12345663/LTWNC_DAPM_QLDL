@@ -1,46 +1,70 @@
 ﻿@model Test02.Models.DonHang
+@using Test02.Models
 
 @{
     ViewBag.Title = "CapNhatTrangThaiDonHang";
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
-    ViewBag.gh_dsdh = "active";
-    ViewBag.nd = "Cập nhật trạng thái đơn giao ";
+    ViewBag.dh = "active";
+    ViewBag.nd = "Cập nhật trạng thái đơn hàng";
+
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.MaDH)
-        <p>
-            <strong>Mã phương tiện: </strong>
-            @Html.DisplayFor(modelItem => Model.MaDH)
-        </p>
-        <div class="form-group">
-            <strong>Trạng thái đơn hàng: </strong>
-            <div class="col-md-10">
-                @*@Html.EditorFor(model => model.TinhTrang, new { htmlAttributes = new { @class = "form-control" } })*@
-                <select class="form-control" name="tinhtrang">
-                    <option>----Cập nhật tình trạng đơn hàng----</option>
-                    <option>Chờ giao hàng</option>
-                    <option>Đang giao hàng</option>
-                    <option>Đã giao hàng</option>
-                    <option>Hoàn đơn</option>
-                </select>
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+<div class="tile">
+    <h2 style="text-align:center">Cập nhật trạng thái đơn hàng @Model.MaDH</h2>
+    <div class="tile-body">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.MaDH)
+                @Html.HiddenFor(model => model.MaDL)
+                @Html.HiddenFor(model => model.MaNVLap)
+                @Html.HiddenFor(model => model.NgayLap)
+                @Html.HiddenFor(model => model.TinhTrangThanhToan)
+                @Html.HiddenFor(model => model.TrangThai)
+                @Html.HiddenFor(model => model.TongTien)
+                @Html.HiddenFor(model => model.PhieuXuatKho)
+                @Html.HiddenFor(model => model.XuatHoaDon)
+
+
+                <div class="form-group">
+                    <h5>Tình trạng giao hàng:</h5>
+                    <div class="col-md-10">
+                        <select class="form-control" id="TrangThai" name="TinhTrangGH">
+                            <option selected="@Model.TinhTrangGH">@Model.TinhTrangGH</option>
+                            <option>Đang giao</option>
+                            <option>Đã giao</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.TinhTrangGH, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h5>Điểm giao:</h5>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DiemGiao, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DiemGiao, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Lưu đơn hàng @Model.MaDH" class="btn btn-default" />
+                    </div>
+                </div>
             </div>
-        </div>
+        }
     </div>
-}
-
+</div>
 <div>
-    @Html.ActionLink("Back to List", "DonGiaoHang")
+    <div class="col-sm-2">
+        <a class="btn btn-danger" type="button" title="Quay lại " href="/GiaoHang/DonGiaoHang"><i class=""></i> Quay lại</a>
+    </div>
 </div>

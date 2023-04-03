@@ -1,30 +1,14 @@
-﻿@model Test02.Models.ChiTietKho
+﻿@model Test02.Models.ChiTietChuyenGiao
 @using Test02.Models;
+
 @{
-    ViewBag.Title = "Tạo chi tiết kho mới";
-    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
-    ViewBag.Name = "Tạo chi tiết kho";
-    ViewBag.qlk = "active";
+    ViewBag.Title = "ThemDonHangVaoChuyenGiao";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+    ViewBag.gh_cg = "active";
+    ViewBag.nd = "Thêm đơn hàng vào chuyến giao";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    var dssp = db.SanPhams.ToList();
-
-    //Sản phẩm chưa có trong kho
 }
 
-@{
-    var checkMessage = TempData["AlertMessage"];
-    if (checkMessage == "error null")
-    {
-        <script>
-            swal({
-                title: "Lỗi số lượng",
-                text: "Số lượng không được để trống hoặc nhỏ hơn 0!",
-                icon: "warning",
-                button: "Nhập lại",
-            });
-        </script>
-    }
-}
 <h3>Tạo chi tiết kho của kho @Session["makho1"]</h3>
 
 @using (Html.BeginForm())
@@ -34,18 +18,18 @@
         <div class="form-horizontal col-6">
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.STT)
-            @Html.HiddenFor(model => model.MaKho)
+            @Html.HiddenFor(model => model.MaCTDVC)
+            @Html.HiddenFor(model => model.MaDH)
 
             <div class="form-group">
-                @Html.LabelFor(model => model.MaSP, "Mã sản phẩm", htmlAttributes: new { @class = "control-label col-md-5" })
+                @Html.LabelFor(model => model.MaDH, "Mã sản phẩm", htmlAttributes: new { @class = "control-label col-md-5" })
                 <div class="col-md-12">
-                    @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.MaDH, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MaDH, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(model => model.SoLuong, "Số lượng /thùng", htmlAttributes: new { @class = "control-label col-md-5" })
                 <div class="col-md-12">
                     @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control" } })
@@ -59,14 +43,14 @@
                     <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayNhap must be a date." id="NgayNhap" name="NgayNhap" type="datetime-local" required>
                     @Html.ValidationMessageFor(model => model.NgayNhap, "", new { @class = "text-danger" })
                 </div>
-            </div>
+            </div>*@
 
             <div class="row form-group justify-content-between" style="margin:auto 12px">
                 <div class="">
                     <input type="submit" value="Thêm chi tiết kho" class="btn btn-outline-dark" required />
                 </div>
                 <div>
-                    <a class="btn btn-outline-secondary btn-sm" href="~/PhongKho/ChiTietKho/@Session["makho1"]" title="Trở lại">
+                    <a class="btn btn-outline-secondary btn-sm" href="~/GiaoHang/ChiTietChuyenGiaoHang/@Session["makho1"]" title="Trở lại">
                         <i class="fas fa-retweet"></i>
                         Trở lại
                     </a>
@@ -74,8 +58,8 @@
             </div>
 
         </div>
-        <div class="col-6">
-            @* Danh sách sản phẩm *@
+        @*<div class="col-6">
+
             <label for="sel2" class="form-label"><h4>Tra cứu tên sản phẩm và mã sản phẩm</h4></label> <br />
             <select multiple class="form-select form-select-lg h-100 w-100 border-0" id="sel2" style="background-color: #f5f5f5; ">
 
@@ -86,8 +70,6 @@
                     </option>
                 }
             </select>
-        </div>
+        </div>*@
     </div>
 }
-
-
