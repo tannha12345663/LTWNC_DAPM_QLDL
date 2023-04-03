@@ -601,6 +601,7 @@
     <Content Include="Views\KeToan\ThongKe.cshtml" />
     <Content Include="Views\KeToan\QLDonChoGiao.cshtml" />
     <Content Include="Views\KeToan\QLDonDaGiao.cshtml" />
+    <Content Include="Views\QTV\ChitietNV.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

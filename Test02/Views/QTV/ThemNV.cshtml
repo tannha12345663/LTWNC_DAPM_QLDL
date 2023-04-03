@@ -11,7 +11,7 @@
     <div class="tile-body contenner" style="padding-top:10px">
         @Html.AntiForgeryToken()
         @Html.HiddenFor(model => model.MaNV)
-        <form class="row" method="post" enctype="multipart/form-data" action="">
+        <form class="row" method="post" enctype="multipart/form-data" action="/QTV/ThemNV">
             <div class="imgstaff col-sm-5">
                 <div class="col-sm-12" style="text-align: center;">
                     <label class="control-label">Chọn hình ảnh</label>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <strong>Password</strong>
-                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", required = "required", @id = "Username", onchange = "UserCheck()" } })
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", required = "required", @id = "pass1", } })
                         @*<input class="form-control" type="text" id="Username" name="Username" required="required"/>*@
                         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                         
@@ -72,7 +72,8 @@
                     </div>
                     <div class="form-group col-md-6">
                         <strong>Xác nhân password</strong>
-                        <input class="form-control" type="text" id="typepassword" name="typepassword" required="required"/>
+                        <input class="form-control" type="text" id="pass2" name="typepassword" required="required"  onchange = "PassCheck()"/>
+                        <span id="checkpass"></span>
                        
                         
 
@@ -87,7 +88,7 @@
             <div class="col-sm-5">
                 <div class="row">
                     <div class="col-sm-4">
-                        <input type="submit" value="Save Account" class="btn btn-success btn-sm" />
+                        <input type="submit" value="Save Account" id="btn-submit" class="btn btn-success btn-sm" />
                     </div>
                     <div class="col-sm-">
                         <a href="" class="btn btn-warning btn-sm">Quay lại danh sách</a>
@@ -119,18 +120,20 @@
 <script type="text/javascript">
      function UserCheck() {
         $("#status").html("check ...");
-        $.post("@Url.Action("CheckUsernameAvailability", "Admin")",
+        $.post("@Url.Action("CheckUsernameAvailability", "QTV")",
             {
                 userdata: $("#Username").val()
             },
             function (data) {
                 if (data == 0) {
-                    $("#status").html('<font color="Green">Available!</font>');
+                    $("#status").html('<font color="Green">Hợp lệ!</font>');
                     $("#Username").css("border-color", "Green");
+                    document.getElementById('btn-submit').disabled = false;
                 }
                 else {
-                    $("#status").html('<font color="Red">That name is taken. Try another !!</font>');
+                    $("#status").html('<font color="Red">Đã có username !!</font>');
                     $("#Username").css("border-color", "Red");
+                    document.getElementById('btn-submit').disabled = true;
                 }
             }
         )
@@ -138,36 +141,62 @@
 
      function EmailCheck() {
         $("#mess").html("check ...");
-        $.post("@Url.Action("CheckEmailAvailability", "Admin")",
+        $.post("@Url.Action("CheckEmailAvailability", "QTV")",
             {
                 usermail: $("#Email").val()
             },
             function (data) {
                 if (data == 0) {
-                    $("#mess").html('<font color="Green">Available!</font>');
+                    $("#mess").html('<font color="Green">Hợp lệ!</font>');
                     $("#Email").css("border-color", "Green");
+                    document.getElementById('btn-submit').disabled = false;
                 }
                 else {
-                    $("#mess").html('<font color="Red">That name is taken. Try another !!</font>');
+                    $("#mess").html('<font color="Red">Đã có nhân viên sử dụng !!</font>');
                     $("#Email").css("border-color", "Red");
+                    document.getElementById('btn-submit').disabled = true;
                 }
             }
         )
     }
     function SDTCheck() {
         $("#noti").html("check ...");
-        $.post("@Url.Action("CheckSDTAvailability", "Admin")",
+        $.post("@Url.Action("CheckSDTAvailability", "QTV")",
             {
                 userSDT: $("#Sdt").val()
             },
             function (data) {
                 if (data == 0) {
-                    $("#noti").html('<font color="Green">Available!</font>');
+                    $("#noti").html('<font color="Green">Hợp lệ!</font>');
                     $("#Sdt").css("border-color", "Green");
+                    document.getElementById('btn-submit').disabled = false;
                 }
                 else {
-                    $("#noti").html('<font color="Red">That name is taken. Try another !!</font>');
+                    $("#noti").html('<font color="Red">Đã có nhân viên sử dụng !!</font>');
                     $("#Sdt").css("border-color", "Red");
+                    document.getElementById('btn-submit').disabled = true;
+                }
+            }
+        )
+    }
+
+     function PassCheck() {
+        $("#checkpass").html("check ...");
+        $.post("@Url.Action("KtraPass", "QTV")",
+            {
+                pass1: $("#pass1").val(),
+                pass2: $("#pass2").val()
+            },
+            function (data) {
+                if (data == 0) {
+                    $("#checkpass").html('<font color="Green">Hợp lệ!</font>');
+                    $("#typepassword").css("border-color", "Green");
+                    document.getElementById('btn-submit').disabled = false;
+                }
+                else {
+                    $("#checkpass").html('<font color="Red">Không trùng password !!</font>');
+                    $("#typepassword").css("border-color", "Red");
+                    document.getElementById('btn-submit').disabled = true;
                 }
             }
         )

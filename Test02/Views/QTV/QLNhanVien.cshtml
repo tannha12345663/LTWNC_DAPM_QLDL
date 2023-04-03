@@ -30,26 +30,17 @@
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
-
-
-                        <div class="col-md-1">
-                            <div id="sampleTable_filter" class="dataTables_filter">
-                                <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 table-responsive">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã nhân viên: activate to sort column ascending" style="width: 50px;">Mã nhân viên</th>
-                                        <th width="300" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Mã chức vụ: activate to sort column ascending" style="width: 150px;">Mã chức vụ</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên chức vụ: activate to sort column ascending" style="width: 160px;">Tên chức vụ</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tên nhân viên: activate to sort column ascending" style="width: 124px;">Tên nhân viên</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="UserName: activate to sort column ascending" style="width: 124px;">UserName</th>
-                                        <th width="100" class="sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã nhân viên</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" >Mã chức vụ</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Tên chức vụ</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Tên nhân viên</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">UserName</th>
+                                        <th class="sorting" tabindex="0">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,15 +66,12 @@
                                             @Html.DisplayFor(modelItem => item.UserName)
                                         </td>
 
-
-
-
                                         <td>
-                                            <a href="/QTV/ChinhsuaNV/@item.MaNV" class="btn btn-primary btn-sm edit">
+                                            <a href="/QTV/ChinhsuaNV/@item.MaNV" class="btn btn-outline-dark btn-sm">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="/QTV/XoaNV/@item.MaNV" class="btn btn-primary btn-sm deleted">
-                                                <i class="fas fa-trash-alt"></i>
+                                            <a href="/QTV/ChitietNV/@item.MaNV" class="btn btn-outline-dark btn-sm">
+                                                <i class="fas fa-info"></i>
                                             </a>
 
                                         </td>
