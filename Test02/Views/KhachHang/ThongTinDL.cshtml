@@ -1,5 +1,4 @@
 ﻿@model Test02.Models.DaiLy
-
 @{
     ViewBag.Title = "Thông tin đại lý";
     Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
@@ -16,82 +15,182 @@
             border-radius: 50% !important;
         }
     </style>
+
+    if (TempData["Pass"] != null)
+    {
+        <script>
+            swal({
+                title: "Cập nhật mật khẩu thành công",
+                icon: "success",
+                button: "Thoát",
+            });
+        </script>
+    }
+
+    if (TempData["UpdateTC"] != null)
+    {
+        <script>
+            swal({
+                title: "Cập nhật thông tin đại lý thành công",
+                icon: "success",
+                button: "Thoát",
+            });
+        </script>
+    }
+
+    @*if (TempData["errorPhone"] != null)
+    {
+        <script>
+            swal({
+                title: "Không thể cập nhật số điện thoại này, vì số điện thoại này đã được sử dụng",
+                icon: "warning",
+                button: "Thoát",
+            });
+        </script>
+    }
+
+    if (TempData["errorEmail"] != null)
+    {
+        <script>
+            swal({
+                title: "Không thể cập nhật email này, vì email này đã được sử dụng",
+                icon: "warning",
+                button: "Thoát",
+            });
+        </script>
+    }*@
+    
+    if (TempData["errorEmailPhone"] != null)
+    {
+        <script>
+            swal({
+                title: "Không thể cập nhật, vì số điện thoại hoặc email này đã được sử dụng",
+                icon: "warning",
+                button: "Thoát",
+            });
+        </script>
+    }
+
+
 }
 
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
             <h3 class="tile-title">THÔNG TIN ĐẠI LÝ</h3>
-            <div class=" row tile-body">
-                <div class="col-lg-5 col-md-12 col-sm-12" style="border: 0px; border-right: 2px solid #FFD43B;">
-                    @using (Html.BeginForm("ThongTinDL", "KhachHang", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
+            @using (Html.BeginForm("ThongTinDL", "KhachHang", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class=" row tile-body">
+                    <div class="col-lg-5 col-md-12 col-sm-12" style="border: 0px; border-right: 2px solid #FFD43B;">
+
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        @*@Html.HiddenFor(model => model.MaDL)
+                            @Html.HiddenFor(model => model.MaLoaiDL)
+                            @Html.HiddenFor(model => model.UserName)
+                            @Html.HiddenFor(model => model.Password)*@
+                        @Html.HiddenFor(model => model.HinhAnh)
+                        @Html.HiddenFor(model => model.NgayTao)
+
                         <div style="text-align: center;"><img class="img-avatar" src="@Model.HinhAnh" /></div>
                         <div style="margin-top: 20px;">
                             <input type="file" name="HinhAnh" style="width: 80px;" />
                         </div>
-                        <div class="pull-right" style="margin-top: 20px; width: auto;">
-                            <input type="submit" value="Save" class="btn btn-outline-primary" />
+                    </div>
+
+                    <div class="col-lg-7 col-md-12 col-sm-12">
+                        <div class="element-button">
+                            <div class="row">
+                                <div class="form-group col-sm-7">
+                                    <label class="control-label">Tên đại lý</label>
+                                    @Html.EditorFor(model => model.TenDL, new { htmlAttributes = new { @class = "form-control col-sm-12" } })
+                                    @Html.ValidationMessageFor(model => model.TenDL, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group col-md-5">
+                                    <label class="control-label">Ngày đăng kí</label>
+                                    @Html.TextBoxFor(model => model.NgayTao, "{0:dd/MM/yyyy}", new { @class = "form-control col-md-12", type = "datetime", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.NgayTao, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-7">
+                                    <label class="control-label">Email</label>
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control col-sm-12", @id = "Email", onchange = "EmailCheck()" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    <span id="mess"></span>
+                                </div>
+
+                                <div class="form-group col-sm-5">
+                                    <label class="control-label">Số điện thoại</label>
+                                    @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control col-sm-12", @id = "NoPhone", onchange = "NoPhoneCheck()" } })
+                                    @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                                    <span id="noti"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Địa chỉ</label>
+                                    @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control col-sm-12" } })
+                                    @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="pull-right" style="margin-top: 20px; width: auto; margin-left: 20px;">
+                                    <a href="/KhachHang/PageSanPham" class="btn btn-outline-danger">Quay lại</a>
+                                    <input type="submit" value="Cập nhật thông tin" class="btn btn-outline-primary" />
+                                    <a class="btn btn-outline-success" href="/KhachHang/CapNhatMatKhau/@Model.MaDL">Đổi mật khẩu</a>
+                                </div>
+                            </div>
                         </div>
-                    }
+                    </div>
                 </div>
-                <div class="col-lg-7 col-md-12 col-sm-12" style="border: 0px;">
-                    <dl>
-                        <dt>
-                            Mã đại lý
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.MaDL)
-                        </dd>
-
-                        <dt>
-                            Tên đại lý
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.TenDL)
-                        </dd>
-
-                        <dt>
-                            Loại đại lý
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.LoaiDL.TenDaiLy)
-                        </dd>
-
-                        <dt>
-                            Số điện thoại
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.SDT)
-                        </dd>
-
-                        <dt>
-                            Địa chỉ
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.DiaChi)
-                        </dd>
-
-                        <dt>
-                            Email
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Email)
-                        </dd>
-
-                        <dt>
-                            Ngày tạo
-                        </dt>
-                        <dd>
-                            @{ var ngayTao = string.Format("{0:dd/MM/yyyy}", Model.NgayTao); }
-                            @Html.DisplayFor(model => ngayTao)
-                        </dd>
-                    </dl>
-                </div>
-
-            </div>
+            }
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="Scripts/jquery-1.4.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+        function EmailCheck() {
+            $("#mess").html("check ...");
+            $.post("@Url.Action("CheckEmailAvailability", "LoginDL")",
+                {
+                    email: $("#Email").val()
+                },
+                function (data) {
+                    if (data == 0) {
+                        $("#mess").html('<font color="Green">Available!</font>');
+                        $("#Email").css("border-color", "Green");
+                    }
+                    else {
+                        $("#mess").html('<font color="Red">Email này đã tồn tại</font>');
+                        $("#Email").css("border-color", "Red");
+                    }
+                }
+            )
+        }
+
+        function NoPhoneCheck() {
+            $("#noti").html("check ...");
+            $.post("@Url.Action("CheckNoPhoneAvailability", "LoginDL")",
+                {
+                    noPhone: $("#NoPhone").val()
+                },
+                function (data) {
+                    if (data == 0) {
+                        $("#noti").html('<font color="Green">Available!</font>');
+                        $("#NoPhone").css("border-color", "Green");
+                    }
+                    else {
+                        $("#noti").html('<font color="Red">Số điện thoại đã tồn tại</font>');
+                        $("#NoPhone").css("border-color", "Red");
+                    }
+                }
+            )
+        }
+</script>

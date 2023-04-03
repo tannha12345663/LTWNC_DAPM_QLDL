@@ -15,6 +15,7 @@ namespace Test02.Controllers
     {
         QuanLyDLEntities2 db = new QuanLyDLEntities2();
         // GET: KhachHang
+
         public ActionResult PageSanPham()
         {
             return View(db.SanPhams.ToList().OrderByDescending(s => s.TenSP));
@@ -64,20 +65,61 @@ namespace Test02.Controllers
             return RedirectToAction("PageSanPham", "KhachHang");
         }
 
-        // Update số lượng sản phẩm
-        public ActionResult CapNhatSL(FormCollection form)
+        public ActionResult ThemVaoGHViewChiTietSP(string id)
         {
-            Cart cart = Session["Cart"] as Cart;
-            string id = form["MaSP"];
-            int sl = int.Parse(form["soluong"]);
-            var sol = db.SanPhams.Find(id);
-            if (sl > sol.TongTon)
+            var sp = db.SanPhams.SingleOrDefault(s => s.MaSP == id);
+
+            if (sp.TongTon == 0 || sp.TongTon == null)
             {
-                TempData["Warning"] = "Số lượng cập nhật lớn hơn số lượng tồn!!!";
-                return RedirectToAction("GioHangDL", "KhachHang");
+                TempData["hethang"] = "Sản phẩm đã hết hàng!!!";
             }
-            cart.CapNhatSL(id, sl);
-            return RedirectToAction("GioHangDL", "KhachHang");
+            else if (sp.TongTon > 0)
+            {
+                TempData["Themvaogiohang"] = "thanhcong";
+                GetCart().Add(sp);
+            }
+            return RedirectToAction("ChiTietSP/" + id, "KhachHang");
+        }
+
+        // Update số lượng sản phẩm
+        //public ActionResult CapNhatSL(FormCollection form)
+        //{
+        //    Cart cart = Session["Cart"] as Cart;
+        //    string id = form["MaSP"];
+        //    int sl = int.Parse(form["soluong"]);
+        //    var sol = db.SanPhams.Find(id);
+        //    if (sl > sol.TongTon)
+        //    {
+        //        TempData["Warning"] = "Số lượng cập nhật lớn hơn số lượng tồn!!!";
+        //        return RedirectToAction("GioHangDL", "KhachHang");
+        //    }
+        //    if (sl <= 0)
+        //    {
+        //        TempData["SLSP=0"] = "Số lượng sản phẩm phải lớn hơn 0";
+        //        return RedirectToAction("GioHangDL", "KhachHang");
+        //    }
+        //    cart.CapNhatSL(id, sl);
+        //    return RedirectToAction("GioHangDL", "KhachHang");
+        //}
+
+        [HttpPost]
+        public ActionResult CapNhatSL(string MaSP, int soluong)
+        {
+            var cart = GetCart();
+            cart.CapNhatSL(MaSP, soluong);
+            var maSP = db.SanPhams.FirstOrDefault(s => s.MaSP == MaSP);
+
+            double tongTien = cart.TongTien();
+            //double thanhTien = maSP.Gia.Value * soluong;
+            double thanhTien = cart.ThanhTien(maSP.MaSP);
+
+            var result = new
+            {
+                tongTien = "Tổng tiền: " + tongTien.ToString("#,##0") + " VNĐ",
+                thanhTien = thanhTien.ToString("#,##0") + " VNĐ",
+            };
+
+            return Json(result);
         }
 
         //Xóa sản phẩm khỏi giỏ hàng
@@ -131,15 +173,18 @@ namespace Test02.Controllers
                 double thanhtien = tongphu - giam;
 
                 //Thêm vào bảng đơn hàng
-                var maDH = "DH" + rd.Next(1, 1000);
+                var maDH = "DH" + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
+
                 donHang.MaDH = maDH;
                 donHang.MaDL = daiLy.MaDL;
                 donHang.MaNVLap = "NV01";
                 donHang.NgayLap = DateTime.Now;
                 donHang.TrangThai = "Chưa xử lý";
                 donHang.TinhTrangThanhToan = "Chưa thanh toán";
-                donHang.DiemGiao = form["diachigh"];
+                donHang.DiemGiao = daiLy.DiaChi;
                 donHang.TongTien = thanhtien;
+                donHang.PhieuXuatKho = false;
+                donHang.XuatHoaDon = false;
                 db.DonHangs.Add(donHang);
 
                 //Thêm vào bảng chi tiết đơn hàng
@@ -171,22 +216,34 @@ namespace Test02.Controllers
             return View(dsDH);
         }
 
+        public ActionResult DSChoGiao()
+        {
+            var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
+            var dsDH = db.DonHangs.Where(s => s.MaDL == daiLy.MaDL && s.TinhTrangGH == "Chờ giao").ToList();
+            return View(dsDH);
+        }
+
+        public ActionResult DSDangGiao()
+        {
+            var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
+            var dsDH = db.DonHangs.Where(s => s.MaDL == daiLy.MaDL && s.TinhTrangGH == "Đang giao").ToList();
+            return View(dsDH);
+        }
+
+        public ActionResult DSDHDaGiao()
+        {
+            var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
+            var dsDH = db.DonHangs.Where(s => s.MaDL == daiLy.MaDL && s.TinhTrangGH == "Đã giao").ToList();
+            return View(dsDH);
+        }
+
         // GET: ChiTietDonHangs/Details/5
         public ActionResult DetailsDH(string id)
         {
             TempData["madh"] = id;
-
-            var donhang = db.ChiTietDonHangs.Where(s => s.MaDH == id).FirstOrDefault();
-            var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
-            double tongphu = 0;
-            tongphu += (double)donhang.ThanhTien;
-            double giam = tongphu * (double)daiLy.LoaiDL.ChietKhau;
-            double thanhtien = tongphu - giam;
-
-            TempData["giam"] = string.Format("{0:0,0}", giam);
-            TempData["thanhtien"] = string.Format("{0:0,0}", thanhtien);
-
-            return View(db.ChiTietDonHangs.ToList().Where(s => s.MaDH == id));
+            var maDH = db.DonHangs.FirstOrDefault(s => s.MaDH == id);
+            TempData["DiaDiemGH"] = maDH.DiemGiao;
+            return View(db.ChiTietDonHangs.Where(s => s.MaDH == id).ToList());
         }
 
         // GET: ChiTietDonHangs/Delete/5
@@ -215,8 +272,51 @@ namespace Test02.Controllers
             return RedirectToAction("DonHangDL");
         }
 
+        public ActionResult CongNo()
+        {
+            var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
+            var dsCongNo = db.PhieuCongNoes.Where(s => s.MaDL == daiLy.MaDL).ToList();
+            return View(dsCongNo);
+        }
+
+        public ActionResult LienHe()
+        {
+            return View();
+        }
+
+        public JsonResult CheckEmailAvailability(string email)
+        {
+            System.Threading.Thread.Sleep(200);
+
+            var mailCus = db.DaiLies.Where(x => x.Email == email).SingleOrDefault();
+            if (mailCus != null)
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(0);
+            }
+        }
+
+        public JsonResult CheckNoPhoneAvailability(string noPhone)
+        {
+            System.Threading.Thread.Sleep(200);
+
+            var noPhoneCus = db.DaiLies.Where(x => x.SDT == noPhone).SingleOrDefault();
+            if (noPhoneCus != null)
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(0);
+            }
+        }
+
         public ActionResult ThongTinDL(string id)
         {
+            //var maDL = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -231,19 +331,113 @@ namespace Test02.Controllers
         //Đổi hình ảnh đại lý
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThongTinDL(DaiLy daiLy, HttpPostedFileBase HinhAnh)
+        public ActionResult ThongTinDL(DaiLy daiLy, HttpPostedFileBase HinhAnh, string id)
         {
-            var maDL = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
+            //var email = db.DaiLies.FirstOrDefault(s => s.Email == daiLy.Email);
+            //var noPhone = db.DaiLies.FirstOrDefault(s => s.SDT == daiLy.SDT);
+            DaiLy info = db.DaiLies.Find(id);
+
+            var totalEmail = db.DaiLies.Count(s => s.Email == daiLy.Email);
+            var totalNoPhone = db.DaiLies.Count(s => s.SDT == daiLy.SDT);
+
+            //if (daiLy.SDT != info.SDT && totalNoPhone >= 1)
+            //{
+            //    //ModelState.AddModelError(string.Empty, "Số điện thoại này đã được sử dụng");
+            //    TempData["errorPhone"] = "Không thể cập nhật số điện thoại này, vì số điện thoại này đã được sử dụng";
+            //    return View(daiLy);
+            //}
+            //if (daiLy.Email != info.Email && totalEmail >= 1)
+            //{
+            //    TempData["errorEmail"] = "Không thể cập nhật email này, vì số điện thoại này đã được sử dụng";
+            //    //ModelState.AddModelError(string.Empty, "Email này đã được sử dụng");
+            //    return View(daiLy);
+            //}
+
+            if ((daiLy.SDT != info.SDT && totalNoPhone >= 1) ||
+                (daiLy.Email != info.Email && totalEmail >= 1))
+            {
+                TempData["errorEmailPhone"] = "Không thể cập nhật, vì số điện thoại và email này đã được sử dụng";
+                //ModelState.AddModelError(string.Empty, "Email này đã được sử dụng");
+                return View(daiLy);
+            }
+
+            if (daiLy.Email == info.Email && daiLy.SDT == info.SDT && daiLy.DiaChi == info.DiaChi)
+            {
+                return View(daiLy);
+            }
+
             if (ModelState.IsValid)
             {
-                daiLy = db.DaiLies.Find(maDL.MaDL);
-                LuuAnh(daiLy, HinhAnh);
-                var update = db.DaiLies.Find(daiLy.MaDL);
-                update.HinhAnh = daiLy.HinhAnh;
+                DaiLy update = db.DaiLies.Find(id);
+                if (HinhAnh == null)
+                {
+                    update.TenDL = daiLy.TenDL;
+                    update.Email = daiLy.Email;
+                    update.SDT = daiLy.SDT;
+                    update.DiaChi = daiLy.DiaChi;
+                    //db.Entry(daiLy).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["UpdateTC"] = "Cập nhật đại lý thành công";
+                    return RedirectToAction("ThongTinDL");
+                }
+                else
+                {
+                    LuuAnh(daiLy, HinhAnh);
+                    update.TenDL = daiLy.TenDL;
+                    update.Email = daiLy.Email;
+                    update.SDT = daiLy.SDT;
+                    update.DiaChi = daiLy.DiaChi;
+                    update.HinhAnh = daiLy.HinhAnh;
+                    //db.Entry(daiLy).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["UpdateTC"] = "Cập nhật đại lý thành công";
+                    return View(daiLy);
+                }
+            }
+            return View(daiLy);
+        }
+
+        public ActionResult CapNhatMatKhau(string id)
+        {
+            //var maDL = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DaiLy daiLy = db.DaiLies.Find(id);
+            if (daiLy == null)
+            {
+                return HttpNotFound();
+            }
+            return View(daiLy);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CapNhatMatKhau(DaiLy daiLy, string matkhau, string confirmPass, string id)
+        {
+            //var maDL = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
+            
+            var maDL = db.DaiLies.Find(id);
+            if (matkhau != maDL.Password)
+            {
+                TempData["errorPass"] = "Mật khẩu không chính xác";
+                return RedirectToAction("CapNhatMatKhau");
+            }
+
+            if (confirmPass != daiLy.Password)
+            {
+                TempData["errorConfirm"] = "Xác thực mật khẩu không chính xác";
+                return RedirectToAction("CapNhatMatKhau");
+            }
+
+            if (ModelState.IsValid)
+            {
+                DaiLy update = db.DaiLies.Find(id);
+                //db.Entry(daiLy).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                update.Password = daiLy.Password;
                 db.SaveChanges();
-                maDL.HinhAnh = daiLy.HinhAnh;
-                Session["userDL"] = maDL;
-                return RedirectToAction("ThongTinDL");
+                TempData["Pass"] = "Đổi mật khẩu thành công!!!";
+                return RedirectToAction("ThongTinDL/" + maDL.MaDL);
             }
             return View(daiLy);
         }

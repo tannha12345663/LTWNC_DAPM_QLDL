@@ -16,6 +16,16 @@
             });
         </script>
     }
+    if (TempData["SLSP=0"] != null)
+    {
+        <script>
+            swal({
+                title: "@TempData["SLSP=0"]",
+                icon: "warning",
+                button: "Thoát",
+            });
+        </script>
+    }
     if (TempData["Warning"] != null)
     {
         <script>
@@ -43,7 +53,7 @@
     <div class="col-md-12">
         <div class="tile">
             <h3 class="tile-title">DANH SÁCH GIỎ HÀNG</h3>
-            <div class="tile-body">
+            <div class="tile-body table-responsive">
                 @if (Model != null)
                 {
                     <table>
@@ -53,33 +63,37 @@
                                 <th style="text-align: center">Hình ảnh</th>
                                 <th style="text-align: center">Giá</th>
                                 <th style="text-align: center;">Số lượng</th>
-                                <th style="text-align: center">Tổng tiền</th>
+                                <th style="text-align: center">Thành tiền</th>
                                 <th style="text-align: center">Chức năng</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model.Items)
                             {
-                                double total = item.idSP.Gia.Value * item.soLuong;
+                                //double total = item.idSP.Gia.Value * item.soLuong;
                                 <tr>
                                     <td style="text-align: center">@Html.DisplayFor(model => item.idSP.TenSP)</td>
-                                    <td style="width: 100px; height: 100px;"><a href="@item.idSP.HinhAnh"></a></td>
+                                    <td style="width: 100px; height: 100px;"><img src="@item.idSP.HinhAnh" style="width: 100px; height: 100px;"></img></td>
                                     <td style="text-align: center">
                                         @{var gia = string.Format("{0:0,0 VNĐ}", item.idSP.Gia);}
                                         @Html.DisplayFor(model => gia)
                                     </td>
                                     <td style="width: 150px;">
-                                        @using (Html.BeginForm("CapNhatSL", "KhachHang"))
-                                        {
-                                            <input type="hidden" value="@item.idSP.MaSP" name="MaSP" />
-                                            <div style="display: flex;">
-                                                <input class="form-control" type="number" value="@item.soLuong" name="soluong" style="width: 150px;" />
-                                                <input class="btn btn-success" type="submit" value="Cập nhật" />
-                                            </div>
-                                        }
+                                        @*@using (Html.BeginForm("CapNhatSL", "KhachHang"))
+                                            {
+                                                <input type="hidden" value="@item.idSP.MaSP" name="MaSP" />
+                                                <div style="display: flex;">
+                                                    <input class="form-control" type="number" value="@item.soLuong" name="soluong" style="width: 150px;" />
+                                                    <input class="btn btn-success" type="submit" value="Cập nhật" />
+                                                </div>
+                                            }*@
+                                        <div style="display: flex;">
+                                            <input class="form-control quantity" type="number" min="1" id="quantity-@item.idSP" name="quantity" value="@item.soLuong" style="width: 150px;" data-product-id="@item.idSP.MaSP" />
+                                        </div>
                                     </td>
-                                    <td style="text-align: center">
-                                        @{ var tien = string.Format("{0:0,0 VNĐ}", total);} @tien
+                                    <td class="thanhtien" id="thanhtien-@item.idSP.MaSP" style="text-align: center">
+
+                                        @{ var tien = string.Format("{0:0,0 VNĐ}", Model.ThanhTien(item.idSP.MaSP)); ;} @tien
                                     </td>
                                     <td style="text-align: center;">
                                         <a href="/KhachHang/XoaSP/@item.idSP.MaSP" class="btn btn-primary btn-sm trash"><i class="fas fa-trash-alt"></i></a>
@@ -89,8 +103,8 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="6" style="text-align: right;">
-                                    Thành tiền: @{ var tong = string.Format("{0:0,0 VNĐ}", @Model.TongTien());} @tong
+                                <td colspan="6" id="tongtien" style="text-align: right;">
+                                    Tổng Tiền: @{ var tong = string.Format("{0:0,0 VNĐ}", @Model.TongTien());} @tong
                                 </td>
                             </tr>
                             <tr>
@@ -138,3 +152,24 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="Scripts/jquery-1.4.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.quantity').change(function () {
+            var quantity = $(this).val();
+            var productId = $(this).data('product-id');
+
+            $.ajax({
+                url: '/KhachHang/CapNhatSL',
+                type: 'POST',
+                data: { MaSP: productId, soluong: quantity },
+                success: function (result) {
+                    $('#tongtien').text(result.tongTien);
+                    $('#thanhtien-' + productId).text(result.thanhTien);
+                }
+            });
+        });
+    });
+</script>

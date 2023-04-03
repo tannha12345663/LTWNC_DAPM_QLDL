@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Test02.Models.PhieuCongNo>
+
+@{
+    ViewBag.Title = "CongNo";
+    Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
+    ViewBag.nd = "Trang công nợ";
+    ViewBag.cn = "active";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">DANH SÁCH CÔNG NỢ</h3>
+            <div class="tile-body table-responsive">
+
+                <table>
+                    <tr>
+                        <th>
+                            Mã công nợ
+                        </th>
+                        <th>
+                            Tiền nợ
+                        </th>
+                        <th>
+                            Ngày lập
+                        </th>
+                        <th>
+                            Ngày phải trả
+                        </th>
+                        <th>
+                            Trạng thái thanh toán
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaCongNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TienNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgayLapCN)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HanTra)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TrangThai)
+                            </td>
+                            <td style="text-align: center;">
+                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#myModal">
+                                    <i class="fa fa-info"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body" style="margin-top: 20px; ">
+                            <div style="text-align: center;"><h4>VUI LÒNG LIÊN HỆ</h4></div>
+                            <div style="font-size: 1rem; margin-top: 30px;" class="table-responsive">
+                                <div>
+                                    <b>Hotline: </b> (+84)999-999-999
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <b>Email: </b> daily@gmail.com
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer" style="margin-top: 20px;">
+                            <button type="submit" class="btn btn-outline-success" data-bs-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,22 +1,21 @@
 ﻿@model IEnumerable<Test02.Models.DonHang>
-@using Test02.Models
+
 @{
-    ViewBag.Title = "DonHangDL";
+    ViewBag.Title = "DSGiaoHang";
     Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
     ViewBag.dhdl = "active";
     ViewBag.nd = "Trang Đơn Hàng";
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="/KhachHang/DonHangDL">Danh sách đặt hàng</a>
+        <a class="nav-link" href="/KhachHang/DonHangDL">Danh sách đặt hàng</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="/KhachHang/DSChoGiao">Danh sách chờ giao</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/KhachHang/DSDangGiao">Đơn hàng đang giao</a>
+        <a class="nav-link active" aria-current="page" href="/KhachHang/DSDangGiao">Đơn hàng đang giao</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="/KhachHang/DSDHDaGiao">Đơn hàng đã giao</a>
@@ -26,9 +25,10 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
-            <h3 class="tile-title">DANH SÁCH ĐƠN HÀNG</h3>
+            <h3 class="tile-title">DANH SÁCH ĐƠN HÀNG ĐANG GIAO</h3>
             <div class="tile-body table-responsive">
-                <table>
+                <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+
                     <tr>
                         <th>
                             Mã đơn hàng
@@ -83,26 +83,9 @@
                                 }
                             </td>
                             <td style="text-align: center;">
-                                @{
-                                    var checkTTTT = item.TinhTrangThanhToan;
-                                    var checkTTTN = item.TrangThai;
-                                    if (checkTTTT == "Đã thanh toán" || checkTTTN == "Đã xét duyệt")
-                                    {
-                                        <a class="btn btn-outline-success" href="/KhachHang/DetailsDH/@item.MaDH">
-                                            <i class="fa fa-info"></i>
-                                        </a>
-                                        @*@Html.ActionLink("Chi tiết", "DetailsDH", new { id = item.MaDH })*@
-                                    }
-                                    else
-                                    {
-                                        <a class="btn btn-outline-success" href="/KhachHang/DetailsDH/@item.MaDH">
-                                            <i class="fa fa-info"></i>
-                                        </a>
-                                        <a class="btn btn-outline-warning" href="/KhachHang/DeleteDH/@item.MaDH">
-                                            <i class="fa fa-close"></i>
-                                        </a>
-                                    }
-                                }
+                                <a class="btn btn-outline-success" href="/KhachHang/DetailsDH/@item.MaDH">
+                                    <i class="fa fa-info"></i>
+                                </a>
                             </td>
                         </tr>
                     }

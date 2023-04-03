@@ -23,7 +23,8 @@
     <div class="col-md-12">
         <div class="tile">
             <h3 class="tile-title">ĐẶT HÀNG</h3>
-            <div class="tile-body">
+            <div class="tile-body table-responsive">
+
                 @if (Model != null)
                 {
                     <table>
@@ -42,7 +43,7 @@
                                 double total = item.idSP.Gia.Value * item.soLuong;
                                 <tr>
                                     <td style="text-align: center">@Html.DisplayFor(model => item.idSP.TenSP)</td>
-                                    <td style="width: 100px; height: 100px;"><a href="@item.idSP.HinhAnh"></a></td>
+                                    <td style="width: 100px; height: 100px;"><img src="@item.idSP.HinhAnh" style="width: 100px; height: 100px;"></img></td>
                                     <td style="text-align: center">
                                         @{var gia = string.Format("{0:0,0 VNĐ}", item.idSP.Gia);}
                                         @Html.DisplayFor(model => gia)
@@ -62,14 +63,14 @@
                                 <tr style="border-bottom: 0px;">
                                     <td colspan="6">
                                         <b>Địa chỉ giao hàng</b>
-                                        <input name="diachigh" class="form-control" type="text" style="width: 500px; margin-top: 5px;" required />
+                                        <input name="diachigh" class="form-control" type="text" style="width: 500px; margin-top: 5px;" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="6" style="text-align: right;">
                                         <label>Tổng: </label> @{ var tong = string.Format("{0:0,0 VNĐ}", @Model.TongTien());} @tong <br />
-                                        <label>Chiết khấu giảm: @TempData["giam"]</label> <br />
-                                        <label>Thành tiền: @TempData["thanhtien"] </label>
+                                        <label>Chiết khấu giảm: @TempData["giam"] VNĐ</label> <br />
+                                        <label>Thành tiền: @TempData["thanhtien"] VNĐ</label>
                                     </td>
                                 </tr>
                                 <tr>

@@ -13,6 +13,8 @@ namespace Test02.Models
     }
     public class Cart
     {
+        QuanLyDLEntities2 db = new QuanLyDLEntities2();
+
         List<CartItem> items = new List<CartItem>();
         public IEnumerable<CartItem> Items
         {
@@ -44,6 +46,14 @@ namespace Test02.Models
         }
 
         //Tính thành tiền
+        public double ThanhTien(string MaSP)
+        {
+            var item = items.Find(s => s.idSP.MaSP == MaSP);
+            var thanhTien = item.idSP.Gia * item.soLuong;
+            return (double)thanhTien;
+        }
+
+        //Tính tổng tiền
         public double TongTien()
         {
             var tong = items.Sum(s => s.soLuong * s.idSP.Gia);
