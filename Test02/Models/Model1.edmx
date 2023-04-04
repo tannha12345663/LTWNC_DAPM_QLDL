@@ -40,7 +40,6 @@
         <EntityType Name="ChiTietChuyenGiao">
           <Key>
             <PropertyRef Name="MaCTDVC" />
-            <PropertyRef Name="MaGH" />
           </Key>
           <Property Name="MaCTDVC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaGH" Type="varchar" MaxLength="10" Nullable="false" />
@@ -751,7 +750,6 @@
         <EntityType Name="ChiTietChuyenGiao">
           <Key>
             <PropertyRef Name="MaCTDVC" />
-            <PropertyRef Name="MaGH" />
           </Key>
           <Property Name="MaCTDVC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaGH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />

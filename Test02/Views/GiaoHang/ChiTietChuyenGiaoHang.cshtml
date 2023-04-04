@@ -7,7 +7,7 @@
     ViewBag.gh_cg = "active";
     ViewBag.nd = "Chi tiết chuyến giao hàng";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    //List<ChiTietChuyenGiao> ct = db.ChiTietChuyenGiaos.ToList();
+    List<ChiTietChuyenGiao> ct = db.ChiTietChuyenGiaos.ToList();
 }
 
 
@@ -54,10 +54,7 @@
                         <p>
                             <a class="btn btn-outline-dark" href="/GiaoHang/ChinhSuaChuyenGiao/@item.MaGH"> Chỉnh sửa</a>
                         </p>
-
                         break;
-
-
                     }
 
                     <div class="row">
@@ -81,9 +78,7 @@
                                     }
                                     @foreach (var item in Model)
                                     {
-
                                         <tr>
-
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.MaDH)
                                             </td>
@@ -150,13 +145,13 @@
                     </a>
                 </div>
                 @*<div class="col-sm-2">
-                    <a class="btn btn-outline-dark" href="/GiaoHang/ChinhSuaChuyenGiao"> Chỉnh sửa</a>
-                </div>*@
+                        <a class="btn btn-outline-dark" href="/GiaoHang/ChinhSuaChuyenGiao"> Chỉnh sửa</a>
+                    </div>*@
                 @*<div class="col-sm-2">
                         <a class="btn btn-danger" href="/GiaoHang/HuyChuyenGiao">Hủy chuyến</a>
                     </div>*@
                 <div class="col-sm-2">
-                    <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachCacChuyenGiao"><i class=""></i> Quay lại</a>
+                    <a class="btn btn-danger" type="button" title="Quay lại " href="/GiaoHang/DanhSachCacChuyenGiao"><i></i> Quay lại</a>
                 </div>
             </div>
 

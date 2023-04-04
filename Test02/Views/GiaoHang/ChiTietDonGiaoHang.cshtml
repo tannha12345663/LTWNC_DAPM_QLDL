@@ -9,7 +9,7 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ct = db.ChiTietDonHangs.ToList();
     var dscgh = db.ChuyenGiaos.ToList();
-    //var dhcg = db.DonHangs.ToList();
+    var ctcg = db.ChiTietChuyenGiaos.ToList();
     //var dsdl = db.DaiLies.ToList();
 }
 
@@ -40,9 +40,9 @@
                                 var tendly = db.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();}
                             @Html.DisplayFor(modelItem => tendly.TenDL)
                         </p>
-
-                        <p><strong>Địa điểm giao: </strong>@Html.DisplayFor(modelItem => dh.DiemGiao)</p>
-
+                        <p>
+                            <strong>Địa điểm giao: </strong>@Html.DisplayFor(modelItem => dh.DiemGiao)
+                        </p>
                         <p>
                             <strong>Phiếu xuất kho: </strong>
                             <a href="~/GiaoHang/InPhieuXuatKho" style="color:#002483; font-weight:bold">
@@ -50,17 +50,16 @@
                                     var phieuxuat = db.PhieuNhapXuats.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
                                 @Html.DisplayFor(modelItem => phieuxuat.MaPhieu)
                             </a>
-
                         </p>
 
-                        <p>
+                        @*<p>
                             <strong>Hóa đơn: </strong>
                             <a href="~/GiaoHang/InHoaDon" style="color:#002483; font-weight:bold">
                                 @{
                                     var hoadon = db.HoaDons.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
                                 @Html.DisplayFor(modelItem => hoadon.MaHD)
                             </a>
-                        </p>
+                        </p>*@
 
                         break;
                     }
@@ -116,7 +115,6 @@
                                             </td>
 
                                             @{var tt = db.ChiTietDonHangs.Where(s => s.MaDH == gh.MaDH).FirstOrDefault();}
-                                            @*@Html.DisplayFor(modelItem => tt.ThanhTien)*@
                                             <td>
                                                 @{total += Convert.ToInt32(tt.ThanhTien);}
                                                 @{var ThanhTien = string.Format("{0:0,0 vnđ}", tt.ThanhTien);}
@@ -165,10 +163,9 @@
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
-                        <h2 style="margin-left:29%">DANH SÁCH CÁC CHUYẾN GIAO HÀNG HIỆN CÓ</h2>
+                        <h2 style="margin-left:27%">DANH SÁCH CÁC CHUYẾN GIAO HÀNG HIỆN CÓ</h2>
                         <div class="col-sm-12">
-                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
-
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable1" role="grid" aria-describedby="sampleTable_info">
                                 <thead>
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align:center">Mã giao hàng</th>
@@ -182,52 +179,58 @@
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Xếp đơn</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                @*<tbody>
                                     @{ var count = 0;}
-                                    @foreach (var id in dscgh.OrderByDescending(s => s.NgayLap))
+                                    @foreach (var item in Model)
                                     {
-
-                                        if (id.TrangThai != null)
+                                        foreach (var id in dscgh.OrderByDescending(s => s.MaGH))
                                         {
-                                            count += 1;
-
-                                            foreach (var item in Model)
+                                            if (id.TrangThai != null)
                                             {
-                                                <span>
-                                                    @{
-                                                        var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
-                                                        var gh = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
-                                                        var sp = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();}
-                                                </span>
+                                                count += 1;
+                                                <p style="text-align:center">
+                                                    <span>
+                                                        @{
+                                                            var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+                                                            var gh = db.ChiTietDonHangs.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
+                                                            var sp = db.SanPhams.Where(s => s.MaSP == gh.MaSP).FirstOrDefault();}
+                                                    </span>
+                                                </p>
 
                                                 <tr>
                                                     <td>
-                                                        @{var magh = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();}
-                                                        @Html.DisplayFor(modelItem => magh.MaGH)
+                                                        @{var magh = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
+                                                        @Html.DisplayFor(modelItem => magh.ChuyenGiao.MaGH)
                                                     </td>
                                                     <td>
-                                                        @{var tennvg = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();}
-                                                        @Html.DisplayFor(modelItem => magh.NhanVienGH.TenNV)
+                                                        @{var tennvg1 = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
+                                                            var tennvg = db.ChuyenGiaos.Where(s => s.MaGH == tennvg1.MaGH).FirstOrDefault();}
+                                                        @Html.DisplayFor(modelItem => tennvg.NhanVienGH.TenNV)
                                                     </td>
                                                     <td>
-                                                        @{var mapt = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();}
-                                                        @Html.DisplayFor(modelItem => magh.PhuongTienGH.MaPT)
+                                                        @{var pt1 = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
+                                                            var pt = db.ChuyenGiaos.Where(s => s.MaGH == pt1.MaGH).FirstOrDefault();}
+                                                        @Html.DisplayFor(modelItem => pt.PhuongTienGH.MaPT)
                                                     </td>
                                                     <td>
-                                                        @{var ngaylap = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();}
-                                                        @Html.DisplayFor(modelItem => magh.NgayLap)
+                                                        @{var nl1 = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
+                                                            var nl = db.ChuyenGiaos.Where(s => s.MaGH == nl1.MaGH).FirstOrDefault();}
+                                                        @Html.DisplayFor(modelItem => nl.PhuongTienGH.MaPT)
                                                     </td>
                                                     <td>
-                                                        @{var ttg = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();}
-                                                        @Html.DisplayFor(modelItem => ttg.TrangThai)
-                                                    </td>
+                                                        @{var ttg1 = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
+                                                           var ttg = db.ChuyenGiaos.Where(s => s.MaGH == ttg1.MaGH).FirstOrDefault();}
+                                                            @Html.DisplayFor(modelItem => ttg.TrangThai)
+                                                        </td>
                                                     <td>
-                                                        @{var kvg = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();}
-                                                        @Html.DisplayFor(modelItem => kvg.KhuVucGiao)
-                                                    </td>
+                                                        @{var kvg1 = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
+                                                            var kvg = db.ChuyenGiaos.Where(s => s.MaGH == kvg1.MaGH).FirstOrDefault();}
+                                                            @Html.DisplayFor(modelItem => kvg.KhuVucGiao)
+                                                        </td>
                                                     <td>
-                                                        @{var ng = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();}
-                                                        @Html.DisplayFor(modelItem => ng.NgayGiao)
+                                                        @{var ng1 = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
+                                                            var ng = db.ChuyenGiaos.Where(s => s.MaGH == kvg1.MaGH).FirstOrDefault();}
+                                                        @Html.DisplayFor(modelItem => kvg.NgayGiao)
                                                     </td>
                                                     <td style="text-align:center">
                                                         <a class="btn  btn-primary btn-sm edit" href="/GiaoHang/ChiTietChuyenGiaoHang/@item.MaDH">
@@ -238,7 +241,7 @@
                                             }
                                         }
                                     }
-                                </tbody>
+                                </tbody>*@
                             </table>
                         </div>
                     </div>

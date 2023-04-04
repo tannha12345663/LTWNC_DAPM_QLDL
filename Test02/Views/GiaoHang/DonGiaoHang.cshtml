@@ -65,9 +65,10 @@
                                 <thead>
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 30px; text-align: center ">Mã Đơn hàng </th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Mã đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 30px; text-align: center ">Mã đại lý</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tên đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Số điện thoại đại lý</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 150px; text-align: center ">Địa chỉ giao</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 160px; text-align: center ">Địa chỉ giao</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tình trạng thanh toán</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 60px; text-align: center ">Tình trạng giao</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Cập nhật</th>
@@ -78,71 +79,87 @@
                                     {
                                         if (item.PhieuXuatKho == true && item.XuatHoaDon == true && item.TinhTrangGH != null && item.TrangThai == "Đã xét duyệt")
                                         {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaDH)
-                                        </td>
-
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DaiLy.TenDL)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DaiLy.SDT)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DiemGiao)
-                                        </td>
-
-
-                                        @if (item.TinhTrangThanhToan == "Chưa thanh toán")
-                                        {
-                                            <td>
-                                                <span class="badge bg-danger" style="width:100px">
-                                                    @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
-                                                </span>
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td>
-                                                <span class="badge bg-success" style="width:100px">
-                                                    @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
-                                                </span>
-                                            </td>                                         
-                                        }
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaDH)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DaiLy.MaDL)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DaiLy.TenDL)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DaiLy.SDT)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                </td>
 
 
-                                        @if (item.TinhTrangGH == "Đã giao")
-                                        {
-                                            <td>
-                                                <span class="badge bg-success" style="width:100px">
-                                                    @Html.DisplayFor(modelItem => item.TinhTrangGH)
-                                                </span>
-                                            </td>
-                                        }
-                                        else if (item.TinhTrangGH == "Đang giao")
-                                        {
-                                            <td>
-                                                <span class="badge bg-warning" style="width:100px">
-                                                    @Html.DisplayFor(modelItem => item.TinhTrangGH)
-                                                </span>
-                                            </td>
-                                        }
-                                        else if (item.TinhTrangGH == "Chờ giao")
-                                        {
-                                            <td>
-                                                <span class="badge bg-dark" style="width:100px">
-                                                    @Html.DisplayFor(modelItem => item.TinhTrangGH)
-                                                </span>
-                                            </td>
-                                        }
+                                                @if (item.TinhTrangThanhToan == "Chưa thanh toán")
+                                                {
+                                                    <td>
+                                                        <span class="badge bg-danger" style="width:100px">
+                                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                        </span>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <span class="badge bg-success" style="width:100px">
+                                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                        </span>
+                                                    </td>
 
-                                        <td style="text-align:center">
-                                            <a href="/GiaoHang/CapNhatTrangThaiDonHang/@item.MaDH" class="btn btn-primary btn-sm edit">
-                                                <i class='bx bxs-log-in-circle'></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                                }
+
+
+                                                @if (item.TinhTrangGH == "Đã giao")
+                                                {
+                                                    <td>
+                                                        <span class="badge bg-success" style="width:100px">
+                                                            @Html.DisplayFor(modelItem => item.TinhTrangGH)
+                                                        </span>
+                                                    </td>
+                                                }
+                                                else if (item.TinhTrangGH == "Đang giao")
+                                                {
+                                                    <td>
+                                                        <span class="badge bg-warning" style="width:100px">
+                                                            @Html.DisplayFor(modelItem => item.TinhTrangGH)
+                                                        </span>
+                                                    </td>
+                                                }
+                                                else if (item.TinhTrangGH == "Chờ giao")
+                                                {
+                                                    <td>
+                                                        <span class="badge bg-dark" style="width:100px">
+                                                            @Html.DisplayFor(modelItem => item.TinhTrangGH)
+                                                        </span>
+                                                    </td>
+                                                }
+
+                                                @if (item.TinhTrangGH == "Đã giao")
+                                                {
+                                                    <td style="text-align:center">
+                                                        <a anchor.href = "javascript:void(0)"; class="btn btn-primary btn-sm edit" >
+                                                            <i class='bx bxs-log-in-circle'></i>
+                                                        </a>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="text-align:center">
+                                                        <a href="/GiaoHang/CapNhatTrangThaiDonHang/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                            <i class='bx bxs-log-in-circle'></i>
+                                                        </a>
+                                                    </td>
+                                                }
+
+
+                                            </tr>
                                         }
                                     }
                                 </tbody>
@@ -154,3 +171,10 @@
         </div>
     </div>
 </div>
+
+
+@*<script>
+    function disableBtn() {
+        document.getElementById("#update-ttdh").disabled = true;
+    }
+</script>*@

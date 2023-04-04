@@ -177,8 +177,8 @@ namespace Test02.Controllers
 
             if (ModelState.IsValid)
             {
-                chiTietChuyenGiao.MaCTDVC = (int)Session["makho1"];
-                chuyenGiao.MaGH = (string)Session["makho2"];
+                chiTietChuyenGiao.MaCTDVC = (int)Session["donhang"];
+                chuyenGiao.MaGH = (string)Session["donhang1"];
                 if (donhang.TinhTrangGH == "Chờ giao")
                 {
                     donhang.TinhTrangGH = Convert.ToString("Đang giao");
