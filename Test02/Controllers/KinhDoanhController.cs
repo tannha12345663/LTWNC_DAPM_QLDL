@@ -310,31 +310,31 @@ namespace Test02.Controllers
                     }
                     else
                     {
-                        var ctk = database.ChiTietKhoes.Where(s => s.MaSP == ctdh.MaSP).ToList();
-                        var slsp = (int)ctdh.SoLuong;
-                        var checksl = -slsp;
-                        foreach (var udk in ctk)
-                        {
-                            checksl += (int)udk.SoLuong;
-                            if (checksl >= 0)
-                            {
-                                udk.SoLuong = checksl;
-                                if (udk.SoLuong < 1500)
-                                {
-                                    udk.TinhTrang = "Sắp hết hàng";
-                                }
-                                database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
-                                database.SaveChanges();
-                                break;
-                            }
-                            else if (checksl < 0)
-                            {
-                                udk.TinhTrang = "Hết hàng";
-                                udk.SoLuong = 0;
-                                database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
-                                database.SaveChanges();
-                            }
-                        }
+                        //var ctk = database.ChiTietKhoes.Where(s => s.MaSP == ctdh.MaSP).ToList();
+                        //var slsp = (int)ctdh.SoLuong;
+                        //var checksl = -slsp;
+                        //foreach (var udk in ctk)
+                        //{
+                        //    checksl += (int)udk.SoLuong;
+                        //    if (checksl >= 0)
+                        //    {
+                        //        udk.SoLuong = checksl;
+                        //        if (udk.SoLuong < 1500)
+                        //        {
+                        //            udk.TinhTrang = "Sắp hết hàng";
+                        //        }
+                        //        database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
+                        //        database.SaveChanges();
+                        //        break;
+                        //    }
+                        //    else if (checksl < 0)
+                        //    {
+                        //        udk.TinhTrang = "Hết hàng";
+                        //        udk.SoLuong = 0;
+                        //        database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
+                        //        database.SaveChanges();
+                        //    }
+                        //}
                     }
                     dh.TongTien += ctdh.ThanhTien;
                     database.Entry(dh).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;

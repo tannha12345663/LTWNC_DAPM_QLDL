@@ -1,10 +1,11 @@
 ﻿@model Test02.Models.DaiLy
-
+@using Test02.Models
 @{
     ViewBag.Title = "Thêm đại lý";
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.nd = "Thêm mới đại lý";
     ViewBag.dl = "active";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @{
@@ -42,9 +43,13 @@
                         <label class="control-label" for="MaLoaiDL">Mã loại đại lý</label>
                         <select class="form-control" id="MaLoaiDL" name="MaLoaiDL" required>
                             <option selected="selected" disabled>------Chọn-------</option>
-                            <option value="LDL01">Đại lý lớn </option>
-                            <option value="LDL02">Đại lý vừa</option>
-                            <option value="LDL03">Đại lý nhỏ</option>
+                            @{
+                                var dsdl = db.LoaiDLs.ToList();
+                                foreach (var item in dsdl)
+                                {
+                                    <option value="@item.MaLoaiDL">@item.TenDaiLy</option>
+                                }
+                            }
                         </select>
                         @Html.ValidationMessageFor(model => model.MaLoaiDL, "", new { @class = "text-danger" })
                     </div>
