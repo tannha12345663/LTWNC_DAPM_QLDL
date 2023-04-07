@@ -20,7 +20,6 @@ namespace Test02.Models
         public Nullable<int> SoLuongCT { get; set; }
         public Nullable<int> SoLuongTT { get; set; }
         public Nullable<System.DateTime> ThoiGianTT { get; set; }
-        public string TinhTrang { get; set; }
         public int STT { get; set; }
     
         public virtual PhieuNhapXuat PhieuNhapXuat { get; set; }

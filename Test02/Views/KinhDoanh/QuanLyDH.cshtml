@@ -60,7 +60,17 @@
             });
         </script>
     }
-    ;
+    else if (checkmess == "error01")
+    {
+        <script>
+            swal({
+                title: "Đơn hàng đặt vược mức công nợ của đại lý \n Vui lòng kiểm tra lại ",
+                text: "Mã đơn hàng @TempData["capnhatdh"] của đại lý @TempData["madl"]  đã được xóa! ",
+                icon: "error",
+                button: "OK",
+            });
+        </script>
+    };
 }
 <ul class="nav nav-tabs">
     <!-- Nav tabs -->
@@ -453,12 +463,8 @@
                                 }
                             </select>
                         </div>
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Địa điểm giao hàng</label>
-                            <textarea class="form-control" type="text" name="DiemGiao" required></textarea>
-                        </div>
                         <div class="form-group col-md-12 " style="text-align:center">
-                            <label style="font-size:20px" class="control-label">---------THÔNG TIN HÓA ĐƠN-------</label>
+                            <label style="font-size:20px" class="control-label">---------THÔNG TIN ĐƠN HÀNG-------</label>
 
                         </div>
                         <div class="form-group col-md-12" id="themdong">
@@ -505,16 +511,20 @@
         }
         else {
             i++;
-            var row = '<div class="row" id="nd'+i+'">'+ '<div class="form-group col-lg-8">'+
-    '<label class="control-label">Tên sản phẩm</label>' +
-                ' <select class="form-control" name="MaSP' + i +'" required>' +
-    '<option selected disabled>----Vui lòng chọn sản phẩm----</option>' +
-    '@{ foreach (var item01 in dssp) {<option value="@item01.MaSP">@item01.MaSP - @item01.TenSP - SL: @item01.TongTon</option> } }' +
-    '</select>' + '</div>' +
-    '<div class="form-group col-md-3">' +
-    '<label class="control-label">Số lượng:</label>' +
-    '<input class="form-control" type="number" name="SoLuong'+i+'" value="true" id="SoLuong" required />' +
-                '</div>' +'</div>';
+            var row = '<div class="row" id="nd' + i + '">' +
+                '<div class="form-group col-lg-9">' +
+                '<label class="control-label">Tên sản phẩm</label>' +
+                ' <select class="form-control" id="ChonSP" name="MaSP' + i +'" required>' +
+                    '<option selected disabled>----Vui lòng chọn sản phẩm----</option>' +
+                    '@{ foreach (var item01 in dssp) 
+                        {<option value="@item01.MaSP">@item01.MaSP - @item01.TenSP - SL: @item01.TongTon</option> } }' +
+                '</select>' +
+                    '</div>' +
+                '<div class="form-group col-md-3">' +
+                    '<label class="control-label">Số lượng:</label>' +
+                    '<input disabled class="form-control" type="number" min=0 name="SoLuong'+i+'" value="true" id="SoLuong" required />' +
+                '</div>' +
+                '</div>';
             $("#xoasp").prop('disabled', false);
             document.getElementById("themdong").innerHTML += row;
 
@@ -523,6 +533,7 @@
         };
 
     }
+    
     function xoaSP() {
 
         if (i > 0) {
@@ -541,6 +552,7 @@
         var resetp = '';
         document.getElementById("themdong").innerHTML=resetp;
     };
+    
 </script>
 <script>
     let button = document.querySelector("#button-excel");
@@ -574,5 +586,4 @@
     '/<div>'; *@
 @section script{
     <script src="~/Content/js/tableToExcel.js"></script>
-
 }

@@ -28,6 +28,7 @@ namespace Test02.Models
         public string NguoiGiaoHang { get; set; }
         public string PhuongTienGiaoHang { get; set; }
         public string MaDH { get; set; }
+        public string TinhTrang { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietPhieuNhapXuat> ChiTietPhieuNhapXuats { get; set; }

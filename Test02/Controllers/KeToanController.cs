@@ -24,7 +24,8 @@ namespace Test02.Controllers
 
         public ActionResult TrangChuKeToan()
         {
-            return View(database.HoaDons.ToList());
+            //return View(database.HoaDons.ToList());
+            return View();
         }
         //chu y
         public ActionResult QLyDonHangKeToan(String id,DonHang dh)

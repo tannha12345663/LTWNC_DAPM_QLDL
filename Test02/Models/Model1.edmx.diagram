@@ -16,7 +16,6 @@
         <EntityTypeShape EntityType="QuanLyDLModel.DoanhSo" Width="1.5" PointX="5.25" PointY="22.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.DonHang" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.DonHangGiao" Width="1.5" PointX="10.5" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.HoaDon" Width="1.5" PointX="7.5" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.Kho" Width="1.5" PointX="6" PointY="19.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.LoaiDL" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.NhanVien" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
@@ -43,7 +42,6 @@
         <AssociationConnector Association="QuanLyDLModel.FK_PhieuCongNo_DaiLy" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_DonHang_NhanVien" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_DonHangGiao_DonHang" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDLModel.FK_HoaDon_DonHang" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_DonHangGiao_NhanVienGH" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_DonHangGiao_PhuongTienGH" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_PhieuNhapXuat_Kho" ManuallyRouted="false" />

@@ -68,7 +68,8 @@
                                 <img height="150" width="400" src="@item.HinhAnh" style="width:100px" />
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Gia)
+                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.Gia);}
+                                @Html.DisplayFor(modelItem => ThanhTien)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.DonViTinh)

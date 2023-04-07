@@ -279,27 +279,32 @@ namespace Test02.Controllers
                 dh.TinhTrangThanhToan = "Chưa thanh toán";
                 dh.TrangThai = "Chưa xử lý";
                 dh.TongTien = 0;
+                var ldl = database.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();
+                dh.DiemGiao = ldl.DiaChi;
+                dh.PhieuXuatKho = false;
+                dh.XuatHoaDon = false;
+                dh.TinhTrangGH = null;
                 database.DonHangs.Add(dh);
                 database.SaveChanges();
                 var loaidl = database.DaiLies.Find(dh.MaDL);
                 var ck = database.LoaiDLs.Where(s => s.MaLoaiDL == loaidl.MaLoaiDL).FirstOrDefault();
-                
-                for(int i = 1; i <= id; i++)
+
+                for (int i = 1; i <= id; i++)
                 {
                     ChiTietDonHang ctdh = new ChiTietDonHang();
                     ctdh.MaDH = dh.MaDH;
                     ctdh.MaSP = Request["MaSP"+i];
                     ctdh.SoLuong =Convert.ToInt32( Request["SoLuong" + i]);
-                    ctdh.ChietKhau = ck.ChietKhau;
+                    //ctdh.ChietKhau = ck.ChietKhau;
                     var dg = database.SanPhams.Where(s => s.MaSP == ctdh.MaSP).FirstOrDefault();
                     if (ctdh.ChietKhau == null)
                     {
                         ctdh.ThanhTien = (dg.Gia) * (ctdh.SoLuong);
                     }
-                    else
-                    {
-                        ctdh.ThanhTien = (ctdh.SoLuong) * (dg.Gia) * (ctdh.ChietKhau);
-                    }
+                    //else
+                    //{
+                    //    ctdh.ThanhTien = (ctdh.SoLuong) * (dg.Gia) * (ctdh.ChietKhau);
+                    //}
                     //Kiểm tra số lượng sản phẩm tồn trong kho
                     var checkslp = database.SanPhams.Where(s => s.MaSP == ctdh.MaSP).FirstOrDefault();
                     if (ctdh.SoLuong > checkslp.TongTon)
@@ -337,11 +342,50 @@ namespace Test02.Controllers
                         //}
                     }
                     dh.TongTien += ctdh.ThanhTien;
-                    database.Entry(dh).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
-                    database.SaveChanges();
+                    
                     database.ChiTietDonHangs.Add(ctdh);
                     database.SaveChanges();
                 }
+                if (ldl.MaLoaiDL == "LDL01")
+                {
+                    if (dh.TongTien > 500000000)
+                    {
+                        TempData["messageAlert"] = "error01";
+                        TempData["themmadh"] = dh.MaDH;
+                        TempData["madl"] = dh.MaDL;
+                        database.DonHangs.Remove(dh);
+                        database.SaveChanges();
+                        return RedirectToAction("QuanLyDH");
+                    }
+                }
+                else if (ldl.MaLoaiDL == "LDL02")
+                {
+                    if (dh.TongTien > 250000000)
+                    {
+                        TempData["messageAlert"] = "error01";
+                        TempData["themmadh"] = dh.MaDH;
+                        TempData["madl"] = dh.MaDL;
+                        database.DonHangs.Remove(dh);
+                        database.SaveChanges();
+                        return RedirectToAction("QuanLyDH");
+                    }
+                }
+                else if (ldl.MaLoaiDL == "LDL03")
+                {
+                    if (dh.TongTien > 100000000)
+                    {
+                        TempData["messageAlert"] = "error01";
+                        TempData["themmadh"] = dh.MaDH;
+                        TempData["madl"] = dh.MaDL;
+                        database.DonHangs.Remove(dh);
+                        database.SaveChanges();
+                        return RedirectToAction("QuanLyDH");
+                    }
+                }
+                dh.TongTien = dh.TongTien - (dh.TongTien * ck.ChietKhau);
+                database.Entry(dh).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                database.SaveChanges();
+
                 TempData["messageAlert"] = "Đã thêm mới đơn hàng";
                 TempData["themmadh"] = dh.MaDH;
                 return RedirectToAction("QuanLyDH");
@@ -453,64 +497,79 @@ namespace Test02.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemCTHD1([Bind(Include = "MaSP,SoLuong,DonGia,DiemGiao,DonViTinh")] ChiTietDonHang chiTietDonHang)
+        public ActionResult ThemCTHD2([Bind(Include = "MaDH,MaSP,SoLuong")] ChiTietDonHang chiTietDonHang)
         {
             if (ModelState.IsValid)
             {
-                //Thêm chi tiết đơn hàng
-
-                chiTietDonHang.MaDH = (string)Session["mdh1"];
-                var dongia = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
-                if (chiTietDonHang.ChietKhau == null)
+                int sl = int.Parse (Request["sl"]);
+                double total = 0;
+                var dh = database.DonHangs.Find(chiTietDonHang.MaDH);
+                var ldl = database.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();
+                var ck = database.LoaiDLs.Where(s => s.MaLoaiDL == ldl.MaLoaiDL).FirstOrDefault();
+                for (int i = 1; i <= sl; i++)
                 {
-                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia);
-                }
-                else
-                {
-                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia) * (chiTietDonHang.ChietKhau);
-                }
-                //Kiểm tra số lượng sản phẩm tồn trong kho
-                var checkslp = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
-                if (chiTietDonHang.SoLuong > checkslp.TongTon)
-                {
-                    var madh = database.DonHangs.Where(s => s.MaDH == chiTietDonHang.MaDH).FirstOrDefault();
-                    TempData["messageAlert"] = "Không đủ số lượng để đặt";
-                    return RedirectToAction("QuanLyDH");
-                }
-                else
-                {
-                    var ctk = database.ChiTietKhoes.Where(s => s.MaSP == chiTietDonHang.MaSP).ToList();
-                    var slsp = (int)chiTietDonHang.SoLuong;
-                    var checksl = -slsp;
-                    foreach (var udk in ctk)
+                    chiTietDonHang.MaSP = Request["MaSP" + i];
+                    chiTietDonHang.SoLuong = Convert.ToInt32(Request["SoLuong" + i]);
+                    //ctdh.ChietKhau = ck.ChietKhau;
+                    var dg = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
+                    chiTietDonHang.ThanhTien = (dg.Gia) * (chiTietDonHang.SoLuong);
+                    //Kiểm tra số lượng sản phẩm tồn trong kho
+                    var checkslp = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
+                    if (chiTietDonHang.SoLuong > checkslp.TongTon)
                     {
-                        checksl += (int)udk.SoLuong;
-                        if (checksl >= 0)
-                        {
-                            udk.SoLuong = checksl;
-                            if (udk.SoLuong < 1500)
-                            {
-                                udk.TinhTrang = "Sắp hết hàng";
-                            }
-                            database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
-                            database.SaveChanges();
-                            break;
-                        }
-                        else if (checksl < 0)
-                        {
-                            udk.TinhTrang = "Hết hàng";
-                            udk.SoLuong = 0;
-                            database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
-                            database.SaveChanges();
-                        }
+                        TempData["messageAlert"] = "Không đủ số lượng để đặt";
+                        TempData["slmasp"] = chiTietDonHang.MaSP;
+                        return RedirectToAction("DanhSachCTDH","KinhDoanh",new { id= chiTietDonHang.MaDH});
+                    }
+                    database.ChiTietDonHangs.Add(chiTietDonHang);
+                    database.SaveChanges();
+                }
+                //Kiểm tra tổng tiền hiện tại đơn hàng
+                var checktongtien = database.ChiTietDonHangs.Where(s => s.MaDH == chiTietDonHang.MaDH).ToList();
+                foreach(var item01 in checktongtien)
+                {
+                    total += (double) item01.ThanhTien;
+                }
+                dh.TongTien = total;
+                if (ldl.MaLoaiDL == "LDL01")
+                {
+                    if (dh.TongTien > 500000000)
+                    {
+                        TempData["messageAlert"] = "error01";
+                        TempData["themmadh"] = chiTietDonHang.MaDH;
+                        TempData["madl"] = dh.MaDL;
+                        database.DonHangs.Remove(dh);
+                        database.SaveChanges();
+                        return RedirectToAction("QuanLyDH");
                     }
                 }
-                //Cập nhật thêm sản phẩm
-                database.ChiTietDonHangs.Add(chiTietDonHang);
-                database.SaveChanges();
-                //THêm tổng tiền của đơn hàng
-                var dh = database.DonHangs.Find(chiTietDonHang.MaDH);
-                dh.TongTien += chiTietDonHang.ThanhTien;
+                else if (ldl.MaLoaiDL == "LDL02")
+                {
+                    if (dh.TongTien > 250000000)
+                    {
+                        TempData["messageAlert"] = "error01";
+                        TempData["themmadh"] = dh.MaDH;
+                        TempData["madl"] = dh.MaDL;
+                        database.DonHangs.Remove(dh);
+                        database.SaveChanges();
+                        return RedirectToAction("QuanLyDH");
+                    }
+                }
+                else if (ldl.MaLoaiDL == "LDL03")
+                {
+                    if (dh.TongTien > 100000000)
+                    {
+                        TempData["messageAlert"] = "error01";
+                        TempData["themmadh"] = dh.MaDH;
+                        TempData["madl"] = dh.MaDL;
+                        database.DonHangs.Remove(dh);
+                        database.SaveChanges();
+                        return RedirectToAction("QuanLyDH");
+                    }
+                }
+                dh.TongTien = dh.TongTien - (dh.TongTien * ck.ChietKhau);
+                //Cập nhật lại tổng tiền của đơn hàng
+                //dh.TongTien += chiTietDonHang.ThanhTien;
                 database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
                 TempData["messageAlert"] = "Đã cập nhật chi tiết đơn hàng";
