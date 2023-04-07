@@ -538,8 +538,6 @@ namespace Test02.Controllers
                         TempData["messageAlert"] = "error01";
                         TempData["themmadh"] = chiTietDonHang.MaDH;
                         TempData["madl"] = dh.MaDL;
-                        database.DonHangs.Remove(dh);
-                        database.SaveChanges();
                         return RedirectToAction("QuanLyDH");
                     }
                 }
@@ -550,8 +548,6 @@ namespace Test02.Controllers
                         TempData["messageAlert"] = "error01";
                         TempData["themmadh"] = dh.MaDH;
                         TempData["madl"] = dh.MaDL;
-                        database.DonHangs.Remove(dh);
-                        database.SaveChanges();
                         return RedirectToAction("QuanLyDH");
                     }
                 }
@@ -562,8 +558,6 @@ namespace Test02.Controllers
                         TempData["messageAlert"] = "error01";
                         TempData["themmadh"] = dh.MaDH;
                         TempData["madl"] = dh.MaDL;
-                        database.DonHangs.Remove(dh);
-                        database.SaveChanges();
                         return RedirectToAction("QuanLyDH");
                     }
                 }
@@ -579,6 +573,15 @@ namespace Test02.Controllers
 
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
             return View(chiTietDonHang);
+        }
+        //Check tổng tiền trước
+        [HttpPost]
+        public ActionResult CheckTongTien(string MaSP, int SoLuong)
+        {
+            var total = 0;
+            var checksp = database.SanPhams.Where(s => s.MaSP == MaSP).FirstOrDefault();
+            total = (int)(checksp.Gia * SoLuong);
+            return Json(new { data=total},JsonRequestBehavior.AllowGet);
         }
         //Chỉnh sửa thông tin đơn hàng
         public ActionResult ChinhSuaDH(string id)
