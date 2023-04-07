@@ -10,17 +10,9 @@
 namespace Test02.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class DonHang
+    public partial class sp_SapxepNgay_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DonHang()
-        {
-            this.ChiTietDonHangs = new HashSet<ChiTietDonHang>();
-            this.DonHangGiaos = new HashSet<DonHangGiao>();
-        }
-    
         public string MaDH { get; set; }
         public string MaDL { get; set; }
         public string MaNVLap { get; set; }
@@ -32,12 +24,5 @@ namespace Test02.Models
         public Nullable<bool> PhieuXuatKho { get; set; }
         public Nullable<bool> XuatHoaDon { get; set; }
         public string TinhTrangGH { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
-        public virtual DaiLy DaiLy { get; set; }
-        public virtual NhanVien NhanVien { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DonHangGiao> DonHangGiaos { get; set; }
     }
 }

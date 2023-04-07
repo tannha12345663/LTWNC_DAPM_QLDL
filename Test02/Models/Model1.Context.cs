@@ -12,6 +12,8 @@ namespace Test02.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class QuanLyDLEntities2 : DbContext
     {
@@ -36,7 +38,6 @@ namespace Test02.Models
         public virtual DbSet<DoanhSo> DoanhSoes { get; set; }
         public virtual DbSet<DonHang> DonHangs { get; set; }
         public virtual DbSet<DonHangGiao> DonHangGiaos { get; set; }
-        public virtual DbSet<HoaDon> HoaDons { get; set; }
         public virtual DbSet<Kho> Khoes { get; set; }
         public virtual DbSet<LoaiDL> LoaiDLs { get; set; }
         public virtual DbSet<NhanVien> NhanViens { get; set; }
@@ -45,5 +46,11 @@ namespace Test02.Models
         public virtual DbSet<PhieuNhapXuat> PhieuNhapXuats { get; set; }
         public virtual DbSet<PhuongTienGH> PhuongTienGHs { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+    
+        public virtual ObjectResult<sp_SapxepNgay_Result> sp_SapxepNgay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_SapxepNgay_Result>("sp_SapxepNgay");
+        }
     }
 }

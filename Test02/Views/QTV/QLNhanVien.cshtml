@@ -1,14 +1,51 @@
 ﻿@model IEnumerable<Test02.Models.NhanVien>
 @using Test02.Models;
 @{
-    ViewBag.Title = "QLNhanVien";
+    ViewBag.Title = "Quản lý nhân viên";
     Layout = "~/Views/QTV/Layout/LayoutQTV.cshtml";
     ViewBag.qtnv = "active";
-    ViewBag.nd = "Danh sách nhan viên";
+    ViewBag.nd = "Danh sách nhân viên";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChucVu> cv = db.ChucVus.ToList();
 }
+@{
+    
+    if (TempData["thongbao"] == "delete")
+    {
+        <script>
+            swal({
+                title: "Xóa nhân viên thành công !!!!",
+                icon: "success",
+                button: "Thoát",
+            });
 
+        </script>
+
+    }
+    else if (TempData["thongbao"] == "edit")
+    {
+        <script>
+            swal({
+                title: "Cập nhật thông tin nhân viên thành công !!!!",
+                icon: "success",
+                button: "Thoát",
+            });
+
+        </script>
+
+    }
+    else if(TempData["thongbao"] == "add")
+    {
+        <script>
+            swal({
+                title: "Thêm nhân viên thành công !!!!",
+                icon: "success",
+                button: "Thoát",
+            });
+
+        </script>
+    }
+}
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
@@ -23,9 +60,9 @@
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDL"><i class="fas fa-copy"></i> Làm mới danh sách</a>
-                    </div>
+                    @*<div class="col-sm-2">
+                            <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/QuanLyDL"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                        </div>*@
 
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
@@ -36,46 +73,43 @@
                                 <thead>
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã nhân viên</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" >Mã chức vụ</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Tên chức vụ</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Chức vụ</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable">Tên nhân viên</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable">UserName</th>
                                         <th class="sorting" tabindex="0">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  
+
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td style="width: 150px;">
-                                            @Html.DisplayFor(modelItem => item.MaNV)
-                                        </td>
-                                        <td style="width: 150px;">
-                                            @Html.DisplayFor(modelItem => item.MaChucVu)
-                                        </td>
-                                        <td>
-                                            @{var tencv = db.ChucVus.Find(item.MaChucVu);
-                                            }
-                                            @Html.DisplayFor(modelItem => tencv.ViTri)
-                                        </td>
-                                        <td style="width: 150px;">
-                                            @Html.DisplayFor(modelItem => item.TenNV)
-                                        </td>
-                                        <td style="width: 150px;">
-                                            @Html.DisplayFor(modelItem => item.UserName)
-                                        </td>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaNV)
+                                            </td>
 
-                                        <td>
-                                            <a href="/QTV/ChinhsuaNV/@item.MaNV" class="btn btn-outline-dark btn-sm">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a href="/QTV/ChitietNV/@item.MaNV" class="btn btn-outline-dark btn-sm">
-                                                <i class="fas fa-info"></i>
-                                            </a>
+                                            <td>
+                                                @{var tencv = db.ChucVus.Find(item.MaChucVu);
+                                                }
+                                                @Html.DisplayFor(modelItem => tencv.ViTri) -  @Html.DisplayFor(modelItem => item.MaChucVu)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TenNV)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.UserName)
+                                            </td>
 
-                                        </td>
-                                    </tr>
+                                            <td>
+                                                <a href="/QTV/ChinhsuaNV/@item.MaNV" class="btn btn-outline-dark btn-sm">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="/QTV/ChitietNV/@item.MaNV" class="btn btn-outline-dark btn-sm">
+                                                    <i class="fas fa-info"></i>
+                                                </a>
+
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

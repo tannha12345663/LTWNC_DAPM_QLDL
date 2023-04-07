@@ -46,8 +46,8 @@ namespace Test02.Controllers
         {
             int count = 0;
             double dangercn = maxcndl - (maxcndl * 0.1);
-            double warningcn = maxcndl - (maxcndl * 0.3);
-            if (tongno > dangercn || (maxcndl > warningcn && maxcndl < dangercn))
+            
+            if (tongno > dangercn)
             {
                 count++;
             }    
@@ -230,10 +230,14 @@ namespace Test02.Controllers
           
             BindDropDownList();
             Tinhtangdonhang();
+            //List<DonHang> dhchon = new List<DonHang>();
+            //var test01 = database.sp_SapxepNgay().ToList().OrderBy(s=>s.NgayLap);
 
             List<DonHang> tatca = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt"
             && s.TinhTrangGH == null).ToList();
-            List<DonHang> dhchon = LocDonHang_TheoDK(thangs,tatca, tinhtrangdh).ToList();
+            List<DonHang> dhchon = LocDonHang_TheoDK(thangs, tatca, tinhtrangdh).ToList();
+
+
             return View(dhchon);
         }
 
@@ -263,7 +267,7 @@ namespace Test02.Controllers
             BindDropDownList();
             Tinhtangdonhang();
             List<DonHang> donhangchuathanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt"
-            && s.TinhTrangThanhToan == "Chưa thanh toán" && s.TinhTrangGH == "Đã giao hàng").ToList();
+            && s.TinhTrangThanhToan == "Chưa thanh toán" && s.TinhTrangGH == "Đã giao").ToList();
 
             return View(donhangchuathanhtoan);
         }
@@ -274,12 +278,26 @@ namespace Test02.Controllers
             BindDropDownList();
             Tinhtangdonhang();
             List<DonHang> tatca = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt"
-           ).ToList();
+           && s.TinhTrangGH=="Đã giao").ToList();
             List<DonHang> dhchon = LocDonHang_TheoDK(thangs, tatca, tinhtrangdh).ToList();
             return View(dhchon);
         }
 
 
+        //public ActionResult ChinhsuaHD(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+        //    }
+        //    DonHang donHang = database.DonHangs.Find(id);
+        //    if (donHang == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    return View(donHang);
+        //}
 
 
         [HttpPost]
@@ -291,7 +309,7 @@ namespace Test02.Controllers
                 database.SaveChanges();
                 TempData["edithd"] = "oke";
                 return RedirectToAction("XuatHDBH", new RouteValueDictionary(
-                                       new { controller = "KeToan", action = "XuatHDBH", Id = Session["madaily"] }));
+                                       new { controller = "KeToan", action = "XuatHDBH", Id = donHang.MaDH }));
 
             }
            
@@ -312,6 +330,9 @@ namespace Test02.Controllers
             {
                 return HttpNotFound();
             }
+            //donHang.XuatHoaDon = true;
+            //database.Entry(donHang).State = System.Data.Entity.EntityState.Modified;
+            //database.SaveChanges();
 
             return View(donHang);
         }

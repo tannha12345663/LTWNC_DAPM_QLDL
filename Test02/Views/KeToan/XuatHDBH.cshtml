@@ -135,9 +135,13 @@
             {
                 <a class="btn btn-danger btn-sm" type="button" title="Quay lại " href="~/KeToan/QLDonHang">Quay lại</a>
             }
-            else if(Model.TinhTrangGH == "Đã giao hàng")
+            else if (Model.TinhTrangGH == "Đã giao")
             {
                 <a class="btn btn-danger btn-sm" type="button" title="Quay lại " href="~/KeToan/QLDonDaGiao">Quay lại</a>
+            }
+            else if (Model.TinhTrangGH == "Chờ giao")
+            {
+                <a class="btn btn-danger btn-sm" type="button" title="Quay lại " href="~/KeToan/QLDonChoGiao">Quay lại</a>
             }
 
         </div>

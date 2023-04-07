@@ -81,33 +81,7 @@ namespace Test02.Controllers
             }
 
         }
-        public void LuuAnh(NhanVien nv, HttpPostedFileBase HinhAnh)
-        {
-            #region Hình ảnh
-            //Xác định đường dẫn lưu file : Url tương đói => tuyệt đói
-            var urlTuongdoi = "/Data/Images/";
-            var urlTuyetDoi = Server.MapPath(urlTuongdoi);// Lấy đường dẫn lưu file trên server
-
-            //Check trùng tên file => Đổi tên file  = tên file cũ (ko kèm đuôi)
-            //Ảnh.jpg = > ảnh + "-" + 1 + ".jpg" => ảnh-1.jpg
-
-            string fullDuongDan = urlTuyetDoi + HinhAnh.FileName;
-            int i = 1;
-            while (System.IO.File.Exists(fullDuongDan) == true)
-            {
-                // 1. Tách tên và đuôi 
-                var ten = Path.GetFileNameWithoutExtension(HinhAnh.FileName);
-                var duoi = Path.GetExtension(HinhAnh.FileName);
-                // 2. Sử dụng biến i để chạy và cộng vào tên file mới
-                fullDuongDan = urlTuyetDoi + ten + "-" + i + duoi;
-                i++;
-                // 3. Check lại 
-            }
-            #endregion
-            //Lưu file (Kiểm tra trùng file)
-            HinhAnh.SaveAs(fullDuongDan);
-            nv.HinhAnh = urlTuongdoi + Path.GetFileName(fullDuongDan);
-        }
+        
         public ActionResult ThemNV()
         {
 
@@ -121,13 +95,33 @@ namespace Test02.Controllers
         {
             if (ModelState.IsValid)
             {
-                LuuAnh(nhanVien, HinhAnh);
+                if (HinhAnh != null)
+                {
+                    //Lấy tên file của hình được up lên
+
+                    var fileName = Path.GetFileName(HinhAnh.FileName);
+
+                    //Tạo đường dẫn tới file
+
+                    var path = Path.Combine(Server.MapPath("~/Data/Images"), fileName);
+                    //Lưu tên
+
+                    nhanVien.HinhAnh = fileName;
+                    //Save vào Images Folder
+                    HinhAnh.SaveAs(path);
+
+                }
+                else
+                {
+                    nhanVien.HinhAnh = "account.png";
+                }    
                 Random rd = new Random();
                 var manv = "NV" + rd.Next(1, 1000);
                 nhanVien.MaNV = manv;
 
                 database.NhanViens.Add(nhanVien);
                 database.SaveChanges();
+                TempData["thongbao"] = "add";
                 return RedirectToAction("QLNhanVien");
             }
             
@@ -138,19 +132,39 @@ namespace Test02.Controllers
 
         public ActionResult ChinhsuaNV(String id,NhanVien nhanVien)
         {
-            ViewBag.MaChucVu = new SelectList(database.ChucVus, "MaChucVu", "MaChucVu");
+            ViewBag.MaChucVu = new SelectList(database.ChucVus, "MaChucVu", "MaChucVu", nhanVien.MaChucVu);
             return View(database.NhanViens.Where(s => s.MaNV == id).FirstOrDefault());
         }
-        [HttpPost]
-        public ActionResult ChinhsuaNV(String id,NhanVien nhanVien,HttpPostedFileBase HinhAnh)
-        {
-            
-            LuuAnh(nhanVien, HinhAnh);
-            database.Entry(nhanVien).State = System.Data.Entity.EntityState.Modified;
-            ViewBag.MaChucVu = new SelectList(database.ChucVus, "MaChucVu", "MaChucVu", nhanVien.MaChucVu);
-            database.SaveChanges();
-            return RedirectToAction("QLNhanVien");
-        }
+        
+            [HttpPost]
+            public ActionResult ChinhsuaNV(NhanVien nv, HttpPostedFileBase HinhAnh, string imgnv)
+            {
+                if (ModelState.IsValid)
+                {
+                if (HinhAnh != null)
+                {
+                    var fileName = Path.GetFileName(HinhAnh.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Data/Images"), fileName);
+
+                    nv.HinhAnh = fileName;
+                    //Save vào Images Folder
+                    HinhAnh.SaveAs(path);
+
+                }
+                else
+                {
+                    nv.HinhAnh = imgnv;
+                }
+                database.Entry(nv).State = System.Data.Entity.EntityState.Modified;
+                    database.SaveChanges();
+                    TempData["thongbao"] = "edit";
+                    return RedirectToAction("QLNhanVien");
+                }
+                return View(nv);
+
+            }
+
+        
         public ActionResult ChitietNV(string id)
         {
             var nhanvien = database.NhanViens.Where(s => s.MaNV == id).FirstOrDefault();
@@ -158,11 +172,12 @@ namespace Test02.Controllers
         }
         
        
-        public ActionResult XoaNV(String id,NhanVien nhanvien)
+        public ActionResult XoaNV(string id,NhanVien nhanvien)
         {
             nhanvien = database.NhanViens.Where(s => s.MaNV == id).FirstOrDefault();
             database.NhanViens.Remove(nhanvien);
             database.SaveChanges();
+            TempData["thongbao"] = "delete";
             return RedirectToAction("QLNhanVien");
         }
 

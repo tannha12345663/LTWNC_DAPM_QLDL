@@ -12,14 +12,12 @@ namespace Test02.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class HoaDon
+    public partial class sysdiagram
     {
-        public string MaHD { get; set; }
-        public string MaDH { get; set; }
-        public string TenDVTiepNhan { get; set; }
-        public Nullable<double> TongTien { get; set; }
-        public Nullable<System.DateTime> NgayLap { get; set; }
-    
-        public virtual DonHang DonHang { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

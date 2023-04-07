@@ -1,9 +1,11 @@
 ﻿@model Test02.Models.NhanVien
 @using Test02.Models
 @{
-    ViewBag.Title = "ThemNV";
+    ViewBag.Title = "Thêm account";
     Layout = "~/Views/QTV/Layout/LayoutQTV.cshtml";
     QuanLyDLEntities2 database = new QuanLyDLEntities2();
+    ViewBag.qtnv = "active";
+    ViewBag.nd = "Thêm mới account nhân viên";
 }
 
 <div class="tile" style="margin:10px 20px;">
@@ -91,7 +93,7 @@
                         <input type="submit" value="Save Account" id="btn-submit" class="btn btn-success btn-sm" />
                     </div>
                     <div class="col-sm-">
-                        <a href="" class="btn btn-warning btn-sm">Quay lại danh sách</a>
+                        <a href="/Admin/QLNhanvien" class="btn btn-warning btn-sm">Quay lại danh sách</a>
                     </div>
 
                 </div>
