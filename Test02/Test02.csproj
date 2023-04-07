@@ -295,6 +295,7 @@
     <Content Include="Content\Img\account.png" />
     <Content Include="Content\Img\DiemKhang.jpg" />
     <Content Include="Content\Img\KhoHang\bg_createStorage.jpg" />
+    <Content Include="Content\toastNoti.css" />
     <Content Include="Data\Images\7up.jpg" />
     <Content Include="Data\Images\coca.png" />
     <Content Include="Data\Images\cocalight.jpg" />

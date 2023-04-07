@@ -36,8 +36,6 @@
             <form style="text-align:center">
                 <label for="date">Ngày:</label>
                 @TempData["ngaylap"]<br>
-                <label for="date">Mã số:</label>
-                @TempData["maphieu"]<br>
                 <label for="date">Người làm phiếu: </label>
                 @{
                     var user = (Test02.Models.NhanVien)HttpContext.Current.Session["user"];

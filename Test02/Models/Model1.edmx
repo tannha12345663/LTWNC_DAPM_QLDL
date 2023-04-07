@@ -153,7 +153,7 @@
           </Key>
           <Property Name="MaKho" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="TenKho" Type="nvarchar" MaxLength="50" />
-          <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="LoaiDL">
           <Key>
@@ -848,7 +848,7 @@
           </Key>
           <Property Name="MaKho" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TenKho" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BienBangKiemKes" Relationship="Self.FK_BienBangKiemKe_Kho" FromRole="Kho" ToRole="BienBangKiemKe" />
           <NavigationProperty Name="ChiTietKhoes" Relationship="Self.FK_ChiTietKho_Kho" FromRole="Kho" ToRole="ChiTietKho" />
           <NavigationProperty Name="PhieuNhapXuats" Relationship="Self.FK_PhieuNhapXuat_Kho" FromRole="Kho" ToRole="PhieuNhapXuat" />

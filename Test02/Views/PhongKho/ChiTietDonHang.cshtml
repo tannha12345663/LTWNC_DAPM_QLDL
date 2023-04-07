@@ -20,11 +20,27 @@
             });
         </script>
     }
+    else if (checkMessage == "noKho")
+    {
+        <script>
+            swal({
+                title: "Không tìm thấy kho!",
+                text: "Không có kho nào đáp ứng đủ cho đơn hàng @Session["madhxk"]!",
+                icon: "warning",
+                button: "OK",
+            });
+        </script>
+    }
 
 }
+<link href="~/Content/toastNoti.css" rel="stylesheet" />
 <div class="row">
+
     <div class="col-md-12">
         <div class="tile">
+            <div id="toasts">
+
+            </div>
             <div class="tile-body">
                 <div class="row element-button">
                     <h3>Danh sách chi tiết của đơn hàng @TempData["madh"]</h3>
@@ -106,10 +122,18 @@
                                 var dhang = db.DonHangs.Where(s => s.MaDH == madh).FirstOrDefault();
                                 if (dhang.XuatHoaDon == false || dhang.XuatHoaDon == null)
                                 {
-                                    <span class="btn btn-danger btn-sm" style="cursor:no-drop;">
+                                    <button class="btn btn-danger btn-sm warning" onclick="createToast('warning')">
                                         <i class="fas fa-plus"></i>
                                         Tạo phiếu xuất
-                                    </span>
+                                    </button>
+
+                                }
+                                else if (dhang.PhieuXuatKho == true)
+                                {
+                                    <button class="btn btn-danger btn-sm error" onclick="createToast('error')">
+                                        <i class="fas fa-plus"></i>
+                                        Tạo phiếu xuất
+                                    </button>
                                 }
                                 else
                                 {
@@ -238,10 +262,44 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 
+<script>
+    function createToast(status, timeout) {
+        let temp = `<i class="fas fa-circle-exclamation"></i>
+                <span class="message">This is a Success message!</span>
+                `
+        switch (status) {
+            case 'success':
+                temp = `<i class="fas fa-circle-exclamation"></i>
+                    <span class="message">This is a Success message!</span>`
+                break;
+            case 'warning':
+                temp = `<i class="fa fa-exclamation-triangle"></i>
+                    <span class="message">Đơn hàng chưa có hóa đơn!</span>`
+                break;
+            case 'error':
+                temp = `<i class="fa fa-exclamation-circle"></i>
+                    <span class="message">Đơn hàng đã tạo phiếu!</span>`
+                break;
+        }
 
+        var toast = document.createElement('div')
+        toast.classList.add('toast')
+        toast.classList.add(status)
+        toast.innerHTML = `${temp}<div class="countdown"></div>`
+        var toastList = document.getElementById('toasts')
+        toastList.appendChild(toast)
+        timeout = timeout || 4000
+        setTimeout(function () {
+            toast.style.animation = 'slidehide 2s ease forwards'
+        }, timeout)
+        setTimeout(function () {
+            toast.remove()
+        }, timeout + 2000)
+    }
+</script>
 <script>
     function printDiv(divName) {
 

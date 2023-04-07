@@ -1,5 +1,5 @@
 ﻿@model Test02.Models.PhieuNhapXuat
-    @using Test02.Models
+@using Test02.Models
 @{
     ViewBag.Title = "DetailsPXK";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
@@ -21,9 +21,8 @@
                 <label for="date">Mã số:</label>
                 @Html.DisplayFor(model => model.MaPhieu)<br>
                 <label for="date">Người làm phiếu: </label>
-                @{
-                    var user = (Test02.Models.NhanVien)HttpContext.Current.Session["user"];
-                    <b>@user.MaChucVu - </b> <b>@user.TenNV</b> }
+                @Html.DisplayFor(model => model.MaNVLap) - @Html.DisplayFor(model => model.NhanVien.TenNV)<br>
+
             </form>
                 <div class="tile-body">
                     <form class="row">

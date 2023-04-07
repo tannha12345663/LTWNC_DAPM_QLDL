@@ -7,25 +7,15 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var listDH = db.DonHangs.ToList();
 }
-@{
-    var checkMessage = TempData["AlertMessage"];
-     if (checkMessage == "noKho")
-    {
-        <script>
-            swal({
-                title: "Không tìm thấy kho!",
-                text: "Không có kho nào đáp ứng đủ cho đơn hàng @Session["madhxk"]!",
-                icon: "warning",
-                button: "OK",
-            });
-        </script>
-    }
-}
+
 @* <Danh sách đơn hàng đã xét duyệt *@
 <div class="row">
     <div class="col-lg-12">
         <div class="tile">
             <h3 class="tile-title" style="text-align:center;"><b>DANH SÁCH ĐƠN HÀNG ĐÃ XÉT DUYỆT</b></h3>
+            <div class="col-sm-2">
+                <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/PhongKho/DSDonHang"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+            </div>
             <div class="col-md-12 table-responsive">
                 <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
                        id="sampleTable">

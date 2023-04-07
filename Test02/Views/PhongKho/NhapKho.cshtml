@@ -59,13 +59,13 @@
                                     @Html.DisplayFor(modelItem => item.LoaiPhieu)
                                 </td>
                                 <td class="element-button">
-                                    @{ string str = item.MaPhieu.Substring(0, 2);}
-                                    @if (str == "PX")
+                                    @{ string str = item.MaPhieu.Substring(0, 4);}
+                                    @if (str == "KDPX")
                                     {
                                         <a href="~/PhongKho/ChiTietPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-info" title=" Chi tiết"> <i class="fa fa-info"></i> </a>
                                         <a href="/PhongKho/XoaPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
                                     }
-                                    else if (str == "PN")
+                                    else if (str == "KDPN")
                                     {
                                         <a href="~/PhongKho/ChiTietPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-info" title="Chi tiết"> <i class="fa fa-info"></i> </a>
                                         <a href="/PhongKho/XoaPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>

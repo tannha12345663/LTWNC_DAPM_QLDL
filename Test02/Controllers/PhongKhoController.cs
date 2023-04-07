@@ -400,12 +400,12 @@ namespace Test02.Controllers
             var pnx = database.PhieuNhapXuats.ToList();
             foreach (var item in pnx)
             {
-                string str = item.MaPhieu.Substring(0, 2);
-                if (str == "PX")
+                string str = item.MaPhieu.Substring(0, 4);
+                if (str == "KDPX")
                 {
                     tongpx = tongpx + 1;
                 }
-                else if (str == "PN")
+                else if (str == "KDPN")
                 {
                     tongpn = tongpn + 1;
                 }
@@ -450,7 +450,7 @@ namespace Test02.Controllers
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
-                var maphieu = "PNK" + rd.Next(1, 1000);
+                var maphieu = "KDPNK" + rd.Next(1, 1000);
                 phieuNhapXuat.MaPhieu = maphieu;
                 Session["phieunhap"] = maphieu;
                 phieuNhapXuat.NgayLap = System.DateTime.Now;
@@ -536,7 +536,7 @@ namespace Test02.Controllers
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
-                var maphieux = "PXK" + rd.Next(1, 1000);
+                var maphieux = "KDPXK" + rd.Next(1, 1000);
                 phieuNhapXuat.MaPhieu = maphieux;
                 Session["phieuXuat"] = maphieux;
                 phieuNhapXuat.NgayLap = System.DateTime.Now;
@@ -614,12 +614,12 @@ namespace Test02.Controllers
             var pnx = database.PhieuNhapXuats.ToList();
             foreach(var item in pnx)
             {
-                string str = item.MaPhieu.Substring(0, 2); 
-                if(str == "PX")
+                string str = item.MaPhieu.Substring(0, 4); 
+                if(str == "KDPX")
                 {
                     tongpx = tongpx + 1;
                 }
-                else 
+                else if (str == "KDPN")
                 { 
                     tongpn = tongpn + 1; 
                 }
@@ -659,7 +659,8 @@ namespace Test02.Controllers
         public ActionResult CreateBBKK()
         {
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
-            ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaNV");
+            var nvlap = database.NhanViens.Where(s => s.MaChucVu == "NVK").ToList();
+            ViewBag.MaNVLap = new SelectList(nvlap, "MaNV", "MaNV");
             return View();
         }
 
@@ -850,7 +851,7 @@ namespace Test02.Controllers
             //return View(chiTietBienBang);
         }
 //----------------------------------------------------------------------------------------------------
-        //Phiếu nhập xuất từng kho
+        //Phiếu nhập xuất từng kho cho đơn hàng
         // GET: PhieuNhapXuats/Create
         public ActionResult CreatePXuat(string id)
         {
@@ -904,7 +905,8 @@ namespace Test02.Controllers
             {
                 ViewBag.MaKho = " ";
                 TempData["AlertMessage"] = "noKho";
-                return View("DSDonHang");
+                return RedirectToAction("ChiTietDonHang", new RouteValueDictionary(
+                                            new { controller = "PhongKho", action = "ChiTietDonHang", Id = Session["madhxk"] }));
             }
             ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu");
             ViewBag.MaHD = new SelectList(database.DonHangs, "MaDH", "MaDH");
@@ -920,7 +922,6 @@ namespace Test02.Controllers
         {
             if (ModelState.IsValid)
             {
-                
                 Random rd = new Random();
                 var maphieu = "PHXHD0" + rd.Next(1, 1000);
                 phieuNhapXuat.MaPhieu = maphieu;
