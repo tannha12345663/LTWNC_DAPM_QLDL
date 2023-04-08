@@ -155,7 +155,7 @@
                         </div>
                         <div class="form-group col-md-12 " style="text-align:center">
                             <label style="font-size:20px" class="control-label">---------THÔNG TIN ĐƠN HÀNG-------</label>
-                            <input hidden value="@TempData["madh"]" name="MaDH" />
+                            <input hidden value="@TempData["madh"]" id="MaDH" name="MaDH" />
                             <input hidden id="SoLuongSP" value="" name="sl" />
                         </div>
                         <div class="form-group col-md-12" id="themdong">
@@ -175,8 +175,13 @@
                                     <input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />
                                 </div>*@
                         </div>
-                        <div class="form-group col-md-12"  style="text-align:end">
+                        <div class="form-group col-md-12" style="text-align:end">
                             <label style="font-size:20px;color:red" id="TongTien" class="control-label">Tổng tiền: </label>
+                            
+                        </div>
+                        <div class="form-group col-md-12" style="text-align:center">
+                            <label style="font-size:16px;color:blue" id="CongNo" class="control-label" hidden>Đang kiểm tra... </label>
+
                         </div>
                     </div>
                 </div>
@@ -187,7 +192,7 @@
                             <input class="btn btn-cancel" id="xoasp" type="button" name="DiemGiao" disabled value="Xóa SP" onclick="xoaSP()" required />
                         </div>
                         <div style="text-align:end" class="col-lg-12">
-                            <button class="btn btn-save" style="margin-left:15px" type="submit">Thêm mới đơn hàng</button>
+                            <button class="btn btn-save" id="CapNhatDh" style="margin-left:15px" type="submit">Thêm mới đơn hàng</button>
                             <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
 
                         </div>
@@ -246,11 +251,16 @@
             i--;
             console.log(i);
             $("#SoLuongSP").attr("value", i);
-           // $("#btnadd").attr("action", "/KinhDoanh/ThemCTHD2/" + i);
+            console.log("Đã xóa kiểm tra");
+            $("#CongNo").attr("hidden", true);
+            $("#btnadd").attr("action", "/KinhDoanh/ThemCTHD2/" + i);
         } else if (i = 0) {
             $("#xoasp").attr("disabled", "disabled");
+            
         };
         KTSoDu();
+        var TongTien=  $("#TongTien").data("value");
+        KTCongNo(TongTien);
     }
     function resetpage() {
         i = 0;
@@ -265,6 +275,7 @@
                 currency: 'VND',
             });
             var divElement = $("#themdong").change(function () {
+                $("#CongNo").prop('hidden', false);
                 //var kt = divElement.on('change', 'select', function (e) {
                 //    console.log("Mã sản phẩm đã chọn "+$(e.target).val());
                 //    var value = $(e.target).val();
@@ -281,8 +292,7 @@
                     var value = $("#ChonSP" + item).val();
                     if (value != null) {
                         var sL = $("#SoLuong" + item).val();
-
-                        if (sL != 0) {
+                        if (sL >= 0) {
                            // console.log("Bạn đã chọn sản phẩm với mã "+ value +" Với số lượng là :"+sL);
                             var model = {
                                 MaSP: value,
@@ -297,7 +307,7 @@
                     }
                     
                 }
-                
+                KTCongNo();
             });
         });
         function CheckTongTien() {
@@ -349,7 +359,9 @@
                     }
                     TongTien = total1 + total2 + total3;
                     $("#TongTien").html('Tổng tiền: ' + VND.format(TongTien));
+                    $("#TongTien").attr('data-value', TongTien);
                     $("#SoLuong" + item).attr('max', '' + res.tongton);
+                    KTCongNo(TongTien);
                 }
             });
 
@@ -365,9 +377,35 @@
                 if (check != null) {
                     total += check;
                 }
-
             }
             $("#TongTien").html('Tổng tiền: ' + VND.format(total));
+            $("#TongTien").attr("data-value", total);
+        }
+        function KTCongNo(TongTien) {
+            var madh = $("#MaDH").val();
+            var thanhtien = TongTien;
+            console.log("Số tiền hiện tại :"+thanhtien);
+            var model = {
+                MaDH: madh,
+                ThanhTien: thanhtien
+            };
+            console.log("Thành tiền khi gửi kt : " + thanhtien + " , Mã đơn hàng: " + madh);
+            $.ajax({
+                url: '/KinhDoanh/CheckCongNo',
+                type: 'POST',
+                dataType: "json",
+                data: model,
+                success: function (res) {
+                    if (res.success == true) {
+                        $("#CongNo").html('Đơn hàng hợp lệ');
+                        $("#CapNhatDh").prop('disabled', false);
+                    }
+                    else {
+                        $("#CongNo").html('Đơn hàng vượt mức công nợ cho phép');
+                        $("#CapNhatDh").attr("disabled", "disabled");
+                    }
+                }
+            });
         }
     </script>
 }

@@ -568,7 +568,8 @@ namespace Test02.Controllers
                 database.SaveChanges();
                 TempData["messageAlert"] = "Đã cập nhật chi tiết đơn hàng";
                 TempData["capnhatdh"] = chiTietDonHang.MaDH;
-                return RedirectToAction("QuanLyDH");
+                TempData["messageAlert"] = "Đã cập nhật chi tiết đơn hàng";
+                return RedirectToAction("DanhSachCTDH","KinhDoanh",new { id= chiTietDonHang.MaDH });
             }
 
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
@@ -579,10 +580,39 @@ namespace Test02.Controllers
         public ActionResult CheckTongTien(string MaSP, int SoLuong)
         {
             var total = 0;
-            var checksp = database.SanPhams.Where(s => s.MaSP == MaSP).FirstOrDefault();
+            var checksp = database.SanPhams.Where(s => s.MaSP == MaSP).FirstOrDefault(); 
             var tongton = checksp.TongTon;
             total = (int)(checksp.Gia * SoLuong);
             return Json(new { data=total,tongton},JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult CheckCongNo(string MaDH, string ThanhTien)
+        {
+            var tongtiendh = 0;
+            var checkdh = database.DonHangs.Where(s => s.MaDH == MaDH).FirstOrDefault();
+            var daily = database.DaiLies.Where(s => s.MaDL == checkdh.MaDL).FirstOrDefault();
+            var ctdh = database.ChiTietDonHangs.Where(s => s.MaDH == MaDH);
+            foreach(var item in ctdh)
+            {
+                var sp = database.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();
+                tongtiendh += Convert.ToInt32(sp.Gia * item.SoLuong);
+            }
+            tongtiendh += Convert.ToInt32(ThanhTien);
+            if (daily.MaLoaiDL == "LDL01" && tongtiendh <=500000000)
+            {
+                return Json(new { success=true }, JsonRequestBehavior.AllowGet);
+            }
+            else if (daily.MaLoaiDL == "LDL02" && tongtiendh <= 250000000)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }else if (daily.MaLoaiDL == "LDL03" && tongtiendh <= 100000000)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
         }
         //Chỉnh sửa thông tin đơn hàng
         public ActionResult ChinhSuaDH(string id)
