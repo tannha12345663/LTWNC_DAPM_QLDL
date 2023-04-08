@@ -580,8 +580,9 @@ namespace Test02.Controllers
         {
             var total = 0;
             var checksp = database.SanPhams.Where(s => s.MaSP == MaSP).FirstOrDefault();
+            var tongton = checksp.TongTon;
             total = (int)(checksp.Gia * SoLuong);
-            return Json(new { data=total},JsonRequestBehavior.AllowGet);
+            return Json(new { data=total,tongton},JsonRequestBehavior.AllowGet);
         }
         //Chỉnh sửa thông tin đơn hàng
         public ActionResult ChinhSuaDH(string id)

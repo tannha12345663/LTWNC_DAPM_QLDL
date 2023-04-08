@@ -229,7 +229,8 @@
                 '</div>' +
                 '</div>';
             $("#xoasp").prop('disabled', false);
-            document.getElementById("themdong").innerHTML += row;
+            var div = document.getElementById("themdong");
+            div.innerHTML += row;
 
             console.log(i);
             $("#SoLuongSP").attr("value", i);
@@ -249,6 +250,7 @@
         } else if (i = 0) {
             $("#xoasp").attr("disabled", "disabled");
         };
+        KTSoDu();
     }
     function resetpage() {
         i = 0;
@@ -263,19 +265,31 @@
                 currency: 'VND',
             });
             var divElement = $("#themdong").change(function () {
-
+                //var kt = divElement.on('change', 'select', function (e) {
+                //    console.log("Mã sản phẩm đã chọn "+$(e.target).val());
+                //    var value = $(e.target).val();
+                //    if (value != null) {
+                //        var kt01 = divElement.on('change', 'input', function (e1) {
+                //            console.log("Mã sản phẩm đã chọn khi có số lượng :" + value);
+                //            var soluong = $(e1.currentTarget).val();
+                //            console.log("Số lượng đã mua :"+ soluong);
+                //        });
+                //    }
+                //})
+                
                 for (var item = 1; item <= i; item++) {
                     var value = $("#ChonSP" + item).val();
                     if (value != null) {
                         var sL = $("#SoLuong" + item).val();
 
                         if (sL != 0) {
-                            console.log("Bạn đã chọn sản phẩm với mã "+ value +" Với số lượng là :"+sL);
+                           // console.log("Bạn đã chọn sản phẩm với mã "+ value +" Với số lượng là :"+sL);
                             var model = {
                                 MaSP: value,
                                 SoLuong: sL
                             };
-                            console.log("Item trước khi thêm vào tổng tiền " + item + "Với tổng tiền là : " + TinhTongTien(model));
+                            // console.log("Item trước khi thêm vào tổng tiền " + item + "Với tổng tiền là : " + TinhTongTien(model));
+                            console.log(model);
                             TinhTongTien(model, item);
                             
                         }
@@ -291,7 +305,7 @@
                 style: 'currency',
                 currency: 'VND',
             });
-            debugger;
+            
             var total = 0;
             for (var item01 = 1; item01 < 3; item01++) {
                 var check = $("#Total" + item01).data("value");
@@ -302,11 +316,16 @@
             }
             $("#TongTien").html('Tổng tiền: ' + VND.format(total));
         }
+        var total1 = 0;
+        var total2 = 0;
+        var total3 = 0;
+        var TongTien = 0;
         function TinhTongTien(model, item) {
             const VND = new Intl.NumberFormat('vi-VN', {
                 style: 'currency',
                 currency: 'VND',
             });
+            
             $.ajax({
                 url: '/KinhDoanh/CheckTongTien',
                 type: 'POST',
@@ -315,13 +334,40 @@
                 success: function (res) {
                     console.log("Tổng tiền :" + res.data);
                     var result = res.data;
-                    debugger
+                    
                     $("#Total" + item).html("Thành tiền " + VND.format(result));
                     $("#Total" + item).attr('data-value', result);
-                    CheckTongTien();
+                    //CheckTongTien();
+                    if (item == 1) {
+                        total1 = res.data;
+                    }
+                    else if (item == 2) {
+                        total2 = res.data;
+                    }
+                    else if(item==3){
+                        total3 = res.data;
+                    }
+                    TongTien = total1 + total2 + total3;
+                    $("#TongTien").html('Tổng tiền: ' + VND.format(TongTien));
+                    $("#SoLuong" + item).attr('max', '' + res.tongton);
                 }
             });
 
+        }
+        function KTSoDu() {
+            var total = 0;
+            const VND = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            });
+            for (var item01 = 1; item01 <= i; item01++) {
+                var check = $("#Total" + item01).data("value");
+                if (check != null) {
+                    total += check;
+                }
+
+            }
+            $("#TongTien").html('Tổng tiền: ' + VND.format(total));
         }
     </script>
 }
