@@ -189,9 +189,6 @@
     <Compile Include="Models\DonHangGiao.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\HoaDon.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Kho.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -287,6 +284,7 @@
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\ckeditor.js" />
     <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\material-dashboard.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\util.css" />
     <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.css" />
@@ -623,7 +621,6 @@
     <Content Include="Views\BienBangKiemKes\Index.cshtml" />
     <Content Include="Views\GiaoHang\DonHangMoi.cshtml" />
     <Content Include="Views\GiaoHang\Layout\LayoutGH.cshtml" />
-    <Content Include="Views\GiaoHang\DanhSachDonHoan.cshtml" />
     <Content Include="Views\GiaoHang\BaoCaoLyDoHoanDon.cshtml" />
     <Content Include="Views\GiaoHang\BaoCaoPhongGiaoHang.cshtml" />
     <Content Include="Views\GiaoHang\DanhSachPhuongTienGiaoHang.cshtml" />
@@ -650,6 +647,12 @@
     <Content Include="Views\GiaoHang\InHoaDon.cshtml" />
     <Content Include="Views\GiaoHang\HuyChuyenGiao.cshtml" />
     <Content Include="Views\GiaoHang\ChinhSuaChuyenGiao.cshtml" />
+    <Content Include="Views\GiaoHang\XepXe.cshtml" />
+    <Content Include="Views\ChuyenGiaos\Create.cshtml" />
+    <Content Include="Views\ChuyenGiaos\Delete.cshtml" />
+    <Content Include="Views\ChuyenGiaos\Details.cshtml" />
+    <Content Include="Views\ChuyenGiaos\Edit.cshtml" />
+    <Content Include="Views\ChuyenGiaos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,18 +14,18 @@
         <div class="tile">
             <div class="tile-body">
                 <div class="row element-button">
-                    @*<a class="btn btn-delete btn-sm nhap-tu-file" href="/GiaoHang/ThemChuyenGiaoHang"><i class="fas fa-file-upload"></i> Thêm chuyến giao hàng</a>*@
+                    <a class="btn btn-delete btn-sm nhap-tu-file" href="/GiaoHang/ThemChuyenGiaoHang"><i class="fas fa-file-upload"></i> Thêm chuyến giao hàng</a>
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
                     </div>
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
+                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="printDiv('printMe')">
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    <div class="row">
+                    <div class="row" id="printMe">
                         <h2 style="margin-left:29%">DANH SÁCH CÁC CHUYẾN GIAO HÀNG</h2>
                         <div class="col-sm-12">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
@@ -46,61 +46,70 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaGH)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NhanVienGH.TenNV)
-                                        </td>
-
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaPT)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NgayLap)
-                                        </td>
-
-                                        @if (item.TrangThai == "Chờ giao")
-                                        {
+                                        <p style="text-align:center">
+                                            <span>
+                                                @{
+                                                    var cg = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                                                    var gh = db.NhanVienGHs.Where(s => s.MaGH == cg.MaGH).FirstOrDefault();}
+                                            </span>
+                                        </p>
+                                        <tr>
                                             <td>
-                                                <span class="badge bg-danger" style="width:100px">
-                                                    @Html.DisplayFor(modelItem => item.TrangThai)
-                                                </span>
+                                                @Html.DisplayFor(modelItem => item.MaGH)
                                             </td>
-                                        }
-                                        else if (item.TrangThai == "Đang giao")
-                                        {
                                             <td>
-                                                <span class="badge bg-warning" style="width:100px">
-                                                    @Html.DisplayFor(modelItem => item.TrangThai)
-                                                </span>
+                                                @{ 
+                                                    var tennv = db.NhanVienGHs.Where(s => s.MaGH == cg.MaGH).FirstOrDefault();
+                                                }
+                                                @Html.DisplayFor(modelItem => tennv.TenNV)
                                             </td>
-                                        }
-                                        else if (item.TrangThai == "Giao thành công")
-                                        {
+
                                             <td>
-                                                <span class="badge bg-success" style="width:100px">
-                                                    @Html.DisplayFor(modelItem => item.TrangThai)
-                                                </span>
+                                                @Html.DisplayFor(modelItem => item.MaPT)
                                             </td>
-                                        }
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NgayLap)
+                                            </td>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.KhuVucGiao)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NgayGiao)
-                                        </td>
-                                        <td style="text-align:center">
-                                            <a href="/GiaoHang/ChiTietChuyenGiaoHang/@item.MaGH" class="btn btn-primary btn-sm edit">
-                                                <i class='bx bxs-cube-alt'></i>
-                                            </a>
+                                            @if (item.TrangThai == "Chờ giao")
+                                            {
+                                                <td>
+                                                    <span class="badge bg-dark" style="width:100px">
+                                                        @Html.DisplayFor(modelItem => item.TrangThai)
+                                                    </span>
+                                                </td>
+                                            }
+                                            else if (item.TrangThai == "Đang giao")
+                                            {
+                                                <td>
+                                                    <span class="badge bg-warning" style="width:100px">
+                                                        @Html.DisplayFor(modelItem => item.TrangThai)
+                                                    </span>
+                                                </td>
+                                            }
+                                            else if (item.TrangThai == "Đã giao")
+                                            {
+                                                <td>
+                                                    <span class="badge bg-success" style="width:100px">
+                                                        @Html.DisplayFor(modelItem => item.TrangThai)
+                                                    </span>
+                                                </td>
+                                            }
 
-                                        </td>
-                                    </tr>
-                                        }
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.KhuVucGiao)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NgayGiao)
+                                            </td>
+                                            <td style="text-align:center">
+                                                <a href="/GiaoHang/ChiTietChuyenGiaoHang/@item.MaGH" class="btn btn-primary btn-sm edit">
+                                                    <i class='bx bxs-cube-alt'></i>
+                                                </a>
+
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -110,3 +119,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    //In dữ liệu
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+    }
+</script>

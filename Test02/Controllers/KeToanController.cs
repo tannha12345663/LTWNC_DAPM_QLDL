@@ -22,10 +22,10 @@ namespace Test02.Controllers
             return View();
         }
 
-        public ActionResult TrangChuKeToan()
-        {
-            return View(database.HoaDons.ToList());
-        }
+        //public ActionResult TrangChuKeToan()
+        //{
+        //    return View(database.HoaDons.ToList());
+        //}
         //chu y
         public ActionResult QLyDonHangKeToan(String id,DonHang dh)
         {

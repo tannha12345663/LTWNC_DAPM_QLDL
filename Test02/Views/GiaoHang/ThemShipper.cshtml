@@ -11,7 +11,8 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+
+    @Html.HiddenFor(model => model.MaGH);
     <div class="form-horizontal">
         <h4>THÊM NHÂN VIÊN GIAO HÀNG</h4>
         <hr />

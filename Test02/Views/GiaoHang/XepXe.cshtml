@@ -1,119 +1,97 @@
-﻿@model Test02.Models.DonHang
+﻿@model Test02.Models.NhanVienGH
 @using Test02.Models;
 @{
-    ViewBag.Title = "CapNhatTrangThaiDonHang";
+    ViewBag.Title = "NhanVienGiaoHang";
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
-    ViewBag.dh = "active";
-    ViewBag.nd = "Cập nhật trạng thái đơn hàng";
+    ViewBag.gh_dsdh = "active";
+    ViewBag.nd = "Cập nhật thông tin nhân viên giao";
+
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChuyenGiao> ct = db.ChuyenGiaos.ToList();
     var ctcg = db.ChuyenGiaos.ToList();
-
+    var nvgh = db.NhanVienGHs.ToList();
 }
-
-
-@*@{
-    var checkMessage = TempData["messageAlert"];
-    if (checkMessage == "Xếp đơn thành công")
-    {
-        <script>
-            swal({
-                title: "Xếp đơn thành công",
-                icon: "success",
-                button: "OK",
-            });
-        </script>
-    }*@
-}
-
-
-
-<div class="tile">
-    <h2 style="text-align:center">XẾP ĐƠN @Model.MaDH</h2>
-    <div class="tile-body">
-
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div>
-                <div class="form-horizontal">
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.MaDH)
-                    @Html.HiddenFor(model => model.MaDL)
-                    @Html.HiddenFor(model => model.MaNVLap)
-                    @Html.HiddenFor(model => model.NgayLap)
-                    @Html.HiddenFor(model => model.TinhTrangThanhToan)
-                    @Html.HiddenFor(model => model.TrangThai)
-                    @Html.HiddenFor(model => model.TongTien)
-                    @Html.HiddenFor(model => model.PhieuXuatKho)
-                    @Html.HiddenFor(model => model.XuatHoaDon)
-                    @Html.HiddenFor(model => model.DiemGiao)
-
-                    <div class="form-group">
-                        <h5>Tên đại lý: </h5>
-                        <div class="col-md-10">
-                            @Html.DisplayFor(model => model.DaiLy.TenDL, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.DiemGiao, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <h5>Địa điểm giao: </h5>
-                        <div class="col-md-10">
-                            @Html.DisplayFor(model => model.DiemGiao, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.DaiLy.TenDL, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <h5>Tình trạng giao hàng:</h5>
-                        <div class="col-md-10">
-                            <select class="form-control" id="TrangThai" name="TinhTrangGH">
-                                <option selected="@Model.TinhTrangGH">@Model.TinhTrangGH</option>
-                                <option>Chờ giao</option>
-                                <option>Đang giao</option>
-                                <option>Đã giao</option>
-                            </select>
-                            @Html.ValidationMessageFor(model => model.TinhTrangGH, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <h5>Chuyến giao:</h5>
-                        <div class="col-md-10">
-                            @Html.DropDownList("MaGH", (IEnumerable<SelectListItem>)ViewBag.ChuyenGiao, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.MaGH, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Xếp đơn hàng @Model.MaDH" class="btn btn-default" id="btn_submit"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-</div>
 
 
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
+            <h4 style="text-align:center">NHÂN VIÊN GIAO HÀNG @Model.MaNV - @Model.TenNV</h4>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MaNV)
+            @Html.HiddenFor(model => model.SDT)
+            @Html.HiddenFor(model => model.DiaChi)
+            @Html.HiddenFor(model => model.TinhTrang)
+            @Html.HiddenFor(model => model.TenNV)
+
+            @*<p>
+            <strong>Mã nhân viên: </strong>
+            @Html.DisplayFor(modelItem => Model.MaNV)
+        </p>
+
+        <p>
+            <strong>Tên nhân viên: </strong>
+            @Html.DisplayFor(model => model.TenNV)
+            @Html.ValidationMessageFor(model => model.TenNV, "", new { @class = "text-danger" })
+        </p>*@
+
+            @*<div class="form-group">
+            <strong>Tình trạng làm việc: </strong>
+            <div class="col-md-10">
+                <select class="form-control" name="tinhtrang">
+                    <option>----Chọn tình trạng làm việc----</option>
+                    <option>Sẵn sàng</option>
+                    <option>Đang giao hàng</option>
+                    <option>Nghỉ phép</option>
+                </select>
+            </div>
+        </div>*@
+
+            <div class="form-group">
+                <strong>Xếp chuyến giao: </strong>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MaGH, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MaGH, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row element-button">
+                <div class="col-sm-2">
+                    <input style="background-color:#27a300" type="submit" value="Lưu" class="btn btn-default" />
+                </div>
+                <div class="col-sm-2">
+                    <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachShipper"><i class=""></i> Quay lại</a>
+                </div>
+            </div>
+        </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@*Danh sach de tra cuu cac chuyen xe*@
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
             <div class="tile-body">
                 <div class="row element-button">
-                    <a class="btn btn-delete btn-sm nhap-tu-file" href="/GiaoHang/ThemChuyenGiaoHang"><i class="fas fa-file-upload"></i> Thêm chuyến giao hàng</a>
+                    @*<a class="btn btn-delete btn-sm nhap-tu-file" href="/GiaoHang/ThemChuyenGiaoHang"><i class="fas fa-file-upload"></i> Thêm chuyến giao hàng</a>*@
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
                     </div>
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
-                        <h2 style="margin-left:27%">DANH SÁCH CÁC CHUYẾN GIAO HÀNG HIỆN CÓ</h2>
+                        <h2 style="margin-left:12%">DANH SÁCH CÁC CHUYẾN GIAO HÀNG CHƯA CÓ NHÂN VIÊN VẬN CHUYỂN</h2>
                         <div class="col-sm-12">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable1" role="grid" aria-describedby="sampleTable_info">
                                 <thead>
@@ -131,17 +109,26 @@
                                 </thead>
                                 <tbody>
                                     @foreach (var item in ctcg)
-                                    {
+                                    { 
+                                        <p style="text-align:center">
+                                            <span>
+                                                @{
+                                                    var gh = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                                                    var dh = db.NhanVienGHs.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();
+                                                }
+                                            </span>
+                                        </p>
+
                                         if (item.TrangThai == "Chờ giao")
                                         {
-                                            <p style="text-align:center">
+                                            @*<p style="text-align:center">
                                                 <span>
                                                     @{
                                                         var gh = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
-                                                        var dh = db.DonHangs.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();
+                                                        var dh = db.NhanVienGHs.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();
                                                     }
                                                 </span>
-                                            </p>
+                                            </p>*@
                                             <tr>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.MaGH)
@@ -175,10 +162,10 @@
                                                     @Html.DisplayFor(modelItem => kvg.NgayGiao)
                                                 </td>
                                                 @*<td style="text-align:center">
-                                                        <a class="btn  btn-primary btn-sm edit" href="/GiaoHang/ChiTietChuyenGiaoHang/@item.MaGH">
-                                                            <i class='bx bxs-cube-alt'></i>
-                                                        </a>
-                                                    </td>*@
+                        <a class="btn  btn-primary btn-sm edit" href="/GiaoHang/ChiTietChuyenGiaoHang/@item.MaGH">
+                            <i class='bx bxs-cube-alt'></i>
+                        </a>
+                    </td>*@
                                             </tr>
                                         }
                                     }
@@ -193,12 +180,5 @@
 </div>
 
 
-<div>
-    <div class="col-sm-2">
-        <a class="btn btn-danger" type="button" title="Quay lại " href="/GiaoHang/ChiTietDonGiaoHang/@TempData["madh01"]"><i class=""></i> Quay lại</a>
-    </div>
-</div>
 
 
-
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

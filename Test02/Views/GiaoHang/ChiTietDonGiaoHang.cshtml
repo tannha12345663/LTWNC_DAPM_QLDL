@@ -7,10 +7,9 @@
     ViewBag.gh_donhangmoi = "active";
     ViewBag.nd = "Chi tiết đơn giao hàng";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    List<ChiTietDonHang> ct = db.ChiTietDonHangs.ToList();
-    var dscgh = db.ChuyenGiaos.ToList();
-    var ctcg = db.ChiTietChuyenGiaos.ToList();
-    //var dsdl = db.DaiLies.ToList();
+    List<ChuyenGiao> ct = db.ChuyenGiaos.ToList();
+    var ctcg = db.ChuyenGiaos.ToList();
+
 }
 
 <div class="row">
@@ -27,7 +26,8 @@
                             <span>
                                 @{
                                     var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
-                                    var gh = db.ChiTietDonHangs.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
+                                    var gh = db.ChiTietDonHangs.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
+                                }
                             </span>
                         </p>
                         <p>
@@ -41,11 +41,15 @@
                             @Html.DisplayFor(modelItem => tendly.TenDL)
                         </p>
                         <p>
-                            <strong>Địa điểm giao: </strong>@Html.DisplayFor(modelItem => dh.DiemGiao)
+                            <strong>Địa điểm giao: </strong>
+                            @Html.DisplayFor(modelItem => dh.DiemGiao)
+                        </p>
+                        <p>
+                            @{ var pxk = db.PhieuNhapXuats.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
                         </p>
                         <p>
                             <strong>Phiếu xuất kho: </strong>
-                            <a href="~/GiaoHang/InPhieuXuatKho" style="color:#002483; font-weight:bold">
+                            <a href="~/GiaoHang/InPhieuXuatKho/@pxk.MaPhieu" style="color:#002483; font-weight:bold">
                                 @{
                                     var phieuxuat = db.PhieuNhapXuats.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
                                 @Html.DisplayFor(modelItem => phieuxuat.MaPhieu)
@@ -53,13 +57,16 @@
                         </p>
 
                         @*<p>
-                            <strong>Hóa đơn: </strong>
-                            <a href="~/GiaoHang/InHoaDon" style="color:#002483; font-weight:bold">
-                                @{
-                                    var hoadon = db.HoaDons.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
-                                @Html.DisplayFor(modelItem => hoadon.MaHD)
-                            </a>
-                        </p>*@
+                                <strong>Hóa đơn: </strong>
+                                <a href="~/GiaoHang/InHoaDon" style="color:#002483; font-weight:bold">
+                                    @{
+                                        var hoadon = db.HoaDons.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
+                                    @Html.DisplayFor(modelItem => hoadon.MaHD)
+                                </a>
+                            </p>*@
+                        <td style="text-align:center">
+                            <a class="btn  btn-success" href="/GiaoHang/CapNhatTrangThaiDonHang/@item.MaDH">Xếp đơn</a>
+                        </td>
 
                         break;
                     }
@@ -151,7 +158,7 @@
 
 
 
-<div class="row">
+@*<div class="row">
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-body">
@@ -174,74 +181,64 @@
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Ngày lập</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Trạng thái</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Khu vực giao</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Ngày giao</th>
-                                        @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tổng tiền thu về</th>*@
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Ngày giao</th>                                       
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Xếp đơn</th>
                                     </tr>
                                 </thead>
-                                @*<tbody>
-                                    @{ var count = 0;}
-                                    @foreach (var item in Model)
+                                <tbody>
+                                    @foreach (var item in ctcg)
                                     {
-                                        foreach (var id in dscgh.OrderByDescending(s => s.MaGH))
+                                        if (item.TrangThai == "Chờ giao")
                                         {
-                                            if (id.TrangThai != null)
-                                            {
-                                                count += 1;
-                                                <p style="text-align:center">
-                                                    <span>
-                                                        @{
-                                                            var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
-                                                            var gh = db.ChiTietDonHangs.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
-                                                            var sp = db.SanPhams.Where(s => s.MaSP == gh.MaSP).FirstOrDefault();}
-                                                    </span>
-                                                </p>
-
-                                                <tr>
-                                                    <td>
-                                                        @{var magh = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
-                                                        @Html.DisplayFor(modelItem => magh.ChuyenGiao.MaGH)
-                                                    </td>
-                                                    <td>
-                                                        @{var tennvg1 = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
-                                                            var tennvg = db.ChuyenGiaos.Where(s => s.MaGH == tennvg1.MaGH).FirstOrDefault();}
-                                                        @Html.DisplayFor(modelItem => tennvg.NhanVienGH.TenNV)
-                                                    </td>
-                                                    <td>
-                                                        @{var pt1 = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
-                                                            var pt = db.ChuyenGiaos.Where(s => s.MaGH == pt1.MaGH).FirstOrDefault();}
-                                                        @Html.DisplayFor(modelItem => pt.PhuongTienGH.MaPT)
-                                                    </td>
-                                                    <td>
-                                                        @{var nl1 = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
-                                                            var nl = db.ChuyenGiaos.Where(s => s.MaGH == nl1.MaGH).FirstOrDefault();}
-                                                        @Html.DisplayFor(modelItem => nl.PhuongTienGH.MaPT)
-                                                    </td>
-                                                    <td>
-                                                        @{var ttg1 = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
-                                                           var ttg = db.ChuyenGiaos.Where(s => s.MaGH == ttg1.MaGH).FirstOrDefault();}
-                                                            @Html.DisplayFor(modelItem => ttg.TrangThai)
-                                                        </td>
-                                                    <td>
-                                                        @{var kvg1 = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
-                                                            var kvg = db.ChuyenGiaos.Where(s => s.MaGH == kvg1.MaGH).FirstOrDefault();}
-                                                            @Html.DisplayFor(modelItem => kvg.KhuVucGiao)
-                                                        </td>
-                                                    <td>
-                                                        @{var ng1 = db.ChiTietChuyenGiaos.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
-                                                            var ng = db.ChuyenGiaos.Where(s => s.MaGH == kvg1.MaGH).FirstOrDefault();}
-                                                        @Html.DisplayFor(modelItem => kvg.NgayGiao)
-                                                    </td>
-                                                    <td style="text-align:center">
-                                                        <a class="btn  btn-primary btn-sm edit" href="/GiaoHang/ChiTietChuyenGiaoHang/@item.MaDH">
-                                                            <i class='bx bxs-cube-alt'></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            }
+                                            <p style="text-align:center">
+                                                <span>
+                                                    @{
+                                                        var gh = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                                                        var dh = db.DonHangs.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();
+                                                    }
+                                                </span>
+                                            </p>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaGH)
+                                                </td>
+                                                <td>
+                                                    @{var tennvg1 = db.NhanVienGHs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => tennvg1.TenNV)
+                                                </td>
+                                                <td>
+                                                    @{var pt1 = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => pt1.MaPT)
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var nl1 = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => nl1.NgayLap)
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var tt = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => tt.TrangThai)
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var kvg = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => kvg.KhuVucGiao)
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var ng = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => kvg.NgayGiao)
+                                                </td>
+                                                <td style="text-align:center">
+                                                    <a class="btn  btn-primary btn-sm edit" href="/GiaoHang/ChiTietChuyenGiaoHang/@item.MaGH">
+                                                        <i class='bx bxs-cube-alt'></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
                                         }
                                     }
-                                </tbody>*@
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -249,7 +246,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <div class="row element-button">
     <div class="col-sm-2">
         <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DonHangMoi"><i class=""></i> Quay lại</a>

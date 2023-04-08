@@ -18,8 +18,5 @@ namespace Test02.Models
         public string MaGH { get; set; }
         public string MaDH { get; set; }
         public Nullable<double> TongTienThu { get; set; }
-    
-        public virtual ChuyenGiao ChuyenGiao { get; set; }
-        public virtual DonHang DonHang { get; set; }
     }
 }

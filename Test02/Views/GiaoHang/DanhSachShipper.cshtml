@@ -9,6 +9,7 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
 
+<link href="/website/css/uicons-outline-rounded.css" rel="stylesheet">
 
 <div class="row">
     <div class="col-md-12">
@@ -20,7 +21,7 @@
                         <a class="btn btn-delete btn-sm nhap-tu-file" href="/GiaoHang/ThemShipper"><i class="fas fa-file-upload"></i> Thêm nhân viên mới</a>
                     </div>
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
+                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="printDiv('printMe')">
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
@@ -31,7 +32,7 @@
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
-                    <div class="row">
+                    <div class="row" id="printMe">
                         <h2 style="margin-left:29%">DANH SÁCH NHÂN VIÊN GIAO HÀNG</h2>
                         <div class="col-sm-12">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
@@ -41,63 +42,67 @@
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 30px; text-align:center">Mã nhân viên</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tên nhân viên giao hàng</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Số điện thoại</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 200px; text-align: center ">Địa chỉ</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 250px; text-align: center ">Địa chỉ</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Tình trạng</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Cập nhật</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Cập nhật</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaNV)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TenNV)
-                                        </td>
-
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.SDT)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DiaChi)
-                                        </td>
-
-
-                                        @if (item.TinhTrang == "Sẵn sàng")
-                                        {
+                                        <tr>
                                             <td>
-                                                <span class="badge bg-success" style="width:100px">
-                                                    @Html.DisplayFor(modelItem => item.TinhTrang)
-                                                </span>
+                                                @Html.DisplayFor(modelItem => item.MaNV)
                                             </td>
-                                        }
-                                        else if (item.TinhTrang == "Đang giao hàng")
-                                        {
                                             <td>
-                                                <span class="badge bg-warning" style="width:100px">
-                                                    @Html.DisplayFor(modelItem => item.TinhTrang)
-                                                </span>
+                                                @Html.DisplayFor(modelItem => item.TenNV)
                                             </td>
-                                        }
-                                        else if (item.TinhTrang == "Nghỉ phép")
-                                        {
+
                                             <td>
-                                                <span class="badge bg-danger" style="width:100px">
-                                                    @Html.DisplayFor(modelItem => item.TinhTrang)
-                                                </span>
+                                                @Html.DisplayFor(modelItem => item.SDT)
                                             </td>
-                                        }
-                                        <td style="text-align:center">
-                                            <a href="/GiaoHang/ChinhSuaShipper/@item.MaNV" class="btn btn-primary btn-sm edit">
-                                                <i class='bx bxs-edit-alt'></i>
-                                            </a>
-                                            <a href="/GiaoHang/XoaShipper/@item.MaNV" class="btn btn-primary btn-sm deleted">
-                                                <i class="bx bxs-trash-alt"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DiaChi)
+                                            </td>
+
+
+                                            @if (item.TinhTrang == "Sẵn sàng")
+                                            {
+                                                <td>
+                                                    <span class="badge bg-success" style="width:100px">
+                                                        @Html.DisplayFor(modelItem => item.TinhTrang)
+                                                    </span>
+                                                </td>
+                                            }
+                                            else if (item.TinhTrang == "Đang giao hàng")
+                                            {
+                                                <td>
+                                                    <span class="badge bg-warning" style="width:150px">
+                                                        @Html.DisplayFor(modelItem => item.TinhTrang) - @Html.DisplayFor(modelItem => item.MaGH)
+                                                    </span>
+                                                </td>
+                                            }
+                                            else if (item.TinhTrang == "Nghỉ phép")
+                                            {
+                                                <td>
+                                                    <span class="badge bg-danger" style="width:100px">
+                                                        @Html.DisplayFor(modelItem => item.TinhTrang)
+                                                    </span>
+                                                </td>
+                                            }
+                                            <td style="text-align:center">
+                                                <a href="/GiaoHang/ChinhSuaShipper/@item.MaNV" class="btn btn-primary btn-sm edit">
+                                                    <i class='bx bxs-edit-alt'></i>
+                                                </a>
+                                                <a href="/GiaoHang/XepXe/@item.MaNV" class="btn btn-primary btn-sm deleted">
+                                                    @*<i class="bx bxs-trash-alt"></i>*@
+                                                    <i class='bx bx-car'></i>
+                                                </a>
+                                                <a href="/GiaoHang/XoaShipper/@item.MaNV" class="btn btn-primary btn-sm deleted">
+                                                    <i class="bx bxs-trash-alt"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -108,3 +113,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    //In dữ liệu
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+    }
+</script>

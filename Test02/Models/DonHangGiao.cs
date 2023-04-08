@@ -19,8 +19,6 @@ namespace Test02.Models
         public string MaDH { get; set; }
         public string MaNV { get; set; }
         public string MaPT { get; set; }
-        public string DiemGiao { get; set; }
-        public Nullable<bool> TrangThaiXD { get; set; }
         public Nullable<System.DateTime> NgayGiao { get; set; }
         public Nullable<double> TienThu { get; set; }
         public string XacNhanGH { get; set; }

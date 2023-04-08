@@ -38,7 +38,6 @@ namespace Test02.Models
         public virtual DbSet<DoanhSo> DoanhSoes { get; set; }
         public virtual DbSet<DonHang> DonHangs { get; set; }
         public virtual DbSet<DonHangGiao> DonHangGiaos { get; set; }
-        public virtual DbSet<HoaDon> HoaDons { get; set; }
         public virtual DbSet<Kho> Khoes { get; set; }
         public virtual DbSet<LoaiDL> LoaiDLs { get; set; }
         public virtual DbSet<NhanVien> NhanViens { get; set; }

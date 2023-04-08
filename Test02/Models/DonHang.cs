@@ -17,9 +17,7 @@ namespace Test02.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DonHang()
         {
-            this.ChiTietChuyenGiaos = new HashSet<ChiTietChuyenGiao>();
             this.ChiTietDonHangs = new HashSet<ChiTietDonHang>();
-            this.HoaDons = new HashSet<HoaDon>();
         }
     
         public string MaDH { get; set; }
@@ -33,14 +31,12 @@ namespace Test02.Models
         public Nullable<bool> PhieuXuatKho { get; set; }
         public Nullable<bool> XuatHoaDon { get; set; }
         public string TinhTrangGH { get; set; }
+        public string MaGH { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietChuyenGiao> ChiTietChuyenGiaos { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
+        public virtual ChuyenGiao ChuyenGiao { get; set; }
         public virtual DaiLy DaiLy { get; set; }
         public virtual NhanVien NhanVien { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HoaDon> HoaDons { get; set; }
     }
 }

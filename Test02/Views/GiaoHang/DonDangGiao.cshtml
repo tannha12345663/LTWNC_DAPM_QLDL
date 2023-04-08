@@ -19,13 +19,13 @@
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
                     </div>
                     <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="myApp.printTable()">
+                        <a class="btn btn-delete btn-sm print-file" title="In" onclick="printDiv('printMe')">
                             <i class="fas fa-print"></i> In dữ liệu
                         </a>
                     </div>
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                    <div class="row">
+                    <div class="row" id="printMe">
                         <h2 style="margin-left:29%">DANH SÁCH ĐƠN HÀNG ĐANG GIAO</h2>
                         <div class="col-sm-12">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
@@ -107,3 +107,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    //In dữ liệu
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+    }
+</script>

@@ -1,0 +1,75 @@
+﻿@model Test02.Models.ChuyenGiao
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ChuyenGiao</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaNVLap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaNVLap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayGiao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayGiao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TienThu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TienThu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayLap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayLap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KhuVucGiao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KhuVucGiao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhuongTienGH.TenPT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhuongTienGH.TenPT)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaGH }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
