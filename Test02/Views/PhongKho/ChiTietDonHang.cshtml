@@ -268,20 +268,20 @@
 <script>
     function createToast(status, timeout) {
         let temp = `<i class="fas fa-circle-exclamation"></i>
-                <span class="message">This is a Success message!</span>
-                `
+                    <span class="message">This is a Success message!</span>
+                    `
         switch (status) {
             case 'success':
                 temp = `<i class="fas fa-circle-exclamation"></i>
-                    <span class="message">This is a Success message!</span>`
+                        <span class="message">This is a Success message!</span>`
                 break;
             case 'warning':
                 temp = `<i class="fa fa-exclamation-triangle"></i>
-                    <span class="message">Đơn hàng chưa có hóa đơn!</span>`
+                        <span class="message">Đơn hàng chưa có hóa đơn!</span>`
                 break;
             case 'error':
                 temp = `<i class="fa fa-exclamation-circle"></i>
-                    <span class="message">Đơn hàng đã tạo phiếu!</span>`
+                        <span class="message">Đơn hàng đã tạo phiếu!</span>`
                 break;
         }
 

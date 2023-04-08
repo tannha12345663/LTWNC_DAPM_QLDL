@@ -10,7 +10,20 @@
     var dsCTKho = db.ChiTietKhoes.ToList();
     List<string> distint = new List<string>();
 }
-
+@{
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "Đã thêm")
+    {
+        <script>
+            swal({
+                title: "Thêm thành công",
+                text: "Đã thêm phiếu đề nghị xuất kho @TempData["MaPNKho"]!",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+}
 <div class="row">
     <div class="col-md-12">
         <div class="tile " id="printMe">
@@ -60,40 +73,66 @@
                         <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
                             <thead>
                                 <tr>
-                                    <th style="text-align:center;">Mã Kho</th>
-                                    <th style="text-align:center;">Mã sản phẩm</th>
-                                    <th style="text-align:center;">Tên sản phẩm</th>
-                                    <th style="text-align:center;">Giá tiền</th>
-                                    <th style="text-align:center;">Số lượng tồn</th>
-                                    <th style="text-align:center;">Đơn vị tính</th>
-
+                                    <th rowspan="2" style="text-align:center; background-color:azure">Mã Kho</th>
+                                    <th rowspan="2" style="text-align: center; background-color: azure">Mã sản phẩm</th>
+                                    <th rowspan="2" style="text-align: center; background-color: azure">Tên sản phẩm</th>
+                                    <th rowspan="2" style="text-align: center; background-color: azure">Giá tiền</th>
+                                    <th rowspan="2" style="text-align: center; background-color: azure">Đơn vị tính</th>
+                                    <th colspan="2" style="text-align: center; background-color: beige">Trong kho</th>
+                                    <th colspan="2" style="text-align:center; background-color:burlywood">Cần xuất</th>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: center; background-color: beige ">Số lượng</th>
+                                    <th style="text-align: center; background-color: beige ">Thành tiền</th>
+                                    <th style="text-align: center; background-color: burlywood">Số lượng</th>
+                                    <th style="text-align: center; background-color: burlywood">Thành tiền</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in dsCTKho)
+                                @foreach (var item in db.ChiTietPhieuNhapXuats)
                                 {
-                                    if (item.TinhTrang == "Tồn kho")
+                                    if (item.MaPhieu == Model.MaPhieu)
                                     {
                                         <tr>
-                                            <td>
+                                            <td style="text-align: center;">
                                                 @Html.DisplayFor(modelItem => item.MaKho)
                                             </td>
-                                            <td>
+                                            <td style="text-align: center;">
                                                 @Html.DisplayFor(modelItem => item.MaSP)
                                             </td>
-                                            <td>
+                                            <td style="text-align: center;">
                                                 @Html.DisplayFor(modelItem => item.SanPham.TenSP)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.SanPham.Gia)
                                             </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.SoLuong)
-                                            </td>
-                                            <td>
+                                            <td style="text-align: center;">
                                                 @Html.DisplayFor(modelItem => item.SanPham.DonViTinh)
                                             </td>
+                                            <td style="text-align: center;">
+                                                @Html.DisplayFor(modelItem => item.SoLuongTrongKho)
+                                            </td>
+                                            <td style="text-align:center">
+                                                @{
+                                                    var sl = item.SoLuongTrongKho;
+                                                    var gia = item.SanPham.Gia;
 
+                                                    var result = sl * gia;
+                                                }
+                                                @string.Format("{0:#,##0}", result) VNĐ
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @Html.DisplayFor(modelItem => item.SoLuongDeXuat)
+                                            </td>
+                                            <td style="text-align:center">
+                                                @{
+                                                    var sl1 = item.SoLuongDeXuat;
+                                                    var gia1 = item.SanPham.Gia;
+
+                                                    var result1 = sl1 * gia1;
+                                                }
+                                                @string.Format("{0:#,##0}", result1) VNĐ
+                                            </td>
                                         </tr>
                                     }
                                 }
@@ -126,7 +165,7 @@
     function printDiv(divName) {
         document.getElementById("btnReturn").style.display = "none";
         document.getElementById("btnPrint").style.display = "none";
-            var printContents = document.getElementById(divName).innerHTML;
+        var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
 
         document.body.innerHTML = printContents;
@@ -135,5 +174,5 @@
 
         document.body.innerHTML = originalContents;
 
-        }
+    }
 </script>
