@@ -100,27 +100,47 @@ namespace Test02.Controllers
             var total5 = 0; //đếm trong ct phiếu
             var total4 = 0; //đếm trong ct kho
 
+            var total6 = 0; //đếm trong ct phiếu
+            var total7 = 0; //đếm trong ct kho
             foreach (var ctp in database.ChiTietPhieuNhapXuats)
             {
-                total5 += 1;
+                
                 foreach(var item in database.ChiTietKhoes)
                 {
                     if (item.TinhTrang == "Sắp hết hàng" || item.TinhTrang == "Hết hàng")
                     {
                         if (item.MaKho == ctp.MaKho && item.MaSP == ctp.MaSP && item.SoLuong == ctp.SoLuongTrongKho)
                         {
+                            total5 += 1;
                             total4 += 1;
+                            break;
+                        }
+                    }
+                    if (item.TinhTrang == "Tồn kho")
+                    {
+                        if (item.MaKho == ctp.MaKho && item.MaSP == ctp.MaSP && item.SoLuong == ctp.SoLuongTrongKho)
+                        {
+                            total6 += 1;
+                            total7 += 1;
                             break;
                         }
                     }
                 }
             }
-            if(total4 <= total5)
+            //check sap het hàng / hết hàng
+            if(total4 == total5 && (total4 != 0 && total5 != 0))
             {
                 TempData["checkTrungSPHH"] = true;
             }else
                 TempData["checkTrungSPHH"] = false;
 
+            //check tồn kho
+            if (total6 == total7 && (total6 != 0 && total7 != 0))
+            {
+                TempData["checkTrungSPTK"] = true;
+            }
+            else
+                TempData["checkTrungSPTK"] = false;
 
             return View();
         }
@@ -1120,15 +1140,28 @@ namespace Test02.Controllers
         public ActionResult UpdateStatusPhieu(string id)
         {
             PhieuNhapXuat phieu = database.PhieuNhapXuats.Find(id);
+            var ctphieu = database.ChiTietPhieuNhapXuats.Where(s=>s.MaPhieu == id).ToList();
             string str = phieu.MaPhieu.Substring(0, 4);
             if (str == "KDPX")
             {
+                foreach (var item in ctphieu)
+                {
+                    var ctkho = database.ChiTietKhoes.Where(s => s.MaKho == item.MaKho && s.MaSP == item.MaSP && s.SoLuong == item.SoLuongTrongKho).FirstOrDefault();
+                    ctkho.SoLuong -= item.SoLuongDeXuat;
+                    ctkho.TinhTrang = "Còn hàng";
+                }
                 phieu.TinhTrang = "Đã xuất";
                 database.Entry(phieu).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();
             }
             else if(str == "KDPN")
             {
+                foreach (var item in ctphieu)
+                {
+                    var ctkho = database.ChiTietKhoes.Where(s => s.MaKho == item.MaKho && s.MaSP == item.MaSP && s.SoLuong == item.SoLuongTrongKho).FirstOrDefault();
+                    ctkho.SoLuong += item.SoLuongDeXuat;
+                    ctkho.TinhTrang = "Còn hàng";
+                }
                 phieu.TinhTrang = "Đã nhập";
                 database.Entry(phieu).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();

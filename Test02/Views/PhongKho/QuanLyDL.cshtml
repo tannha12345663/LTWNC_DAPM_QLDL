@@ -133,6 +133,7 @@
                                             </a>
                                         }*@
                                     @{
+                                        var b = TempData["checkTrungSPHH"];
                                         var a = TempData["tongSPHH"];
                                         if ((int)a == 0)
                                         {
@@ -143,10 +144,21 @@
                                         }
                                         else
                                         {
-                                            <a class="btn btn-add btn-sm" href="/PhongKho/TaoPhieuNhapKho" title="Thêm">
-                                                <i class="fas fa-plus"></i>
-                                                Tạo phiếu đề nghị nhập hàng hóa
-                                            </a>
+                                            if ((bool)b == true)
+                                            {
+                                                <a class="btn btn-add btn-sm" style="cursor:no-drop">
+                                                    <i class="fas fa-plus"></i>
+                                                    Tạo phiếu đề nghị nhập hàng hóa
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-add btn-sm" href="/PhongKho/TaoPhieuNhapKho" title="Thêm">
+                                                    <i class="fas fa-plus"></i>
+                                                    Tạo phiếu đề nghị nhập hàng hóa
+                                                </a>
+                                            }
+
                                         }
                                     }
                                 </div>
@@ -224,6 +236,7 @@
                         <div class="row element-button">
                             <div class="col-md-12">
                                 @{
+                                    var d = TempData["checkTrungSPTK"];
                                     var c = TempData["TongSPTK"];
                                     if ((int)c == 0)
                                     {
@@ -233,9 +246,20 @@
                                     }
                                     else
                                     {
-                                        <a class="btn btn-warning" type="button" href="/PhongKho/GiaiQuyetTonKho">
-                                            <i class="fas fa-retweet"></i> Giải quyết tất cả
-                                        </a>
+                                        if ((bool)d == true)
+                                        {
+                                            <a class="btn btn-add btn-sm" style="cursor:no-drop">
+                                                <i class="fas fa-retweet"></i>
+                                                Giải quyết tất cả
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-warning" type="button" href="/PhongKho/GiaiQuyetTonKho">
+                                                <i class="fas fa-retweet"></i> Giải quyết tất cả
+                                            </a>
+                                        }
+
                                     }
                                 }
                             </div>

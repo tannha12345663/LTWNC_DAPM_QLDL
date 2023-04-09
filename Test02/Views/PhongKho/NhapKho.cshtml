@@ -195,18 +195,12 @@
                                                     @if (str == "KDPX")
                                                     {
                                                         <a href="~/PhongKho/ChiTietPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-info" title=" Chi tiết"> <i class="fa fa-info"></i> </a>
-                                                        <form method="post" action="@Url.Action("UpdateStatusPhieu", "PhongKho", new { id = item.MaPhieu })">
-                                                            @Html.AntiForgeryToken()
-                                                            <button type="submit" class="btn btn-danger">Done</button>
-                                                        </form>
+                                                        //<a href="/PhongKho/XoaPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
                                                     }
                                                     else if (str == "KDPN")
                                                     {
                                                         <a href="~/PhongKho/ChiTietPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-info" title="Chi tiết"> <i class="fa fa-info"></i> </a>
-                                                        <form method="post" action="@Url.Action("UpdateStatusPhieu", "PhongKho", new { id = item.MaPhieu })">
-                                                            @Html.AntiForgeryToken()
-                                                            <button type="submit" class="btn btn-danger">Done</button>
-                                                        </form>
+                                                        
                                                         //<a href="/PhongKho/XoaPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
                                                     }
                                                     else

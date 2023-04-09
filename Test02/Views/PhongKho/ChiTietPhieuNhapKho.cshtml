@@ -7,8 +7,9 @@
     ViewBag.Name = "Chi tiết phiếu đề nghị nhập kho";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dsSP = db.SanPhams.ToList();
-    var dsCTKho = db.ChiTietKhoes.ToList();
-    List<string> distint = new List<string>();
+    //var dsCTKho = db.ChiTietKhoes.ToList();
+    //List<string> distint = new List<string>();
+    var tongtien = 0;
 }
 @{
     var checkMessage = TempData["AlertMessage"];
@@ -27,6 +28,8 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tile" id="printMe">
+            <p>Tên đơn vị: Công ty TNHH nước giải khát NQK</p>
+            <p></p>
             <h2 style="text-align:center">PHIẾU ĐỀ NGHỊ NHẬP KHO</h2>
             <form style="text-align:center" id="sample2">
                 <label for="date">Ngày:</label>
@@ -40,34 +43,34 @@
                         <label class="control-label">- Kính gửi: </label>
                         @Session["kinhgui"]
                     </div>
-                    <div class="form-group col-md-12" id="sample4">
-                        <label class="control-label">- Nhập vào các kho: </label> <br />
-                        @for (int i = 0; i < dsCTKho.Count; i++)
+                    <!--<div class="form-group col-md-12" id="sample4">
+                <label class="control-label">- Nhập vào các kho: </label> <br />-->
+                    @*@for (int i = 0; i < dsCTKho.Count; i++)
+                {
+                    if (dsCTKho[i].TinhTrang == "Sắp hết hàng" || dsCTKho[i].TinhTrang == "Hết hàng")
+                    {
+                        distint.Add(dsCTKho[i].MaKho);
+                        distint = distint.Distinct().ToList();
+                    }
+                }
+                @for (int i = 0; i < dsCTKho.Count; i++)
+                {
+                    for (int j = 0; j >= 0 && j < distint.Count; j++)
+                    {
+                        if (distint[j].Equals(dsCTKho[i].MaKho))
                         {
-                            if (dsCTKho[i].TinhTrang == "Sắp hết hàng" || dsCTKho[i].TinhTrang == "Hết hàng")
-                            {
-                                distint.Add(dsCTKho[i].MaKho);
-                                distint = distint.Distinct().ToList();
-                            }
+                            <span>@dsCTKho[i].MaKho - @dsCTKho[i].Kho.TenKho (@dsCTKho[i].Kho.DiaChi)</span> <br />
+                            distint.RemoveAt(j);
                         }
-                        @for (int i = 0; i < dsCTKho.Count; i++)
-                        {
-                            for (int j = 0; j >= 0 && j < distint.Count; j++)
-                            {
-                                if (distint[j].Equals(dsCTKho[i].MaKho))
-                                {
-                                    <span>@dsCTKho[i].MaKho - @dsCTKho[i].Kho.TenKho (@dsCTKho[i].Kho.DiaChi)</span> <br />
-                                    distint.RemoveAt(j);
-                                }
-                            }
-                        }
-                    </div>
+                    }
+                }*@
+                    <!--</div>-->
                     <div class="form-group col-md-12" id="sample5">
                         <label class="control-label">- Họ tên người làm phiếu:</label>
                         @Session["hoten"]
                     </div>
                     <div class="form-group col-md-12" id="sample6">
-                        <label class="control-label">- Sản phẩm cần nhập kho: </label>
+                        <label class="control-label">- Chi tiết nhập kho: </label>
                         <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
                             <thead>
                                 <tr>
@@ -154,9 +157,21 @@
         <i class="fas fa-retweet"></i>
         Trở lại
     </a>
-    <a class="btn btn-delete btn-sm print-file" id="btnPrint" href="/PhongKho/NhapKho" title="In" onclick="printDiv('printMe')">
-        <i class="fas fa-print"></i> In phiếu
-    </a>
+    @{
+        if (Model.TinhTrang == "Đã xét duyệt")
+        {
+            <form method="post" action="@Url.Action("UpdateStatusPhieu", "PhongKho", new { id = Model.MaPhieu })">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger">Done</button>
+            </form> }
+        else
+        {
+            <a class="btn btn-delete btn-sm print-file" id="btnPrint" href="/PhongKho/NhapKho" title="In" onclick="printDiv('printMe')">
+                <i class="fas fa-print"></i> In phiếu
+            </a>
+        }
+    }
+
 </p>
 
 <script>
