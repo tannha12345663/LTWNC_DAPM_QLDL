@@ -559,21 +559,37 @@
 
     button.addEventListener("click", e => {
         let table = document.querySelector("#sampleTable");
-        TableToExcel.convert(table);
+        TableToExcel.convert(document.getElementById("sampleTable"), {
+            name: "Danh sách đơn hàng.xlsx",
+            sheet: {
+                name: "Sheet 1"
+            }
+        });
     });
 
     let button01 = document.querySelector("#button-excel01");
     button01.addEventListener("click", e => {
         let table = document.querySelector("#sampleTable01");
-        TableToExcel.convert(table);
+        TableToExcel.convert(document.getElementById("sampleTable01"), {
+            name: "Đơn hàng chưa xét duyệt.xlsx",
+            sheet: {
+                name: "Sheet 1"
+            }
+        });
     });
 
     let button02 = document.querySelector("#button-excel02");
     button02.addEventListener("click", e => {
         let table = document.querySelector("#sampleTable02");
-        TableToExcel.convert(table);
+        TableToExcel.convert(document.getElementById("sampleTable02"), {
+            name: "Đơn hàng đã xét duyệt.xlsx",
+            sheet: {
+                name: "Sheet 1"
+            }
+        });
     });
 </script>
+
 @* '<div class="form-group col-md-12">' +
     '<label class="control-label">Tên sản phẩm</label>' +
     ' <select class="form-control" name="MaSP" required>' +
@@ -586,4 +602,5 @@
     '/<div>'; *@
 @section script{
     <script src="~/Content/js/tableToExcel.js"></script>
+    
 }

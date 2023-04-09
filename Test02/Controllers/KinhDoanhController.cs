@@ -858,6 +858,49 @@ namespace Test02.Controllers
         {
             return View();
         }
+        //Tiếp nhận phiếu đề nghị nhập/ xuất hàng hóa
+        public ActionResult TiepNhanHH()
+        {
+            var dstiepnhan = database.PhieuNhapXuats.ToList();
+            return View(dstiepnhan);
+        }
+        //Phiếu nhập kho
+        public ActionResult ChiTietPhieuNhapKho(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TempData["maPhieuNhap"] = id;
+            Session["KinhGui"] = "Trưởng phòng kinh doanh";
+            Session["HoTen"] = "Nguyễn Thị Diễm Khang";
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            if (phieuNhapXuat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phieuNhapXuat);
+        }
+
+        //Phiếu xuất kho
+        public ActionResult ChiTietPhieuXuatKho(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TempData["maPhieuXuat"] = id;
+            Session["KinhGui"] = "Trưởng phòng kinh doanh";
+            Session["HoTen"] = "Nguyễn Thị Diễm Khang";
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            if (phieuNhapXuat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phieuNhapXuat);
+        }
+        
+        // Báo cáo
         public ActionResult BaoCao()
         {
             return View();

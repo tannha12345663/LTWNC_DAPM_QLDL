@@ -605,6 +605,9 @@
     <Content Include="Views\BienBangKiemKes\Details.cshtml" />
     <Content Include="Views\BienBangKiemKes\Edit.cshtml" />
     <Content Include="Views\BienBangKiemKes\Index.cshtml" />
+    <Content Include="Views\KinhDoanh\TiepNhanHH.cshtml" />
+    <Content Include="Views\KinhDoanh\ChiTietPhieuNhapKho.cshtml" />
+    <Content Include="Views\KinhDoanh\ChiTietPhieuXuatKho.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
