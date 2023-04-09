@@ -24,6 +24,23 @@
         </script>
     }
 }
+<div class="tile element-button">
+    @{
+        if (Model.TinhTrang == "Đã xét duyệt")
+        {
+            <form method="post" action="@Url.Action("UpdateStatusPhieu", "PhongKho", new { id = Model.MaPhieu })">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger bx-tada">Đã xuất hàng hóa<i class='bx bx-question-mark'></i></button>
+            </form> }
+        else
+        {
+            <a class="btn btn-delete btn-sm print-file" id="btnPrint" href="/PhongKho/NhapKho" title="In" onclick="printDiv('printMe')">
+                <i class="fas fa-print"></i> In phiếu
+            </a>
+            <h5 class="pull-right">Tình trạng: <span class="badge bg-danger">@Model.TinhTrang</span></h5>
+        }
+    }
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="tile " id="printMe">
@@ -156,20 +173,6 @@
         <i class="fas fa-retweet"></i>
         Trở lại
     </a>
-    @{
-        if (Model.TinhTrang == "Đã xét duyệt")
-        {
-            <form method="post" action="@Url.Action("UpdateStatusPhieu", "PhongKho", new { id = Model.MaPhieu })">
-                @Html.AntiForgeryToken()
-                <button type="submit" class="btn btn-danger">Done</button>
-            </form> }
-        else
-        {
-            <a class="btn btn-delete btn-sm print-file" id="btnPrint" href="/PhongKho/NhapKho" title="In" onclick="printDiv('printMe')">
-                <i class="fas fa-print"></i> In phiếu
-            </a>
-        }
-    }
 </p>
 <script>
     //In dữ liệu

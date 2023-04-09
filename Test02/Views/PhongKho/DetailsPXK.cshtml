@@ -4,6 +4,7 @@
     ViewBag.Title = "DetailsPXK";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.nk = "active";
+    ViewBag.hieuung4 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var kho = db.Khoes.ToList();
     var ctdonhang = db.ChiTietDonHangs.ToList();

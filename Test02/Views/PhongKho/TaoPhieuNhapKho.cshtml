@@ -5,6 +5,7 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.hh = "active";
     ViewBag.Name = "Tạo phiếu đề nghị nhập kho";
+    ViewBag.hieuung3 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dsSP = db.SanPhams.ToList();
     var dsCTKho = db.ChiTietKhoes.ToList();
