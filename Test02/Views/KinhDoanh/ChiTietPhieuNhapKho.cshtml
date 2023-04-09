@@ -26,10 +26,19 @@
     }
 }
 <div class="row">
+    @{
+        if (Model.TinhTrang == "Chưa xét duyệt")
+        {
+            <div class="col-md-12" style="text-align:end">
+                <a class="btn btn-warning btn-sm" data-value="@Model.MaPhieu" id="xetduyet" title="xét duyệt">
+                    <i class="fas fa-solid fa-check"></i> Xét duyệt
+                </a>
+            </div>
+        }
+    }
+
     <div class="col-md-12">
-        <a class="btn btn-warning btn-sm" title="xét duyệt">
-            <i class="fas fa-solid fa-check"></i> Xét duyệt
-        </a>
+
         <div class="tile" id="printMe">
             <h2 style="text-align:center">PHIẾU ĐỀ NGHỊ NHẬP KHO</h2>
             <form style="text-align:center" id="sample2">
@@ -48,9 +57,10 @@
                         <label class="control-label">- Họ tên người làm phiếu:</label>
                         @Session["hoten"]
                     </div>
-                    <div class="form-group col-md-12" id="sample6">
-                        <label class="control-label">- Sản phẩm cần nhập kho: </label>
-                        <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
+                    <label class="control-label col-md-12">- Sản phẩm cần nhập kho: </label>
+                    <div class="form-group col-md-12 table-responsive" id="sample6">
+
+                        <table class="table table-hover table-bordered js-copytextarea " cellpadding="0" cellspacing="0" border="0">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="text-align:center; background-color:azure">Mã Kho</th>
@@ -157,3 +167,41 @@
         document.body.innerHTML = originalContents;
     }
 </script>
+@section script{
+    <script>
+        $(document).ready(function () {
+            $("#xetduyet").click(function () {
+                var maphieu = $("#xetduyet").data("value");
+                console.log(maphieu);
+                var model = {
+                    MaPhieu: maphieu
+                };
+                $.ajax({
+                    url: '/KinhDoanh/XetDuyetPhieu',
+                    type: 'POST',
+                    dataType: "json",
+                    data: model,
+                    success: function (res) {
+                        if (res.success == true) {
+                            swal({
+                                title: `Đã cập nhật thành công`,
+                                text: `Phiếu nhập kho ${res.MaPhieu} đã được cập nhật !`,
+                                icon: "success",
+                                button: "OK",
+                            });
+                            $("#xetduyet").attr("hidden", true);
+                        }
+                        else {
+                            swal({
+                                title: `Cập nhật không thành công`,
+                                text: `Phiếu nhập kho ${res.MaPhieu} đã bị từ chối cập nhật \n Vui lòng xem lại thông tin !`,
+                                icon: "error",
+                                button: "OK",
+                            });
+                        }
+                    }
+                });
+            })
+        });
+    </script>
+    }

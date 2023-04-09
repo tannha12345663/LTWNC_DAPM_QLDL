@@ -5,7 +5,7 @@
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.TN = "active";
     ViewBag.nd = "Tiếp nhận phiếu nhập / xuất hàng hóa";
-    ViewBag.hieuung = "bx-tada";
+    ViewBag.hieuung6 = "bx-tada";
 }
 
 <ul class="nav nav-tabs">
@@ -128,7 +128,7 @@
                                         <tbody>
                                             @foreach (var item in Model)
                                             {
-                                                if (item.TinhTrang == "Đã xét duyệt")
+                                                if (item.TinhTrang == "Đã xét duyệt"|| item.TinhTrang=="Đã nhập"|| item.TinhTrang=="Đã xuất")
                                                 {
                                                     <tr>
                                                         <td data-b-a-s="thin">

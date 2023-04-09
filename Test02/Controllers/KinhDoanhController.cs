@@ -899,7 +899,19 @@ namespace Test02.Controllers
             }
             return View(phieuNhapXuat);
         }
-        
+        //Xét duyệt phiếu
+        public ActionResult XetDuyetPhieu(string MaPhieu)
+        {
+            var check = database.PhieuNhapXuats.Where(s => s.MaPhieu == MaPhieu).FirstOrDefault();
+            if(check != null)
+            {
+                check.TinhTrang = "Đã xét duyệt";
+                database.Entry(check).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
+                return Json(new { success = true,MaPhieu=check.MaPhieu }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+        }
         // Báo cáo
         public ActionResult BaoCao()
         {

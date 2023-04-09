@@ -59,38 +59,38 @@
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.home" href="~/KinhDoanh/TrangChu">
-                    <i class='app-menu__icon bx bx-tachometer'></i>
-                    <span class="app-menu__label">Trang chủ</span>
+                    <i class='app-menu__icon bx bx-tachometer @ViewBag.hieuung1'></i>
+                    <span class="app-menu__label ">Trang chủ</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item  @ViewBag.dl" href="~/KinhDoanh/QuanLyDL">
-                    <i class='app-menu__icon bx bx-id-card'></i> <span class="app-menu__label">Quản lý đại lý</span>
+                    <i class='app-menu__icon bx bx-id-card @ViewBag.hieuung2'></i> <span class="app-menu__label">Quản lý đại lý</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.dh" href="~/KinhDoanh/QuanLyDH">
-                    <i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý đơn hàng</span>
+                    <i class='app-menu__icon bx bx-user-voice @ViewBag.hieuung3'></i><span class="app-menu__label">Quản lý đơn hàng</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.hd" href="~/KinhDoanh/QuanLyHD">
-                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Doanh số bán hàng </span>
+                    <i class='app-menu__icon bx bx-purchase-tag-alt @ViewBag.hieuung4'></i><span class="app-menu__label">Doanh số bán hàng </span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.sp" href="~/KinhDoanh/QuanLySP">
-                    <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý sản phẩm</span>
+                    <i class='app-menu__icon bx bx-task @ViewBag.hieuung5'></i><span class="app-menu__label">Quản lý sản phẩm</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.TN" href="~/KinhDoanh/TiepNhanHH">
-                    <i class='app-menu__icon bx bx-paper-plane @ViewBag.hieuung'></i> <span class="app-menu__label">Phiếu đề nghị</span>
+                    <i class='app-menu__icon bx bx-paper-plane @ViewBag.hieuung6'></i> <span class="app-menu__label">Phiếu đề nghị</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item  @ViewBag.baocao" href="~/KinhDoanh/BaoCao">
-                    <i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Báo cáo</span>
+                    <i class='app-menu__icon bx bx-pie-chart-alt-2 @ViewBag.hieuung7'></i><span class="app-menu__label">Báo cáo</span>
                 </a>
             </li>
         </ul>
@@ -128,7 +128,7 @@
         $('#sampleTable01').DataTable();
         $('#sampleTable02').DataTable();
     </script>
-    @*<script type="text/javascript">
+    <script type="text/javascript">
         var data = {
             labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6"],
             datasets: [{
@@ -210,7 +210,7 @@
                 win.print();
             }
         }
-    </script>*@
+    </script>
     <script src="~/Content/ckeditor/ckeditor.js"></script>
     @RenderSection("script", false)
 </body>

@@ -5,6 +5,7 @@
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.home = "active";
     ViewBag.nd = "Bảng điều khiển";
+    ViewBag.hieuung1 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var nv =(NhanVien) Session["user"];
     var dsdonhang = db.DonHangs.ToList();

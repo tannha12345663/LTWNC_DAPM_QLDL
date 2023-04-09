@@ -5,6 +5,7 @@
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.dh = "active";
     ViewBag.nd = "Danh sách đơn hàng";
+    ViewBag.hieuung3 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChiTietDonHang> ctdh = db.ChiTietDonHangs.ToList();
     var dsdl = db.DaiLies.ToList();
@@ -516,7 +517,7 @@
                 '<label class="control-label">Tên sản phẩm</label>' +
                 ' <select class="form-control" id="ChonSP" name="MaSP' + i +'" required>' +
                     '<option selected disabled>----Vui lòng chọn sản phẩm----</option>' +
-                    '@{ foreach (var item01 in dssp) 
+                    '@{ foreach (var item01 in dssp)
                         {<option value="@item01.MaSP">@item01.MaSP - @item01.TenSP - SL: @item01.TongTon</option> } }' +
                 '</select>' +
                     '</div>' +
@@ -533,7 +534,7 @@
         };
 
     }
-    
+
     function xoaSP() {
 
         if (i > 0) {
@@ -552,7 +553,7 @@
         var resetp = '';
         document.getElementById("themdong").innerHTML=resetp;
     };
-    
+
 </script>
 <script>
     let button = document.querySelector("#button-excel");
@@ -588,6 +589,7 @@
             }
         });
     });
+
 </script>
 
 @* '<div class="form-group col-md-12">' +
@@ -602,5 +604,39 @@
     '/<div>'; *@
 @section script{
     <script src="~/Content/js/tableToExcel.js"></script>
-    
+    <script>
+        document.addEventListener('keydown', function (event) {
+            if (event.key === "F12") {
+                event.preventDefault();
+                location.reload();
+            }
+        });
+        document.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+        });
+        document.addEventListener('keydown', function (event) {
+            // Ngăn chặn hoạt động khi nhấn Ctrl+Shift+I hoặc F12
+            if (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 123)) {
+                event.preventDefault();
+            }
+        });
+        window.addEventListener('beforeunload', function (event) {
+            // Hiển thị thông báo cảnh báo nếu người dùng nhấn Ctrl+Shift+I hoặc F12
+            if (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 123)) {
+                event.returnValue = 'Bạn có chắc chắn muốn reload trang web này?';
+            }
+        });
+        if (window.console && window.console.firebug) {
+            alert('Vui lòng tắt Firebug trước khi tiếp tục!');
+            // hoặc bất kỳ hành động nào bạn muốn thực hiện khi phát hiện Firebug đang mở
+        }
+        // Kiểm tra nếu Developer Tool được mở ra
+        if (window.console && window.console.firebug) {
+            // Nếu có, che giấu nội dung và hiển thị thông báo
+            console.clear();
+            console.log("Xảy ra lỗi không thể hiển thị nội dung!");
+            alert("Không thể hiển thị nội dung");
+            document.body.innerHTML = "";
+        }
+    </script>
 }
