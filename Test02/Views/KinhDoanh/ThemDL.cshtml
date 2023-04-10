@@ -5,6 +5,7 @@
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.nd = "Thêm mới đại lý";
     ViewBag.dl = "active";
+    ViewBag.hieuung2 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -66,24 +67,27 @@
                         </div>*@
                     <div class="form-group  col-md-4">
                         <label class="control-label" for="MaLoaiDL">Tên đại lý</label>
-                        <input class="form-control text-box single-line" id="TenDL" name="TenDL" required="true" type="text" value="">
+                        <input class="form-control text-box single-line" id="TenDL" name="TenDL" required type="text">
+                        <p style="color:red ;font-weight:bold" id="Error" hidden>Đang kiểm tra tên đại lý ....</p>
                         @Html.ValidationMessageFor(model => model.TenDL, "", new { @class = "text-danger" })
                         <div id="mess"></div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label class="control-label" for="MaLoaiDL">Số điện thoại</label>
-                        @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", type = "number", required = "true" } })
+                        <label class="control-label" for="SDT">Số điện thoại</label>
+                        @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", type = "number", required = "true", id = "SDT",min=0 } })
                         @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                        <p style="color:red ;font-weight:bold" id="Error01" hidden>Đang kiểm tra thông tin số điện thoại ....</p>
                     </div>
                     <div class="form-group  col-md-6">
-                        <label class="control-label" for="MaLoaiDL">Địa chỉ</label>
+                        <label class="control-label" for="DiaChi">Địa chỉ</label>
                         @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", type = "text", required = "true" } })
                         @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group col-md-4">
-                        <label class="control-label" for="MaLoaiDL">Email</label>
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email", required = "true" } })
+                        <label class="control-label" for="Email">Email</label>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email", required = "true", id = "Email" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        <p style="color:red ;font-weight:bold" id="Error02" hidden>Đang kiểm tra thông tin email ....</p>
                     </div>
                     <div class="form-group col-md-10">
                         <div class="col-md-offset-2 col-md-5">
@@ -139,4 +143,92 @@
         </div>
     </div>
 </div>
+@section script{
+    <script>
+        //Kiểm tra nội dung thêm mới đại lý 
+        $(document).ready(function () {
+            $("#TenDL").on("input", function () {
+                $("#Error").prop("hidden",false);
+                var input = $("#TenDL").val();
+                if (input.length > 0) {
+                    var model = {
+                        TenDL: input
+                    };
+                    //Tạo Ajax để kiểm tra nội dung nhập
+                    $.ajax({
+                        url: '/KinhDoanh/KTTenDL',
+                        type: 'POST',
+                        dataType: "json",
+                        data: model,
+                        success: function (res) {
+                            if (res.success == true) {
+                                $("#Error").html('Tên đại lý hợp lệ !');
+                            }
+                            else {
+                                $("#Error").html('Tên đại lý không hợp lệ hoặc đã được sử dụng !');
+                            }
+                        }
+                    });
+                } else {
+                    $("#Error").html('Vui lòng nhập !');
+                }
+                
+            });
+            $("#SDT").on("input", function () {
+                $("#Error01").prop("hidden", false);
+                var input = $("#SDT").val();
+                if (input.length > 0 && input.length == 10) {
+                    var model = {
+                        SDT: input
+                    };
+                    //Tạo Ajax để kiểm tra nội dung nhập
+                    $.ajax({
+                        url: '/KinhDoanh/KTSDT',
+                        type: 'POST',
+                        dataType: "json",
+                        data: model,
+                        success: function (res) {
+                            if (res.success == true) {
+                                $("#Error01").html('Số điện thoại này hợp lệ !');
+                            }
+                            else {
+                                $("#Error01").html('Số điện thoại không hợp lệ hoặc đã được sử dụng !');
+                            }
+                        }
+                    });
+                } else if (input.length < 10 ) {
+                    $("#Error01").html('Số điện thoại nhập đủ 10 số !');
+                } else if (input.length == 0 ){
+                    $("#Error01").html('Vui lòng nhập số điện thoại !');
+                };
+            });
+            $("#Email").on("input", function () {
+                $("#Error02").prop("hidden", false);
+                var input = $("#Email").val();
+                if (input.length > 0) {
+                    var model = {
+                        Email: input
+                    };
+                    //Tạo Ajax để kiểm tra nội dung nhập
+                    $.ajax({
+                        url: '/KinhDoanh/KTEmail',
+                        type: 'POST',
+                        dataType: "json",
+                        data: model,
+                        success: function (res) {
+                            if (res.success == true) {
+                                $("#Error02").html('Email này hợp lệ !');
+                            }
+                            else {
+                                $("#Error02").html('Email này không hợp lệ hoặc đã được sử dụng !');
+                            }
+                        }
+                    });
+                } else {
+                    $("#Error02").html('Vui lòng nhập Email !');
+                };
+            });
+        });
+    </script>
 
+    }

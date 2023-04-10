@@ -27,6 +27,46 @@ namespace Test02.Controllers
         {
             return View(database.DaiLies.ToList().OrderByDescending(s=> s.NgayTao));
         }
+        //Kiểm tra tên đại lý
+        [HttpPost]
+        public ActionResult KTTenDL(string TenDL)
+        {
+            var check = database.DaiLies.Where(s => s.TenDL == TenDL).FirstOrDefault();
+            if(check != null)
+            {
+                return Json(new { success = false}, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult KTSDT(string SDT)
+        {
+            var check = database.DaiLies.Where(s => s.SDT == SDT).FirstOrDefault();
+            if (check != null)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult KTEmail(string Email)
+        {
+            var check = database.DaiLies.Where(s => s.Email == Email).FirstOrDefault();
+            if (check != null)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult ThemDL()
         {
             ViewBag.MaLoaiDL = new SelectList(database.LoaiDLs, "MaLoaiDL", "TenDaiLy");
