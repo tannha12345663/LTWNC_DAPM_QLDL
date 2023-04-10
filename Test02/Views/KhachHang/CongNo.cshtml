@@ -11,7 +11,10 @@
         <div class="tile">
             <h3 class="tile-title">DANH SÁCH CÔNG NỢ</h3>
             <div class="tile-body table-responsive">
-
+                <div>
+                    @{ var congno = string.Format("{0:0,0 VNĐ}", @ViewBag.CongNo);}
+                    <b>Mức mua hàng tối đa của đại lý: @congno</b>
+                </div>
                 <table>
                     <tr>
                         <th>
@@ -39,7 +42,8 @@
                                 @Html.DisplayFor(modelItem => item.MaCongNo)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.TienNo)
+                                @{ var tienno = string.Format("{0:0,0} VNĐ", item.TienNo);}
+                                @Html.DisplayFor(modelItem => tienno)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.NgayLapCN)
@@ -57,6 +61,11 @@
                             </td>
                         </tr>
                     }
+                    <tr>
+                        <td colspan="6" style="text-align: right;">
+                            Tiền còn nợ: @{ var tong = string.Format("{0:0,0 VNĐ}", TempData["TongConNo"]);} @tong
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div class="modal" id="myModal">

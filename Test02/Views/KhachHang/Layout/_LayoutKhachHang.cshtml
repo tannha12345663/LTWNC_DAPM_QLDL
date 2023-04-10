@@ -41,7 +41,14 @@
         <div class="app-sidebar__user">
             @{ var user = (Test02.Models.DaiLy)HttpContext.Current.Session["userDL"];}
             <a href="~/KhachHang/ThongTinDL/@user.MaDL">
-                <img class="app-sidebar__user-avatar" src="@user.HinhAnh" alt="User Image">
+                @if (user.HinhAnh == null)
+                {
+                    <img class="app-sidebar__user-avatar" src="~/Content/Img/account.png" alt="User Image">
+                }
+                else
+                {
+                    <img class="app-sidebar__user-avatar" src="@user.HinhAnh" alt="User Image">
+                }
             </a>
             <div>
                 <p class="app-sidebar__user-name">

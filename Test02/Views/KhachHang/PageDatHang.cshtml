@@ -60,12 +60,12 @@
                         <tfoot>
                             @using (Html.BeginForm("DatHang", "KhachHang"))
                             {
-                                <tr style="border-bottom: 0px;">
+                                @*<tr style="border-bottom: 0px;">
                                     <td colspan="6">
                                         <b>Địa chỉ giao hàng</b>
                                         <input name="diachigh" class="form-control" type="text" style="width: 500px; margin-top: 5px;" />
                                     </td>
-                                </tr>
+                                </tr>*@
                                 <tr>
                                     <td colspan="6" style="text-align: right;">
                                         <label>Tổng: </label> @{ var tong = string.Format("{0:0,0 VNĐ}", @Model.TongTien());} @tong <br />

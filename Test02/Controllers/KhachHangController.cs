@@ -81,46 +81,60 @@ namespace Test02.Controllers
             return RedirectToAction("ChiTietSP/" + id, "KhachHang");
         }
 
-        // Update số lượng sản phẩm
-        //public ActionResult CapNhatSL(FormCollection form)
+        //Update số lượng sản phẩm
+        public ActionResult CapNhatSL(FormCollection form)
+        {
+            Cart cart = Session["Cart"] as Cart;
+            string id = form["MaSP"];
+            int sl = int.Parse(form["soluong"]);
+            var sol = db.SanPhams.Find(id);
+            if (sl > sol.TongTon)
+            {
+                TempData["Warning"] = "Số lượng cập nhật lớn hơn số lượng tồn!!!";
+                return RedirectToAction("GioHangDL", "KhachHang");
+            }
+            if (sl <= 0)
+            {
+                TempData["SLSP=0"] = "Số lượng sản phẩm phải lớn hơn 0";
+                return RedirectToAction("GioHangDL", "KhachHang");
+            }
+            cart.CapNhatSL(id, sl);
+            return RedirectToAction("GioHangDL", "KhachHang");
+        }
+
+        //[HttpPost]
+        //public ActionResult CapNhatSL(string MaSP, int soluong)
         //{
-        //    Cart cart = Session["Cart"] as Cart;
-        //    string id = form["MaSP"];
-        //    int sl = int.Parse(form["soluong"]);
-        //    var sol = db.SanPhams.Find(id);
-        //    if (sl > sol.TongTon)
+        //    var cart = GetCart();
+        //    var maSP = db.SanPhams.FirstOrDefault(s => s.MaSP == MaSP);
+        //    if (soluong > maSP.TongTon)
         //    {
         //        TempData["Warning"] = "Số lượng cập nhật lớn hơn số lượng tồn!!!";
+        //        //return Json(new { success = "false" });
         //        return RedirectToAction("GioHangDL", "KhachHang");
         //    }
-        //    if (sl <= 0)
+
+        //    if (soluong <= 0)
         //    {
         //        TempData["SLSP=0"] = "Số lượng sản phẩm phải lớn hơn 0";
         //        return RedirectToAction("GioHangDL", "KhachHang");
         //    }
-        //    cart.CapNhatSL(id, sl);
-        //    return RedirectToAction("GioHangDL", "KhachHang");
+
+        //    else
+        //    {
+        //        cart.CapNhatSL(MaSP, soluong);
+
+        //        double tongTien = cart.TongTien();
+        //        double thanhTien = cart.ThanhTien(maSP.MaSP);
+        //        var result = new
+        //        {
+        //            tongTien = "Tổng tiền: " + tongTien.ToString("#,##0") + " VNĐ",
+        //            thanhTien = thanhTien.ToString("#,##0") + " VNĐ",
+        //        };
+        //        return Json(result);
+        //    }
+        //    //return RedirectToAction("GioHangDL");
         //}
-
-        [HttpPost]
-        public ActionResult CapNhatSL(string MaSP, int soluong)
-        {
-            var cart = GetCart();
-            cart.CapNhatSL(MaSP, soluong);
-            var maSP = db.SanPhams.FirstOrDefault(s => s.MaSP == MaSP);
-
-            double tongTien = cart.TongTien();
-            //double thanhTien = maSP.Gia.Value * soluong;
-            double thanhTien = cart.ThanhTien(maSP.MaSP);
-
-            var result = new
-            {
-                tongTien = "Tổng tiền: " + tongTien.ToString("#,##0") + " VNĐ",
-                thanhTien = thanhTien.ToString("#,##0") + " VNĐ",
-            };
-
-            return Json(result);
-        }
 
         //Xóa sản phẩm khỏi giỏ hàng
         public ActionResult XoaSP(string id)
@@ -132,10 +146,43 @@ namespace Test02.Controllers
             return RedirectToAction("GioHangDL", "KhachHang");
         }
 
+        public double TinhCongNo(string MaDL)
+        {
+            List<PhieuCongNo> phieuCongNos = db.PhieuCongNoes.Where(s => s.MaDL == MaDL && s.TrangThai == "Chưa thanh toán").ToList();
+
+            double tongCN = 0;
+            foreach(var i in phieuCongNos)
+            {
+                tongCN += (double)i.TienNo;
+            }
+            return tongCN;
+        }
+
+        public double MaxNo(string maLoaiDL)
+        {
+            double congNo = 0;
+            if (maLoaiDL == "LDL01")
+            {
+                congNo = 500000000;
+            }
+            else if (maLoaiDL == "LDL02")
+            {
+                congNo = 250000000;
+            }
+            else
+            {
+                congNo = 100000000;
+            }
+            return congNo;
+        }
+
         //Trang đặt hàng
         public ActionResult PageDatHang()
         {
             Cart cart = Session["Cart"] as Cart;
+
+            var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
+
             if (cart == null || cart.Items.Count() <= 0)
             {
                 TempData["GHNull"] = "Vui lòng chọn sản phẩm!!!";
@@ -144,14 +191,25 @@ namespace Test02.Controllers
 
             else if(cart.Items != null)
             {
-                var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
                 double tongphu = cart.TongTien();
                 double giam = tongphu * (double)daiLy.LoaiDL.ChietKhau;
                 double thanhtien = tongphu - giam;
 
-                TempData["giam"] = string.Format("{0:0,0}", giam);
-                TempData["thanhtien"] = string.Format("{0:0,0}", thanhtien);
-                return View(cart);
+                double tongTienCN = TinhCongNo(daiLy.MaDL);
+                double maxCN = MaxNo(daiLy.MaLoaiDL);
+                double tong = tongphu + tongTienCN;
+
+                if (tong > maxCN)
+                {
+                    TempData["MaxCN"] = "Công nợ vượt quá mức quy định, vui lòng thanh toán công nợ trước khi đặt hàng";
+                    return RedirectToAction("GioHangDL", "KhachHang");
+                }
+                else
+                {
+                    TempData["giam"] = string.Format("{0:0,0}", giam);
+                    TempData["thanhtien"] = string.Format("{0:0,0}", thanhtien);
+                    return View(cart);
+                }
             }
             return View();
         }
@@ -177,7 +235,7 @@ namespace Test02.Controllers
 
                 donHang.MaDH = maDH;
                 donHang.MaDL = daiLy.MaDL;
-                donHang.MaNVLap = "NV01";
+                donHang.MaNVLap = null;
                 donHang.NgayLap = DateTime.Now;
                 donHang.TrangThai = "Chưa xử lý";
                 donHang.TinhTrangThanhToan = "Chưa thanh toán";
@@ -276,6 +334,28 @@ namespace Test02.Controllers
         {
             var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
             var dsCongNo = db.PhieuCongNoes.Where(s => s.MaDL == daiLy.MaDL).ToList();
+
+            var conNo = db.PhieuCongNoes.Where(s => s.TrangThai == "Chưa thanh toán");
+
+            if (daiLy.MaLoaiDL == "LDL01")
+            {
+                ViewBag.CongNo = 500000000;
+            }
+            else if (daiLy.MaLoaiDL == "LDL02")
+            {
+                ViewBag.CongNo = 250000000;
+            }
+            else
+            {
+                ViewBag.CongNo = 100000000;
+            }
+
+            double tong = 0;
+            foreach (var i in conNo)
+            {
+                tong += (double)i.TienNo;
+            }
+            TempData["TongConNo"] = tong;
             return View(dsCongNo);
         }
 
@@ -357,29 +437,28 @@ namespace Test02.Controllers
                 (daiLy.Email != info.Email && totalEmail >= 1))
             {
                 TempData["errorEmailPhone"] = "Không thể cập nhật, vì số điện thoại và email này đã được sử dụng";
-                //ModelState.AddModelError(string.Empty, "Email này đã được sử dụng");
-                return View(daiLy);
-            }
-
-            if (daiLy.Email == info.Email && daiLy.SDT == info.SDT && daiLy.DiaChi == info.DiaChi)
-            {
                 return View(daiLy);
             }
 
             if (ModelState.IsValid)
             {
                 DaiLy update = db.DaiLies.Find(id);
-                if (HinhAnh == null)
+                if (daiLy.Email == info.Email && daiLy.SDT == info.SDT && daiLy.DiaChi == info.DiaChi && HinhAnh == null)
                 {
-                    update.TenDL = daiLy.TenDL;
-                    update.Email = daiLy.Email;
-                    update.SDT = daiLy.SDT;
-                    update.DiaChi = daiLy.DiaChi;
-                    //db.Entry(daiLy).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
-                    TempData["UpdateTC"] = "Cập nhật đại lý thành công";
-                    return RedirectToAction("ThongTinDL");
+                    return View(daiLy);
                 }
+
+                //else if (HinhAnh == null)
+                //{
+                //    update.TenDL = daiLy.TenDL;
+                //    update.Email = daiLy.Email;
+                //    update.SDT = daiLy.SDT;
+                //    update.DiaChi = daiLy.DiaChi;
+                //    //db.Entry(daiLy).State = System.Data.Entity.EntityState.Modified;
+                //    db.SaveChanges();
+                //    TempData["UpdateTC"] = "Cập nhật đại lý thành công";
+                //    return RedirectToAction("ThongTinDL");
+                //}
                 else
                 {
                     LuuAnh(daiLy, HinhAnh);
@@ -445,29 +524,36 @@ namespace Test02.Controllers
         public void LuuAnh(DaiLy daiLy, HttpPostedFileBase HinhAnh)
         {
             #region Hình ảnh
-            //Xác định đường dẫn lưu file : Url tương đói => tuyệt đói
-            var urlTuongdoi = "/Data/ImagesDL/";
-            var urlTuyetDoi = Server.MapPath(urlTuongdoi);// Lấy đường dẫn lưu file trên server
-
-            //Check trùng tên file => Đổi tên file  = tên file cũ (ko kèm đuôi)
-            //Ảnh.jpg = > ảnh + "-" + 1 + ".jpg" => ảnh-1.jpg
-
-            string fullDuongDan = urlTuyetDoi + HinhAnh.FileName;
-            int i = 1;
-            while (System.IO.File.Exists(fullDuongDan) == true)
+            if (HinhAnh == null)
             {
-                // 1. Tách tên và đuôi 
-                var ten = Path.GetFileNameWithoutExtension(HinhAnh.FileName);
-                var duoi = Path.GetExtension(HinhAnh.FileName);
-                // 2. Sử dụng biến i để chạy và cộng vào tên file mới
-                fullDuongDan = urlTuyetDoi + ten + "-" + i + duoi;
-                i++;
-                // 3. Check lại 
+                daiLy.HinhAnh = daiLy.HinhAnh;
             }
-            #endregion
-            //Lưu file (Kiểm tra trùng file)
-            HinhAnh.SaveAs(fullDuongDan);
-            daiLy.HinhAnh = urlTuongdoi + Path.GetFileName(fullDuongDan);
+            else
+            {
+                //Xác định đường dẫn lưu file : Url tương đói => tuyệt đói
+                var urlTuongdoi = "/Data/ImagesDL/";
+                var urlTuyetDoi = Server.MapPath(urlTuongdoi);// Lấy đường dẫn lưu file trên server
+
+                //Check trùng tên file => Đổi tên file  = tên file cũ (ko kèm đuôi)
+                //Ảnh.jpg = > ảnh + "-" + 1 + ".jpg" => ảnh-1.jpg
+
+                string fullDuongDan = urlTuyetDoi + HinhAnh.FileName;
+                int i = 1;
+                while (System.IO.File.Exists(fullDuongDan) == true)
+                {
+                    // 1. Tách tên và đuôi 
+                    var ten = Path.GetFileNameWithoutExtension(HinhAnh.FileName);
+                    var duoi = Path.GetExtension(HinhAnh.FileName);
+                    // 2. Sử dụng biến i để chạy và cộng vào tên file mới
+                    fullDuongDan = urlTuyetDoi + ten + "-" + i + duoi;
+                    i++;
+                    // 3. Check lại 
+                }
+                #endregion
+                //Lưu file (Kiểm tra trùng file)
+                HinhAnh.SaveAs(fullDuongDan);
+                daiLy.HinhAnh = urlTuongdoi + Path.GetFileName(fullDuongDan);
+            }
         }
     }
 }

@@ -5,6 +5,7 @@
     Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
     ViewBag.gh = "active";
     ViewBag.nd = "Trang giỏ hàng";
+    //<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
     if (TempData["XoaSP"] != null)
     {
@@ -16,32 +17,34 @@
             });
         </script>
     }
+
     if (TempData["SLSP=0"] != null)
     {
         <script>
             swal({
-                title: "@TempData["SLSP=0"]",
+                title: "Số lượng sản phẩm phải lớn hơn 0",
                 icon: "warning",
                 button: "Thoát",
             });
         </script>
     }
+
     if (TempData["Warning"] != null)
     {
         <script>
             swal({
-                title: "@TempData["Warning"]",
+                title: "Số lượng cập nhật lớn hơn số lượng tồn!!!",
                 icon: "warning",
                 button: "Thoát",
             })
         </script>
     }
 
-    if (TempData["GHNull"] != null)
+    if (TempData["MaxCN"] != null)
     {
         <script>
             swal({
-                title: "Vui lòng chọn sản phẩm!!!",
+                title: "Số tiền vượt quá mức quy định, vui lòng mua hàng trong mức quy định hoặc thanh toán công nợ trước khi đặt hàng",
                 icon: "warning",
                 button: "Thoát",
             });
@@ -79,17 +82,19 @@
                                         @Html.DisplayFor(model => gia)
                                     </td>
                                     <td style="width: 150px;">
-                                        @*@using (Html.BeginForm("CapNhatSL", "KhachHang"))
+                                        @using (Html.BeginForm("CapNhatSL", "KhachHang"))
                                             {
                                                 <input type="hidden" value="@item.idSP.MaSP" name="MaSP" />
                                                 <div style="display: flex;">
                                                     <input class="form-control" type="number" value="@item.soLuong" name="soluong" style="width: 150px;" />
                                                     <input class="btn btn-success" type="submit" value="Cập nhật" />
                                                 </div>
-                                            }*@
-                                        <div style="display: flex;">
-                                            <input class="form-control quantity" type="number" min="1" id="quantity-@item.idSP" name="quantity" value="@item.soLuong" style="width: 150px;" data-product-id="@item.idSP.MaSP" />
-                                        </div>
+                                            }
+                                        @*<div style="display: flex;">
+                                            <div id="sllon"></div>
+                                            <div id="slbe"></div>
+                                            <input class="form-control quantity" type="number" min="1" max="@item.idSP.TongTon" id="quantity-@item.idSP" name="quantity" value="@item.soLuong" style="width: 150px;" data-product-id="@item.idSP.MaSP" />
+                                        </div>*@
                                     </td>
                                     <td class="thanhtien" id="thanhtien-@item.idSP.MaSP" style="text-align: center">
 

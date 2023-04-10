@@ -93,7 +93,16 @@
                         @Html.HiddenFor(model => model.HinhAnh)
                         @Html.HiddenFor(model => model.NgayTao)
 
-                        <div style="text-align: center;"><img class="img-avatar" src="@Model.HinhAnh" /></div>
+                        <div style="text-align: center;">
+                            @if (Model.HinhAnh == null)
+                            {
+                                <img class="img-avatar" src="~/Content/Img/account.png" />
+                            }
+                            else
+                            {
+                                <img class="img-avatar" src="@Model.HinhAnh" />
+                            }
+                        </div>
                         <div style="margin-top: 20px;">
                             <input type="file" name="HinhAnh" style="width: 80px;" />
                         </div>
@@ -104,7 +113,7 @@
                             <div class="row">
                                 <div class="form-group col-sm-7">
                                     <label class="control-label">Tên đại lý</label>
-                                    @Html.EditorFor(model => model.TenDL, new { htmlAttributes = new { @class = "form-control col-sm-12" } })
+                                    @Html.EditorFor(model => model.TenDL, new { htmlAttributes = new { @class = "form-control col-sm-12", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.TenDL, "", new { @class = "text-danger" })
                                 </div>
 
@@ -118,14 +127,14 @@
                             <div class="row">
                                 <div class="form-group col-md-7">
                                     <label class="control-label">Email</label>
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control col-sm-12", @id = "Email", onchange = "EmailCheck()" } })
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control col-sm-12", @id = "Email", onchange = "EmailCheck()", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                     <span id="mess"></span>
                                 </div>
 
                                 <div class="form-group col-sm-5">
                                     <label class="control-label">Số điện thoại</label>
-                                    @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control col-sm-12", @id = "NoPhone", onchange = "NoPhoneCheck()" } })
+                                    @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control col-sm-12", @id = "NoPhone", onchange = "NoPhoneCheck()", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
                                     <span id="noti"></span>
                                 </div>
@@ -134,7 +143,7 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label class="control-label">Địa chỉ</label>
-                                    @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control col-sm-12" } })
+                                    @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control col-sm-12", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
                                 </div>
                             </div>
