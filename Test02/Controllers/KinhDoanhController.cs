@@ -150,6 +150,29 @@ namespace Test02.Controllers
         {
             return View(database.DonHangs.ToList().OrderBy(s => s.NgayLap));
         }
+        [HttpPost]
+        public ActionResult CheckCongNoDL(string MaDL, string ThanhTien)
+        {
+            var tongtiendh = 0;
+            var daily = database.DaiLies.Where(s => s.MaDL == MaDL).FirstOrDefault();
+            tongtiendh += Convert.ToInt32(ThanhTien);
+            if (daily.MaLoaiDL == "LDL01" && tongtiendh <= 500000000)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            else if (daily.MaLoaiDL == "LDL02" && tongtiendh <= 250000000)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            else if (daily.MaLoaiDL == "LDL03" && tongtiendh <= 100000000)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
         //Thêm mới đơn hàng
         public ActionResult ThemDH()
         {
@@ -306,8 +329,9 @@ namespace Test02.Controllers
         }
         //Version 2.0 mới 
         [HttpPost]
-        public ActionResult ThemDH02(DonHang dh , int id)
+        public ActionResult ThemDH02(DonHang dh)
         {
+            int id = int.Parse(Request["sl"]);
             if (id > 0)
             {
                 var user = (Test02.Models.NhanVien)Session["user"];
