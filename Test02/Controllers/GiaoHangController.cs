@@ -84,8 +84,6 @@ namespace Test02.Controllers
         }
 
         
-
-
         //--------------------------LAP CAC CHUYEN GIAO HANG(gom nhieu don hang)------------------------------------
 
         //Danh sach cac chuyen giao 
@@ -201,45 +199,6 @@ namespace Test02.Controllers
             return View();
 
         }
-
-        //Them don hang vao chuyen giao(ban cu)
-        //public ActionResult ThemDonHangVaoChuyenGiao(string id1, string id2)
-        //{
-        //    Session["macg1"] = id1;
-        //    Session["macg2"] = id2;
-        //    ViewBag.MaCTDVC = new SelectList(database.ChiTietChuyenGiaos, "MaCTDVC", "MaCTDVC");
-        //    ViewBag.MaGH = new SelectList(database.ChiTietChuyenGiaos, "MaGH", "MaGH");
-        //    ViewBag.MaDH = new SelectList(database.SanPhams, "MaDH", "MaDH");
-        //    return View();
-        //}
-
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult ThemDonHangVaoChuyenGiao([Bind(Include = "MaCTDVC,MaDH,MaGH")] ChiTietChuyenGiao chiTietChuyenGiao, ChuyenGiao chuyenGiao, DonHang donhang)
-        //{
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        chiTietChuyenGiao.MaCTDVC = (int)Session["donhang"];
-        //        chuyenGiao.MaGH = (string)Session["donhang1"];
-        //        if (donhang.TinhTrangGH == "Chờ giao")
-        //        {
-        //            donhang.TinhTrangGH = Convert.ToString("Đang giao");
-        //        }                
-              
-        //        database.ChiTietChuyenGiaos.Add(chiTietChuyenGiao);
-        //        database.SaveChanges();
-        //        TempData["AlertMessage"] = "Đã thêm";
-        //        TempData["MaCTKkk"] = chiTietChuyenGiao.MaCTDVC;
-        //        return RedirectToAction("ChiTietChuyenGiaoHang", 
-        //        new RouteValueDictionary(new { controller = "GiaoHang", 
-        //        action = "ChiTietChuyenGiaoHang", Id = chiTietChuyenGiao.MaGH }));
-        //    }
-        //    return View();
-        //}
-
-
 
         //Xet duyet don giao hang (test)
         public ActionResult XetDuyetDonGiaoHang(string id)
