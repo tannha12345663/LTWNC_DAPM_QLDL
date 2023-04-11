@@ -19,6 +19,28 @@
                 button: "OK",
             });
         </script>
+    }
+    else if (checkmess == "Đã xóa sản phẩm")
+    {
+        <script>
+            swal({
+                title: "Xóa sản phẩm thành công",
+                text: "Mã sản phẩm @TempData["maspTT"] đã được xóa khỏi danh sách !",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "Đã cập nhật sản phẩm")
+    {
+        <script>
+            swal({
+                title: "Cập nhật sản phẩm thành công",
+                text: "Mã sản phẩm @TempData["maspTT"] đã được cập nhật !",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
     };
 }
 
@@ -100,7 +122,7 @@
 
             </table>
         </div>
-        
+
     </div>
 </div>
 

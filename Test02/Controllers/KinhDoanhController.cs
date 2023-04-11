@@ -870,13 +870,16 @@ namespace Test02.Controllers
                     sanPham.HinhAnh = hac.HinhAnh;
                     database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                     database.SaveChanges();
+                    TempData["messageAlert"] = "Đã cập nhật sản phẩm";
+                    TempData["maspTT"] = sanPham.MaSP;
                 }
                 else
                 {
                     LuuAnh(sanPham, HinhAnh);
                     database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                     database.SaveChanges();
-
+                    TempData["messageAlert"] = "Đã cập nhật sản phẩm";
+                    TempData["maspTT"] = sanPham.MaSP;
                 }
                 return RedirectToAction("QuanLySP");
             }
@@ -906,6 +909,9 @@ namespace Test02.Controllers
                 SanPham sanPham = database.SanPhams.Find(id);
                 database.SanPhams.Remove(sanPham);
                 database.SaveChanges();
+
+                TempData["messageAlert"] = "Đã xóa sản phẩm";
+                TempData["maspTT"] = sanPham.MaSP;
                 return RedirectToAction("QuanLySP");
             }
             catch

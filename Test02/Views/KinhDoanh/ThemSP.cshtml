@@ -5,6 +5,7 @@
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.sp = "active";
     ViewBag.nd = "Thêm mới sản phẩm";
+    ViewBag.hieuung5 = "bx-tada";
 }
 <link href="~/Content/Test01/UploadAnh.css" rel="stylesheet" />
 <div class="tile">
@@ -18,49 +19,13 @@
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            <div class="form-group col-md-4">
-                @Html.LabelFor(model => model.TenSP, htmlAttributes: new { @class = "control-label" })
-                @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-group col-md-4">
-                @Html.LabelFor(model => model.DonViTinh, htmlAttributes: new { @class = "control-label " })
-                <select class="form-control" id="DonViTinh" name="DonViTinh">
-                    <option value="Lốc">Lốc </option>
-                    <option value="Thùng">Thùng</option>
-                    <option value="Lon">Lon</option>
-                    <option value="Chai">Chai</option>
-                </select>
-                @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-group col-md-4">
-                @Html.LabelFor(model => model.Gia, htmlAttributes: new { @class = "control-label" })
-                @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group col-md-3">
-                @Html.LabelFor(model => model.NgaySX, htmlAttributes: new { @class = "control-label " })
-                <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayXuat must be a date." id="NgaySX" name="NgaySX" type="datetime-local" value="">
-                @Html.ValidationMessageFor(model => model.NgaySX, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group col-md-3">
-                @Html.LabelFor(model => model.HanSD, htmlAttributes: new { @class = "control-label " })
-                <input class="form-control text-box single-line" data-val="true" data-val-date="The field HanSH must be a date." id="HanSD" name="HanSD" type="datetime-local" value="">
-                @Html.ValidationMessageFor(model => model.HanSD, "", new { @class = "text-danger" })
-            </div>
-            @*<div class="form-group col-md-1">
-                    <label class="control-label">Chọn hình ảnh</label>
-                    <input type="file" name="HinhAnh"/>
-                </div>*@
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-4" style="border-right:5px solid red">
                 <label class="control-label">Ảnh sản phẩm</label>
                 <div id="myfileupload">
-                    <input type="file" id="uploadfile" name="HinhAnh" onchange="readURL(this);" />
+                    <input type="file" id="uploadfile" name="HinhAnh" onchange="readURL(this)" />
                 </div>
                 <div id="thumbbox">
-                    <img height="450" width="400" alt="Thumb image" id="thumbimage" style="display: none" />
+                    <img height="200" width="400" alt="Thumb image" id="thumbimage" style="display: none" />
                     <a class="removeimg" href="javascript:"></a>
                 </div>
                 <div id="boxchoice">
@@ -68,6 +33,46 @@
                     <p style="clear:both"></p>
                 </div>
 
+            </div>
+            <div class="form-group col-md-6">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Tên sản phẩm</label>
+                        @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Đơn vị tính</label>
+                        <select class="form-control" id="DonViTinh" name="DonViTinh">
+                            <option value="Lốc">Lốc </option>
+                            <option value="Thùng">Thùng</option>
+                            <option value="Lon">Lon</option>
+                            <option value="Chai">Chai</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label class="control-label">Giá sản phẩm</label>
+                        @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control",min=0 } })
+                        @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Ngày sản xuất: </label>
+                        <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayXuat must be a date." id="NgaySX" name="NgaySX" type="date" value="">
+                        @Html.ValidationMessageFor(model => model.NgaySX, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Hạn sử dụng: </label>
+                        <input class="form-control text-box single-line" data-val="true" data-val-date="The field HanSH must be a date." id="HanSD" name="HanSD" type="date" value="">
+                        @Html.ValidationMessageFor(model => model.HanSD, "", new { @class = "text-danger" })
+                    </div>
+                    @*<div class="form-group col-md-1">
+            <label class="control-label">Chọn hình ảnh</label>
+            <input type="file" name="HinhAnh"/>
+        </div>*@
+                </div>
             </div>
             <div class="form-group col-md-12">
                 <div class="col-md-offset-2 col-md-8">
@@ -105,11 +110,11 @@
         $(document).ready(function () {
             $(".Choicefile").bind('click', function () {
                 $("#uploadfile").click();
-
             });
             $(".removeimg").click(function () {
-                $("#thumbimage").attr('src', '').hide();
-                $("#myfileupload").html('<input type="file" id="uploadfile"  onchange="readURL(this);" />');
+               /* $("#thumbimage").attr('src', '').hide();*/
+                $("#thumbimage").attr('src', '').show();
+                $("#myfileupload").html('<input type="file" id="uploadfile" name="HinhAnh" onchange="readURL(this);" />');
                 $(".removeimg").hide();
                 $(".Choicefile").bind('click', function () {
                     $("#uploadfile").click();
@@ -118,6 +123,12 @@
                 $('.Choicefile').css('cursor', 'pointer');
                 $(".filename").text("");
             });
+            $("#NgaySX").on('input', function () {
+                var check = $("#NgaySX").val();
+                console.log(check);
+                $("#HanSD").attr("min", '' + check);
+            });
         })
+        
     </script>
 }

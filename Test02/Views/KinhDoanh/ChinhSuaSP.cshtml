@@ -5,6 +5,7 @@
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.sp = "active";
     ViewBag.nd = "Chỉnh sửa sản phẩm";
+    ViewBag.hieuung5 = "bx-tada";
 }
 
 <link href="~/Content/Test01/UploadAnh.css" rel="stylesheet" />
@@ -18,13 +19,12 @@
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.MaSP)
-                    @Html.HiddenFor(model => model.NgaySX)
                     @Html.HiddenFor(model => model.TongTon)
                     <div class="form-group col-md-5" style="border-right:5px solid red">
                         <label class="control-label">Ảnh sản phẩm</label>
                         <div id="myfileupload">
                             <input type="file" id="uploadfile" name="HinhAnh" value="@Model.HinhAnh" onchange="readURL(this);" />
-                        </div> 
+                        </div>
                         <div id="thumbbox">
                             <img height="200" width="400" alt="Thumb image" id="thumbimage" src="@Model.HinhAnh" />
                             <a class="removeimg" href="javascript:"></a>
@@ -54,23 +54,25 @@
                                 </select>
                                 @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-group col-md-5">
+                            <div class="form-group col-md-3">
                                 <label class="control-label">Giá sản phẩm</label>
                                 @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
                             </div>
-
-                            <div class="form-group col-md-4">
-                                <label class="control-label">Hạn sử dụng</label>
-                                <input class="form-control text-box single-line" data-val="true" data-val-date="The field HanSH must be a date." id="HanSD" name="HanSD"  type="Date" value="@Model.HinhAnh">
+                            <div class="form-group col-md-5">
+                                <label class="control-label">Ngày sản xuất: </label>
+                                <label class="">Ngày sản xuất cập nhật lần cuối : @Model.NgaySX</label>
+                                <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayXuat must be a date." required id="NgaySX" name="NgaySX" type="date" value="">
+                                @Html.ValidationMessageFor(model => model.NgaySX, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label class="control-label">Hạn sử dụng:</label>
+                                <label class="">Hạn sử dụng cập nhật lần cuối : @Model.HanSD</label>
+                                <input class="form-control text-box single-line" data-val="true" data-val-date="The field HanSH must be a date." required id="HanSD" name="HanSD" type="Date" value="">
                                 @Html.ValidationMessageFor(model => model.HanSD, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
                     </div>
-
-
-
                     <div class="form-group col-md-12 mt-3">
                         <a class="btn btn-outline-warning" href="~/KinhDoanh/QuanLySP">
                             Quay lại danh sách sản phẩm
@@ -84,7 +86,6 @@
 </div>
 @section script{
     <script>
-
         function readURL(input, thumbimage) {
             if (input.files && input.files[0]) { //Sử dụng  cho Firefox - chrome
                 var reader = new FileReader();
@@ -112,7 +113,7 @@
             $(".removeimg").click(function () {
                /* $("#thumbimage").attr('src', '').hide();*/
                 $("#thumbimage").attr('src', '@Model.HinhAnh').show();
-                $("#myfileupload").html('<input type="file" id="uploadfile"  onchange="readURL(this);" />');
+                $("#myfileupload").html('<input type="file" id="uploadfile" name="HinhAnh" value="@Model.HinhAnh" onchange="readURL(this);" />');
                 $(".removeimg").hide();
                 $(".Choicefile").bind('click', function () {
                     $("#uploadfile").click();
@@ -121,6 +122,13 @@
                 $('.Choicefile').css('cursor', 'pointer');
                 $(".filename").text("");
             });
+            
         })
+        $("#NgaySX").on('input', function () {
+            var check = $("#NgaySX").val();
+            console.log(check);
+            $("#HanSD").attr("min", '' + check);
+        });
     </script>
+    
 }
