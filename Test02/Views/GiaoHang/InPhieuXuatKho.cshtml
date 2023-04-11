@@ -3,12 +3,12 @@
 @{
     ViewBag.Title = "In phiếu xuất kho";
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
-    ViewBag.nk = "active";
+    ViewBag.gh_cg = "active";
     ViewBag.Name = "In phiếu xuất kho";
     ViewBag.nd = "In phiếu xuất kho";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var kho = db.Khoes.ToList();
-    var ctdonhang = db.ChiTietDonHangs.ToList();   
+    var ctdonhang = db.ChiTietDonHangs.ToList();
 }
 
 
@@ -16,15 +16,15 @@
     <div class="col-md-12">
         <div class="tile" id="printMe">
             <p>Tên đơn vị: Công ty TNHH nước giải khát NQK</p>
-            <p>Theo mã đơn hàng số: @TempData["maPhieuXuattheodonhang"]</p>
-            <h2 style="text-align:center" id="sample1">PHIẾU XUẤT KHO THEO ĐƠN HÀNG</h2>
+            <p>Theo mã đơn hàng số: @TempData["ctmadh"]</p>
+            <h2 style="text-align:center" id="sample1">PHIẾU XUẤT KHO THEO ĐƠN HÀNG @*@TempData["ctmadh"]*@</h2>
             <form style="text-align:center">
                 <label for="date">Ngày:</label>
                 @TempData["ngaylap"]<br>
-                <label for="date">Mã số:</label>                
+                <label for="date">Mã số:</label>
                 @Html.DisplayFor(model => model.MaPhieu)<br>
-                <label for="date">Người làm phiếu: </label>             
-                <b>@TempData["nvlap"]-@TempData["tennvlap"]</b> 
+                <label for="date">Người làm phiếu: </label>
+                <b>@TempData["nvlap"]-@TempData["tennvlap"]</b>
             </form>
             <div class="tile-body">
                 <form class="row">
@@ -49,7 +49,8 @@
                     </div>
 
                     <div class="form-group col-md-12 table-responsive" id="sample6">
-
+                        <label class="control-label">Nhân viên giao hàng: </label> <a>@TempData["tenNVGiao"]</a> <br />
+                        <label class="control-label">Phương tiện giao hàng: </label> <a>@TempData["phuongtien"]</a> <br />
                         <label class="control-label">Danh sách sản phẩm: </label> <br />
                         <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
                             @*//Phần render từng dòng trong C#*@
@@ -67,36 +68,36 @@
                                 @{ var total = 0;}
                                 @{ var madhX = TempData["ctmadh"];}
                                 @foreach (var item in ctdonhang)
+                                {
+                                    if (item.MaDH == (string)madhX)
                                     {
-                                        if (item.MaDH == (string)madhX)
-                                        {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MaSP)
-                                    </td>
-                                    <td>
-                                        @{ var tensp = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
-                                        @Html.DisplayFor(modelItem => tensp.TenSP)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SoLuong)
-                                    </td>
-                                    <td>
-                                        @{ var dongia = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
-                                        @{ var chuyendoi = string.Format("{0:0,0 vnđ}", dongia.Gia);}
-                                        @Html.DisplayFor(modelItem => chuyendoi)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => dongia.DonViTinh)
-                                    </td>
-                                    <td>
-                                        @{ total += Convert.ToInt32(item.ThanhTien);}
-                                        @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
-                                        @Html.DisplayFor(modelItem => ThanhTien)
-                                    </td>
-                                </tr>
-                                        }
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaSP)
+                                            </td>
+                                            <td>
+                                                @{ var tensp = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
+                                                @Html.DisplayFor(modelItem => tensp.TenSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SoLuong)
+                                            </td>
+                                            <td>
+                                                @{ var dongia = db.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();}
+                                                @{ var chuyendoi = string.Format("{0:0,0 vnđ}", dongia.Gia);}
+                                                @Html.DisplayFor(modelItem => chuyendoi)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => dongia.DonViTinh)
+                                            </td>
+                                            <td>
+                                                @{ total += Convert.ToInt32(item.ThanhTien);}
+                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
+                                                @Html.DisplayFor(modelItem => ThanhTien)
+                                            </td>
+                                        </tr>
                                     }
+                                }
                                 <tr>
                                     <th colspan="5">
                                         <p class="pull-right">Tổng cộng đơn hàng:</p>
@@ -118,22 +119,24 @@
         </div>
     </div>
 </div>
-<p>
-    <a class="btn btn-danger" id="btnReturn" href="/GiaoHang/ChiTietDonGiaoHang/@TempData["ctmadh"]" title="Trở lại">       
-        Trở lại
-    </a>
-    <a class="btn btn-warning" id="btnPrint" href="/GiaoHang/ChiTietDonGiaoHang/@TempData["ctmadh"]" title="In" onclick="printDiv('printMe')">
-        <i class="fas fa-print"></i> In phiếu
-    </a>
-</p>
+<div class="row" style="padding-left:10px" id="btnin">
+    @*<div class="col-sm-2">
+            <a class="btn btn-danger" id="btnReturn" href="/GiaoHang/ChiTietChuyenGiaoHang/@TempData["ctmadh"]" title="Trở lại">
+                Trở lại
+            </a>
+        </div>*@
+    <div class="col-sm-2">
+        <a class="btn btn-delete " title="In" onclick="printDiv('printMe')">
+            <i class="fas fa-print"></i> In dữ liệu
+        </a>
+    </div>
+</div>
 
 <script>
-    //In dữ liệu
     function printDiv(divName) {
-        document.getElementById("btnReturn").style.display = "none";
-        document.getElementById("btnPrint").style.display = "none";
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
+        document.getElementById("btnin").style.display = "none";
         document.body.innerHTML = printContents;
         window.print();
         document.body.innerHTML = originalContents;

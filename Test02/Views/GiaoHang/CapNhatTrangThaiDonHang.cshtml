@@ -3,8 +3,8 @@
 @{
     ViewBag.Title = "CapNhatTrangThaiDonHang";
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
-    ViewBag.dh = "active";
-    ViewBag.nd = "Cập nhật trạng thái đơn hàng";
+    ViewBag.gh_donhangmoi = "active";
+    ViewBag.nd = "Xếp đơn";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChuyenGiao> ct = db.ChuyenGiaos.ToList();
     var ctcg = db.ChuyenGiaos.ToList();
@@ -24,7 +24,6 @@
             });
         </script>
     }*@
-}
 
 
 

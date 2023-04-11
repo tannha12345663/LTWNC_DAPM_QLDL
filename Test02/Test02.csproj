@@ -648,11 +648,6 @@
     <Content Include="Views\GiaoHang\HuyChuyenGiao.cshtml" />
     <Content Include="Views\GiaoHang\ChinhSuaChuyenGiao.cshtml" />
     <Content Include="Views\GiaoHang\XepXe.cshtml" />
-    <Content Include="Views\ChuyenGiaos\Create.cshtml" />
-    <Content Include="Views\ChuyenGiaos\Delete.cshtml" />
-    <Content Include="Views\ChuyenGiaos\Details.cshtml" />
-    <Content Include="Views\ChuyenGiaos\Edit.cshtml" />
-    <Content Include="Views\ChuyenGiaos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

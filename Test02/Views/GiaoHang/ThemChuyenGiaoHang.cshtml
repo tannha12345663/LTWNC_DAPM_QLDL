@@ -39,36 +39,42 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => model.MaGH)
 
-                        @*<div class="form-group">
-                            @Html.LabelFor(model => model.MaNVGiao, "Nhân viên giao", htmlAttributes: new { @class = "control-label col-md-12" })
-                            <div class="col-md-12">
-                                @Html.EditorFor(model => model.MaNVGiao, new { htmlAttributes = new { @class = "form-control " } })
-                                @Html.ValidationMessageFor(model => model.MaNVGiao, "", new { @class = "text-danger" })
-                            </div>
-                        </div>*@
-
-                        @*<div class="form-group">
-                                @Html.LabelFor(model => model.MaNVGiao, "Nhân viên hỗ trợ", htmlAttributes: new { @class = "control-label col-md-12" })
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.MaNVGiao, new { htmlAttributes = new { @class = "form-control " } })
-                                    @Html.ValidationMessageFor(model => model.MaNVGiao, "", new { @class = "text-danger" })
-                                </div>
-                            </div>*@
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.MaPT, "Phương tiện giao", htmlAttributes: new { @class = "control-label col-md-12" })
+                            <h5>Phương tiện giao:</h5>
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.MaPT, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.DropDownList("MaPT", (IEnumerable<SelectListItem>)ViewBag.PhuongTien, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.MaPT, "", new { @class = "text-danger" })
                             </div>
                         </div>
+
+
+                        @*@using (Html.BeginForm("XepXe", "GiaoHang", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.MaNV)
+                            @Html.HiddenFor(model => model.SDT)
+                            @Html.HiddenFor(model => model.DiaChi)
+                            @Html.HiddenFor(model => model.TinhTrang)
+                            @Html.HiddenFor(model => model.TenNV)
+
+                            <div class="form-group">
+                                <h5>Nhân viên giao:</h5>
+                                <div class="col-md-12">
+                                    @Html.DropDownList("TenNV", (IEnumerable<SelectListItem>)ViewBag.NVGiao, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.MaGH, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }*@
+
 
                         <div class="row justify-content-center">
                             <div class="col-sm-2">
                                 <input type="submit" value="Thêm" class="btn btn-outline-dark" title="Lưu" />
                             </div>
                             <div class="col-sm-2">
-                                <a class="btn btn-outline-primary btn-group-sm" href="~/PhongKho/QuanLyKho" title="Trở về">
+                                <a class="btn btn-outline-primary btn-group-sm" href="~/GiaoHang/DanhSachCacChuyenGiao" title="Trở về">
                                     Trở về
                                 </a>
                             </div>
@@ -96,22 +102,26 @@
                         <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                             <thead>
                                 <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Mã nhân viên</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Tên nhân viên giao</th>
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Tình trạng</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Tình trạng</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in nvgh)
                                 {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaNV)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TinhTrang)
-                                        </td>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaNV)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenNV)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TinhTrang)
+                                    </td>
 
-                                    </tr>
+                                </tr>
                                 }
                             </tbody>
                         </table>
@@ -130,7 +140,7 @@
                             <thead>
                                 <tr role="row">
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Mã phương tiện</th>
-                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Tên phương tiện</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Tên phương tiện</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Tình trạng</th>
                                 </tr>
                             </thead>
