@@ -290,6 +290,9 @@
     <Content Include="Content\Img\DiemKhang.jpg" />
     <Content Include="Content\Img\KhoHang\bg_createStorage.jpg" />
     <Content Include="Content\KeToan\StyleKeToan.css" />
+    <Content Include="Content\js\chart.js" />
+    <Content Include="Content\js\tableToExcel.js" />
+    <Content Include="Content\Test01\UploadAnh.css" />
     <Content Include="Data\Images\7up.jpg" />
     <Content Include="Data\Images\account.png" />
     <Content Include="Data\Images\coca.png" />
@@ -597,6 +600,15 @@
     <Content Include="Views\KeToan\QLDonChoGiao.cshtml" />
     <Content Include="Views\KeToan\QLDonDaGiao.cshtml" />
     <Content Include="Views\QTV\ChitietNV.cshtml" />
+    <Content Include="Views\PhongKho\DeletePNX.cshtml" />
+    <Content Include="Views\BienBangKiemKes\Create.cshtml" />
+    <Content Include="Views\BienBangKiemKes\Delete.cshtml" />
+    <Content Include="Views\BienBangKiemKes\Details.cshtml" />
+    <Content Include="Views\BienBangKiemKes\Edit.cshtml" />
+    <Content Include="Views\BienBangKiemKes\Index.cshtml" />
+    <Content Include="Views\KinhDoanh\TiepNhanHH.cshtml" />
+    <Content Include="Views\KinhDoanh\ChiTietPhieuNhapKho.cshtml" />
+    <Content Include="Views\KinhDoanh\ChiTietPhieuXuatKho.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

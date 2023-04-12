@@ -39,6 +39,8 @@ namespace Test02.Controllers
 
             }
             return maxcn;
+            //return View(database.HoaDons.ToList());
+            return View();
         }
         public double tongno(string madl)
         {

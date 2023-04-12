@@ -1,0 +1,229 @@
+﻿@model Test02.Models.PhieuNhapXuat
+@using Test02.Models;
+@{
+    ViewBag.Title = "ChiTietPhieuXuatKho";
+    Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
+    ViewBag.TN = "active";
+    ViewBag.nd = "Chi tiết phiếu đề nghị xuất kho";
+    ViewBag.hieuung = "bx-tada";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var dsSP = db.SanPhams.ToList();
+    var dsCTKho = db.ChiTietKhoes.ToList();
+    List<string> distint = new List<string>();
+}
+@{
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "Đã thêm")
+    {
+        <script>
+            swal({
+                title: "Thêm thành công",
+                text: "Đã thêm phiếu đề nghị xuất kho @TempData["MaPNKho"]!",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+}
+<div class="row">
+    @{
+        if (Model.TinhTrang == "Chưa xét duyệt")
+        {
+            <div class="col-md-12" style="text-align:end">
+                <a class="btn btn-warning btn-sm" data-value="@Model.MaPhieu" id="xetduyet" title="xét duyệt">
+                    <i class="fas fa-solid fa-check"></i> Xét duyệt
+                </a>
+            </div>
+        }
+    }
+    <div class="col-md-12">
+
+        <div class="tile " id="printMe">
+            <p>Tên đơn vị: Công ty TNHH nước giải khát NQK</p>
+            <p>Mã số thuế: 03289456217</p>
+            <h2 style="text-align:center" id="sample1">PHIẾU ĐỀ NGHỊ XUẤT KHO</h2>
+            <form style="text-align:center">
+                <label for="date">Ngày:</label>
+                @Html.DisplayFor(model => model.NgayLap)<br>
+                <label for="date">Mã số:</label>
+                @Html.DisplayFor(model => model.MaPhieu)<br>
+            </form>
+            <div class="tile-body">
+                <form class="row">
+                    <div class="form-group col-md-12" id="sample3">
+                        <label class="control-label">- Kính gửi: </label>
+                        @Session["kinhgui"]
+                    </div>
+                    <div class="form-group col-md-12" id="sample4">
+                        <label class="control-label">- Xuất tại các kho: </label> <br />
+                        @for (int i = 0; i < dsCTKho.Count; i++)
+                        {
+                            if (dsCTKho[i].TinhTrang == "Tồn kho")
+                            {
+                                distint.Add(dsCTKho[i].MaKho);
+                                distint = distint.Distinct().ToList();
+                            }
+                        }
+                        @for (int i = 0; i < dsCTKho.Count; i++)
+                        {
+                            for (int j = 0; j >= 0 && j < distint.Count; j++)
+                            {
+                                if (distint[j].Equals(dsCTKho[i].MaKho))
+                                {
+                                    <span>@dsCTKho[i].MaKho - @dsCTKho[i].Kho.TenKho </span> <br />
+                                    distint.RemoveAt(j);
+                                }
+                            }
+                        }
+                    </div>
+                    <div class="form-group col-md-12" id="sample5">
+                        <label class="control-label">- Họ tên người làm phiếu:</label>
+                        @Session["hoten"]
+                    </div>
+                    <label class="control-label col-md-12">- Danh sách sản phẩm tồn kho cần giải quyết:</label>
+                    <div class="form-group col-md-12 table-responsive" id="sample6">
+
+                        <table class="table table-hover table-bordered js-copytextarea " cellpadding="0" cellspacing="0" border="0">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="text-align:center; background-color:azure">Mã Kho</th>
+                                    <th rowspan="2" style="text-align: center; background-color: azure">Mã sản phẩm</th>
+                                    <th rowspan="2" style="text-align: center; background-color: azure">Tên sản phẩm</th>
+                                    <th rowspan="2" style="text-align: center; background-color: azure">Giá tiền</th>
+                                    <th rowspan="2" style="text-align: center; background-color: azure">Đơn vị tính</th>
+                                    <th colspan="2" style="text-align: center; background-color: beige">Trong kho</th>
+                                    <th colspan="2" style="text-align:center; background-color:burlywood">Cần xuất</th>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: center; background-color: beige ">Số lượng</th>
+                                    <th style="text-align: center; background-color: beige ">Thành tiền</th>
+                                    <th style="text-align: center; background-color: burlywood">Số lượng</th>
+                                    <th style="text-align: center; background-color: burlywood">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in db.ChiTietPhieuNhapXuats)
+                                {
+                                    if (item.MaPhieu == Model.MaPhieu)
+                                    {
+                                        <tr>
+                                            <td style="text-align: center;">
+                                                @Html.DisplayFor(modelItem => item.MaKho)
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @Html.DisplayFor(modelItem => item.MaSP)
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SanPham.Gia)
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @Html.DisplayFor(modelItem => item.SanPham.DonViTinh)
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @Html.DisplayFor(modelItem => item.SoLuongTrongKho)
+                                            </td>
+                                            <td style="text-align:center">
+                                                @{
+                                                    var sl = item.SoLuongTrongKho;
+                                                    var gia = item.SanPham.Gia;
+
+                                                    var result = sl * gia;
+                                                }
+                                                @string.Format("{0:#,##0}", result) VNĐ
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @Html.DisplayFor(modelItem => item.SoLuongDeXuat)
+                                            </td>
+                                            <td style="text-align:center">
+                                                @{
+                                                    var sl1 = item.SoLuongDeXuat;
+                                                    var gia1 = item.SanPham.Gia;
+
+                                                    var result1 = sl1 * gia1;
+                                                }
+                                                @string.Format("{0:#,##0}", result1) VNĐ
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <h5 style="margin-left:82%;" id="sample1">Thủ kho</h5>
+                        <h6 style="margin-left:80%; font-style:italic;" id="sample1">(ký và ghi rõ họ tên)</h6>
+                        <br />
+                        <br />
+                        <br />
+                        <h6 style="margin-left:80%;" id="sample1">Nguyễn Thị Diễm Khang</h6>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>
+    <a class="btn btn-actv btn-sm" href="/KinhDoanh/TiepNhanHH" id="btnReturn" title="Trở lại">
+        <i class="fas fa-retweet"></i>
+        Trở lại
+    </a>
+    <a class="btn btn-delete btn-sm print-file" id="btnPrint" type="button" href="/KinhDoanh/TiepNhanHH" title="In" onclick="printDiv('printMe')">
+        <i class="fas fa-print"></i> In phiếu
+    </a>
+</p>
+<script>
+    //In dữ liệu
+    function printDiv(divName) {
+        document.getElementById("btnReturn").style.display = "none";
+        document.getElementById("btnPrint").style.display = "none";
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+    }
+</script>
+@section script{
+    <script>
+        $(document).ready(function () {
+            $("#xetduyet").click(function () {
+                var maphieu = $("#xetduyet").data("value");
+                console.log(maphieu);
+                var model = {
+                    MaPhieu: maphieu
+                };
+                $.ajax({
+                    url: '/KinhDoanh/XetDuyetPhieu',
+                    type: 'POST',
+                    dataType: "json",
+                    data: model,
+                    success: function (res) {
+                        if (res.success == true) {
+                            swal({
+                                title: `Đã cập nhật thành công`,
+                                text: `Phiếu xuất kho ${res.MaPhieu} đã được cập nhật !`,
+                                icon: "success",
+                                button: "OK",
+                            });
+                            $("#xetduyet").attr("hidden", true);
+                        }
+                        else {
+                            swal({
+                                title: `Cập nhật không thành công`,
+                                text: `Phiếu xuất kho ${res.MaPhieu} đã bị từ chối cập nhật \n Vui lòng xem lại thông tin !`,
+                                icon: "error",
+                                button: "OK",
+                            });
+                        }
+                    }
+                });
+            })
+        });
+    </script>
+}
