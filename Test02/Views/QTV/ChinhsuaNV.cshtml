@@ -46,6 +46,23 @@
                         @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                         @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
                     </div>
+                    <div class="form-group col-md-6">
+                        <strong>Giới tính</strong>
+                        <select class="form-control" id="GioiTinh" name="GioiTinh">
+                            <option>@Model.GioiTinh</option>
+                            <option>Nam</option>
+                            <option>Nữ</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger", required = "required" })
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <strong>Ngày sinh</strong>
+                        
+                        <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgaySinh must be a date." id="NgaySinh" name="NgaySinh" required="required" value="@Model.NgaySinh">
+                        @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+
+                    </div>
 
                     <div class="form-group col-md-6">
                         <strong>Số điện thoại</strong>
@@ -90,7 +107,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <strong>Xác nhân password</strong>
-                        <input class="form-control" id="pass2" name="typepassword" required="required" onchange="PassCheck()" type = "password" value="@Model.Password" />
+                        <input class="form-control" id="pass2" name="typepassword" required="required" onchange="PassCheck()" type="password" value="@Model.Password" />
                         <span id="checkpass"></span>
 
 

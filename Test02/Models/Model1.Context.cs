@@ -34,10 +34,9 @@ namespace Test02.Models
         public virtual DbSet<ChiTietKho> ChiTietKhoes { get; set; }
         public virtual DbSet<ChiTietPhieuNhapXuat> ChiTietPhieuNhapXuats { get; set; }
         public virtual DbSet<ChucVu> ChucVus { get; set; }
+        public virtual DbSet<ChuyenGiao> ChuyenGiaos { get; set; }
         public virtual DbSet<DaiLy> DaiLies { get; set; }
-        public virtual DbSet<DoanhSo> DoanhSoes { get; set; }
         public virtual DbSet<DonHang> DonHangs { get; set; }
-        public virtual DbSet<DonHangGiao> DonHangGiaos { get; set; }
         public virtual DbSet<Kho> Khoes { get; set; }
         public virtual DbSet<LoaiDL> LoaiDLs { get; set; }
         public virtual DbSet<NhanVien> NhanViens { get; set; }
@@ -46,11 +45,10 @@ namespace Test02.Models
         public virtual DbSet<PhieuNhapXuat> PhieuNhapXuats { get; set; }
         public virtual DbSet<PhuongTienGH> PhuongTienGHs { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     
-        public virtual ObjectResult<sp_SapxepNgay_Result> sp_SapxepNgay()
+        public virtual int sp_capnhat()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_SapxepNgay_Result>("sp_SapxepNgay");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_capnhat");
         }
     }
 }

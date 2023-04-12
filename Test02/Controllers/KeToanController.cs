@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Test02.App_Start;
@@ -41,33 +40,39 @@ namespace Test02.Controllers
             }
             return maxcn;
         }
-
-        public int DemDL(double tongno,double maxcndl)
+        public double tongno(string madl)
         {
-            int count = 0;
-            double dangercn = maxcndl - (maxcndl * 0.1);
-            
-            if (tongno > dangercn)
+            double no = 0;
+            List<PhieuCongNo> congno = database.PhieuCongNoes.Where(n => n.MaDL == madl
+                && n.TrangThai == "Chưa thanh toán").ToList();
+            foreach (var cn in congno)
             {
-                count++;
-            }    
-             
-            return count;
+                no += (double)cn.TienNo;
+            }
+            return no;
         }
+        //public int DemDL(double tongno,double maxcndl)
+        //{
+        //    int count = 0;
+            
+             
+        //    return count;
+        //}
         public int SoTinhTrangDaiLy()
         {
-            double tongno = 0;
+            double no = 0;
             int countdl = 0;
             List<DaiLy> dly = database.DaiLies.ToList();
             foreach(var item in dly)
             {
-                var congno = database.PhieuCongNoes.Where(n => n.MaDL == item.MaDL && n.TrangThai == "Chưa thanh toán");
-                foreach (var cn in congno)
-                {
-                    tongno += (double)cn.TienNo;
-                }
+                no = tongno(item.MaDL);
                double maxcndl = maxno(item.MaLoaiDL);
-                countdl = DemDL(tongno,maxcndl);
+                double dangercn = maxcndl - (maxcndl * 0.1);
+
+                if (no >= dangercn)
+                {
+                    countdl++;
+                }
             }
             return countdl;
         }
@@ -108,14 +113,35 @@ namespace Test02.Controllers
 
             return donhangngay;
         }
+
+        public List<PhieuCongNo> CongnodenHan()
+        {
+            DateTime aDatetime = DateTime.Now;
+            List<PhieuCongNo> phieucn = database.PhieuCongNoes.Where(s => s.TrangThai == "Chưa thanh toán").ToList();
+            List<PhieuCongNo> cnhan = new List<PhieuCongNo>();
+
+            foreach (var item in phieucn)
+            {
+                DateTime hantra = Convert.ToDateTime(item.HanTra);
+                TimeSpan Time = hantra - DateTime.Now;
+                int TongSoNgay = Time.Days;
+                if(TongSoNgay<4)
+                {
+                    cnhan.Add(item);
+                }
+            }
+            return cnhan;
+        }
         public ActionResult TrangChuKeToan()
         {
             List<DonHang> dh = DonTrongNgay();
             Session["dsdonngay"] = dh;
             int dem = SoTinhTrangDaiLy();
             Session["demdl"] = dem;
-            //Session["donchohomnay"] = countgiao;
+            
             Session["doanhthu"] = TinhDoanhThu();
+            List<PhieuCongNo> cnhan = CongnodenHan();
+            Session["cndenhan"] = cnhan;
             return View(database.DonHangs.ToList());
         }
         
@@ -358,6 +384,7 @@ namespace Test02.Controllers
 
         public ActionResult DSDaiLy()
         {
+            database.sp_capnhat();
             return View(database.DaiLies.ToList().OrderBy(s => s.MaDL));
         }
         public List<DonHang> LayDonHang_ChuaThanhToan(string madl)

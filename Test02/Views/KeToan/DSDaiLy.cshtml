@@ -73,7 +73,7 @@
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable">Loại đại lý</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng công nợ</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable">Trạng thái</th>
-
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng doanh số</th>
                                     <th class="sorting" tabindex="0" style="width: 100px;">Chức năng</th>
                                 </tr>
                             </thead>
@@ -81,61 +81,61 @@
 
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaDL)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TenDL)
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaDL)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenDL)
 
-                                        </td>
-                                        <td>
-                                            @{var tenldk = database.LoaiDLs.Find(item.MaLoaiDL);
-                                            }
-                                            @Html.DisplayFor(modelItem => tenldk.TenDaiLy)  @Html.DisplayFor(modelItem =>item.MaLoaiDL)
-                                        </td>
-
-                                        <td>
-                                            @{
-                                                double tongno = 0;
-                                                int sophieuno = 0;
-                                                var congno = database.PhieuCongNoes.Where(n => n.MaDL == item.MaDL && n.TrangThai == "Chưa thanh toán");
-                                                foreach (var cn in congno)
-                                                {
-                                                    tongno += (double)cn.TienNo;
-                                                }
-                                                sophieuno = congno.Count();
-                                                var tiencongnno = string.Format("{0:0,0 vnđ}", tongno);
-
-                                            }
-
-                                            @Html.DisplayFor(modelItem => tiencongnno)
-
-                                        </td>
-                                        @{
-                                            int tongdonhang = 0;
-                                            var donhangdl = database.DonHangs.Where(dh => dh.MaDL == item.MaDL && dh.TinhTrangThanhToan == "Chưa thanh toán"
-                                            && dh.TrangThai == "Đã xét duyệt" && dh.TinhTrangGH == "Đã giao hàng");
-                                            tongdonhang = donhangdl.Count();
-                                            double maxcn = 0;
-
-
-                                            if (item.MaLoaiDL == "LDL01")
-                                            {
-                                                maxcn = 500000000;
-                                            }
-                                            else if (item.MaLoaiDL == "LDL02")
-                                            {
-                                                maxcn = 250000000;
-                                            }
-                                            else
-                                            {
-                                                maxcn = 100000000;
-
-                                            }
-                                            double dangercn = maxcn - (maxcn * 0.1);
-                                            double warningcn = maxcn - (maxcn * 0.3);
+                                    </td>
+                                    <td>
+                                        @{var tenldk = database.LoaiDLs.Find(item.MaLoaiDL);
                                         }
+                                        @Html.DisplayFor(modelItem => tenldk.TenDaiLy)  @Html.DisplayFor(modelItem => item.MaLoaiDL)
+                                    </td>
+
+                                    <td>
+                                        @{
+                                            double tongno = 0;
+                                            int sophieuno = 0;
+                                            var congno = database.PhieuCongNoes.Where(n => n.MaDL == item.MaDL && n.TrangThai == "Chưa thanh toán");
+                                            foreach (var cn in congno)
+                                            {
+                                                tongno += (double)cn.TienNo;
+                                            }
+                                            sophieuno = congno.Count();
+                                            var tiencongnno = string.Format("{0:0,0 vnđ}", tongno);
+
+                                        }
+
+                                        @Html.DisplayFor(modelItem => tiencongnno)
+
+                                    </td>
+                                    @{
+                                        int tongdonhang = 0;
+                                        var donhangdl = database.DonHangs.Where(dh => dh.MaDL == item.MaDL && dh.TinhTrangThanhToan == "Chưa thanh toán"
+                                        && dh.TrangThai == "Đã xét duyệt" && dh.TinhTrangGH == "Đã giao hàng");
+                                        tongdonhang = donhangdl.Count();
+                                        double maxcn = 0;
+
+
+                                        if (item.MaLoaiDL == "LDL01")
+                                        {
+                                            maxcn = 500000000;
+                                        }
+                                        else if (item.MaLoaiDL == "LDL02")
+                                        {
+                                            maxcn = 250000000;
+                                        }
+                                        else
+                                        {
+                                            maxcn = 100000000;
+
+                                        }
+                                        double dangercn = maxcn - (maxcn * 0.1);
+                                        double warningcn = maxcn - (maxcn * 0.3);
+                                    }
                                     <td>
 
                                         @if (tongno > dangercn)
@@ -145,11 +145,18 @@
                                         else if (tongno >= warningcn && tongno <= dangercn)
                                         {
                                             <span class="badge badge-warning">Cảnh báo</span>
-                                        } 
+                                        }
                                         else
                                         {
-                                         <span class="badge badge-success">Bình thường</span>
+                                            <span class="badge badge-success">Bình thường</span>
                                         }
+                                    </td>
+                                    <td>
+                                       @{ 
+                                           var doanhso = string.Format("{0:0,0 vnđ}", item.TongDoanhSo);
+                                       }
+                                        @Html.DisplayFor(modelItem =>doanhso)
+
                                     </td>
                                     <td style="text-align:center">
 
@@ -164,7 +171,7 @@
                                                 }
                                             }
                                         </a>
-                                       
+
 
                                         <a href="~/KeToan/DSCongnoNo/@item.MaDL" class="btn btn-outline-primary btn-sm notification" ata-toggle="tooltip" title="Chi tiết công nợ">
                                             <i class="fa fa-receipt"></i>
@@ -178,8 +185,9 @@
                                             }
                                         </a>
                                     </td>
-                                    </tr>
-                                }
+
+                                </tr>
+                                                }
                             </tbody>
                         </table>
                     </div>

@@ -38,7 +38,7 @@
                                     </span>
                                 </div>
                             </p>
-                          
+
                             <p>
                                 <span>
                                     <strong>Địa chỉ:</strong> @Html.DisplayFor(modelItem => Model.DiaChi)
@@ -47,6 +47,19 @@
                             <p>
                                 <span>
                                     <strong>User Name:</strong> @Html.DisplayFor(modelItem => Model.UserName)
+                                </span>
+                            </p>
+                            <p>
+                                <span>
+                                    <strong>Giới tính:</strong> @Html.DisplayFor(modelItem => Model.GioiTinh)
+                                </span>
+                            </p>
+                            <p>
+                                <span>
+                                    @{ 
+                                        var ngay = String.Format("{0:d/M/yyyy}", Model.NgaySinh);
+                                    }
+                                    <strong>Ngày sinh:</strong> @Html.DisplayFor(modelItem =>ngay);
                                 </span>
                             </p>
                             <p>

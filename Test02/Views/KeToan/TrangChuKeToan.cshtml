@@ -173,19 +173,8 @@
 
             </div>
             @{
-                DateTime aDatetime = DateTime.Now;
-                List<PhieuCongNo> phieucn = db.PhieuCongNoes.Where(s => s.TrangThai == "Chưa thanh toán").ToList();
-                List<PhieuCongNo> cnhan = new List<PhieuCongNo>();
-
-                foreach (var item in phieucn)
-                {
-                    TimeSpan interval = aDatetime.Subtract((DateTime)item.NgayLapCN);
-                    if (interval.Days < 7)
-                    {
-                        cnhan.Add(item);
-                    }
-                }
-                int countcn = cnhan.Count;
+                List<PhieuCongNo> cnhan = Session["cndenhan"] as List<PhieuCongNo>;
+                int countcn = cnhan.Count();
             }
             <div class="col-sm-4">
                 <a href="#congno">

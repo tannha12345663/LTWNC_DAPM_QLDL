@@ -14,19 +14,13 @@ namespace Test02.Models
     
     public partial class NhanVienGH
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public NhanVienGH()
-        {
-            this.DonHangGiaos = new HashSet<DonHangGiao>();
-        }
-    
         public string MaNV { get; set; }
         public string TenNV { get; set; }
         public string SDT { get; set; }
         public string DiaChi { get; set; }
         public string TinhTrang { get; set; }
+        public string MaGH { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DonHangGiao> DonHangGiaos { get; set; }
+        public virtual ChuyenGiao ChuyenGiao { get; set; }
     }
 }

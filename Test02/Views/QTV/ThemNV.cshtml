@@ -19,6 +19,8 @@
                     <label class="control-label">Chọn hình ảnh</label>
                     @Html.TextBox("HinhAnh", "", new { type = "file" })
                     <br />
+                    <br />
+                    <br />
                     <img id="preview" class="rounded-circle " src="#" width="230" height="230" style="object-fit:cover; object-position:center; text-align: center;" />
                     <br />
                 </div>
@@ -35,7 +37,22 @@
                     <div class="form-group col-md-12">
                         <strong>Địa chỉ</strong>
                         @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                        @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                        @*@Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="form-group col-md-6">
+                        <strong>Địa chỉ</strong>
+                        <select class="form-control" id="GioiTinh" name="GioiTinh">
+                            <option>Nam</option>
+                            <option>Nữ</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger", required = "required" })
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <strong>Ngày sinh</strong>
+                        @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "form-control col-md-12 text-box single-line datepicker", required = "required", @type = "date" } })
+                        @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="form-group col-md-6">
@@ -66,18 +83,18 @@
                     </div>
                     <div class="form-group col-md-6">
                         <strong>Password</strong>
-                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", required = "required", @id = "pass1", } })
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password", required = "required", @id = "pass1", } })
                         @*<input class="form-control" type="text" id="Username" name="Username" required="required"/>*@
                         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                        
+
 
                     </div>
                     <div class="form-group col-md-6">
                         <strong>Xác nhân password</strong>
-                        <input class="form-control" type="text" id="pass2" name="typepassword" required="required"  onchange = "PassCheck()"/>
+                        <input class="form-control" type="text" id="pass2" name="typepassword" required="required" onchange="PassCheck()"  type = "password" />
                         <span id="checkpass"></span>
-                       
-                        
+
+
 
                     </div>
                 </div>
