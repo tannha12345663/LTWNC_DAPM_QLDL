@@ -1,0 +1,202 @@
+﻿@model IEnumerable<Test02.Models.PhieuNhapXuat>
+@using Test02.Models;
+@{
+    ViewBag.Title = "TiepNhanHH";
+    Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
+    ViewBag.TN = "active";
+    ViewBag.nd = "Tiếp nhận phiếu nhập / xuất hàng hóa";
+    ViewBag.hieuung6 = "bx-tada";
+}
+
+<ul class="nav nav-tabs">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#menu1"><h5 class="btn btn-outline-danger">Danh sách chưa xét duyệt</h5></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu2"><h6 class="btn btn-outline-success">Danh sách đã xét duyệt</h6></a>
+        </li>
+    </ul>
+</ul>
+
+<div class="tab-content">
+    <div id="menu1" class="tab-pane active">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/TiepNhanHH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-excel btn-sm" id="button-excel01" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</button>
+                            </div>
+                        </div>
+                        <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12 table-responsive">
+                                    <table data-cols-width="20,20,30,20,20" class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable01" role="grid" aria-describedby="sampleTable_info">
+                                        @*//Phần render từng dòng trong C#*@
+                                        <thead>
+                                            <tr role="row">
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã phiếu</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Loại phiếu</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Mã nhân viên lập</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Trạng thái</th>
+                                                <th data-exclude="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.TinhTrang == "Chưa xét duyệt")
+                                                {
+                                                    <tr>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.MaPhieu)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.NgayLap)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.LoaiPhieu)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.MaNVLap)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            <span class="badge bg-warning">@Html.DisplayFor(modelItem => item.TinhTrang)</span>
+                                                        </td>
+
+                                                        <td data-exclude="true" style="text-align:center;">
+                                                            @{ string str = item.MaPhieu.Substring(0, 4);}
+                                                            @if (str == "KDPX")
+                                                            {
+                                                                <a href="~/KinhDoanh/ChiTietPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-info" title=" Chi tiết"> <i class="fa fa-info"></i> </a> }
+                                                            else if (str == "KDPN")
+                                                            {
+                                                                <a href="~/KinhDoanh/ChiTietPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-info" title="Chi tiết"> <i class="fa fa-info"></i> </a>
+                                                            }
+                                                        </td>
+                                                    </tr>
+
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Menu item 01-->
+    <div id="menu2" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="~/KinhDoanh/TiepNhanHH"><i class="fas fa-copy"></i> Làm mới danh sách</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-excel btn-sm" id="button-excel02" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</button>
+                            </div>
+                        </div>
+                        <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12 table-responsive">
+                                    <table data-cols-width="20,20,30,20,20" class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable02" role="grid" aria-describedby="sampleTable_info">
+                                        @*//Phần render từng dòng trong C#*@
+                                        <thead>
+                                            <tr role="row">
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã phiếu</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 160px;">Loại phiếu</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Chức vụ: activate to sort column ascending" style="width: 100px;">Mã nhân viên lập</th>
+                                                <th data-a-h="center" data-a-v="middle" data-b-a-s="thick" data-f-bold="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 120px;">Trạng thái</th>
+                                                <th data-exclude="true" width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 110px;">Chức năng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.TinhTrang == "Đã xét duyệt"|| item.TinhTrang=="Đã nhập"|| item.TinhTrang=="Đã xuất")
+                                                {
+                                                    <tr>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.MaPhieu)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.NgayLap)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.LoaiPhieu)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            @Html.DisplayFor(modelItem => item.MaNVLap)
+                                                        </td>
+                                                        <td data-b-a-s="thin">
+                                                            <span class="badge bg-success">@Html.DisplayFor(modelItem => item.TinhTrang)</span>
+                                                        </td>
+
+                                                        <td data-exclude="true">
+                                                            @{ string str = item.MaPhieu.Substring(0, 4);}
+                                                            @if (str == "KDPX")
+                                                            {
+                                                                <a href="~/KinhDoanh/ChiTietPhieuXuatKho/@item.MaPhieu" class="btn btn-outline-info" title=" Chi tiết"> <i class="fa fa-info"></i> </a> }
+                                                            else if (str == "KDPN")
+                                                            {
+                                                                <a href="~/KinhDoanh/ChiTietPhieuNhapKho/@item.MaPhieu" class="btn btn-outline-info" title="Chi tiết"> <i class="fa fa-info"></i> </a>
+                                                            }
+                                                        </td>
+                                                    </tr>
+
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section script{
+    <script src="~/Content/js/tableToExcel.js"></script>
+    <script>
+        let button01 = document.querySelector("#button-excel01");
+        button01.addEventListener("click", e => {
+            let table = document.querySelector("#sampleTable01");
+            TableToExcel.convert(document.getElementById("sampleTable01"), {
+                name: "Danh sách chưa xét duyệt.xlsx",
+                sheet: {
+                    name: "Sheet 1"
+                }
+            });
+        });
+
+        let button02 = document.querySelector("#button-excel02");
+        button02.addEventListener("click", e => {
+            let table = document.querySelector("#sampleTable02");
+            TableToExcel.convert(document.getElementById("sampleTable02"), {
+                name: "Danh sách đã xét duyệt.xlsx",
+                sheet: {
+                    name: "Sheet 1"
+                }
+            });
+        });
+    </script>
+}

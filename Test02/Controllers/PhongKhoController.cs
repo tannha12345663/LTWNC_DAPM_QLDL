@@ -242,6 +242,7 @@ namespace Test02.Controllers
             return View();
         }
 
+
         // GET: ChiTietKhoes/Edit/5
         public ActionResult EditCTKho(int id)
         {
@@ -258,69 +259,68 @@ namespace Test02.Controllers
             }
             Session["Mactkho"] = mactk.STT;
             Session["Makho"] = mactk.MaKho;
-            
+
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
-            return View(mactk);
+              return View(mactk);
         }
 
         // POST: ChiTietKhoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditCTKho([Bind(Include = "MaCTKho,MaSP,MaKho,NgayNhap,NgayXuat,SoLuong,TinhTrang")] ChiTietKho chiTietKho)
-        {
-            if (ModelState.IsValid)
+            [ValidateAntiForgeryToken]
+            public ActionResult EditCTKho([Bind(Include = "MaCTKho,MaSP,MaKho,NgayNhap,NgayXuat,SoLuong,TinhTrang")] ChiTietKho chiTietKho)
             {
-                chiTietKho.STT = (int)Session["Mactkho"];
-                chiTietKho.MaKho = (string)Session["Makho"];
-                if (chiTietKho.SoLuong <= 100 && chiTietKho.SoLuong > 0)
+                if (ModelState.IsValid)
                 {
-                    chiTietKho.TinhTrang = "Sắp hết hàng";
+                    chiTietKho.STT = (int)Session["Mactkho"];
+                    chiTietKho.MaKho = (string)Session["Makho"];
+                    if (chiTietKho.SoLuong <= 100 && chiTietKho.SoLuong > 0)
+                    {
+                        chiTietKho.TinhTrang = "Sắp hết hàng";
+                    }
+                    else if (chiTietKho.SoLuong > 100 && chiTietKho.SoLuong < 1000)
+                    {
+                        chiTietKho.TinhTrang = "Còn hàng";
+                    }
+                    //var ktra = (System.DateTime.Now - chiTietKho.NgayXuat);
+                    else if (chiTietKho.SoLuong >= 1000)
+                    {
+                        chiTietKho.TinhTrang = "Tồn kho";
+                    }
+                    else if (chiTietKho.SoLuong == 0)
+                    {
+                        chiTietKho.TinhTrang = "Hết hàng";
+                    }
+                    else
+                    {
+                        TempData["AlertMessage"] = "check null";
+                        return RedirectToAction("EditCTKho");
+                    }
+                    database.Entry(chiTietKho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.SaveChanges();
+                    TempData["AlertMessage"] = "Đã cập nhật";
+                    TempData["MaCTKkk"] = Session["Mactkho"];
+                    return RedirectToAction("Chitietkho", new RouteValueDictionary(
+                                            new { controller = "PhongKho", action = "Chitietkho", Id = chiTietKho.MaKho }));
                 }
-                else if (chiTietKho.SoLuong > 100 && chiTietKho.SoLuong < 1000)
-                {
-                    chiTietKho.TinhTrang = "Còn hàng";
-                }
-                //var ktra = (System.DateTime.Now - chiTietKho.NgayXuat);
-                else if (chiTietKho.SoLuong >= 1000)
-                {
-                    chiTietKho.TinhTrang = "Tồn kho";
-                }
-                else if (chiTietKho.SoLuong == 0)
-                {
-                    chiTietKho.TinhTrang = "Hết hàng";
-                }
-                else
-                {
-                    TempData["AlertMessage"] = "check null";
-                    return RedirectToAction("EditCTKho");
-                }
-                database.Entry(chiTietKho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
-                database.SaveChanges();
-                updateTongTon();
-                TempData["AlertMessage"] = "Đã cập nhật";
-                TempData["MaCTKkk"] = Session["Mactkho"];
-                return RedirectToAction("Chitietkho", new RouteValueDictionary(
-                                        new { controller = "PhongKho", action = "Chitietkho", Id = chiTietKho.MaKho }));
+                ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", chiTietKho.MaKho);
+                ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietKho.MaSP);
+                return View(chiTietKho);
             }
-            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", chiTietKho.MaKho);
-            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietKho.MaSP);
-            return View(chiTietKho);
-        }
 
-        // GET: ChiTietKhoes/Delete/5
-        public ActionResult DeleteCTKho(int id)
-        {
-            var mactk = database.ChiTietKhoes.Where(s => s.STT == id).FirstOrDefault();
-            //ChiTietKho chiTietKho = database.ChiTietKhoes.Find(id);
-            if (mactk == null)
+            // GET: ChiTietKhoes/Delete/5
+            public ActionResult DeleteCTKho(int id)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var mactk = database.ChiTietKhoes.Where(s => s.STT == id).FirstOrDefault();
+                //ChiTietKho chiTietKho = database.ChiTietKhoes.Find(id);
+                if (mactk == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                return View(mactk);
             }
-            return View(mactk);
-        }
 
         // POST: ChiTietKhoes/Delete/5
         [HttpPost, ActionName("DeleteCTKho")]
@@ -343,43 +343,6 @@ namespace Test02.Controllers
             return View();
         }
 
-        // POST: Khoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ThemKho([Bind(Include = "MaKho,TenKho,DiaChi")] Kho kho)
-        {
-            //if (ModelState.IsValid)
-            //{
-            //    Random rd = new Random();
-            //    var makho = "KO" + rd.Next(1, 1000);
-            //    kho.MaKho = makho;
-            //    database.Khoes.Add(kho);
-            //    database.SaveChanges();
-            //    TempData["AlertMessage"] = "Đã thêm";
-            //    TempData["MaCTKkk"] = makho;
-            //    return RedirectToAction("QuanLyKho");
-            //}
-            if(kho.TenKho == null || kho.DiaChi == null)
-            {
-                TempData["AlertMessage"] = "check null";
-                return RedirectToAction("Themkho");
-            }
-            else
-            {
-                Random rd = new Random();
-                var makho = "KO" + rd.Next(1, 1000);
-                kho.MaKho = makho;
-                database.Khoes.Add(kho);
-                database.SaveChanges();
-                TempData["AlertMessage"] = "Đã thêm";
-                TempData["MaCTKkk"] = makho;
-                return RedirectToAction("QuanLyKho");
-            }
-            return View(kho);
-        }
-
         public JsonResult CheckTenKhoAvailability(string namekho)
         {
             System.Threading.Thread.Sleep(200);
@@ -393,6 +356,7 @@ namespace Test02.Controllers
                 return Json(0);
             }
         }
+
 
         public JsonResult CheckDiaChiAvailability(string diachi)
         {
@@ -408,80 +372,119 @@ namespace Test02.Controllers
             }
         }
 
-        // GET: Khoes/Edit/5
+           
 
-        public ActionResult ChinhSuaKho(string id)
-        {
-            if (id == null)
+            // POST: Khoes/Create
+            // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+            // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public ActionResult ThemKho([Bind(Include = "MaKho,TenKho,DiaChi")] Kho kho)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //if (ModelState.IsValid)
+                //{
+                //    Random rd = new Random();
+                //    var makho = "KO" + rd.Next(1, 1000);
+                //    kho.MaKho = makho;
+                //    database.Khoes.Add(kho);
+                //    database.SaveChanges();
+                //    TempData["AlertMessage"] = "Đã thêm";
+                //    TempData["MaCTKkk"] = makho;
+                //    return RedirectToAction("QuanLyKho");
+                //}
+                if (kho.TenKho == null || kho.DiaChi == null)
+                {
+                    TempData["AlertMessage"] = "check null";
+                    return RedirectToAction("Themkho");
+                }
+                else
+                {
+                    Random rd = new Random();
+                    var makho = "KO" + rd.Next(1, 1000);
+                    kho.MaKho = makho;
+                    database.Khoes.Add(kho);
+                    database.SaveChanges();
+                    TempData["AlertMessage"] = "Đã thêm";
+                    TempData["MaCTKkk"] = makho;
+                    return RedirectToAction("QuanLyKho");
+                }
+                return View(kho);
             }
-            Kho kho = database.Khoes.Find(id);
-            if (kho == null)
-            {
-                return HttpNotFound();
-            }
-            return View(kho);
-        }
 
-        // POST: Khoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ChinhSuaKho([Bind(Include = "MaKho,TenKho,DiaChi")] Kho kho)
-        {
-            //if (ModelState.IsValid)
-            //{
-            //    database.Entry(kho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
-            //    database.SaveChanges();
-            //    TempData["AlertMessage"] = "Đã cập nhật";
-            //    TempData["MaCTKkk"] = kho.MaKho;
-            //    return RedirectToAction("QuanLyKho");
-            //}
-            if (kho.TenKho == null || kho.DiaChi == null)
+            // GET: Khoes/Edit/5
+
+            public ActionResult ChinhSuaKho(string id)
             {
-                TempData["AlertMessage"] = "check null";
-                return RedirectToAction("ChinhSuaKho");
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Kho kho = database.Khoes.Find(id);
+                if (kho == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(kho);
             }
-            else
+
+            // POST: Khoes/Edit/5
+            // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+            // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public ActionResult ChinhSuaKho([Bind(Include = "MaKho,TenKho,DiaChi")] Kho kho)
             {
-                database.Entry(kho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                //if (ModelState.IsValid)
+                //{
+                //    database.Entry(kho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                //    database.SaveChanges();
+                //    TempData["AlertMessage"] = "Đã cập nhật";
+                //    TempData["MaCTKkk"] = kho.MaKho;
+                //    return RedirectToAction("QuanLyKho");
+                //}
+                if (kho.TenKho == null || kho.DiaChi == null)
+                {
+                    TempData["AlertMessage"] = "check null";
+                    return RedirectToAction("ChinhSuaKho");
+                }
+                else
+                {
+                    database.Entry(kho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.SaveChanges();
+                    TempData["AlertMessage"] = "Đã cập nhật";
+                    TempData["MaCTKkk"] = kho.MaKho;
+                    return RedirectToAction("QuanLyKho");
+                }
+                return View(kho);
+            }
+
+            // GET: Khoes/Delete/5
+            public ActionResult XoaKho(string id)
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Kho kho = database.Khoes.Find(id);
+                if (kho == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(kho);
+            }
+
+            // POST: Khoes/Delete/5
+            [HttpPost, ActionName("XoaKho")]
+            [ValidateAntiForgeryToken]
+            public ActionResult XoaKhoConfirmed(string id)
+            {
+                Kho kho = database.Khoes.Find(id);
+                database.Khoes.Remove(kho);
                 database.SaveChanges();
-                TempData["AlertMessage"] = "Đã cập nhật";
-                TempData["MaCTKkk"] = kho.MaKho;
+                TempData["AlertMessage"] = "Đã xóa";
+                TempData["MaCTKkk"] = id;
                 return RedirectToAction("QuanLyKho");
-            }
-            return View(kho);
-        }
-
-        // GET: Khoes/Delete/5
-        public ActionResult XoaKho(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kho kho = database.Khoes.Find(id);
-            if (kho == null)
-            {
-                return HttpNotFound();
-            }
-            return View(kho);
-        }
-
-        // POST: Khoes/Delete/5
-        [HttpPost, ActionName("XoaKho")]
-        [ValidateAntiForgeryToken]
-        public ActionResult XoaKhoConfirmed(string id)
-        {
-            Kho kho = database.Khoes.Find(id);
-            database.Khoes.Remove(kho);
-            database.SaveChanges();
-            TempData["AlertMessage"] = "Đã xóa";
-            TempData["MaCTKkk"] = id;
-            return RedirectToAction("QuanLyKho");
-        }
+            } 
 
         protected override void Dispose(bool disposing)
         {

@@ -1,0 +1,183 @@
+﻿@model IEnumerable<Test02.Models.PhieuCongNo>
+
+@using Test02.Models;
+@{
+    ViewBag.Title = "Công nợ đại lý";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.dsdl = "active";
+    ViewBag.nd = "Danh sách công nợ chưa thanh toán";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+
+}
+<link href="~/Content/KeToan/ketoan.css" rel="stylesheet" />
+@{
+    var checkmess = (string)TempData["edithd"];
+    if (checkmess == "oke")
+    {
+        <script>
+            swal({
+                title: "Đã cập nhật đơn hàng thành công",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+
+
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+              
+                <div class="btn-func col-sm-12" style="padding:10px;">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <a class="btn btn-outline-dark btn-sm" role="button" title="In" onclick="printDiv('printhere')">
+                                <i class="fas fa-print"></i> In dữ liệu
+                            </a>
+                        </div>
+                        <div class="col-sm-2">
+                            <a href="/KeToan/DSDaiLy" class="btn btn-warning btn-sm" type="button" title="Back">
+                                Quay lại danh sách
+                            </a>
+                        </div>
+                        <div class="col-sm-8">
+                            @using (Html.BeginForm("DSCongnoNo", "KeToan", FormMethod.Post, new { @clas = "" }))
+                            {
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.DropDownList("tinhtrangcn", (IEnumerable<SelectListItem>)TempData["tinhtrangcn"], htmlAttributes: new { @class = "form-control-sm", })
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row" id="printhere">
+                    <div class="col-sm-12  table-responsive">
+                        <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                            @*//Phần render từng dòng trong C#*@
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã CN</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Tên đại lý</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã Đại lý</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng nợ</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Ngày tạo phiếu</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Hạn trả</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Tình trạng</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Chức năng</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaCongNo)
+                                        </td>
+                                        <td>
+                                            @{var tendl = db.DaiLies.Find(item.MaDL);
+                                            }
+                                            @Html.DisplayFor(modelItem => tendl.TenDL)
+
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaDL)
+                                        </td>
+
+
+                                        <td>
+                                            @{ var Tienno = string.Format("{0:0,0 vnđ}", item.TienNo);}
+                                            @Html.DisplayFor(modelItem => Tienno)
+                                        </td>
+                                        <td>
+                                            @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLapCN); ;}
+                                            @Html.DisplayFor(modelItem => ngay)
+
+
+
+                                        </td>
+                                        <td>
+                                            @{ var han = String.Format("{0:d/M/yyyy}", item.HanTra);}
+                                            @Html.DisplayFor(modelItem => han)
+
+                                        </td>
+
+                                        <td>
+                                            @{
+                                                DateTime aDatetime = DateTime.Now;
+                                                DateTime hant = (DateTime)item.HanTra;
+                                                TimeSpan interval = hant.Subtract(aDatetime);
+
+                                                if (interval.Days <= 0)
+                                                {
+                                                    <span class="badge badge-danger">Đến hạn</span>
+                                                }
+                                                else if (interval.Days > 0 && interval.Days <= 7)
+                                                {
+                                                    <span class="badge badge-warning">Sắp đến hạn</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-success">Còn hạn</span>
+                                                }
+
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+
+                                            <a href="/KeToan/ChitietCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
+                                                <i class="fas fa-train"></i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<script>
+    function printDiv(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+
+    }
+</script>
+
+
+
+
+
+
+
