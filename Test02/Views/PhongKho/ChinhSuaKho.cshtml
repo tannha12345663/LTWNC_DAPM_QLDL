@@ -4,6 +4,7 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Chỉnh sửa kho";
     ViewBag.qlk = "active";
+    ViewBag.hieuung2 = "bx-tada";
 }
 @{
     var checkMessage = TempData["AlertMessage"];
@@ -25,59 +26,112 @@
 {
     @Html.AntiForgeryToken()
 
-        <div class="row">
-            <div class="col-lg-6 col-md-12 tile" style="margin-left:30px;">
-                <div class="tile-body">
-                    <div class="form-horizontal">
-                        <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.MaKho)
+    <div class="row">
+        <div class="col-lg-6 col-md-12 tile" style="margin-left:30px;">
+            <div class="tile-body">
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.MaKho)
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.MaKho, "Mã kho (Mặc định)", htmlAttributes: new { @class = "control-label col-md-5" })
-                            <div class="col-md-12">
-                                @Html.DisplayFor(model => model.MaKho)
-                                @Html.ValidationMessageFor(model => model.MaKho, "", new { @class = "text-danger" })
-                            </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MaKho, "Mã kho (Mặc định)", htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-12">
+                            @Html.DisplayFor(model => model.MaKho)
+                            @Html.ValidationMessageFor(model => model.MaKho, "", new { @class = "text-danger" })
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.TenKho, "Tên kho", htmlAttributes: new { @class = "control-label col-md-5" })
-                            <div class="col-md-12">
-                                @Html.EditorFor(model => model.TenKho, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.TenKho, "", new { @class = "text-danger" })
-                            </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TenKho, "Tên kho", htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.TenKho, new { htmlAttributes = new { @class = "form-control text-box single-line", @id = "TenKho", onchange = "TenKhoCheck()" } })
+                            <span id="mess"></span>
+                            @Html.ValidationMessageFor(model => model.TenKho, "", new { @class = "text-danger" })
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.DiaChi, "Địa chỉ", htmlAttributes: new { @class = "control-label col-md-5" })
-                            <div class="col-md-12">
-                                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
-                            </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DiaChi, "Địa chỉ", htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-12">
+                            <input class="form-control text-box single-line" id="DiaChi" name="diachi" type="text" value="@Model.DiaChi" onchange="DiaChiCheck();">
+                            @*@Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })*@
+                            <span id="mess1"></span>
+                            @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Lưu thay đổi" class="btn btn-outline-dark" />  
-                                <a class="btn btn-outline-danger btn-sm" href="~/PhongKho/QuanLyKho">
-                                    <i class="fas fa-retweet"></i>
-                                    Trở lại
-                                </a>
-                            </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input id="btn_submit" type="submit" value="Lưu thay đổi" class="btn btn-outline-dark" />
+                            <a class="btn btn-outline-danger btn-sm" href="~/PhongKho/QuanLyKho">
+                                <i class="fas fa-retweet"></i>
+                                Trở lại
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5 col-md-12" style="margin:10px 5px 10px 20px; text-align:center">
-                <img class="" src="~/Content/Img/KhoHang/bg_createStorage.jpg" width="100%" height="335px"
-                     alt="User Image">
-            </div>
         </div>
-        
+        <div class="col-lg-5 col-md-12" style="margin:10px 5px 10px 20px; text-align:center">
+            <img class="" src="~/Content/Img/KhoHang/bg_createStorage.jpg" width="100%" height="335px"
+                 alt="User Image">
+        </div>
+    </div>
+
 
 }
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
 
+<script type="text/javascript">
+    function TenKhoCheck() {
+        $("#mess").html("check...");
+        $.post("@Url.Action("CheckTenKhoAvailability", "PhongKho")", {
+            namekho: $("#TenKho").val()
+        },
+            function (data) {
+                if (data == 0) {
+                    $("#mess").html('<font color="Green"> Available!</font>');
+                    $("#TenKho").css("border-color", "Green");
+                    document.getElementById("btn_submit").disabled = false;
+                } else {
+                    $("#mess").html('<font color="Red"> Tên kho này đã tồn tại!</font>');
+                    $("#TenKho").css("border-color", "Red");
+                    document.getElementById("btn_submit").disabled = true;
+                }
+            }
+        )
+    }
+
+    function DiaChiCheck() {
+        $("#mess1").html("check...");
+        $.post("@Url.Action("CheckDiaChiAvailability", "PhongKho")", {
+            diachi: $("#DiaChi").val()
+        },
+            function (data) {
+                if (data == 0) {
+                    $("#mess1").html('<font color="Green"> Available!</font>');
+                    $("#DiaChi").css("border-color", "Green");
+                    document.getElementById("btn_submit").disabled = false;
+                    //document.getElementById("btn_submit").style.cursor = "pointer";
+                    //document.getElementById("btn_submit").addEventListener("click", function (event) {
+                    //    event.target()
+                    //});
+                } else {
+                    $("#mess1").html('<font color="Red"> Địa chỉ này đã tồn tại!</font>');
+                    $("#DiaChi").css("border-color", "Red");
+                    document.getElementById("btn_submit").disabled = true;
+
+                    //document.getElementById("btn_submit").addEventListener("click", function (event) {
+                    //    event.preventDefault()
+                    //});
+                    //document.getElementById("btn_submit").style.cursor = "no-drop";
+                }
+            }
+        )
+    }
+</script>
 
 

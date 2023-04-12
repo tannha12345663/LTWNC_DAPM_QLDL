@@ -3,8 +3,9 @@
 @{
     ViewBag.Title = "ChiTietDonHang";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
-    ViewBag.nk = "active";
+    ViewBag.dhxdd = "active";
     ViewBag.Name = "Danh sách chi tiết đơn hàng";
+    ViewBag.hieuung4 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
 @{
@@ -20,10 +21,27 @@
             });
         </script>
     }
+    else if (checkMessage == "noKho")
+    {
+        <script>
+            swal({
+                title: "Không tìm thấy kho!",
+                text: "Không có kho nào đáp ứng đủ cho đơn hàng @Session["madhxk"]!",
+                icon: "warning",
+                button: "OK",
+            });
+        </script>
+    }
+
 }
+<link href="~/Content/toastNoti.css" rel="stylesheet" />
 <div class="row">
+
     <div class="col-md-12">
         <div class="tile">
+            <div id="toasts">
+
+            </div>
             <div class="tile-body">
                 <div class="row element-button">
                     <h3>Danh sách chi tiết của đơn hàng @TempData["madh"]</h3>
@@ -45,7 +63,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 table-responsive">
                         <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                             @*//Phần render từng dòng trong C#*@
                             <thead>
@@ -100,11 +118,33 @@
                         </table>
 
                         <div class="row justify-content-between" style="margin:8px;">
-                            <a class="btn btn-outline-dark m-10" href="~/PhongKho/NhapKho">Trở lại</a>
-                            <a class="btn btn-danger btn-sm" href="/PhongKho/CreatePXuat/@TempData["madh"]" title="Thêm phiếu xuất kho">
-                                <i class="fas fa-plus"></i>
-                                Tạo phiếu xuất
-                            </a>
+                            <a class="btn btn-outline-dark m-10" href="~/PhongKho/DSDonHang">Trở lại</a>
+                            @{
+                                var dhang = db.DonHangs.Where(s => s.MaDH == madh).FirstOrDefault();
+                                if (dhang.XuatHoaDon == false || dhang.XuatHoaDon == null)
+                                {
+                                    <button class="btn btn-danger btn-sm warning" onclick="createToast('warning')">
+                                        <i class="fas fa-plus"></i>
+                                        Tạo phiếu xuất
+                                    </button>
+
+                                }
+                                else if (dhang.PhieuXuatKho == true)
+                                {
+                                    <button class="btn btn-danger btn-sm error" onclick="createToast('error')">
+                                        <i class="fas fa-plus"></i>
+                                        Tạo phiếu xuất
+                                    </button>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-danger btn-sm" href="/PhongKho/CreatePXuat/@TempData["madh"]" title="Thêm phiếu xuất kho">
+                                        <i class="fas fa-plus"></i>
+                                        Tạo phiếu xuất
+                                    </a>
+                                }
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -112,5 +152,170 @@
         </div>
     </div>
 </div>
+
+
+@* Hóa đơn *@
+
+<link href="~/Content/KeToan/StyleKeToan.css" rel="stylesheet" />
+
+<div class="container-sm">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile" id="printMe">
+
+                @{
+
+                    var hddonhang = db.DonHangs.Where(s => s.MaDH == madh).FirstOrDefault();
+                    DateTime ngay = (DateTime)(hddonhang.NgayLap);
+                    int thang = ngay.Month;
+
+                    var daily = db.DaiLies.Where(s => s.MaDL == hddonhang.MaDL).FirstOrDefault();
+                    var loaidaily = db.LoaiDLs.Where(s => s.MaLoaiDL == daily.MaLoaiDL).FirstOrDefault();
+
+
+                    if (hddonhang.XuatHoaDon == false || hddonhang.XuatHoaDon == null)
+                    {
+
+
+                        <h4>Chưa có hóa đơn cho đơn hàng này!</h4>
+                    }
+                    else
+                    {
+                        <div style="padding:20px">
+                            <div style="text-align:center">
+                                <h4>HÓA ĐƠN ĐƠN HÀNG</h4>
+                                <p> <strong>Ngày: </strong>@Html.DisplayFor(model => ngay)</p>
+                                <p> <strong>Mã đơn hàng: </strong>@Html.DisplayFor(model => hddonhang.MaDH)</p>
+                            </div>
+
+
+                            <p> <strong>Tên đại lý: </strong>@Html.DisplayFor(model => daily.TenDL)</p>
+                            <p> <strong>Loại đại lý: </strong>@Html.DisplayFor(model => loaidaily.MaLoaiDL)</p>
+                            <p> <strong>Địa chỉ: </strong>@Html.DisplayFor(model => hddonhang.DiemGiao)</p>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                        @*//Phần render từng dòng trong C#*@
+                                        <thead>
+                                            <tr role="row" style="text-align:center">
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Mã CTDH</th>
+                                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Mã SP</th>
+                                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tên sản phẩm</th>
+                                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Số lượng</th>
+                                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 120px;">Thành tiền</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{ var total1 = 0;
+                                            }
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MaCTDH)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MaSP)
+                                                    </td>
+                                                    @{
+                                                        var sanpham = db.SanPhams.Where(sp => sp.MaSP == item.MaSP).FirstOrDefault();
+                                                    }
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => sanpham.TenSP)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SoLuong)
+                                                    </td>
+
+
+                                                    <td>
+                                                        @{ total1 += Convert.ToInt32(item.ThanhTien);}
+                                                        @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
+                                                        @Html.DisplayFor(modelItem => ThanhTien)
+
+                                                    </td>
+
+                                                </tr>
+
+                                            }
+                                            <tr>
+                                                <th colspan="4">Tổng cộng tiền nợ:</th>
+                                                @{ var TongCong1 = string.Format("{0:0,0 vnđ}", total1);}
+                                                <td>@Html.DisplayFor(modelItem => TongCong1)</td>
+                                            </tr>
+                                    </table>
+
+                                </div>
+
+                                <h5 style="margin-left:82%;padding-top:20px;" id="sample1">Kế toán</h5>
+                                <h6 style="margin-left:80%; font-style:italic;" id="sample1">(ký và ghi rõ họ tên)</h6>
+                                <br />
+                                <br />
+                                <br />
+                                <p style="margin-left:80%;">Nguyễn Thị Diễm Quỳnh</p>
+                            </div>
+                        </div>
+                    }
+                }
+
+
+            </div>
+        </div>
+    </div>
+
 </div>
+
+<script>
+    function createToast(status, timeout) {
+        let temp = `<i class="fas fa-circle-exclamation"></i>
+                    <span class="message">This is a Success message!</span>
+                    `
+        switch (status) {
+            case 'success':
+                temp = `<i class="fas fa-circle-exclamation"></i>
+                        <span class="message">This is a Success message!</span>`
+                break;
+            case 'warning':
+                temp = `<i class="fa fa-exclamation-triangle"></i>
+                        <span class="message">Đơn hàng chưa có hóa đơn!</span>`
+                break;
+            case 'error':
+                temp = `<i class="fa fa-exclamation-circle"></i>
+                        <span class="message">Đơn hàng đã tạo phiếu!</span>`
+                break;
+        }
+
+        var toast = document.createElement('div')
+        toast.classList.add('toast')
+        toast.classList.add(status)
+        toast.innerHTML = `${temp}<div class="countdown"></div>`
+        var toastList = document.getElementById('toasts')
+        toastList.appendChild(toast)
+        timeout = timeout || 4000
+        setTimeout(function () {
+            toast.style.animation = 'slidehide 2s ease forwards'
+        }, timeout)
+        setTimeout(function () {
+            toast.remove()
+        }, timeout + 2000)
+    }
+</script>
+<script>
+    function printDiv(divName) {
+
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.getElementById("btnin").style.display = "none";
+
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>
 

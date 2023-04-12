@@ -1,8 +1,10 @@
 ﻿@model Test02.Models.PhieuNhapXuat
-    @using Test02.Models
+@using Test02.Models
 @{
     ViewBag.Title = "DetailsPXK";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+    ViewBag.nk = "active";
+    ViewBag.hieuung4 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var kho = db.Khoes.ToList();
     var ctdonhang = db.ChiTietDonHangs.ToList();
@@ -12,41 +14,49 @@
     <div class="col-md-12">
         <div class="tile" id="printMe">
             <p>Tên đơn vị: Công ty TNHH nước giải khát NQK</p>
-            <p>Mã số thuế: 03289456217</p>
             <p>Theo mã đơn hàng số: @TempData["ctmadh"]</p>
-            <h2 style="text-align:center" id="sample1">PHIẾU XUẤT KHO KIÊM VẬN CHUYỂN NỘI BỘ</h2>
+            <h2 style="text-align:center" id="sample1">PHIẾU XUẤT KHO THEO ĐƠN HÀNG</h2>
             <form style="text-align:center">
                 <label for="date">Ngày:</label>
                 @Html.DisplayFor(model => model.NgayLap)<br>
                 <label for="date">Mã số:</label>
                 @Html.DisplayFor(model => model.MaPhieu)<br>
                 <label for="date">Người làm phiếu: </label>
-                @{
-                    var user = (Test02.Models.NhanVien)HttpContext.Current.Session["user"];
-                    <b>@user.MaChucVu - </b> <b>@user.TenNV</b> }
+                @Html.DisplayFor(model => model.MaNVLap) - @Html.DisplayFor(model => model.NhanVien.TenNV)<br>
+
             </form>
                 <div class="tile-body">
                     <form class="row">
-                        <div class="form-group col-md-12" id="sample5">
-                            <label class="control-label" id="ThongTinKho1">Kho xuất hàng:</label><br />
-                            @Html.DisplayFor(model => model.MaKho) - @Html.DisplayFor(model => model.Kho.TenKho) - @Html.DisplayFor(model => model.Kho.DiaChi)
+                        <div class="col-md-6 text-center">
+                            <div class="form-group col-md-12" id="sample5">
+                                <label class="control-label" id="ThongTinKho1">Kho xuất hàng:</label>
+                                @Html.DisplayFor(model => model.MaKho) - @Html.DisplayFor(model => model.Kho.TenKho)
+                            </div>
+                            <div class="form-group col-md-12" id="sample5">
+                                <label class="control-label" id="ThongTinKho1">Địa chỉ lấy hàng:</label> @Html.DisplayFor(model => model.Kho.DiaChi)
+                            </div>
                         </div>
-                        <div class="form-group col-md-12" id="sample3">
+                        <div class="col-md-6 text-center">
+                            <div class="form-group col-md-12" id="sample4">
+                                <label class="control-label">Đại lý nhận hàng: </label>
+                                @TempData["maDL"] - @TempData["tenDL"]
+                            </div>
+                            <div class="form-group col-md-12" id="sample4">
+                                <label class="control-label">Địa chỉ nhận hàng: </label>
+                                @TempData["diemgiao"]
+                            </div>
+                        </div>
+
+
+                        @*<div class="form-group col-md-12 text-center" id="sample3">
                             <label class="control-label">Tên người giao hàng: </label>
                             @Html.DisplayFor(model => model.NguoiGiaoHang)
                         </div>
-                        <div class="form-group col-md-12" id="sample4">
+                        <div class="form-group col-md-12 text-center" id="sample4">
                             <label class="control-label">Phương tiện vận chuyển: </label>
                             @Html.DisplayFor(model => model.PhuongTienGiaoHang)
-                        </div>
-                        <div class="form-group col-md-12" id="sample4">
-                            <label class="control-label">Đại lý nhận hàng: </label>
-                            @TempData["tenDL"]
-                        </div>
-                        <div class="form-group col-md-12" id="sample4">
-                            <label class="control-label">Địa chỉ nhận hàng: </label>
-                            @TempData["diemgiao"]
-                        </div>
+                        </div>*@
+
                         <div class="form-group col-md-12 table-responsive" id="sample6">
 
                             <label class="control-label">Danh sách sản phẩm: </label> <br />
