@@ -698,13 +698,13 @@ namespace Test02.Controllers
             ChiTietDonHang ct = new ChiTietDonHang();
             if (ModelState.IsValid)
             {
-                var madh = database.ChiTietDonHangs.Where(s => s.MaDH == donHang.MaDH).ToList();
-                var total = 0;
-                foreach (var item in madh)
-                {
-                    total += Convert.ToInt32(item.ThanhTien);
-                };
-                donHang.TongTien = total;
+                //var madh = database.ChiTietDonHangs.Where(s => s.MaDH == donHang.MaDH).ToList();
+                //var total = 0;
+                //foreach (var item in madh)
+                //{
+                //    total += Convert.ToInt32(item.ThanhTien);
+                //};
+                //donHang.TongTien = total;
                 database.Entry(donHang).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                 database.SaveChanges();
                 return RedirectToAction("QuanLyDH");
