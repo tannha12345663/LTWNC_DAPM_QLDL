@@ -100,6 +100,8 @@
 </div>
 
 
+
+@* -------------HIỂN THỊ DANH SÁCH CÁC CHUYẾN GIAO HÀNG HIỆN CÓ-------- *@
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
@@ -124,8 +126,6 @@
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Trạng thái</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Khu vực giao</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Ngày giao</th>
-                                        @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tổng tiền thu về</th>*@
-                                        @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Xếp đơn</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -173,11 +173,6 @@
                                                         var ng = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
                                                     @Html.DisplayFor(modelItem => kvg.NgayGiao)
                                                 </td>
-                                                @*<td style="text-align:center">
-                                                        <a class="btn  btn-primary btn-sm edit" href="/GiaoHang/ChiTietChuyenGiaoHang/@item.MaGH">
-                                                            <i class='bx bxs-cube-alt'></i>
-                                                        </a>
-                                                    </td>*@
                                             </tr>
                                         }
                                     }
@@ -197,7 +192,6 @@
         <a class="btn btn-danger" type="button" title="Quay lại " href="/GiaoHang/ChiTietDonGiaoHang/@TempData["madh01"]"><i class=""></i> Quay lại</a>
     </div>
 </div>
-
 
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

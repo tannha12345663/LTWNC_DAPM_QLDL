@@ -159,9 +159,6 @@
     <Compile Include="Models\ChiTietBienBang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChiTietChuyenGiao.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ChiTietDonHang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -180,13 +177,7 @@
     <Compile Include="Models\DaiLy.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DoanhSo.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DonHang.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DonHangGiao.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Kho.cs">
@@ -621,11 +612,8 @@
     <Content Include="Views\BienBangKiemKes\Index.cshtml" />
     <Content Include="Views\GiaoHang\DonHangMoi.cshtml" />
     <Content Include="Views\GiaoHang\Layout\LayoutGH.cshtml" />
-    <Content Include="Views\GiaoHang\BaoCaoLyDoHoanDon.cshtml" />
-    <Content Include="Views\GiaoHang\BaoCaoPhongGiaoHang.cshtml" />
     <Content Include="Views\GiaoHang\DanhSachPhuongTienGiaoHang.cshtml" />
     <Content Include="Views\GiaoHang\DonGiaoHang.cshtml" />
-    <Content Include="Views\GiaoHang\XetDuyetDonGiaoHang.cshtml" />
     <Content Include="Views\GiaoHang\ChiTietDonGiaoHang.cshtml" />
     <Content Include="Views\GiaoHang\ThemPhuongTienGiaoHang.cshtml" />
     <Content Include="Views\GiaoHang\ChinhSuaPhuongTienGiaoHang.cshtml" />
@@ -642,12 +630,11 @@
     <Content Include="Views\GiaoHang\DanhSachCacChuyenGiao.cshtml" />
     <Content Include="Views\GiaoHang\ChiTietChuyenGiaoHang.cshtml" />
     <Content Include="Views\GiaoHang\ThemChuyenGiaoHang.cshtml" />
-    <Content Include="Views\GiaoHang\XepDon.cshtml" />
-    <Content Include="Views\GiaoHang\ThemDonHangVaoChuyenGiao.cshtml" />
     <Content Include="Views\GiaoHang\InHoaDon.cshtml" />
     <Content Include="Views\GiaoHang\HuyChuyenGiao.cshtml" />
     <Content Include="Views\GiaoHang\ChinhSuaChuyenGiao.cshtml" />
     <Content Include="Views\GiaoHang\XepXe.cshtml" />
+    <Content Include="Views\GiaoHang\CapNhatDonGiaoHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -28,7 +28,7 @@
                     <div class="row" id="printMe">
                         <h2 style="margin-left:29%">DANH SÁCH ĐƠN HÀNG MỚI CẦN GIAO</h2>
                         <div class="col-sm-12">
-                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info" >
 
                                 <thead>
                                     <tr role="row">
@@ -118,12 +118,9 @@
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
-
+        document.getElementById("btnin").style.display = "none";
         document.body.innerHTML = printContents;
-
         window.print();
-
         document.body.innerHTML = originalContents;
-
     }
 </script>

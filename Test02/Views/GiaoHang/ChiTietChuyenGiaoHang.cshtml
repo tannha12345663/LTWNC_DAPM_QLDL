@@ -9,8 +9,8 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<DonHang> dh = db.DonHangs.ToList();
     var chuyengiao = db.ChuyenGiaos.ToList();
+    var nv = db.NhanVienGHs.ToList();
 }
-
 
 
 
@@ -19,10 +19,6 @@
         <div class="tile">
             <div class="tile-body">
                 <div class="row element-button">
-
-                    @*<div class="col-sm-2">
-                            <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
-                        </div>*@
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file" title="In" onclick="printDiv('printMe')">
                             <i class="fas fa-print"></i> In dữ liệu
@@ -44,35 +40,38 @@
                                         }
                                     </span>
                                 </p>
-
+                                foreach (var nhanvien in Model)
+                                {@*<p style="text-align:center">
+                                            <span>
+                                                @{
+                                                    var macg1 = db.ChuyenGiaos.Where(s => s.MaGH == nhanvien.MaGH).FirstOrDefault();
+                                                    var nvgh = db.NhanVienGHs.Where(s => s.MaGH == nhanvien.MaGH).FirstOrDefault();
+                                                }
+                                            </span>
+                                        </p>*@
                                 <p>
-                                    <strong>Tên nhân viên giao: </strong> @{
-                                        var tendnv = db.NhanVienGHs.Where(s => s.MaGH == macg.MaGH).FirstOrDefault();}
-                                    @Html.DisplayFor(modelItem => tendnv.TenNV) - @{var sdt = db.NhanVienGHs.Where(s => s.MaGH == macg.MaGH).FirstOrDefault();}
+                                    <strong>Tên nhân viên giao: </strong>
+                                    @{var tendnv = db.NhanVienGHs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                    @Html.DisplayFor(modelItem => tendnv.TenNV) - @{var sdt = db.NhanVienGHs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
                                     @Html.DisplayFor(modelItem => tendnv.SDT)
-                                </p>
-
-
-                                @*<p>
-                                        <strong>Số điện thoại nhân viên: </strong> @{
-
-                                    </p>*@
-                                <p>
-                                    <strong>Phương tiện: </strong> @{
-                                        var pt = db.PhuongTienGHs.Where(s => s.MaPT == macg.MaPT).FirstOrDefault();}
-                                    @Html.DisplayFor(modelItem => pt.MaPT)
-                                </p>
-                                <p>
-                                    <strong>Khu vực giao: </strong>
-                                    @Html.DisplayFor(modelItem => macg.KhuVucGiao)
                                 </p>
                                 break;
                             }
+                            <p>
+                                <strong>Phương tiện: </strong>
+                                @{var pt = db.PhuongTienGHs.Where(s => s.MaPT == macg.MaPT).FirstOrDefault();}
+                                @Html.DisplayFor(modelItem => pt.MaPT)
+                            </p>
+                            <p>
+                                <strong>Khu vực giao: </strong>
+                                @Html.DisplayFor(modelItem => macg.KhuVucGiao)
+                            </p>
+                            break;
+                        }
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align:center">Mã đơn hàng</th>
-                                        @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Ngày lên đơn</th>*@
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align:center">Mã đơn hàng</th>                                      
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 40px; text-align: center ">Mã đại lý </th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tên đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Số điện thoại đại lý</th>
@@ -101,9 +100,6 @@
 
                                                 @Html.DisplayFor(modelItem => item.MaDH)
                                             </td>
-                                            @*<td>
-                                                    @Html.DisplayFor(modelItem => item.NgayLap)
-                                                </td>*@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.DaiLy.MaDL)
                                             </td>
@@ -119,7 +115,6 @@
                                             </td>
 
                                             <td>
-                                                @*@{ var tttt = db.DonHangs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}*@
                                                 @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
                                             </td>
 

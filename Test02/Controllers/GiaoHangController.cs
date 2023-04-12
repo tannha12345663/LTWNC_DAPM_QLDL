@@ -125,7 +125,7 @@ namespace Test02.Controllers
                 ViewBag.ngaylap = TempData["ngaylapcg"] = System.DateTime.Now;
                 Random rd = new Random();
                 var cg = "GH" + rd.Next(1, 1000);
-
+                chuyenggiao.TienThu = 0;
                 chuyenggiao.MaGH = cg;
                 chuyenggiao.TrangThai = Convert.ToString("Chờ giao");
                 chuyenggiao.NgayLap = System.DateTime.Now;
@@ -133,9 +133,6 @@ namespace Test02.Controllers
                 database.ChuyenGiaos.Add(chuyenggiao);
                 database.SaveChanges();
             }
-            //database.Entry(nhanviengiao).State = System.Data.Entity.EntityState.Modified;
-            //database.SaveChanges();
-            //nhanviengiao.TinhTrang = Convert.ToString("Đang giao");
             return RedirectToAction("DanhSachCacChuyenGiao");
         }
     
@@ -145,34 +142,6 @@ namespace Test02.Controllers
             TempData["magh"] = id;
             return View(database.DonHangs.ToList().Where(s => s.MaGH == id));
         }
-
-        //[HttpPost]
-        //public ActionResult ChiTietChuyenGiaoHang(string id, ChuyenGiao chuyengiao, DonHang donhang)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        chuyengiao.MaGH = (string)Session["tempdata"];
-        //        var thanhtien = database.DonHangs.Where(s => s.MaGH == chuyengiao.MaGH).FirstOrDefault();
-        //        if (donhang.TinhTrangThanhToan == "Chưa thanh toán")
-        //        {
-        //            chuyengiao.TienThu = chuyengiao.TienThu + donhang.TongTien;
-        //        }
-        //        else
-        //        {
-        //            chuyengiao.TienThu = chuyengiao.TienThu;
-        //        }
-        //        var dh = database.ChuyenGiaos.Find(chuyengiao.MaGH);
-        //        dh.TienThu = chuyengiao.TienThu;
-        //        database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
-        //        database.SaveChanges();
-
-        //        TempData["messageAlert"] = "Đã thêm mới đơn hàng";
-        //        //TempData["themmadh"] = chiTietDonHang.MaDH;
-        //        return RedirectToAction("ChiTietChuyenGiaoHang");
-        //    }
-        //    return RedirectToAction("ChiTietChuyenGiaoHang");
-        //}
-
 
         //Huy chuyen giao
         public ActionResult HuyChuyenGiao(String id)
@@ -197,78 +166,8 @@ namespace Test02.Controllers
         {
             database.ChuyenGiaos.ToList().OrderByDescending(s => s.MaGH);
             return View();
-
         }
-
-        //Xet duyet don giao hang (test)
-        public ActionResult XetDuyetDonGiaoHang(string id)
-        {
-            TempData["ngayduyet"] = System.DateTime.Now;
-            var maDH = id;
-            foreach (var item in database.DonHangs)
-            {
-                if (maDH == item.MaDH)
-                {
-                    TempData["tenDL"] = item.DaiLy.TenDL;
-                    TempData["diaDiemGiao"] = item.DiemGiao;
-                }
-            }
-            ViewBag.MaKho = new SelectList(database.Khoes, "TenKho", "MaKho");
-            ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu");
-            ViewBag.MaHD = new SelectList(database.DonHangs, "MaDH", "MaDH");
-            return View();
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult XetDuyetDonGiaoHang([Bind(Include = "MaGH,MaDH,MaNV,TenNV,DiemGiao,TrangThai,NgayGiao,TienThu,XacNhan,MaPT,NgayXetDuyet,MaKho")] DonHangGiao dsxetduyetgiaohang, string tenkho, string shipper, string phuongtiengiao)
-        {
-            if (ModelState.IsValid)
-            {
-
-                Random rd = new Random();
-                var maGH = "MGH" + rd.Next(1, 1000);
-                dsxetduyetgiaohang.MaGH = maGH;
-                dsxetduyetgiaohang.NgayLap = System.DateTime.Now;
-                dsxetduyetgiaohang.MaNV = shipper;
-                dsxetduyetgiaohang.MaPT = phuongtiengiao;
-                dsxetduyetgiaohang.MaDH = (string)Session["madhxd"];
-                var user = (Test02.Models.NhanVien)HttpContext.Session["user"];
-                dsxetduyetgiaohang.MaNV = user.MaNV;
-
-                if (shipper != "----Chọn nhân viên giao hàng----")
-                {
-                    TempData["shipper"] = shipper;
-                    database.DonHangGiaos.Add(dsxetduyetgiaohang);
-                    database.SaveChanges();
-                    TempData["AlertMessage"] = "Duyệt thành công";
-                    TempData["maGH"] = maGH;
-                    return RedirectToAction("DonGiaoHang", new RouteValueDictionary(new { controller = "GiaoHang", action = "XetDuyetDonGiaoHang", Id = Session["madhxd"] }));
-                }
-
-                else if (phuongtiengiao != "----Chọn phương tiện----")
-                {
-                    TempData["phuongtien"] = phuongtiengiao;
-                    database.DonHangGiaos.Add(dsxetduyetgiaohang);
-                    database.SaveChanges();
-                    TempData["AlertMessage"] = "Duyệt thành công";
-                    TempData["maGH"] = maGH;
-                    return RedirectToAction("DonGiaoHang", new RouteValueDictionary(new { controller = "GiaoHang", action = "XetDuyetDonGiaoHang", Id = Session["madhxd"] }));
-                }
-                else
-                {
-                    TempData["AlertMessage"] = "Chọn thiếu dữ kiện duyệt đơn!";
-                    return View(dsxetduyetgiaohang);
-                }
-                
-            }
-
-            ViewBag.MaGH = new SelectList(database.Khoes, "MaGH", "MaNV", dsxetduyetgiaohang.MaGH);
-            return View(dsxetduyetgiaohang);
-        }
-
-        
+       
 
         //Cap nhat trang thai don hang
         public ActionResult CapNhatTrangThaiDonHang(string id)
@@ -281,26 +180,32 @@ namespace Test02.Controllers
         [HttpPost, ActionName("CapNhatTrangThaiDonHang")]
         [ValidateAntiForgeryToken]
         public ActionResult CapNhatTrangThaiDonHang(DonHang donhang, ChuyenGiao chuyengiao)
-        {           
+        {            
             if (ModelState.IsValid)
-            {
-                var tien = 0;
-                chuyengiao = database.ChuyenGiaos.Where(s => s.MaGH == donhang.MaGH).FirstOrDefault();
-                chuyengiao.TienThu = tien;
-                if (donhang.TinhTrangThanhToan == "Chưa thanh toán")
-                {
-                    chuyengiao.TienThu += tien + chuyengiao.TienThu + donhang.TongTien;
-                }
-                else if (donhang.TinhTrangThanhToan == "Đã thanh toán")
-                {
-                    chuyengiao.TienThu = tien + chuyengiao.TienThu;
-                }
-                database.Entry(donhang).State = System.Data.Entity.EntityState.Modified;
-                database.Entry(chuyengiao).State = System.Data.Entity.EntityState.Modified;
-                database.SaveChanges();
-                TempData["messageAlert"] = "Xếp đơn thành công";
+            {                   
+                    chuyengiao = database.ChuyenGiaos.Where(s => s.MaGH == donhang.MaGH).FirstOrDefault();
+                    if (donhang.TinhTrangThanhToan == "Chưa thanh toán")
+                    {
+                        var tien = donhang.TongTien;
+                        chuyengiao.TienThu += tien;                      
+                    }
+                    else if (donhang.TinhTrangThanhToan == "Đã thanh toán")
+                    {
+                        chuyengiao.TienThu = chuyengiao.TienThu;
+                    }
+                    database.Entry(donhang).State = System.Data.Entity.EntityState.Modified;
+                    database.Entry(chuyengiao).State = System.Data.Entity.EntityState.Modified;
+                    database.SaveChanges();
+                    TempData["messageAlert"] = "Xếp đơn thành công";               
             }    
             return RedirectToAction("DonHangMoi");           
+        }
+
+        public ActionResult CapNhatDonGiaoHang(string id)
+        {
+            TempData["madh01"] = id;
+            ViewBag.ChuyenGiao = new SelectList(database.ChuyenGiaos, "MaGH", "MaGH");
+            return View(database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault());
         }
 
 
@@ -472,6 +377,8 @@ namespace Test02.Controllers
 
 
         //----------------------------------------------IN PHIEU--------------------------------------------------
+
+        //In phieu xuat kho
         public ActionResult InPhieuXuatKho(string id)
         {
             if (id == null)
@@ -504,6 +411,7 @@ namespace Test02.Controllers
             return View(phieuNhapXuat);
         }
 
+        //In hoa don 
         public ActionResult InHoaDon(string id)
         {
             DonHang donHang = database.DonHangs.Find(id);

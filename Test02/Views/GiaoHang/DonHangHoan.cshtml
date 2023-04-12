@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "DonChoGiao";
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
-    ViewBag.gh_donhangmoi = "active";
+    ViewBag.gh_dongiaohang = "active";
     ViewBag.nd = "Danh sách đơn chờ giao";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
@@ -85,7 +85,7 @@
                                                     </span>
                                                 </td>
                                                 <td style="text-align:center">
-                                                    <a href="/GiaoHang/CapNhatTrangThaiDonHang/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                    <a href="/GiaoHang/CapNhatDonGiaoHang/@item.MaDH" class="btn btn-primary btn-sm edit">
                                                         <i class='bx bxs-log-in-circle'></i>
                                                     </a>
                                                 </td>

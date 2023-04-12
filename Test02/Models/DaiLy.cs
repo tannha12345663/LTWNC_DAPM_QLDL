@@ -17,7 +17,6 @@ namespace Test02.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DaiLy()
         {
-            this.DoanhSoes = new HashSet<DoanhSo>();
             this.DonHangs = new HashSet<DonHang>();
             this.PhieuCongNoes = new HashSet<PhieuCongNo>();
         }
@@ -32,10 +31,9 @@ namespace Test02.Models
         public string Email { get; set; }
         public Nullable<System.DateTime> NgayTao { get; set; }
         public string HinhAnh { get; set; }
+        public Nullable<double> TongDoanhSo { get; set; }
     
         public virtual LoaiDL LoaiDL { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DoanhSo> DoanhSoes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHang> DonHangs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

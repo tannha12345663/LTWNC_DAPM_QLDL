@@ -4,7 +4,7 @@
     ViewBag.Title = "ThemChuyenGiao";
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
     ViewBag.nd = "Thêm chuyến giao hàng";
-    ViewBag.qlk = "active";
+    ViewBag.gh_cg = "active";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var nvgh = db.NhanVienGHs.ToList();
     var ptgh = db.PhuongTienGHs.ToList();
