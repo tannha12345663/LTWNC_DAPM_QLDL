@@ -181,7 +181,5 @@ namespace Test02.Controllers
             return RedirectToAction("QLNhanVien");
         }
 
-
-
     }
 }

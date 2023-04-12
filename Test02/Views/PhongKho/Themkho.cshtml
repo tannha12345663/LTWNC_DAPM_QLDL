@@ -5,6 +5,7 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Thêm kho mới";
     ViewBag.qlk = "active";
+    ViewBag.hieuung2 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dskho = db.Khoes.ToList();
 }
@@ -29,7 +30,8 @@
     @Html.AntiForgeryToken()
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
             <div class="tile">
                 <div class="tile-body">
                     <h3 class="tile-title" style="text-align:center">THÊM MỚI KHO HÀNG</h3>
@@ -41,7 +43,9 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.TenKho, "Tên kho", htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.TenKho, new { htmlAttributes = new { @class = "form-control " } })
+                                @*<input class="form-control text-box single-line" id="tenkho" name="tenkho" type="text" value="" onchange="">*@
+                                @Html.EditorFor(model => model.TenKho, new { htmlAttributes = new { @class = "form-control text-box single-line", @id = "TenKho", onchange = "DiaChiCheck(); TenKhoCheck()" } })
+                                <span id="mess"></span>
                                 @Html.ValidationMessageFor(model => model.TenKho, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -49,14 +53,16 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.DiaChi, "Địa chỉ", htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                                <input class="form-control text-box single-line" id="DiaChi" name="diachi" type="text" value="" onchange="DiaChiCheck();">
+                                @*@Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })*@
+                                <span id="mess1"></span>
                                 @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="row justify-content-center">
                             <div class="col-sm-2">
-                                <input type="submit" value="Lưu dữ liệu" class="btn btn-outline-dark" title="Lưu" />
+                                <input id="btn_submit" type="submit" value="Lưu dữ liệu" class="btn btn-outline-dark" title="Lưu" />
                             </div>
                             <div class="col-sm-2">
                                 <a class="btn btn-outline-primary btn-group-sm" href="~/PhongKho/QuanLyKho" title="Trở về">
@@ -68,6 +74,7 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-3"></div>
     </div>
 
 }
@@ -98,20 +105,20 @@
                     <tbody>
                         @foreach (var item in dskho)
                         {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MaKho)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TenKho)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ChiTietKhoes.Count) sản phẩm
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DiaChi)
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaKho)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TenKho)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ChiTietKhoes.Count) sản phẩm
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DiaChi)
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -120,3 +127,55 @@
     </div>
 </div>
 
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script type="text/javascript">
+    function TenKhoCheck() {
+        $("#mess").html("check...");
+        $.post("@Url.Action("CheckTenKhoAvailability", "PhongKho")", {
+            namekho: $("#TenKho").val()
+        },
+            function (data) {
+                if (data == 0) {
+                    $("#mess").html('<font color="Green"> Available!</font>');
+                    $("#TenKho").css("border-color", "Green");
+                    document.getElementById("btn_submit").disabled = false;
+                } else {
+                    $("#mess").html('<font color="Red"> Tên kho này đã tồn tại!</font>');
+                    $("#TenKho").css("border-color", "Red");
+                    document.getElementById("btn_submit").disabled = true;
+                }
+            }
+        )
+    }
+
+    function DiaChiCheck() {
+        $("#mess1").html("check...");
+        $.post("@Url.Action("CheckDiaChiAvailability", "PhongKho")", {
+            diachi: $("#DiaChi").val()
+        },
+            function (data) {
+                if (data == 0) {
+                    $("#mess1").html('<font color="Green"> Available!</font>');
+                    $("#DiaChi").css("border-color", "Green");
+                    document.getElementById("btn_submit").disabled = false;
+                    //document.getElementById("btn_submit").style.cursor = "pointer";
+                    //document.getElementById("btn_submit").addEventListener("click", function (event) {
+                    //    event.target()
+                    //});
+                } else {
+                    $("#mess1").html('<font color="Red"> Địa chỉ này đã tồn tại!</font>');
+                    $("#DiaChi").css("border-color", "Red");
+                    document.getElementById("btn_submit").disabled = true;
+
+                    //document.getElementById("btn_submit").addEventListener("click", function (event) {
+                    //    event.preventDefault()
+                    //});
+                    //document.getElementById("btn_submit").style.cursor = "no-drop";
+                }
+            }
+        )
+    }
+</script>

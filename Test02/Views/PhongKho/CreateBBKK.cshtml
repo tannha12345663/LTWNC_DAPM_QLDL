@@ -107,7 +107,7 @@
                         @Html.LabelFor(model => model.MaNVLap, "Mã nhân viên lập", htmlAttributes: new { @class = "control-label col-md-12" })
 
                         <div class="col-md-12">
-                            @Html.DropDownList("MaNVLap", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("MaNVLap", (IEnumerable<SelectListItem>)ViewBag.MaNVLap, htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.MaNVLap, "", new { @class = "text-danger" })
                         </div>
                     </div>

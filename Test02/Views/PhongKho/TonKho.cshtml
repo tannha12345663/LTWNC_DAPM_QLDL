@@ -4,7 +4,7 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.tk = "active";
     ViewBag.Name = "Tồn kho";
-
+    ViewBag.hieuung3 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dsctk = db.ChiTietKhoes.ToList();
 }

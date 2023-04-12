@@ -15,7 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-
+    <!--Icon google-->
 
 </head>
 <body onload="time()" class="app sidebar-mini rtl">
@@ -25,8 +25,6 @@
                                         aria-label="Hide Sidebar"></a>
         <!-- Navbar Right Menu-->
         <ul class="app-nav">
-
-
             <!-- User Menu-->
             <li>
                 <a class="app-nav__item" href="@Url.Action("Logout", "LoginUser")"><i class='bx bx-log-out bx-rotate-180'></i> </a>
@@ -61,36 +59,40 @@
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.home" href="~/KinhDoanh/TrangChu">
-                    <i class='app-menu__icon bx bx-tachometer'></i>
-                    <span class="app-menu__label">Trang chủ</span>
+                    <i class='app-menu__icon bx bx-tachometer @ViewBag.hieuung1'></i>
+                    <span class="app-menu__label ">Trang chủ</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item  @ViewBag.dl" href="~/KinhDoanh/QuanLyDL">
-                    <i class='app-menu__icon bx bx-id-card'></i> <span class="app-menu__label">Quản lý đại lý</span>
+                    <i class='app-menu__icon bx bx-id-card @ViewBag.hieuung2'></i> <span class="app-menu__label">Quản lý đại lý</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.dh" href="~/KinhDoanh/QuanLyDH">
-                    <i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý đơn hàng</span>
+                    <i class='app-menu__icon bx bx-user-voice @ViewBag.hieuung3'></i><span class="app-menu__label">Quản lý đơn hàng</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.hd" href="~/KinhDoanh/QuanLyHD">
-                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Doanh số bán hàng </span>
+                    <i class='app-menu__icon bx bx-purchase-tag-alt @ViewBag.hieuung4'></i><span class="app-menu__label">Doanh số bán hàng </span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.sp" href="~/KinhDoanh/QuanLySP">
-                    <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý sản phẩm</span>
+                    <i class='app-menu__icon bx bx-task @ViewBag.hieuung5'></i><span class="app-menu__label">Quản lý sản phẩm</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item @ViewBag.TN" href="~/KinhDoanh/TiepNhanHH">
+                    <i class='app-menu__icon bx bx-paper-plane @ViewBag.hieuung6'></i> <span class="app-menu__label">Phiếu đề nghị</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item  @ViewBag.baocao" href="~/KinhDoanh/BaoCao">
-                    <i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Báo cáo</span>
+                    <i class='app-menu__icon bx bx-pie-chart-alt-2 @ViewBag.hieuung7'></i><span class="app-menu__label">Báo cáo</span>
                 </a>
             </li>
-            
         </ul>
     </aside>
     <main class="app-content">
@@ -121,7 +123,11 @@
     <!-- Data table plugin-->
     <script type="text/javascript" src="~/Content/js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Content/js/plugins/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+    <script type="text/javascript">
+        $('#sampleTable').DataTable();
+        $('#sampleTable01').DataTable();
+        $('#sampleTable02').DataTable();
+    </script>
     <script type="text/javascript">
         var data = {
             labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6"],
@@ -153,7 +159,7 @@
         var ctxb = $("#barChartDemo").get(0).getContext("2d");
         var barChart = new Chart(ctxb).Bar(data);
     </script>
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         //Thời Gian
         function time() {
             var today = new Date();
@@ -204,8 +210,8 @@
                 win.print();
             }
         }
-    </script>
+    </script>*@
     <script src="~/Content/ckeditor/ckeditor.js"></script>
-
+    @RenderSection("script", false)
 </body>
 </html>

@@ -5,7 +5,7 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Danh sách kho";
     ViewBag.qlk = "active";
-    
+    ViewBag.hieuung2 = "bx-tada";
 
 }
 
@@ -113,17 +113,18 @@
 
 
 <script>
-    oTable = $('#sampleTable').dataTable();
-    $('#all').click(function (e) {
-        $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
-        e.stopImmediatePropagation();
-    });
+    //oTable = $('#sampleTable').dataTable();
+    //$('#all').click(function (e) {
+    //    $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
+    //    e.stopImmediatePropagation();
+    //});
 
     //In dữ liệu
     var myApp = new function () {
         this.printTable = function () {
             var tab = document.getElementById('sampleTable');
             var win = window.open('', '', 'height=700,width=700');
+            
             win.document.write(tab.outerHTML);
             win.document.close();
             win.print();

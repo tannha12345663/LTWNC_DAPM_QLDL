@@ -5,11 +5,13 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Tạo chi tiết kho";
     ViewBag.qlk = "active";
+    ViewBag.hieuung2 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dssp = db.SanPhams.ToList();
 
     //Sản phẩm chưa có trong kho
 }
+
 @{
     var checkMessage = TempData["AlertMessage"];
     if (checkMessage == "error null")
@@ -24,69 +26,79 @@
         </script>
     }
 }
-<h3>Tạo chi tiết kho của kho @Session["makho1"]</h3>
+<div class="tile">
+    <h3 class="tile-title">Tạo chi tiết kho của kho @Session["makho1"]</h3>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="row">
-        <div class="form-horizontal col-6">
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.STT)
-            @Html.HiddenFor(model => model.MaKho)
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="form-horizontal col-sm-6">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.STT)
+                @Html.HiddenFor(model => model.MaKho)
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.MaSP, "Mã sản phẩm", htmlAttributes: new { @class = "control-label col-md-5" })
-                <div class="col-md-12">
-                    @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MaSP, "Mã sản phẩm", htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-12">
+                        @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SoLuong, "Số lượng /thùng", htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NgayNhap, "Ngày nhập vào kho", htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-12">
+                        @*<input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayNhap must be a date." id="NgayNhap" name="NgayNhap" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>*@
+                        @Html.TextBoxFor(model => model.NgayNhap, new { @class = "form-control col-md-12", type = "datetime-local", min = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:00") })
+                        @Html.ValidationMessageFor(model => model.NgayNhap, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group justify-content-between" style="margin:auto 12px">
+                    <div class="">
+                        <input type="submit" value="Thêm chi tiết kho" class="btn btn-outline-dark" required />
+                    </div>
+                    <div>
+                        <a class="btn btn-outline-secondary btn-sm" href="~/PhongKho/ChiTietKho/@Session["makho1"]" title="Trở lại">
+                            <i class="fas fa-retweet"></i>
+                            Trở lại
+                        </a>
+                    </div>
+                </div>
+
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.SoLuong, "Số lượng /thùng", htmlAttributes: new { @class = "control-label col-md-5" })
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
-                </div>
+            <div class="col-sm-6">
+                @* Danh sách sản phẩm *@
+                <form class="form-group">
+                    <label for="sel2" class="form-label control-label">
+                        <h4>Tra cứu tên sản phẩm và mã sản phẩm</h4>
+                    </label>
+                    <br />
+                    <select multiple class="form-select form-control w-100 border-1" id="sel2" style="background-color: #f5f5f5; font-size:20px; height:300px;">
+                        @{int i = 1;}
+                        @foreach (var item in dssp)
+                        {
+                            <option>
+                                @i<span>. @Html.DisplayFor(modelItem => item.MaSP)   <span>-</span>  @Html.DisplayFor(modelItem => item.TenSP)</span>
+                            </option>
+                            i += 1;
+                        }
+                    </select>
+                </form>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.NgayNhap, "Ngày nhập vào kho", htmlAttributes: new { @class = "control-label col-md-5" })
-                <div class="col-md-12">
-                    <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayNhap must be a date." id="NgayNhap" name="NgayNhap" type="datetime-local" required>
-                    @Html.ValidationMessageFor(model => model.NgayNhap, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="row form-group justify-content-between" style="margin:auto 12px">
-                <div class="">
-                    <input type="submit" value="Thêm chi tiết kho" class="btn btn-outline-dark" required />
-                </div>
-                <div>
-                    <a class="btn btn-outline-secondary btn-sm" href="~/PhongKho/ChiTietKho/@Session["makho1"]" title="Trở lại">
-                        <i class="fas fa-retweet"></i>
-                        Trở lại
-                    </a>
-                </div>
-            </div>
-
         </div>
-        <div class="col-6">
-            @* Danh sách sản phẩm *@
-            <label for="sel2" class="form-label"><h4>Tra cứu tên sản phẩm và mã sản phẩm</h4></label> <br />
-            <select multiple class="form-select form-select-lg h-100 w-100 border-0" id="sel2" style="background-color: #f5f5f5; ">
-
-                @foreach (var item in dssp)
-                {
-                    <option>
-                        <span>@Html.DisplayFor(modelItem => item.TenSP) --- <span style="color:blue">@Html.DisplayFor(modelItem => item.MaSP)</span> </span>
-                    </option>
-                }
-            </select>
-        </div>
-    </div>
-}
+    }
 
 
+
+</div>
