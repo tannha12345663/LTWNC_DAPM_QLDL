@@ -536,7 +536,7 @@ namespace Test02.Controllers
                         ctphieu.MaKho = item.MaKho;
                         ctphieu.MaSP = item.MaSP;
                         ctphieu.SoLuongTrongKho = item.SoLuong;
-                        ctphieu.SoLuongDeXuat = 500 - item.SoLuong;
+                        ctphieu.SoLuongDeXuat = 513 - item.SoLuong;
                         database.ChiTietPhieuNhapXuats.Add(ctphieu);
                     }
                 }
@@ -648,7 +648,7 @@ namespace Test02.Controllers
                         ctphieu.MaKho = item.MaKho;
                         ctphieu.MaSP = item.MaSP;
                         ctphieu.SoLuongTrongKho = item.SoLuong;
-                        ctphieu.SoLuongDeXuat = item.SoLuong - 500;
+                        ctphieu.SoLuongDeXuat = item.SoLuong - 532;
                         database.ChiTietPhieuNhapXuats.Add(ctphieu);
                     }
                 }
