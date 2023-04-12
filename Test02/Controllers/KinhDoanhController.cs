@@ -204,7 +204,6 @@ namespace Test02.Controllers
             if (ModelState.IsValid)
             {
                 
-
                 var user = (Test02.Models.NhanVien)Session["user"];
                 Random rd = new Random();
                 var madh = "DH" + rd.Next(1, 1000);
@@ -245,7 +244,6 @@ namespace Test02.Controllers
             TempData["messageAlert"] = "Đã thêm mới loại đại lý";
             return RedirectToAction("ThemDL");
         }
-        //Version 1.0 cũ
         //Thêm mới chi tiết đơn hàng bán tự động
         public ActionResult ThemCTHD()
         {
@@ -546,6 +544,7 @@ namespace Test02.Controllers
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
             return View(chiTietDonHang);
         }
+
         //Hiển thị danh sách CTDH
         public ActionResult DanhSachCTDH(string id)
         {

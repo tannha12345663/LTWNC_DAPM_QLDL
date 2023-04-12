@@ -45,13 +45,13 @@ namespace Test02.Controllers
                 {
                     return RedirectToAction("TrangChuKeToan", "KeToan");
                 }
-                else if (data.MaChucVu.ToString() == gh)
-                {
-                    return RedirectToAction("TrangChu", "GiaoHang");
-                }
                 else if (data.MaChucVu.ToString() == qtv)
                 {
                     return RedirectToAction("QLNhanVien", "QTV");
+                }
+                else if (data.MaChucVu.ToString() == gh)
+                {
+                    return RedirectToAction("DonHangMoi", "GiaoHang");
                 }
             }
             return View();

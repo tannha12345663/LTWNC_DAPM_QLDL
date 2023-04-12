@@ -1,0 +1,57 @@
+﻿@model Test02.Models.NhanVienGH
+
+@{
+    ViewBag.Title = "XoaShipper";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+    ViewBag.gh_shippers = "active";
+    ViewBag.nd = "Xóa nhân viên giao hàng";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h4 style="text-align:center">XÓA NHÂN VIÊN GIAO HÀNG @Model.MaNV</h4>
+                
+            <div>
+                <hr />
+                <dl class="dl-horizontal">
+
+                    <dd>
+                        <strong>Tên nhân viên: </strong>
+                        @Html.DisplayFor(model => model.TenNV)
+                    </dd>
+
+                    <dd>
+                        <strong>Số điện thoại: </strong>
+                        @Html.DisplayFor(model => model.SDT)
+                    </dd>
+
+                    <dd>
+                        <strong>Địa chỉ: </strong>
+                        @Html.DisplayFor(model => model.DiaChi)
+                    </dd>
+
+                    <dd>
+                        <strong>Tình trạng: </strong>
+                        @Html.DisplayFor(model => model.TinhTrang)
+                    </dd>
+
+                </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="row element-button">
+                        <div class="col-sm-2">
+                            <input style="background-color:#00b217" type="submit" value="Xóa" class="btn btn-default" />
+                        </div>
+                        <div class="col-sm-2">
+                            <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachShipper"><i class=""></i> Quay lại</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
