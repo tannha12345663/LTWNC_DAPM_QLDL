@@ -115,7 +115,7 @@
                                     @{
                                         int tongdonhang = 0;
                                         var donhangdl = database.DonHangs.Where(dh => dh.MaDL == item.MaDL && dh.TinhTrangThanhToan == "Chưa thanh toán"
-                                        && dh.TrangThai == "Đã xét duyệt" && dh.TinhTrangGH == "Đã giao hàng");
+                                        && dh.TrangThai == "Đã xét duyệt" && dh.TinhTrangGH == "Đã giao");
                                         tongdonhang = donhangdl.Count();
                                         double maxcn = 0;
 

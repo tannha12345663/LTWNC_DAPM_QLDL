@@ -1,0 +1,88 @@
+﻿@model Test02.Models.SanPham
+
+@{
+    ViewBag.Title = "ChiTietSP";
+    Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
+    ViewBag.nd = "Trang thông tin sản phẩm";
+    ViewBag.tcdl = "active";
+
+    if (TempData["Themvaogiohang"] != null)
+    {
+        <script>
+            swal({
+                title: "Đã thêm sản phẩm vào giỏ hàng thành công !!!!",
+                icon: "success",
+                button: "Thoát",
+            });
+        </script>
+    }
+
+    if (TempData["hethang"] != null)
+    {
+        <script>
+            swal({
+                title: "Sản phẩm đã hết hàng!!!",
+                icon: "warning",
+                button: "Ok",
+            });
+        </script>
+    }
+
+    if (TempData["muahangthanhcong"] != null)
+    {
+        <script>
+            swal({
+                title: "Đã đặt hàng thành công!!!",
+                icon: "success",
+                button: "Ok",
+            });
+        </script>
+    }
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">THÔNG TIN SẢN PHẨM</h3>
+            <div class="tile-body table-responsive">
+                <div class="row element-button">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="row" style="border-right: 2px solid #FFD43B; padding-left: 30px;">
+                                    <img src="@Model.HinhAnh" style="height: 350px ; width: 350px;" alt="Hình ảnh" />
+                                </div>
+                            </div>
+                            <div class="col-md-7" style="font-size: 1.3125rem; padding: 50px 0px 0px 0px;">
+                                <div class="row" style="padding: 0px 0px 10px 30px;">
+                                    <b>Tên sản phẩm:&nbsp</b> @Html.DisplayFor(model => model.TenSP)
+                                </div>
+
+                                <div class="row" style="padding: 0px 0px 10px 30px;">
+                                    <b>Tổng tồn:&nbsp</b> @Html.DisplayFor(model => model.TongTon) sản phẩm còn lại
+                                </div>
+
+                                <div class="row" style="padding: 0px 0px 10px 30px; color: red;">
+                                    <b>Giá:&nbsp</b> @{ var gia = string.Format("{0:0,0 VNĐ}", Model.Gia);}
+                                    @Html.DisplayFor(model => gia)
+                                </div>
+
+                                <div class="row" style="padding: 0px 0px 10px 30px;">
+                                    <b>Đơn vị tính:&nbsp</b> @Html.DisplayFor(model => model.DonViTinh)
+                                </div>
+
+                                <div class="row" style="padding: 0px 0px 10px 30px;">
+                                    <a class="btn btn-warning" href="/KhachHang/ThemVaoGHViewChiTietSP/@Model.MaSP">Mua</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding: 10px 0px 0px 30px;">
+                    <a class="btn btn-success" href="/KhachHang/PageSanPham" title="Quay lại">
+                        <i class="fas fa-retweet"></i> Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

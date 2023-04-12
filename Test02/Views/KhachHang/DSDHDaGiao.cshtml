@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Test02.Models.DonHang>
+
+@{
+    ViewBag.Title = "DSDHDaGiao";
+    Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
+    ViewBag.dhdl = "active";
+    ViewBag.nd = "Trang Đơn Hàng";
+}
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="/KhachHang/DonHangDL">Danh sách đặt hàng</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/KhachHang/DSChoGiao">Danh sách chờ giao</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/KhachHang/DSDangGiao">Đơn hàng đang giao</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/KhachHang/DSDHDaGiao">Đơn hàng đã giao</a>
+    </li>
+</ul>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">DANH SÁCH ĐƠN HÀNG ĐÃ GIAO</h3>
+            <div class="tile-body table-responsive">
+                <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                    <tr>
+                        <th>
+                            Mã đơn hàng
+                        </th>
+                        <th>
+                            Ngày lập
+                        </th>
+                        <th>
+                            Trạng thái tiếp nhận
+                        </th>
+                        <th>
+                            Tình trạng thanh toán
+                        </th>
+                        <th>
+                            Tình trạng giao hàng
+                        </th>
+                        <th style="text-align: center;">Chức năng</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaDH)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgayLap)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TrangThai)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                            </td>
+                            <td>
+                                @{
+                                    var checkTTGH = item.TinhTrangGH;
+
+                                    if (checkTTGH == "Chờ giao")
+                                    {
+                                        <p>Chờ giao hàng</p>
+                                    }
+
+                                    else if (checkTTGH == "Đang giao")
+                                    {
+                                        <p>Đang giao hàng</p>
+                                    }
+
+                                    else if (checkTTGH == "Đã giao")
+                                    {
+                                        <p>Đã giao hàng</p>
+                                    }
+                                }
+                            </td>
+                            <td style="text-align: center;">
+                                <a class="btn btn-outline-success" href="/KhachHang/DetailsDH/@item.MaDH">
+                                    <i class="fa fa-info"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

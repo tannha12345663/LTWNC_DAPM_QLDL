@@ -155,6 +155,7 @@
     <Compile Include="Models\BienBangKiemKe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\ChiTietBienBang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -218,6 +219,9 @@
     <Compile Include="Models\SanPham.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +278,7 @@
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\ckeditor.js" />
     <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\material-dashboard.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\util.css" />
     <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.css" />
@@ -289,6 +294,12 @@
     <Content Include="Content\Img\account.png" />
     <Content Include="Content\Img\DiemKhang.jpg" />
     <Content Include="Content\Img\KhoHang\bg_createStorage.jpg" />
+    <Content Include="Content\Img\logictic\delivery-truck.png" />
+    <Content Include="Content\Img\logictic\fail.png" />
+    <Content Include="Content\Img\logictic\fast-delivery.png" />
+    <Content Include="Content\Img\logictic\fulfillment.png" />
+    <Content Include="Content\Img\logictic\shipped.png" />
+    <Content Include="Content\js\GHthemdonhang.js" />
     <Content Include="Content\toastNoti.css" />
     <Content Include="Content\KeToan\StyleKeToan.css" />
     <Content Include="Content\js\chart.js" />
@@ -302,6 +313,14 @@
     <Content Include="Data\Images\pepsi0calo.jpg" />
     <Content Include="Data\Images\sting.jpg" />
     <Content Include="Data\Images\stingVang.jpg" />
+    <Content Include="Content\Img\neo.jpg" />
+    <Content Include="Content\Img\SanPham\7up.jpg" />
+    <Content Include="Content\Img\SanPham\coca.png" />
+    <Content Include="Content\Img\SanPham\cocalight.jpg" />
+    <Content Include="Content\Img\SanPham\pepsi.jpg" />
+    <Content Include="Content\Img\SanPham\pepsi0calo.jpg" />
+    <Content Include="Content\Img\SanPham\sting.jpg" />
+    <Content Include="Content\Img\SanPham\stingVang.jpg" />
     <Content Include="Content\images\teamwork-la-gi-3.jpg" />
     <Content Include="Data\Images\traolong.png" />
     <Content Include="Content\js\bootstrap.min.js" />
@@ -329,6 +348,7 @@
     <Content Include="Content\Test01\animate.css" />
     <Content Include="Content\Test01\hamburgers.min.css" />
     <Content Include="Content\Test01\main.css" />
+    <Content Include="Content\Test01\mainDKyDL.css" />
     <Content Include="Content\Test01\mainLogin.css" />
     <Content Include="Content\Test01\sb-admin-2.min.css" />
     <Content Include="Content\Test01\select2.min.js" />
@@ -358,18 +378,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap-5.0.2-dist\css\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-5.0.2-dist\css\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-5.0.2-dist\css\bootstrap-grid.rtl.css.map" />
@@ -458,6 +466,15 @@
     <Content Include="Content\fonts\font-awesome-4.7.0\scss\_variables.scss" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include="libman.json" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -466,6 +483,18 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -512,11 +541,6 @@
     <Content Include="Views\KinhDoanh\QuanLyDH.cshtml" />
     <Content Include="Views\KinhDoanh\QuanLyHD.cshtml" />
     <Content Include="Views\KinhDoanh\QuanLySP.cshtml" />
-    <Content Include="Views\GiaoHang\Layout\LayoutGH.cshtml" />
-    <Content Include="Views\GiaoHang\TrangChu.cshtml" />
-    <Content Include="Views\GiaoHang\DanhSachHD.cshtml" />
-    <Content Include="Views\GiaoHang\TiepNhanDH.cshtml" />
-    <Content Include="Views\GiaoHang\BaoCao.cshtml" />
     <Content Include="Views\KinhDoanh\Test01.cshtml" />
     <Content Include="Views\KinhDoanh\ThemDL.cshtml" />
     <Content Include="Views\KinhDoanh\Delete.cshtml" />
@@ -589,6 +613,24 @@
     <Content Include="Views\KinhDoanh\TuChoiTruyCap.cshtml" />
     <Content Include="Views\TuChoiTruyCap\Layout\Error.cshtml" />
     <Content Include="Views\TuChoiTruyCap\TuChoiTruyCap.cshtml" />
+    <Content Include="Views\KhachHang\ChiTietSP.cshtml" />
+    <Content Include="Views\KhachHang\GioHangDL.cshtml" />
+    <Content Include="Views\KhachHang\PageDatHang.cshtml" />
+    <Content Include="Views\KhachHang\ThongTinDL.cshtml" />
+    <Content Include="Views\LoginDL\Login.cshtml" />
+    <Content Include="Views\LoginDL\QuenMK.cshtml" />
+    <Content Include="Views\LoginDL\DangKy.cshtml" />
+    <Content Include="Views\KhachHang\DSDHDaGiao.cshtml" />
+    <Content Include="Views\KhachHang\CapNhatMatKhau.cshtml" />
+    <Content Include="Views\KhachHang\DSDangGiao.cshtml" />
+    <Content Include="Views\KhachHang\DSChoGiao.cshtml" />
+    <Content Include="Views\KhachHang\CongNo.cshtml" />
+    <Content Include="Views\KhachHang\LienHe.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Data\ImagesDL\" />
+    <Folder Include="Data\Images\" />
     <Content Include="Views\KeToan\ChitietCN.cshtml" />
     <Content Include="Views\KeToan\XuatCN.cshtml" />
     <Content Include="Views\KeToan\Thongbao.cshtml" />
@@ -609,25 +651,41 @@
     <Content Include="Views\BienBangKiemKes\Details.cshtml" />
     <Content Include="Views\BienBangKiemKes\Edit.cshtml" />
     <Content Include="Views\BienBangKiemKes\Index.cshtml" />
+    <Content Include="Views\GiaoHang\DonHangMoi.cshtml" />
+    <Content Include="Views\GiaoHang\Layout\LayoutGH.cshtml" />
+    <Content Include="Views\GiaoHang\DanhSachPhuongTienGiaoHang.cshtml" />
+    <Content Include="Views\GiaoHang\DonGiaoHang.cshtml" />
+    <Content Include="Views\GiaoHang\ChiTietDonGiaoHang.cshtml" />
+    <Content Include="Views\GiaoHang\ThemPhuongTienGiaoHang.cshtml" />
+    <Content Include="Views\GiaoHang\ChinhSuaPhuongTienGiaoHang.cshtml" />
+    <Content Include="Views\GiaoHang\XoaPhuongTienGiaoHang.cshtml" />
+    <Content Include="Views\GiaoHang\DonDangGiao.cshtml" />
+    <Content Include="Views\GiaoHang\DonDaGiao.cshtml" />
+    <Content Include="Views\GiaoHang\DonHangHoan.cshtml" />
+    <Content Include="Views\GiaoHang\DanhSachShipper.cshtml" />
+    <Content Include="Views\GiaoHang\ThemShipper.cshtml" />
+    <Content Include="Views\GiaoHang\ChinhsuaShipper.cshtml" />
+    <Content Include="Views\GiaoHang\XoaShipper.cshtml" />
+    <Content Include="Views\GiaoHang\InPhieuXuatKho.cshtml" />
+    <Content Include="Views\GiaoHang\CapNhatTrangThaiDonHang.cshtml" />
+    <Content Include="Views\GiaoHang\DanhSachCacChuyenGiao.cshtml" />
+    <Content Include="Views\GiaoHang\ChiTietChuyenGiaoHang.cshtml" />
+    <Content Include="Views\GiaoHang\ThemChuyenGiaoHang.cshtml" />
+    <Content Include="Views\GiaoHang\InHoaDon.cshtml" />
+    <Content Include="Views\GiaoHang\HuyChuyenGiao.cshtml" />
+    <Content Include="Views\GiaoHang\ChinhSuaChuyenGiao.cshtml" />
+    <Content Include="Views\GiaoHang\XepXe.cshtml" />
+    <Content Include="Views\GiaoHang\CapNhatDonGiaoHang.cshtml" />
     <Content Include="Views\KinhDoanh\TiepNhanHH.cshtml" />
     <Content Include="Views\KinhDoanh\ChiTietPhieuNhapKho.cshtml" />
     <Content Include="Views\KinhDoanh\ChiTietPhieuXuatKho.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Img\SanPham\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Test01\Layout\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />

@@ -1,0 +1,184 @@
+﻿@model Test02.Models.NhanVienGH
+@using Test02.Models;
+@{
+    ViewBag.Title = "NhanVienGiaoHang";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+    ViewBag.gh_shippers = "active";
+    ViewBag.nd = "Cập nhật thông tin nhân viên giao";
+
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    List<ChuyenGiao> ct = db.ChuyenGiaos.ToList();
+    var ctcg = db.ChuyenGiaos.ToList();
+    var nvgh = db.NhanVienGHs.ToList();
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h4 style="text-align:center">NHÂN VIÊN GIAO HÀNG @Model.MaNV - @Model.TenNV</h4>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MaNV)
+            @Html.HiddenFor(model => model.SDT)
+            @Html.HiddenFor(model => model.DiaChi)
+            @Html.HiddenFor(model => model.TinhTrang)
+            @Html.HiddenFor(model => model.TenNV)
+
+            @*<p>
+            <strong>Mã nhân viên: </strong>
+            @Html.DisplayFor(modelItem => Model.MaNV)
+        </p>
+
+        <p>
+            <strong>Tên nhân viên: </strong>
+            @Html.DisplayFor(model => model.TenNV)
+            @Html.ValidationMessageFor(model => model.TenNV, "", new { @class = "text-danger" })
+        </p>*@
+
+            @*<div class="form-group">
+            <strong>Tình trạng làm việc: </strong>
+            <div class="col-md-10">
+                <select class="form-control" name="tinhtrang">
+                    <option>----Chọn tình trạng làm việc----</option>
+                    <option>Sẵn sàng</option>
+                    <option>Đang giao hàng</option>
+                    <option>Nghỉ phép</option>
+                </select>
+            </div>
+        </div>*@
+
+            <div class="form-group">
+                <strong>Xếp chuyến giao: </strong>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MaGH, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MaGH, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row element-button">
+                <div class="col-sm-2">
+                    <input style="background-color:#27a300" type="submit" value="Lưu" class="btn btn-default" />
+                </div>
+                <div class="col-sm-2">
+                    <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachShipper"><i class=""></i> Quay lại</a>
+                </div>
+            </div>
+        </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@*Danh sach de tra cuu cac chuyen xe*@
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                <div class="row element-button">
+                    @*<a class="btn btn-delete btn-sm nhap-tu-file" href="/GiaoHang/ThemChuyenGiaoHang"><i class="fas fa-file-upload"></i> Thêm chuyến giao hàng</a>*@
+                    <div class="col-sm-2">
+                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
+                    </div>
+                </div>
+                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                    <div class="row">
+                        <h2 style="margin-left:12%">DANH SÁCH CÁC CHUYẾN GIAO HÀNG CHƯA CÓ NHÂN VIÊN VẬN CHUYỂN</h2>
+                        <div class="col-sm-12">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable1" role="grid" aria-describedby="sampleTable_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align:center">Mã giao hàng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Tên nhân viên giao</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Mã phương tiện</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Ngày lập</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Trạng thái</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Khu vực giao</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Ngày giao</th>
+                                        @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tổng tiền thu về</th>*@
+                                        @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Xếp đơn</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ctcg)
+                                    { 
+                                        <p style="text-align:center">
+                                            <span>
+                                                @{
+                                                    var gh = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                                                    var dh = db.NhanVienGHs.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();
+                                                }
+                                            </span>
+                                        </p>
+
+                                        if (item.TrangThai == "Chờ giao")
+                                        {
+                                            @*<p style="text-align:center">
+                                                <span>
+                                                    @{
+                                                        var gh = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                                                        var dh = db.NhanVienGHs.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();
+                                                    }
+                                                </span>
+                                            </p>*@
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaGH)
+                                                </td>
+                                                <td>
+                                                    @{var tennvg1 = db.NhanVienGHs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => tennvg1.TenNV)
+                                                </td>
+                                                <td>
+                                                    @{var pt1 = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => pt1.MaPT)
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var nl1 = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => nl1.NgayLap)
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var tt = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => tt.TrangThai)
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var kvg = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => kvg.KhuVucGiao)
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var ng = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                    @Html.DisplayFor(modelItem => kvg.NgayGiao)
+                                                </td>
+                                                @*<td style="text-align:center">
+                        <a class="btn  btn-primary btn-sm edit" href="/GiaoHang/ChiTietChuyenGiaoHang/@item.MaGH">
+                            <i class='bx bxs-cube-alt'></i>
+                        </a>
+                    </td>*@
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
