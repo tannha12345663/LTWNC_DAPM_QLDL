@@ -1,0 +1,61 @@
+﻿@model Test02.Models.DaiLy
+@{
+    ViewBag.Title = "Thông tin đại lý";
+    Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
+    ViewBag.nd = "Trang cập nhật mật khẩu";
+
+
+
+    <style>
+        .img-avatar {
+            background: white;
+            border-radius: .357rem;
+            width: 250px;
+            height: 250px;
+            border: 3px solid white;
+            margin-bottom: 10px;
+            border-radius: 50% !important;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">ĐỔI MẬT KHẨU ĐẠI LÝ</h3>
+            @using (Html.BeginForm("CapNhatMatKhau", "KhachHang", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class=" row tile-body">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="element-button" style="width: 285px; margin: auto;">
+                            <div class="form-group" style="width: 285px;">
+                                <label class="control-label">Nhập mật khẩu cũ</label>
+                                <input class="form-control" type="password" name="matkhau" required="required"/>
+                                <b style="color: red;">@TempData["errorPass"]</b>
+                            </div>
+                            <div class="form-group" style="width: 285px;">
+                                <label class="control-label">Nhập mật khẩu mới</label>
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control col-sm-12", @type = "password", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group" style="width: 285px;">
+                                <label class="control-label">Xác thực mật khẩu</label>
+                                <input class="form-control" type="password" name="confirmPass" required="required" />
+                                <b style="color: red;">@TempData["errorConfirm"]</b>
+                            </div>
+                        </div>
+                        <div style="width: 300px; margin: auto;">
+                            <div style="margin-top: 20px; width: auto;">
+                                <a class="btn btn-outline-warning" href="/KhachHang/ThongTinDL/@Model.MaDL">Hủy</a>
+                                <input type="submit" value="Update" class="btn btn-outline-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

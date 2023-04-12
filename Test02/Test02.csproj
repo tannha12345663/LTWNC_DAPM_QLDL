@@ -155,6 +155,7 @@
     <Compile Include="Models\BienBangKiemKe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\ChiTietBienBang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -344,6 +345,7 @@
     <Content Include="Content\Test01\animate.css" />
     <Content Include="Content\Test01\hamburgers.min.css" />
     <Content Include="Content\Test01\main.css" />
+    <Content Include="Content\Test01\mainDKyDL.css" />
     <Content Include="Content\Test01\mainLogin.css" />
     <Content Include="Content\Test01\sb-admin-2.min.css" />
     <Content Include="Content\Test01\select2.min.js" />
@@ -373,18 +375,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap-5.0.2-dist\css\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-5.0.2-dist\css\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-5.0.2-dist\css\bootstrap-grid.rtl.css.map" />
@@ -473,6 +463,15 @@
     <Content Include="Content\fonts\font-awesome-4.7.0\scss\_variables.scss" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include="libman.json" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -481,6 +480,18 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -599,6 +610,24 @@
     <Content Include="Views\KinhDoanh\TuChoiTruyCap.cshtml" />
     <Content Include="Views\TuChoiTruyCap\Layout\Error.cshtml" />
     <Content Include="Views\TuChoiTruyCap\TuChoiTruyCap.cshtml" />
+    <Content Include="Views\KhachHang\ChiTietSP.cshtml" />
+    <Content Include="Views\KhachHang\GioHangDL.cshtml" />
+    <Content Include="Views\KhachHang\PageDatHang.cshtml" />
+    <Content Include="Views\KhachHang\ThongTinDL.cshtml" />
+    <Content Include="Views\LoginDL\Login.cshtml" />
+    <Content Include="Views\LoginDL\QuenMK.cshtml" />
+    <Content Include="Views\LoginDL\DangKy.cshtml" />
+    <Content Include="Views\KhachHang\DSDHDaGiao.cshtml" />
+    <Content Include="Views\KhachHang\CapNhatMatKhau.cshtml" />
+    <Content Include="Views\KhachHang\DSDangGiao.cshtml" />
+    <Content Include="Views\KhachHang\DSChoGiao.cshtml" />
+    <Content Include="Views\KhachHang\CongNo.cshtml" />
+    <Content Include="Views\KhachHang\LienHe.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Data\ImagesDL\" />
+    <Folder Include="Data\Images\" />
     <Content Include="Views\KeToan\ChitietCN.cshtml" />
     <Content Include="Views\KeToan\XuatCN.cshtml" />
     <Content Include="Views\KeToan\Thongbao.cshtml" />
@@ -654,14 +683,6 @@
     <Folder Include="Views\Test01\Layout\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />

@@ -3,82 +3,87 @@
     ViewBag.Title = "DeleteDH";
     Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
     ViewBag.dhdl = "active";
-    ViewBag.Name = "Hủy bỏ đơn hàng";
+    ViewBag.nd = "Trang hủy đơn hàng";
 }
 
-<h3>Bạn có muốn xóa đơn hàng @Model.MaDH này ?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.MaDL)
-        </dt>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">BẠN CÓ MUỐN XÓA ĐƠN HÀNG @Model.MaDH NÀY KHÔNG?</h3>
+            <div class="tile-body">
+                <div>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Mã đơn hàng
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.MaDL)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.MaDL)
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayLap)
-        </dt>
+                        <dt>
+                           Ngày đặt hàng
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.NgayLap)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.NgayLap)
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TrangThai)
-        </dt>
+                        <dt>
+                            Trạng thái
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TrangThai)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.TrangThai)
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TinhTrangThanhToan)
-        </dt>
+                        <dt>
+                            Tình trạng thanh toán
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TinhTrangThanhToan)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.TinhTrangThanhToan)
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DiemGiao)
-        </dt>
+                        <dt>
+                            Địa điểm giao hàng
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DiemGiao)
-        </dd>
-    </dl>
+                        <dd>
+                            @Html.DisplayFor(model => model.DiemGiao)
+                        </dd>
+                    </dl>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        if (Model.TrangThai == "Chưa xử lý")
-        {
-            <div class="form-actions no-color">
-                <input type="submit" value="Vẫn xóa" class="btn btn-danger" /> |
-                <a class="btn btn-danger btn-sm" href="/KhachHang/DonHangDL" title="Thêm">
-                    <i class="fas fa-retweet"></i>
-                    Trở lại danh sách kho
-                </a>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        if (Model.TrangThai == "Chưa xử lý")
+                        {
+                            <div class="form-actions no-color">
+                                <input type="submit" value="Vẫn xóa" class="btn btn-danger" /> |
+                                <a class="btn btn-success" href="/KhachHang/DonHangDL" title="Thêm">
+                                    <i class="fas fa-retweet"></i>
+                                    Trở lại danh sách đơn hàng
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-actions no-color">
+                                <p value="Hủy đơn" class="btn btn-default">Hủy</p>
+                                <a class="btn btn-actv btn-sm" href="/KhachHang/DonHangDL" title="Trở lại">
+                                    <i class="fas fa-retweet"></i>
+                                    Quay lại
+                                </a>
+                            </div>
+                            <p>Đã hết thời gian hủy đơn. Vui lòng liên hệ sđt 0944219234 để được chỉnh sửa</p>
+                        }
+                    }
+                </div>
             </div>
-        }
-        else
-        {
-            <div class="form-actions no-color">
-                <p value="Hủy đơn" class="btn btn-default" >Hủy</p>
-                <a class="btn btn-actv btn-sm" href="/KhachHang/DonHangDL" title="Trở lại">
-                    <i class="fas fa-retweet"></i>
-                    Quay lại
-                </a>
-            </div>
-            <p>Đã hết thời gian hủy đơn. Vui lòng liên hệ sđt 0944219234 để được chỉnh sửa</p>
-        }
-    }
-
-
-
+        </div>
+    </div>
 </div>
 
 

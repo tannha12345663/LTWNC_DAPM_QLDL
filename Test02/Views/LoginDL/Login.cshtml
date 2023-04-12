@@ -26,6 +26,17 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 </head>
 <body>
+    @if (TempData["success"] != null)
+    {
+        <script>
+            swal({
+                title: "Bạn đã đăng kí thành công",
+                icon: "success",
+                button: "Thoát",
+            });
+        </script>
+    }
+
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
@@ -64,8 +75,11 @@
                     </div>
                     <!--=====LINK TÌM MẬT KHẨU======-->
                     <div class="text-right p-t-12">
-                        <a class="txt2" href="~/LoginDL/QuenMK">
+                        @*<a class="txt2" href="~/LoginDL/QuenMK">
                             Bạn quên mật khẩu?
+                        </a>*@
+                        <a class="txt2" href="~/LoginDL/DangKy" @*style="margin-left: 90px;"*@>
+                            Đăng ký
                         </a>
                     </div>
                 }
