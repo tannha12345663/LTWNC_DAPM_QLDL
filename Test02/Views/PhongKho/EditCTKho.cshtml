@@ -1,9 +1,12 @@
 ﻿@model Test02.Models.ChiTietKho
+    @using Test02.Models
 @{
     ViewBag.Title = "EditCTKho";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Chỉnh sửa chi tiết kho";
     ViewBag.qlk = "active";
+    ViewBag.hieuung2 = "bx-tada";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
 @{
     var checkMessage = TempData["AlertMessage"];
@@ -19,7 +22,7 @@
         </script>
     }
 }
-<h2>Chỉnh sửa chi tiết kho @Model.STT của kho @Model.MaKho</h2>
+<h2>Chỉnh sửa chi tiết kho số @Model.STT của kho @Model.MaKho</h2>
 
 @using (Html.BeginForm())
 {
@@ -34,7 +37,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MaSP, "Tên sản phẩm:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-12">
-                @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control" })
+                @*@Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control", @value = Model.MaSP })*@
+                <select class="form-control col-md-12" name="MaSP" required>
+                    <option selected value="@Model.MaSP">@Model.MaSP - @Model.SanPham.TenSP</option>
+                    @{ 
+                        var sp = db.SanPhams.ToList();
+                        foreach(var item in sp)
+                {
+                    <option value="@item.MaSP" >@item.MaSP - @item.TenSP</option>
+                }
+                    }
+                </select>
                 @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -47,18 +60,24 @@
                 </div>
             </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NgayNhap, "Ngày nhập:", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-12">
-                @Html.DisplayFor(model => model.NgayNhap)
-                @Html.ValidationMessageFor(model => model.NgayNhap, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.NgayNhap, "Ngày nhập:", htmlAttributes: new { @class = "control-label col-md-12" })
+        <p class="col-md-12"><span> *Ngày nhập gần nhất: </span>@Html.DisplayFor(model => model.NgayNhap)</p>
+
+        <div class="col-md-12">
+            @Html.TextBoxFor(model => model.NgayNhap, "{0:yyyy-MM-dd HH:mm:ss}", new { @class = "form-control col-md-12", type = "datetime-local"})
+
+            @Html.ValidationMessageFor(model => model.NgayNhap, "", new { @class = "text-danger" })
         </div>
+    </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.NgayXuat, "Ngày xuất:", htmlAttributes: new { @class = "control-label col-md-1" }) @Html.DisplayFor(model => model.NgayXuat)<span> (Ngày xuất gần nhất)</span>
+            @Html.LabelFor(model => model.NgayXuat, "Ngày xuất:", htmlAttributes: new { @class = "control-label col-md-12" }) 
+            <p class="col-md-12"><span> *Ngày xuất gần nhất: </span>@Html.DisplayFor(model => model.NgayXuat)</p>
+            
             <div class="col-md-12">
-                <input class="form-control text-box single-line" data-val="true" data-val-date="The field NgayXuat must be a date." id="NgayXuat" name="NgayXuat" type="datetime-local" required>
+                @*<input class="form-control text-box single-line" data-val="true" value="@Model.NgayXuat" id="NgayXuat" name="NgayXuat" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>*@
+                @Html.TextBoxFor(model => model.NgayXuat, "{0:yyyy-MM-dd HH:mm:ss}", new { @class = "form-control col-md-12", type = "datetime-local", min = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:00") })
                 @Html.ValidationMessageFor(model => model.NgayXuat, "", new { @class = "text-danger" })
             </div>
         </div>

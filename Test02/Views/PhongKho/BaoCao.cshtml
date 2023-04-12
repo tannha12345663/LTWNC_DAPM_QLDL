@@ -5,9 +5,11 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.bc = "active";
     ViewBag.Name = "Báo cáo kho hàng";
+    ViewBag.hieuung6 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dsnv = db.NhanViens.ToList();
     var dscv = db.ChucVus.ToList();
+
 }
 @{
     var checkMessage = TempData["AlertMessage"];
@@ -159,7 +161,7 @@
                                     }
                                     else if (item.NhanVien.MaChucVu == kho)
                                     {
-                                        <p>Quản kho</p>
+                                        <p>Nhân viên kho</p>
                                     }
                                     else if (item.NhanVien.MaChucVu == kt)
                                     {
