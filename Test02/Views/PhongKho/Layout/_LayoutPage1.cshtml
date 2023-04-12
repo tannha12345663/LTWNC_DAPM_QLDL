@@ -4,12 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <!-- add sp xuất kho-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <!-- Main CSS-->
     <link rel="stylesheet" href="~/Content/Test01/main.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <!-- or -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -19,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-    
+   
 </head>
 <body onload="time()" class="app sidebar-mini rtl">
     <!-- Navbar-->
@@ -40,8 +35,7 @@
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
         <div class="app-sidebar__user">
-            <img class="app-sidebar__user-avatar" src="~/Content/Img/DiemKhang.jpg" width="50px"
-                 alt="User Image">
+            <img class="app-sidebar__user-avatar" src="~/Content/Img/DiemKhang.jpg" width="50px" alt="User Image">
             <div>
                 <p class="app-sidebar__user-name">
                     <b>
@@ -63,37 +57,37 @@
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.tq" href="~/PhongKho/Test02">
-                    <i class='app-menu__icon bx bx-tachometer'></i>
+                    <i class='app-menu__icon bx bx-tachometer @ViewBag.hieuung1'></i>
                     <span class="app-menu__label">Tổng quan</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.qlk" href="~/PhongKho/QuanLyKho">
-                    <i class='app-menu__icon bx bx-run'></i><span class="app-menu__label">
+                    <i class='app-menu__icon bx bx-run @ViewBag.hieuung2'></i><span class="app-menu__label">
                         Quản lý Kho
                     </span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.hh" href="~/PhongKho/QuanLyDL">
-                    <i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý hàng hóa</span>
+                    <i class='app-menu__icon bx bx-user-voice @ViewBag.hieuung3 '></i><span class="app-menu__label">Quản lý hàng hóa</span>
                 </a>
             </li>
-            @*<li>
-                    <a class="app-menu__item @ViewBag.tk" href="~/PhongKho/TonKho">
-                        <i class='app-menu__icon bx bx-run'></i><span class="app-menu__label">
-                            Tồn kho
-                        </span>
-                    </a>
-                </li>*@
+            <li>
+                <a class="app-menu__item @ViewBag.dhxdd" href="~/PhongKho/DSDonHang">
+                    <i class='app-menu__icon bx bxs-package @ViewBag.hieuung4'></i><span class="app-menu__label">
+                        Đơn hàng xuất
+                    </span>
+                </a>
+            </li>
             <li>
                 <a class="app-menu__item @ViewBag.nk" href="~/PhongKho/NhapKho">
-                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Phiếu nhập & xuất</span>
+                    <i class='app-menu__icon bx bx-purchase-tag-alt @ViewBag.hieuung5'></i><span class="app-menu__label">Phiếu nhập & xuất</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item @ViewBag.bc" href="~/PhongKho/BaoCao">
-                    <i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Kiểm kê / báo cáo</span>
+                    <i class='app-menu__icon bx bx-pie-chart-alt-2 @ViewBag.hieuung6'></i><span class="app-menu__label">Kiểm kê / báo cáo</span>
                 </a>
             </li>
         </ul>
@@ -114,31 +108,45 @@
             @RenderSection("scripts", false)
         </div>
     </main>
-
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="js/popper.min.js"></script>
-    <script src="https://unpkg.g.com/boxicons@latest/dist/boxicons.js"></script>
-    <!--===============================================================================================-->
-    <script src="js/bootstrap.min.js"></script>
-    <!--===============================================================================================-->
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/popper.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="src/jquery.table2excel.js"></script>
     <script src="~/Content/js/main.js"></script>
-    <!--===============================================================================================-->
+    <!-- The javascript plugin to display page loading on top-->
     <script src="~/Content/js/plugins/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="~/Content/js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/plugins/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+    <script type="text/javascript">$('#sampleTable1').DataTable();</script>
+    <script type="text/javascript">$('#sampleTable2').DataTable();</script>
+    <script type="text/javascript">$('#sampleTable3').DataTable();</script>
+    <!--<script src="js/jquery-3.2.1.min.js"></script>
     <!--===============================================================================================-->
-    <script type="text/javascript" src="~/Content/js/plugins/chart.js"></script>
+    <!--<script src="js/popper.min.js"></script>
+    <script src="https://unpkg.g.com/boxicons@latest/dist/boxicons.js"></script>-->
+    <!--===============================================================================================-->
+    <!--<script src="js/bootstrap.min.js"></script>-->
+    <!--===============================================================================================-->
+    <!--<script src="~/Content/js/main.js"></script>-->
+    <!--===============================================================================================-->
+    <!--<script src="~/Content/js/plugins/pace.min.js"></script>-->
+    <!--===============================================================================================-->
+    <!--<script type="text/javascript" src="~/Content/js/plugins/chart.js"></script>-->
     <!--==dialog_message=============================================================================================-->
     <!--===============================================================================================-->
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
     @*<script src="src/jquery.table2excel.js"></script>*@
 
-    <script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
+    @*<script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
 
-    <script type="text/javascript" src="~/Scripts/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/dataTables.bootstrap.min.js"></script>
 
-    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+        <script type="text/javascript">$('#sampleTable').DataTable();</script>-->*@
 
     <!--dialog_message -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -189,20 +197,5 @@
 
     </script>
 
-
-    <script>
-        //In dữ liệu
-        function printDiv(divName) {
-            var printContents = document.getElementById(divName).innerHTML;
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents;
-
-            window.print();
-
-            document.body.innerHTML = originalContents;
-
-        }
-    </script>
 </body>
 </html>

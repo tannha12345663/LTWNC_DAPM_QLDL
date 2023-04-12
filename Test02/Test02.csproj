@@ -134,7 +134,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\BienBangKiemKesController.cs" />
     <Compile Include="Controllers\DaiLiesController.cs" />
     <Compile Include="Controllers\DonHangsController.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
@@ -297,7 +296,13 @@
     <Content Include="Content\Img\logictic\fulfillment.png" />
     <Content Include="Content\Img\logictic\shipped.png" />
     <Content Include="Content\js\GHthemdonhang.js" />
+    <Content Include="Content\toastNoti.css" />
+    <Content Include="Content\KeToan\StyleKeToan.css" />
+    <Content Include="Content\js\chart.js" />
+    <Content Include="Content\js\tableToExcel.js" />
+    <Content Include="Content\Test01\UploadAnh.css" />
     <Content Include="Data\Images\7up.jpg" />
+    <Content Include="Data\Images\account.png" />
     <Content Include="Data\Images\coca.png" />
     <Content Include="Data\Images\cocalight.jpg" />
     <Content Include="Data\Images\pepsi.jpg" />
@@ -332,7 +337,7 @@
     <Content Include="Content\js\plugins\select2.min.js" />
     <Content Include="Content\js\plugins\sweetalert.min.js" />
     <Content Include="Content\js\popper.min.js" />
-    <Content Include="Content\QLHoadon.css" />
+    <Content Include="Content\KeToan\badges.css" />
     <Content Include="Content\soft-ui-dashboard.css" />
     <Content Include="Content\style01.css" />
     <Content Include="Content\Test01\all.min.css" />
@@ -488,6 +493,17 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\KeToan\ChinhsuCN.cshtml" />
+    <Content Include="Views\KeToan\Doanhthu.cshtml" />
+    <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
+    <Content Include="Views\KeToan\QLCongno.cshtml" />
+    <Content Include="Views\KeToan\QLDonHang.cshtml" />
+    <Content Include="Views\KeToan\TaoCongno.cshtml" />
+    <Content Include="Views\KeToan\TaoHD.cshtml" />
+    <Content Include="Views\KeToan\ThemCongno.cshtml" />
+    <Content Include="Views\KeToan\TrangChuKeToan.cshtml" />
+    <Content Include="Views\KeToan\XoaCN.cshtml" />
+    <Content Include="Views\KeToan\XuatHDBH.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -536,13 +552,8 @@
     <Content Include="Views\PhongKho\XuatKho.cshtml" />
     <Content Include="Views\KhachHang\Layout\_LayoutKhachHang.cshtml" />
     <Content Include="Views\KhachHang\PageSanPham.cshtml" />
-    <Content Include="Views\KeToan\LoiNhuan.cshtml" />
-    <Content Include="Views\KeToan\QLCongno.cshtml" />
-    <Content Include="Views\KeToan\TrangChuKeToan.cshtml" />
-    <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
     <Content Include="Views\LoginUser\Layout\QuenMatKhau.cshtml" />
     <Content Include="Views\LoginUser\QuenMK.cshtml" />
-    <Content Include="Views\KeToan\CreateDoanhThu.cshtml" />
     <Content Include="Views\DonHangs\Create.cshtml" />
     <Content Include="Views\DonHangs\Delete.cshtml" />
     <Content Include="Views\DonHangs\Details.cshtml" />
@@ -555,22 +566,10 @@
     <Content Include="Views\KinhDoanh\ThemCTHD1.cshtml" />
     <Content Include="Views\KinhDoanh\XoaCTDH.cshtml" />
     <Content Include="Views\KhachHang\DeleteDH.cshtml" />
-    <Content Include="Views\KeToan\TaoCongno.cshtml" />
-    <Content Include="Views\KeToan\ChinhsuCN.cshtml" />
-    <Content Include="Views\KeToan\XoaCN.cshtml" />
-    <Content Include="Views\KeToan\QLyDonHangKeToan.cshtml" />
-    <Content Include="Views\KeToan\TaoHD.cshtml" />
-    <Content Include="Views\KeToan\QLHoaDon.cshtml" />
-    <Content Include="Views\KeToan\XoaHD.cshtml" />
-    <Content Include="Views\KeToan\DSDaiLy.cshtml" />
     <Content Include="Views\QTV\Layout\LayoutQTV.cshtml" />
     <Content Include="Views\QTV\QLNhanVien.cshtml" />
     <Content Include="Views\QTV\ThemNV.cshtml" />
     <Content Include="Views\QTV\ChinhsuaNV.cshtml" />
-    <Content Include="Views\KeToan\XuatHDBH.cshtml" />
-    <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
-    <Content Include="Views\KeToan\CongnoDL.cshtml" />
-    <Content Include="Views\KeToan\Doanhthu.cshtml" />
     <Content Include="Views\KhachHang\DeleteDH.cshtml" />
     <Content Include="Views\KhachHang\DetailsDH.cshtml" />
     <Content Include="Views\KhachHang\DonHangDL.cshtml" />
@@ -591,7 +590,6 @@
     <Content Include="Views\PhongKho\XoaKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuNhapKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuXuatKho.cshtml" />
-    <Content Include="Views\KeToan\ThemCongno.cshtml" />
     <Content Include="Views\KinhDoanh\BaoCaoTaiChinh.cshtml" />
     <Content Include="Views\DaiLies\Create.cshtml" />
     <Content Include="Views\DaiLies\Delete.cshtml" />
@@ -601,10 +599,21 @@
     <Content Include="Views\KinhDoanh\TuChoiTruyCap.cshtml" />
     <Content Include="Views\TuChoiTruyCap\Layout\Error.cshtml" />
     <Content Include="Views\TuChoiTruyCap\TuChoiTruyCap.cshtml" />
-    <Content Include="Views\PhongKho\CreatePXuat.cshtml" />
-    <Content Include="Views\PhongKho\ChiTietDonHang.cshtml" />
+    <Content Include="Views\KeToan\ChitietCN.cshtml" />
+    <Content Include="Views\KeToan\XuatCN.cshtml" />
+    <Content Include="Views\KeToan\Thongbao.cshtml" />
+    <Content Include="Views\KeToan\ChinhsuaHD.cshtml" />
+    <Content Include="Views\KeToan\DSCongnoNo.cshtml" />
+    <Content Include="Views\KeToan\DSDaiLy.cshtml" />
+    <Content Include="Views\KeToan\CongnoDL.cshtml" />
     <Content Include="Views\PhongKho\DetailsPXK.cshtml" />
+    <Content Include="Views\KeToan\ThongKe.cshtml" />
+    <Content Include="Views\KeToan\QLDonChoGiao.cshtml" />
+    <Content Include="Views\KeToan\QLDonDaGiao.cshtml" />
+    <Content Include="Views\QTV\ChitietNV.cshtml" />
     <Content Include="Views\PhongKho\DeletePNX.cshtml" />
+    <Content Include="Views\PhongKho\DSDonHang.cshtml" />
+    <Content Include="Views\PhongKho\PhanPhoiSanPham.cshtml" />
     <Content Include="Views\BienBangKiemKes\Create.cshtml" />
     <Content Include="Views\BienBangKiemKes\Delete.cshtml" />
     <Content Include="Views\BienBangKiemKes\Details.cshtml" />
@@ -635,6 +644,9 @@
     <Content Include="Views\GiaoHang\ChinhSuaChuyenGiao.cshtml" />
     <Content Include="Views\GiaoHang\XepXe.cshtml" />
     <Content Include="Views\GiaoHang\CapNhatDonGiaoHang.cshtml" />
+    <Content Include="Views\KinhDoanh\TiepNhanHH.cshtml" />
+    <Content Include="Views\KinhDoanh\ChiTietPhieuNhapKho.cshtml" />
+    <Content Include="Views\KinhDoanh\ChiTietPhieuXuatKho.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

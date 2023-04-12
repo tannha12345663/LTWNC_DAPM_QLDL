@@ -6,7 +6,9 @@
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.dh = "active";
     ViewBag.nd = "Danh sách chi tiết đơn hàng";
+    ViewBag.hieuung = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var dssp = db.SanPhams.ToList();
 }
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -22,7 +24,31 @@
                 button: "OK",
             });
         </script>
-    };
+    }
+    else if (checkmess == "Không đủ số lượng để đặt")
+    {
+        <script>
+            swal({
+                title: "Thêm sản phẩm vào đơn hàng không thành công",
+                text: "Mã sản phẩm @TempData["slmasp"] không đủ để đặt cho đơn hàng",
+                icon: "error",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "Đã cập nhật chi tiết đơn hàng")
+    {
+        <script>
+            swal({
+                title: "Cập nhật đơn hàng @TempData["capnhatdh"] thành công",
+                text: "Đơn hàng @TempData["capnhatdh"] đã được thêm sản phẩm",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+
+    }
+        ;
 }
 <div class="row">
     <div class="col-md-12">
@@ -34,16 +60,7 @@
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row">
-
-
-                        <div class="col-md-1">
-                            <div id="sampleTable_filter" class="dataTables_filter">
-                                <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 table-responsive">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
                                 @*//Phần render từng dòng trong C#*@
                                 <thead>
@@ -107,7 +124,7 @@
                                         </tr>
                                     }
                                     <tr>
-                                        <th colspan="8">Tổng cộng đơn hàng:</th>
+                                        <th colspan="7">Tổng cộng đơn hàng:</th>
                                         @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
                                         <td>@Html.DisplayFor(modelItem => TongCong)</td>
                                     </tr>
@@ -117,8 +134,278 @@
                 </div>
             </div>
             <div class="col-sm-12">
-                <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KinhDoanh/ThemCTHD1/@Session["mdh1"]"><i class="fas fa-file-upload"></i> Thêm một sản phẩm</a>
+                <a class="btn btn-delete btn-sm nhap-tu-file" data-target="#myModal" data-toggle="modal" @*href="~/KinhDoanh/ThemCTHD1/@Session["mdh1"]"*@><i class="fas fa-file-upload"></i> Thêm một sản phẩm</a>
             </div>
         </div>
     </div>
 </div>
+
+<!--Thêm một sản phẩm-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="btnadd" action="/KinhDoanh/ThemCTHD2" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group  col-md-12">
+                            <span class="thong-tin-thanh-toan">
+                                <h5>Thêm sản phẩm cho đơn hàng @TempData["madh"]</h5>
+                            </span>
+                        </div>
+                        <div class="form-group col-md-12 " style="text-align:center">
+                            <label style="font-size:20px" class="control-label">---------THÔNG TIN ĐƠN HÀNG-------</label>
+                            <input hidden value="@TempData["madh"]" id="MaDH" name="MaDH" />
+                            <input hidden id="SoLuongSP" value="" name="sl" />
+                        </div>
+                        <div class="form-group col-md-12" id="themdong">
+                            @*<div class="form-group col-md-12">
+                                    <label class="control-label">Tên sản phẩm</label>
+                                    <select class="form-control" name="MaSP" required>
+                                        <option>-----Vui lòng chọn sản phẩm------</option>
+                                        @{ foreach (var item01 in dssp)
+                                            {
+                                                <option value="@item01.MaSP">@item01.MaSP</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Nhập số lượng :</label>
+                                    <input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />
+                                </div>*@
+                        </div>
+                        <div class="form-group col-md-12" style="text-align:end">
+                            <label style="font-size:20px;color:red" id="TongTien" class="control-label">Tổng tiền: </label>
+                            
+                        </div>
+                        <div class="form-group col-md-12" style="text-align:center">
+                            <label style="font-size:16px;color:blue" id="CongNo" class="control-label" hidden>Đang kiểm tra... </label>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input class="btn btn-add" id="themsp" type="button" name="DiemGiao" value="Thêm SP" onclick="themSP()" required />
+                            <input class="btn btn-cancel" id="xoasp" type="button" name="DiemGiao" disabled value="Xóa SP" onclick="xoaSP()" required />
+                        </div>
+                        <div style="text-align:end" class="col-lg-12">
+                            <button class="btn btn-save" id="CapNhatDh" style="margin-left:15px" type="submit">Thêm mới đơn hàng</button>
+                            <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+
+                        </div>
+                    </div>
+                </div>
+                <h5 id="TongTien"></h5>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+
+
+</script>
+@section script{
+    <script>
+        var i = 0;
+    function themSP() {
+        if (i >= 3) {
+            $("#themsp").attr("disabled", "disabled");
+        }
+        else {
+            i++;
+            var row = '<div class="row" id="nd' + i + '">' +
+                '<div class="form-group col-lg-6">' +
+                    '<label class="control-label">Tên sản phẩm</label>' +
+                ' <select class="form-control" id="ChonSP'+i+'" name="MaSP' + i +'" required>' +
+                    '<option selected disabled>----Vui lòng chọn sản phẩm----</option>' +
+                    '@{ foreach (var item01 in dssp)
+                        {<option value="@item01.MaSP">@item01.MaSP - @item01.TenSP - SL: @item01.TongTon</option> } }' +
+                '</select>' +
+                    '</div>' +
+                '<div class="form-group col-md-3">' +
+                    '<label class="control-label">Số lượng:</label>' +
+                    '<input class="form-control" type="number" min=0 name="SoLuong' + i + '" id="SoLuong' + i +'" required />' +
+                '</div>' +
+                '<div class="form-group col-md-3">' +
+                    '<p class="control-label" style="margin-top: 16px;" id="Total'+i+'">Thành tiền: 0 VNĐ </p>' +
+                '</div>' +
+                '</div>';
+            $("#xoasp").prop('disabled', false);
+            var div = document.getElementById("themdong");
+            div.innerHTML += row;
+
+            console.log(i);
+            $("#SoLuongSP").attr("value", i);
+            //$("#btnadd").attr("action", "/KinhDoanh/ThemCTHD2/" + i);
+        };
+
+    }
+    function xoaSP() {
+
+        if (i > 0) {
+            $("#themsp").prop('disabled', false);
+            document.getElementById('nd'+i).remove();
+            i--;
+            console.log(i);
+            $("#SoLuongSP").attr("value", i);
+            console.log("Đã xóa kiểm tra");
+            $("#CongNo").attr("hidden", true);
+            $("#btnadd").attr("action", "/KinhDoanh/ThemCTHD2/" + i);
+        } else if (i = 0) {
+            $("#xoasp").attr("disabled", "disabled");
+            
+        };
+        KTSoDu();
+        var TongTien=  $("#TongTien").data("value");
+        KTCongNo(TongTien);
+    }
+    function resetpage() {
+        i = 0;
+        $("#themsp").prop("disabled",false);
+        var resetp = '';
+        document.getElementById("themdong").innerHTML=resetp;
+        }
+        
+        $(document).ready(function () {
+            const VND = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            });
+            var divElement = $("#themdong").change(function () {
+                $("#CongNo").prop('hidden', false);
+                //var kt = divElement.on('change', 'select', function (e) {
+                //    console.log("Mã sản phẩm đã chọn "+$(e.target).val());
+                //    var value = $(e.target).val();
+                //    if (value != null) {
+                //        var kt01 = divElement.on('change', 'input', function (e1) {
+                //            console.log("Mã sản phẩm đã chọn khi có số lượng :" + value);
+                //            var soluong = $(e1.currentTarget).val();
+                //            console.log("Số lượng đã mua :"+ soluong);
+                //        });
+                //    }
+                //})
+                
+                for (var item = 1; item <= i; item++) {
+                    var value = $("#ChonSP" + item).val();
+                    if (value != null) {
+                        var sL = $("#SoLuong" + item).val();
+                        if (sL >= 0) {
+                           // console.log("Bạn đã chọn sản phẩm với mã "+ value +" Với số lượng là :"+sL);
+                            var model = {
+                                MaSP: value,
+                                SoLuong: sL
+                            };
+                            // console.log("Item trước khi thêm vào tổng tiền " + item + "Với tổng tiền là : " + TinhTongTien(model));
+                            console.log(model);
+                            TinhTongTien(model, item);
+                            
+                        }
+                        
+                    }
+                    
+                }
+            });
+        });
+        function CheckTongTien() {
+            const VND = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            });
+            
+            var total = 0;
+            for (var item01 = 1; item01 < 3; item01++) {
+                var check = $("#Total" + item01).data("value");
+                if (check != null) {
+                    total += check;
+                }
+
+            }
+            $("#TongTien").html('Tổng tiền: ' + VND.format(total));
+        }
+        var total1 = 0;
+        var total2 = 0;
+        var total3 = 0;
+        var TongTien = 0;
+        function TinhTongTien(model, item) {
+            const VND = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            });
+            
+            $.ajax({
+                url: '/KinhDoanh/CheckTongTien',
+                type: 'POST',
+                dataType:"json",
+                data: model,
+                success: function (res) {
+                    console.log("Tổng tiền :" + res.data);
+                    var result = res.data;
+                    
+                    $("#Total" + item).html("Thành tiền " + VND.format(result));
+                    $("#Total" + item).attr('data-value', result);
+                    //CheckTongTien();
+                    if (item == 1) {
+                        total1 = res.data;
+                    }
+                    else if (item == 2) {
+                        total2 = res.data;
+                    }
+                    else if(item==3){
+                        total3 = res.data;
+                    }
+                    TongTien = total1 + total2 + total3;
+                    $("#TongTien").html('Tổng tiền: ' + VND.format(TongTien));
+                    $("#TongTien").attr('data-value', TongTien);
+                    $("#SoLuong" + item).attr('max', '' + res.tongton);
+                    KTCongNo(TongTien);
+                }
+            });
+
+        }
+        function KTSoDu() {
+            var total = 0;
+            const VND = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            });
+            for (var item01 = 1; item01 <= i; item01++) {
+                var check = $("#Total" + item01).data("value");
+                if (check != null) {
+                    total += check;
+                }
+            }
+            $("#TongTien").html('Tổng tiền: ' + VND.format(total));
+            $("#TongTien").attr("data-value", total);
+        }
+        function KTCongNo(TongTien) {
+            var madh = $("#MaDH").val();
+            var thanhtien = TongTien;
+            console.log("Số tiền hiện tại :"+thanhtien);
+            var model = {
+                MaDH: madh,
+                ThanhTien: thanhtien
+            };
+            console.log("Thành tiền khi gửi kt : " + thanhtien + " , Mã đơn hàng: " + madh);
+            $.ajax({
+                url: '/KinhDoanh/CheckCongNo',
+                type: 'POST',
+                dataType: "json",
+                data: model,
+                success: function (res) {
+                    if (res.success == true) {
+                        $("#CongNo").html('Đơn hàng hợp lệ');
+                        $("#CapNhatDh").prop('disabled', false);
+                    }
+                    else {
+                        $("#CongNo").html('Đơn hàng vượt mức công nợ cho phép');
+                        $("#CapNhatDh").attr("disabled", "disabled");
+                    }
+                }
+            });
+        }
+    </script>
+}

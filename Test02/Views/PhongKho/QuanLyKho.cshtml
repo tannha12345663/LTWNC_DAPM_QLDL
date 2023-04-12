@@ -5,7 +5,7 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Danh sách kho";
     ViewBag.qlk = "active";
-    
+    ViewBag.hieuung2 = "bx-tada";
 
 }
 
@@ -52,7 +52,7 @@
         <div class="tile">
             <h3 class="tile-title" style="text-align:center;"><b>DANH SÁCH KHO HÀNG</b></h3>
             <div class="tile-body table-responsive-sm">
-                <div class="row element-button">
+                <div class="row element-button">    
                     <a class="btn btn-add btn-sm" href="~/PhongKho/ThemKho" title="Thêm" style="margin-left:20px;">
                         <i class="fas fa-plus"></i>
                         Thêm kho mới
@@ -113,11 +113,11 @@
 
 
 <script>
-    oTable = $('#sampleTable').dataTable();
-    $('#all').click(function (e) {
-        $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
-        e.stopImmediatePropagation();
-    });
+    //oTable = $('#sampleTable').dataTable();
+    //$('#all').click(function (e) {
+    //    $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
+    //    e.stopImmediatePropagation();
+    //});
 
     //In dữ liệu
     var myApp = new function () {

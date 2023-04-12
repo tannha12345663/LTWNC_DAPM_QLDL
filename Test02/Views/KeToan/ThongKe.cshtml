@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Test02.Models.SanPham>
+@using Test02.Models
+@{
+    ViewBag.Title = "Thống kê";
+    Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
+    ViewBag.tk = "active";
+    ViewBag.nd = "Thống kê";
+    QuanLyDLEntities2 database = new QuanLyDLEntities2();
+}
+
+<div class="row">
+    <div class="col-md-12 container-fluid">
+        <div class="tile">
+            <div class="tile-body">
+                <div class="row element-button" style="padding-left:10px">
+                    <div class="col-sm-2">
+                        <a class="btn btn-outline-dark btn-sm" type="button" title="In" onclick="printDiv('printme')">
+                            <i class="fas fa-print"></i> In dữ liệu
+                        </a>
+                    </div>
+                </div>
+
+                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                    @*<div class="row">
+                            <div class="col-md-1">
+                                <div id="sampleTable_filter" class="dataTables_filter">
+                                    <label>Tìm kiếm:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="sampleTable"></label>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="row" id="printme">
+                        <div class="col-sm-12  table-responsive">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                @*//Phần render từng dòng trong C#*@
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã SP</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Tên sản phẩm</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Đơn vị</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Giá</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng hàng bán</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var total = 0;}
+                                    @foreach (var item in Model)
+                                    {
+
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaSP)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TenSP)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DonViTinh)
+                                        </td>
+                                        @{ var gia = string.Format("{0:0,0 vnđ}", item.Gia);}
+                                        <td>
+                                            @Html.DisplayFor(modelItem => gia)
+                                        </td>
+                                        @{
+                                            int soluongban = 0;
+                                            List<ChiTietDonHang> chiTietDonHangs = database.ChiTietDonHangs.Where(s => s.MaSP == item.MaSP).ToList();
+                                            foreach (var ct in chiTietDonHangs)
+                                            {
+                                                var dh = database.DonHangs.Where(s=>s.MaDH == ct.MaDH).FirstOrDefault();
+                                                if (dh.TinhTrangThanhToan=="Đã thanh toán")
+                                                {
+                                                    soluongban = (int)ct.SoLuong + soluongban;
+                                                }
+
+                                            }
+                                        }
+                                        <td>
+                                            @soluongban
+                                        </td>
+                                        <td>
+                                            @{ 
+                                                int giasp = (int)item.Gia;
+                                                double tienban = (double)soluongban * giasp;
+                                                var ThanhTien = string.Format("{0:0,0 vnđ}", tienban);
+                                                }
+                                            @Html.DisplayFor(modelItem => ThanhTien)
+
+                                        </td>
+                                    </tr>
+
+
+
+                                                            }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //In dữ liệu
+    function printDiv(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+
+    }
+</script>

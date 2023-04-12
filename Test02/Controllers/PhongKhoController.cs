@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,19 +11,162 @@ using Test02.Models;
 
 namespace Test02.Controllers
 {
-    [Authentication(MaChucVu = "NVK")]
-
+    [Authentication (MaChucVu ="NVK")]
+    
     public class PhongKhoController : Controller
     {
         QuanLyDLEntities2 database = new QuanLyDLEntities2();
         // GET: PhongKho
-        public ActionResult Index()
+        public ActionResult Test02()
         {
+            //tính tổng số kho
+            var total = database.Khoes.ToList().Count;
+            TempData["tongKho"] = total;
+            //tính tổng sản phẩm sắp hết hàng
+            var dssphh = database.ChiTietKhoes.ToList();
+            var total2 = 0;
+            foreach (var item in dssphh)
+            {
+                if (item.TinhTrang == "Sắp hết hàng")
+                {
+                    total2 = total2 + 1;
+                }
+            }
+            TempData["tongSPHH"] = total2;
+
+            //tính tổng số sản phẩm
+            var totalsp = database.SanPhams.ToList().Count;
+            TempData["Tongsp1"] = totalsp;
+            //tính tổng số Phiếu nhập xuất hàng
+            var tongpn = 0;
+            var tongpx = 0;
+            var pnx = database.PhieuNhapXuats.ToList();
+            foreach (var item in pnx)
+            {
+                string str = item.MaPhieu.Substring(0, 4);
+                if (str == "KDPX")
+                {
+                    tongpx = tongpx + 1;
+                }
+                else if (str == "KDPN")
+                {
+                    tongpn = tongpn + 1;
+                }
+                else
+                {
+                    tongpx = tongpx + 1;
+                }
+            }
+            TempData["Tongpn"] = tongpn;
+            TempData["Tongpx"] = tongpx;
+            //tính tổng sản phẩm tồn kho
+            var total3 = 0;
+            foreach (var item in dssphh)
+            {
+                if (item.TinhTrang == "Tồn kho")
+                {
+                    total3 = total3 + 1;
+                }
+            }
+            TempData["TongSPTK"] = total3;
+
+            return View(database.Khoes.ToList());
+        }
+
+        public ActionResult QuanLyDL()
+        {
+            //tính tổng Sp sắp hết hàng / hết hàng
+            var dssphh = database.ChiTietKhoes.ToList();
+            var total2 = 0;
+            foreach (var item in dssphh)
+            {
+                if (item.TinhTrang == "Sắp hết hàng" || item.TinhTrang == "Hết hàng")
+                {
+                    total2 = total2 + 1;
+                }
+            }
+            TempData["tongSPHH"] = total2;
+            //tính tổng sản phẩm tồn kho
+            var total3 = 0;
+            foreach (var item in dssphh)
+            {
+                if (item.TinhTrang == "Tồn kho")
+                {
+                    total3 = total3 + 1;
+                }
+            }
+            TempData["TongSPTK"] = total3;
+            //Kiểm tra đã tạo phiếu chưa
+            var total5 = 0; //đếm trong ct phiếu
+            var total4 = 0; //đếm trong ct kho
+
+            var total6 = 0; //đếm trong ct phiếu
+            var total7 = 0; //đếm trong ct kho
+            foreach (var ctp in database.ChiTietPhieuNhapXuats)
+            {
+                
+                foreach(var item in database.ChiTietKhoes)
+                {
+                    if (item.TinhTrang == "Sắp hết hàng" || item.TinhTrang == "Hết hàng")
+                    {
+                        if (item.MaKho == ctp.MaKho && item.MaSP == ctp.MaSP && item.SoLuong == ctp.SoLuongTrongKho)
+                        {
+                            total5 += 1;
+                            total4 += 1;
+                            break;
+                        }
+                    }
+                    if (item.TinhTrang == "Tồn kho")
+                    {
+                        if (item.MaKho == ctp.MaKho && item.MaSP == ctp.MaSP && item.SoLuong == ctp.SoLuongTrongKho)
+                        {
+                            total6 += 1;
+                            total7 += 1;
+                            break;
+                        }
+                    }
+                }
+            }
+            //check sap het hàng / hết hàng
+            if(total4 == total5 && (total4 != 0 && total5 != 0))
+            {
+                TempData["checkTrungSPHH"] = true;
+            }else
+                TempData["checkTrungSPHH"] = false;
+
+            //check tồn kho
+            if (total6 == total7 && (total6 != 0 && total7 != 0))
+            {
+                TempData["checkTrungSPTK"] = true;
+            }
+            else
+                TempData["checkTrungSPTK"] = false;
+
+            return View();
+        }
+
+        public ActionResult updateTongTon()
+        {
+            //set tổng tồn từng sp theo từng chi tiết kho
+            var chiTietKhos = database.ChiTietKhoes.ToList();
+            var sanPhams = database.SanPhams.ToList();
+            foreach (var sp in sanPhams)
+            {
+                sp.TongTon = 0;
+                foreach (var ctk in chiTietKhos)
+                {
+                    if (sp.MaSP == ctk.MaSP)
+                    {
+                        sp.TongTon += ctk.SoLuong;
+                    }
+                }
+                database.Entry(sp).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                database.SaveChanges();
+            }
             return View();
         }
 
         // Quản lý kho
-
         public ActionResult QuanLyKho()
         {
             return View(database.Khoes.ToList().OrderByDescending(s => s.TenKho));
@@ -40,7 +183,7 @@ namespace Test02.Controllers
         public ActionResult CreateCTKho(string id)
         {
             Session["makho1"] = id;
-            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "MaKho");
+            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "MaKho" );
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "MaSP");
             return View();
         }
@@ -68,7 +211,7 @@ namespace Test02.Controllers
                     chiTietKho.TinhTrang = "Còn hàng";
                 }
                 //var ktra = (System.DateTime.Now - chiTietKho.NgayXuat);
-                else if (chiTietKho.SoLuong >= 1000)
+                else if(chiTietKho.SoLuong >= 1000)
                 {
                     chiTietKho.TinhTrang = "Tồn kho";
                 }
@@ -82,14 +225,15 @@ namespace Test02.Controllers
                     return RedirectToAction("CreateCTKho", new RouteValueDictionary(
                                         new { controller = "PhongKho", action = "CreateCTKho", Id = chiTietKho.MaKho }));
                 }
-                if (chiTietKho.NgayXuat == null)
+                if(chiTietKho.NgayXuat == null)
                 {
                     DateTime ngayDf = new DateTime(2000, 01, 01);
                     chiTietKho.NgayXuat = ngayDf;
                 }
-
+                
                 database.ChiTietKhoes.Add(chiTietKho);
                 database.SaveChanges();
+                updateTongTon();
                 TempData["AlertMessage"] = "Đã thêm";
                 TempData["MaCTKkk"] = chiTietKho.STT;
                 return RedirectToAction("ChiTietKho", new RouteValueDictionary(
@@ -97,6 +241,7 @@ namespace Test02.Controllers
             }
             return View();
         }
+
 
         // GET: ChiTietKhoes/Edit/5
         public ActionResult EditCTKho(int id)
@@ -117,7 +262,7 @@ namespace Test02.Controllers
 
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
-            return View(mactk);
+              return View(mactk);
         }
 
         // POST: ChiTietKhoes/Edit/5
@@ -177,25 +322,57 @@ namespace Test02.Controllers
                 return View(mactk);
             }
 
-            // POST: ChiTietKhoes/Delete/5
-            [HttpPost, ActionName("DeleteCTKho")]
-            [ValidateAntiForgeryToken]
-            public ActionResult DeleteCTKhoConfirmed(int id)
-            {
-                var mactk = database.ChiTietKhoes.Where(s => s.STT == id).FirstOrDefault();
-                database.ChiTietKhoes.Remove(mactk);
-                database.SaveChanges();
-                TempData["AlertMessage"] = "Đã xóa";
-                TempData["MaCTKkk"] = mactk.STT;
-                return RedirectToAction("QuanLyKho");
-            }
+        // POST: ChiTietKhoes/Delete/5
+        [HttpPost, ActionName("DeleteCTKho")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteCTKhoConfirmed(int id)
+        {
+            var mactk = database.ChiTietKhoes.Where(s => s.STT == id).FirstOrDefault();
+            database.ChiTietKhoes.Remove(mactk);
+            database.SaveChanges();
+            updateTongTon();
+            TempData["AlertMessage"] = "Đã xóa";
+            TempData["MaCTKkk"] = mactk.STT;
+            return RedirectToAction("QuanLyKho");
+        }
 
-            //-----------------------------------------------------------------------------------
-            // GET: Khoes/Create
-            public ActionResult Themkho()
+        //-----------------------------------------------------------------------------------
+        // GET: Khoes/Create
+        public ActionResult Themkho()
+        {
+            return View();
+        }
+
+        public JsonResult CheckTenKhoAvailability(string namekho)
+        {
+            System.Threading.Thread.Sleep(200);
+            var tenKho = database.Khoes.Where(s => s.TenKho == namekho).SingleOrDefault();
+            if(tenKho != null)
             {
-                return View();
+                return Json(1);
             }
+            else
+            {
+                return Json(0);
+            }
+        }
+
+
+        public JsonResult CheckDiaChiAvailability(string diachi)
+        {
+            System.Threading.Thread.Sleep(200);
+            var diaChi = database.Khoes.Where(s => s.DiaChi == diachi).SingleOrDefault();
+            if (diaChi != null)
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(0);
+            }
+        }
+
+           
 
             // POST: Khoes/Create
             // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -307,7 +484,7 @@ namespace Test02.Controllers
                 TempData["AlertMessage"] = "Đã xóa";
                 TempData["MaCTKkk"] = id;
                 return RedirectToAction("QuanLyKho");
-            }
+            } 
 
         protected override void Dispose(bool disposing)
         {
@@ -317,68 +494,9 @@ namespace Test02.Controllers
             }
             base.Dispose(disposing);
         }
+    
 
-
-        public ActionResult Test02()
-        {
-            //tính tổng số kho
-            var total = database.Khoes.ToList().Count;
-            TempData["tongKho"] = total;
-            //tính tổng sản phẩm sắp hết hàng
-            var dssphh = database.ChiTietKhoes.ToList();
-            var total2 = 0;
-            foreach (var item in dssphh)
-            {
-                if (item.TinhTrang == "Sắp hết hàng")
-                {
-                    total2 = total2 + 1;
-                }
-            }
-            TempData["tongSPHH"] = total2;
-
-            //tính tổng số sản phẩm
-            var totalsp = database.SanPhams.ToList().Count;
-            TempData["Tongsp1"] = totalsp;
-            //tính tổng số Phiếu nhập xuất hàng
-            var tongpn = 0;
-            var tongpx = 0;
-            var pnx = database.PhieuNhapXuats.ToList();
-            foreach (var item in pnx)
-            {
-                string str = item.MaPhieu.Substring(0, 2);
-                if (str == "PX")
-                {
-                    tongpx = tongpx + 1;
-                }
-                else if (str == "PN")
-                {
-                    tongpn = tongpn + 1;
-                }
-                else
-                {
-                    tongpx = tongpx + 1;
-                }
-            }
-            TempData["Tongpn"] = tongpn;
-            TempData["Tongpx"] = tongpx;
-            //tính tổng sản phẩm tồn kho
-            var total3 = 0;
-            foreach (var item in dssphh)
-            {
-                if (item.TinhTrang == "Tồn kho")
-                {
-                    total3 = total3 + 1;
-                }
-            }
-            TempData["TongSPTK"] = total3;
-
-            return View(database.Khoes.ToList());
-        }
-        public ActionResult QuanLyDL()
-        {
-            return View();
-        }
-
+        
 
         ////----------------------------------------------------------------------
         //// GET: PhieuNhapXuats/Create
@@ -389,9 +507,9 @@ namespace Test02.Controllers
             return View();
         }
 
-        //// POST: PhieuNhapXuats/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: PhieuNhapXuats/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult TaoPhieuNhapKho([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu,MaNVLap")] PhieuNhapXuat phieuNhapXuat)
@@ -399,18 +517,38 @@ namespace Test02.Controllers
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
-                var maphieu = "PNK" + rd.Next(1, 1000);
+                var maphieu = "KDPNK" + rd.Next(1, 1000);
                 phieuNhapXuat.MaPhieu = maphieu;
                 Session["phieunhap"] = maphieu;
                 phieuNhapXuat.NgayLap = System.DateTime.Now;
                 phieuNhapXuat.LoaiPhieu = "Phiếu đề nghị nhập hàng vào kho";
                 Session["KinhGui"] = " ";
                 Session["HoTen"] = " ";
+                var user = (Test02.Models.NhanVien)HttpContext.Session["user"];
+                phieuNhapXuat.MaNVLap = user.MaNV;
+                phieuNhapXuat.TinhTrang = "Chưa xét duyệt";
+                //var ctphieu = database.ChiTietPhieuNhapXuats.;
+
+                foreach (var item in database.ChiTietKhoes)
+                {
+                    if(item.TinhTrang == "Sắp hết hàng" || item.TinhTrang == "Hết hàng")
+                    {
+                        ChiTietPhieuNhapXuat ctphieu = new ChiTietPhieuNhapXuat();
+                        ctphieu.MaCT = "CT" + rd.Next(100, 10000);
+                        ctphieu.MaPhieu = maphieu;
+                        ctphieu.MaKho = item.MaKho;
+                        ctphieu.MaSP = item.MaSP;
+                        ctphieu.SoLuongTrongKho = item.SoLuong;
+                        ctphieu.SoLuongDeXuat = 513 - item.SoLuong;
+                        database.ChiTietPhieuNhapXuats.Add(ctphieu);
+                    }
+                }
                 database.PhieuNhapXuats.Add(phieuNhapXuat);
                 database.SaveChanges();
                 TempData["AlertMessage"] = "Đã thêm";
                 TempData["MaPNKho"] = maphieu;
-                return RedirectToAction("QuanLyDL");
+                return RedirectToAction("ChiTietPhieuNhapKho", new RouteValueDictionary(
+                                        new { controller = "PhongKho", action = "ChiTietPhieuNhapKho", Id = maphieu }));
             }
 
             return View(phieuNhapXuat);
@@ -454,6 +592,12 @@ namespace Test02.Controllers
         public ActionResult XoaPhieuNhapKhoConfirmed(string id)
         {
             PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            var ctphieuNhapXuat = database.ChiTietPhieuNhapXuats.Where(s => s.MaPhieu == id);
+            foreach(var item in ctphieuNhapXuat)
+            {
+                database.ChiTietPhieuNhapXuats.Remove(item);
+
+            }
             database.PhieuNhapXuats.Remove(phieuNhapXuat);
             database.SaveChanges();
             TempData["AlertMessage"] = "Đã xóa";
@@ -485,18 +629,38 @@ namespace Test02.Controllers
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
-                var maphieux = "PXK" + rd.Next(1, 1000);
+                var maphieux = "KDPXK" + rd.Next(1, 1000);
                 phieuNhapXuat.MaPhieu = maphieux;
                 Session["phieuXuat"] = maphieux;
                 phieuNhapXuat.NgayLap = System.DateTime.Now;
                 phieuNhapXuat.LoaiPhieu = "Phiếu đề nghị xuất hàng tồn";
                 Session["KinhGui"] = " ";
                 Session["HoTen"] = " ";
+                var user = (Test02.Models.NhanVien)HttpContext.Session["user"];
+                phieuNhapXuat.MaNVLap = user.MaNV;
+                phieuNhapXuat.TinhTrang = "Chưa xét duyệt";
+                //var ctphieu = database.ChiTietPhieuNhapXuats.;
+
+                foreach (var item in database.ChiTietKhoes)
+                {
+                    if (item.TinhTrang == "Tồn kho")
+                    {
+                        ChiTietPhieuNhapXuat ctphieu = new ChiTietPhieuNhapXuat();
+                        ctphieu.MaCT = "CT" + rd.Next(100, 10000);
+                        ctphieu.MaPhieu = maphieux;
+                        ctphieu.MaKho = item.MaKho;
+                        ctphieu.MaSP = item.MaSP;
+                        ctphieu.SoLuongTrongKho = item.SoLuong;
+                        ctphieu.SoLuongDeXuat = item.SoLuong - 532;
+                        database.ChiTietPhieuNhapXuats.Add(ctphieu);
+                    }
+                }
                 database.PhieuNhapXuats.Add(phieuNhapXuat);
                 database.SaveChanges();
                 TempData["AlertMessage"] = "Đã thêm";
                 TempData["MaPNKho"] = maphieux;
-                return RedirectToAction("QuanLyDL");
+                return RedirectToAction("ChiTietPhieuXuatKho", new RouteValueDictionary(
+                                        new { controller = "PhongKho", action = "ChiTietPhieuXuatKho", Id = maphieux }));
             }
             return View(phieuNhapXuat);
         }
@@ -539,6 +703,12 @@ namespace Test02.Controllers
         public ActionResult XoaPhieuXuatKhoConfirmed(string id)
         {
             PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            var ctphieuNhapXuat = database.ChiTietPhieuNhapXuats.Where(s => s.MaPhieu == id);
+            foreach (var item in ctphieuNhapXuat)
+            {
+                database.ChiTietPhieuNhapXuats.Remove(item);
+
+            }
             database.PhieuNhapXuats.Remove(phieuNhapXuat);
             database.SaveChanges();
             TempData["AlertMessage"] = "Đã xóa";
@@ -549,6 +719,8 @@ namespace Test02.Controllers
         //------------------------------------------Hết phần tồn kho - phiếu xuất---------------------------
         public ActionResult BaoCao()
         {
+            //Chức vụ nhân viên lập biên bảng kiểm kê
+            TempData["tencv1"] = TempData["tencv"];
             //tính tổng số kho
             var totalkho = database.Khoes.ToList().Count;
             TempData["TongKho"] = totalkho;
@@ -559,16 +731,16 @@ namespace Test02.Controllers
             var tongpn = 0;
             var tongpx = 0;
             var pnx = database.PhieuNhapXuats.ToList();
-            foreach (var item in pnx)
+            foreach(var item in pnx)
             {
-                string str = item.MaPhieu.Substring(0, 2);
-                if (str == "PX")
+                string str = item.MaPhieu.Substring(0, 4); 
+                if(str == "KDPX")
                 {
                     tongpx = tongpx + 1;
                 }
-                else
-                {
-                    tongpn = tongpn + 1;
+                else if (str == "KDPN")
+                { 
+                    tongpn = tongpn + 1; 
                 }
             }
             TempData["Tongpn"] = tongpn;
@@ -606,7 +778,8 @@ namespace Test02.Controllers
         public ActionResult CreateBBKK()
         {
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho");
-            ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu");
+            var nvlap = database.NhanViens.Where(s => s.MaChucVu == "NVK").ToList();
+            ViewBag.MaNVLap = new SelectList(nvlap, "MaNV", "MaNV");
             return View();
         }
 
@@ -615,47 +788,55 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateBBKK([Bind(Include = "MaKK,MaNVLap,MaKho,TenNV,TenBienBang,NgayLap")] BienBangKiemKe bienBangKiemKe)
+        public ActionResult CreateBBKK([Bind(Include = "MaKK,MaKho,MaNVLap,TenBienBang,NgayLap")] BienBangKiemKe bienBangKiemKe)
         {
+            DataTable bb = new DataTable();
+            if (Session["BBKK"] == null)
+            {
+                bb.Columns.Add("MaKK");
+                bb.Columns.Add("MaKho");
+                bb.Columns.Add("MaNVLap");
+                bb.Columns.Add("NgayLap");
+                bb.Columns.Add("TenBB");
+                //bb.Columns.Add("MaNVLap");
+                //Tạo xong lưu lại Session
+                Session["BBKK"] = bb;
+            }
+            else
+            {
+                //Lấy thông tin từ Session
+                bb = Session["BBKK"] as DataTable;
+            }
             if (ModelState.IsValid)
             {
-                DataTable bb = new DataTable();
-                if (Session["BBKK"] == null)
-                {
-                    bb.Columns.Add("MaKK");
-                    bb.Columns.Add("MaKho");
-                    bb.Columns.Add("MaNVLap");
-                    bb.Columns.Add("NgayLap");
-                    bb.Columns.Add("TenBB");
-                    //bb.Columns.Add("MaNVLap");
-                    //Tạo xong lưu lại Session
-                    Session["BBKK"] = bb;
-                }
-                else
-                {
-                    //Lấy thông tin từ Session
-                    bb = Session["BBKK"] as DataTable;
-                }
                 Random rd = new Random();
                 var mabb = "BB" + rd.Next(1, 1000);
                 bienBangKiemKe.MaKK = mabb;
                 Session["tempdata"] = mabb;
                 bienBangKiemKe.NgayLap = System.DateTime.Now;
-                DataRow dr = bb.NewRow();
-                dr["MaKK"] = bienBangKiemKe.MaKK;
-                dr["MaNVLap"] = bienBangKiemKe.MaNVLap;
-                dr["MaKho"] = bienBangKiemKe.MaKho;
-                dr["TenNV"] = bienBangKiemKe.NhanVien.TenNV;
-                dr["TenBB"] = bienBangKiemKe.TenBienBang;
-                dr["NgayLap"] = bienBangKiemKe.NgayLap;
-                bb.Rows.Add(dr);
-                //database.BienBangKiemKes.Add(bienBangKiemKe);
-                //database.SaveChanges();
-                return RedirectToAction("CreateCTBBKK");
+                if(bienBangKiemKe.TenBienBang != null)
+                {
+                    DataRow dr = bb.NewRow();
+                    dr["MaKK"] = bienBangKiemKe.MaKK;
+                    dr["MaNVLap"] = bienBangKiemKe.MaNVLap;
+                    dr["MaKho"] = bienBangKiemKe.MaKho;
+                    dr["TenBB"] = bienBangKiemKe.TenBienBang;
+                    dr["NgayLap"] = bienBangKiemKe.NgayLap;
+                    bb.Rows.Add(dr);
+                    //database.BienBangKiemKes.Add(bienBangKiemKe);
+                    //database.SaveChanges();
+                    
+                    return RedirectToAction("CreateCTBBKK");
+                }
+                else
+                {
+                    TempData["AlertMessage"] = "null";
+                    return RedirectToAction("CreateBBKK");
+                }
             }
 
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", bienBangKiemKe.MaKho);
-            ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu", bienBangKiemKe.MaNVLap);
+            ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaNV", bienBangKiemKe.MaNVLap);
             return View(bienBangKiemKe);
         }
 
@@ -663,6 +844,7 @@ namespace Test02.Controllers
         public ActionResult CreateCTBBKK()
         {
             ViewBag.MaKK = new SelectList(database.BienBangKiemKes, "MaKK", "MaKho");
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
             return View();
         }
 
@@ -671,37 +853,57 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateCTBBKK([Bind(Include = "MaCTBB,MaKK,SLTonKho,SLThucTe,ChenhLech,LyDo")] ChiTietBienBang chiTietBienBang)
+        public ActionResult CreateCTBBKK([Bind(Include = "STT,MaKK,MaSP,SLTonKho,SLThucTe,ChenhLech,LyDo")] ChiTietBienBang chiTietBienBang)
         {
             if (ModelState.IsValid)
             {
-                chiTietBienBang.MaKK = (string)Session["tempdata"];
-                //Random rd = new Random();
-                //var mactbb = "CTBB" + rd.Next(1, 1000);
-                //chiTietBienBang.STT = mactbb;
-                chiTietBienBang.ChenhLech = (int)chiTietBienBang.SLTonKho - (int)chiTietBienBang.SLThucTe;
-                BienBangKiemKe bienBangKiemKe = new BienBangKiemKe();
-
-                DataTable bb = Session["BBKK"] as DataTable;
-
-                foreach (DataRow dr in bb.Rows)
+                if(chiTietBienBang.SLThucTe != null && chiTietBienBang.LyDo != null)
                 {
-                    bienBangKiemKe.MaKK = dr["MaKK"].ToString();
-                    bienBangKiemKe.MaKho = dr["MaSP"].ToString();
-                    bienBangKiemKe.MaNVLap = dr["MaNVLap"].ToString();
-                    var date = Convert.ToDateTime(dr["NgayLap"]);
-                    bienBangKiemKe.NgayLap = date;
-                    bienBangKiemKe.TenBienBang = dr["TenBB"].ToString();
-                    bienBangKiemKe.MaNVLap = dr["TenNV"].ToString();
+                    chiTietBienBang.MaKK = (string)Session["tempdata"];
+                    Random rd = new Random();
+                    //var mactbb = "CTBB" + rd.Next(1, 1000);
+                    chiTietBienBang.STT = rd.Next(1, 1000);
+                    BienBangKiemKe bienBangKiemKe = new BienBangKiemKe();
+
+                    DataTable bb = Session["BBKK"] as DataTable;
+
+                    foreach (DataRow dr in bb.Rows)
+                    {
+                        bienBangKiemKe.MaKK = dr["MaKK"].ToString();
+                        bienBangKiemKe.MaKho = dr["MaKho"].ToString();
+                        bienBangKiemKe.MaNVLap = dr["MaNVLap"].ToString();
+                        var date = Convert.ToDateTime(dr["NgayLap"]);
+                        bienBangKiemKe.NgayLap = date;
+                        bienBangKiemKe.TenBienBang = dr["TenBB"].ToString();
+                    }
+                    var makhofromds = database.ChiTietKhoes.ToList();
+                    var slton = 0;
+                    foreach (var item in makhofromds)
+                    {
+                        if (item.MaKho == bienBangKiemKe.MaKho && item.MaSP == chiTietBienBang.MaSP)
+                        {
+                            slton += (int)item.SoLuong;
+                        }
+                    }
+                    chiTietBienBang.SLTonKho = slton;
+                    chiTietBienBang.ChenhLech = Math.Abs((int)chiTietBienBang.SLTonKho - (int)chiTietBienBang.SLThucTe) ;
+
+                    database.BienBangKiemKes.Add(bienBangKiemKe);
+                    database.SaveChanges();
+                    database.ChiTietBienBangs.Add(chiTietBienBang);
+                    database.SaveChanges();
+                    TempData["AlertMessage"] = "Đã thêm";
+                    return RedirectToAction("BaoCao");
                 }
-                database.BienBangKiemKes.Add(bienBangKiemKe);
-                database.SaveChanges();
-                database.ChiTietBienBangs.Add(chiTietBienBang);
-                database.SaveChanges();
-                TempData["AlertMessage"] = "Đã thêm";
-                return RedirectToAction("BaoCao");
+                else
+                {
+                    TempData["AlertMessage"] = "null";
+                    return RedirectToAction("CreateCTBBKK");
+                }
+                
             }
-            ViewBag.MaKK = new SelectList(database.BienBangKiemKes, "MaKK", "MaNVLap", chiTietBienBang.MaKK);
+            ViewBag.MaKK = new SelectList(database.BienBangKiemKes, "MaKK", "MaKho", chiTietBienBang.MaKK);
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietBienBang.MaSP); 
             return View(chiTietBienBang);
         }
 
@@ -713,11 +915,12 @@ namespace Test02.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             BienBangKiemKe bienBangKiemKe = database.BienBangKiemKes.Find(id);
+            ChiTietBienBang ctbienBangKiemKe = database.ChiTietBienBangs.Where(s => s.MaKK == bienBangKiemKe.MaKK).FirstOrDefault();
             if (bienBangKiemKe == null)
             {
                 return HttpNotFound();
             }
-            return View(bienBangKiemKe);
+            return View(ctbienBangKiemKe);
         }
 
         // POST: BienBangKiemKes/Delete/5
@@ -726,6 +929,7 @@ namespace Test02.Controllers
         public ActionResult DeleteBBKKConfirmed(string id)
         {
             BienBangKiemKe bienBangKiemKe = database.BienBangKiemKes.Find(id);
+            ChiTietBienBang ctbienBangKiemKe = database.ChiTietBienBangs.Where(s => s.MaKK == bienBangKiemKe.MaKK).FirstOrDefault();
             database.BienBangKiemKes.Remove(bienBangKiemKe);
             database.SaveChanges();
             TempData["AlertMessage"] = "Đã xóa";
@@ -742,11 +946,22 @@ namespace Test02.Controllers
             }
             TempData["makk"] = id;
             BienBangKiemKe bienBangKiemKe = database.BienBangKiemKes.Find(id);
+            ChiTietBienBang ctbienBangKiemKe = database.ChiTietBienBangs.Where(s => s.MaKK == bienBangKiemKe.MaKK).FirstOrDefault();
             if (bienBangKiemKe == null)
             {
                 return HttpNotFound();
             }
-            return View(bienBangKiemKe);
+
+            //var cv = database.ChucVus.ToList();
+            //foreach (var item in cv)
+            //{
+            //    if (bienBangKiemKe.NhanVien.MaChucVu == item.MaChucVu)
+            //    {
+            //        TempData["tencv"] = item.ChucVu1 + " " + item.ViTri;
+            //        break;
+            //    }
+            //}
+            return View(ctbienBangKiemKe);
             //ChiTietBienBang chiTietBienBang = database.ChiTietBienBangs.Find(id);
             //if (chiTietBienBang == null)
             //{
@@ -754,24 +969,64 @@ namespace Test02.Controllers
             //}
             //return View(chiTietBienBang);
         }
-        //----------------------------------------------------------------------------------------------------
-        //Phiếu nhập xuất từng kho
+//----------------------------------------------------------------------------------------------------
+        //Phiếu nhập xuất từng kho cho đơn hàng
         // GET: PhieuNhapXuats/Create
         public ActionResult CreatePXuat(string id)
         {
-
             TempData["mahdx"] = id;
             TempData["ngaylap"] = System.DateTime.Now;
             var maDH = id;
+            var donhang = database.DonHangs.Where(s => s.MaDH == maDH).FirstOrDefault();
+            List<ChiTietDonHang> ctdonhang = database.ChiTietDonHangs.Where(s => s.MaDH == maDH).ToList();
+            var kho = database.Khoes.ToList();
+            
+            List<Kho> khouutien = new List<Kho>();//set danh sách kho uu tien
+            int i = 0; // Biến đếm 
+            //kiểm tra kho có chứa sản phẩm của đơn hàng không?
+            foreach (var item in kho)
+            {
+                //tạo danh sách chi tiết kho của kho item
+                List<ChiTietKho> ctk1 = database.ChiTietKhoes.Where(s=> s.MaKho == item.MaKho).ToList();
+                foreach(var itemdh in ctdonhang)
+                {
+                    foreach(var item2 in ctk1)
+                    {
+                        //Kiểm tra sản phẩm có số lượng trong kho phải >= số lượng sản phẩm của đơn hàng
+                        if(item2.MaSP == itemdh.MaSP && item2.SoLuong >= itemdh.SoLuong)
+                        {
+                            //Nếu thỏa thì tăng i lên 1
+                            i += 1;
+                            break;
+                        }
+                    }
+                }
+                //Nếu i = số lượng đơn hàng thì add kho item vào ds kho ưu tiên
+                if (i >= ctdonhang.Count())
+                {
+                    i = 0; //trả lại i=0 để xét tiếp kho tiếp theo
+                    khouutien.Add(item);
+                }
+                else i = 0;
+            }
+            
             foreach (var item in database.DonHangs)
             {
                 if (maDH == item.MaDH)
                 {
-                    TempData["tenDL"] = item.DaiLy.TenDL;
-                    TempData["diemgiao"] = item.DiemGiao;
+                    TempData["maDL"] = item.DaiLy.MaDL;
+                    TempData["tenDL"] =  item.DaiLy.TenDL;
+                    TempData["diemgiao"] =  item.DiemGiao;
                 }
             }
-            ViewBag.MaKho = new SelectList(database.Khoes, "TenKho", "MaKho");
+            ViewBag.MaKho = new SelectList(khouutien, "MaKho", "MaKho");
+            if(khouutien.Count() == 0)
+            {
+                ViewBag.MaKho = " ";
+                TempData["AlertMessage"] = "noKho";
+                return RedirectToAction("ChiTietDonHang", new RouteValueDictionary(
+                                            new { controller = "PhongKho", action = "ChiTietDonHang", Id = Session["madhxk"] }));
+            }
             ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu");
             ViewBag.MaHD = new SelectList(database.DonHangs, "MaDH", "MaDH");
             return View();
@@ -782,27 +1037,66 @@ namespace Test02.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePXuat([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu,MaNVLap")] PhieuNhapXuat phieuNhapXuat, string ThongTinKho1, string vanchuyen, string nguoigiaohang)
+        public ActionResult CreatePXuat([Bind(Include = "MaPhieu,MaKho,NgayLap,LoaiPhieu,MaNVLap")] PhieuNhapXuat phieuNhapXuat, string ThongTinKho1)
         {
             if (ModelState.IsValid)
             {
-
                 Random rd = new Random();
                 var maphieu = "PHXHD0" + rd.Next(1, 1000);
                 phieuNhapXuat.MaPhieu = maphieu;
                 phieuNhapXuat.NgayLap = System.DateTime.Now;
-                phieuNhapXuat.LoaiPhieu = "Phiếu xuất kho theo đơn hàng số " + Session["madhxk"];
+                phieuNhapXuat.LoaiPhieu = "Phiếu xuất kho theo đơn hàng số "+ Session["madhxk"];
                 var mk = ThongTinKho1;
                 phieuNhapXuat.MaKho = mk;
-                phieuNhapXuat.NguoiGiaoHang = nguoigiaohang;
-                phieuNhapXuat.PhuongTienGiaoHang = vanchuyen;
                 phieuNhapXuat.MaDH = (string)Session["madhxk"];
                 var user = (Test02.Models.NhanVien)HttpContext.Session["user"];
                 phieuNhapXuat.MaNVLap = user.MaNV;
-
+                
                 if (ThongTinKho1 != "----chọn kho----")
                 {
+                    var donhang = database.DonHangs.Where(s => s.MaDH == phieuNhapXuat.MaDH).FirstOrDefault();
+                    List<ChiTietDonHang> ctdonhang = database.ChiTietDonHangs.Where(s => s.MaDH == phieuNhapXuat.MaDH).ToList();
+                    var khoxuat = database.Khoes.Where(s => s.MaKho == phieuNhapXuat.MaKho).FirstOrDefault();
+                    List<ChiTietKho> ctk = khoxuat.ChiTietKhoes.ToList();
+                    
+                    
                     TempData["makho001"] = ThongTinKho1;
+                    donhang.PhieuXuatKho = true;
+                    donhang.TinhTrangGH = "Chờ giao";
+
+                    foreach (var itemdh in ctdonhang)
+                    {
+                        foreach (var item in ctk)
+                        {
+                            if (item.MaSP == itemdh.MaSP && item.SoLuong >= itemdh.SoLuong)
+                            {
+                                item.SoLuong -= itemdh.SoLuong;
+                                var sp = database.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();
+                                sp.TongTon -= itemdh.SoLuong;
+                                //ngày xuất cập nhật khi trừ số lượng
+                                item.NgayXuat = DateTime.Today;
+                                //cập nhật lại tình trạng
+                                if (item.SoLuong <= 100 && item.SoLuong > 0)
+                                {
+                                    item.TinhTrang = "Sắp hết hàng";
+                                }
+                                else if (item.SoLuong > 100 && item.SoLuong < 1000)
+                                {
+                                    item.TinhTrang = "Còn hàng";
+                                }
+                                //var ktra = (System.DateTime.Now - chiTietKho.NgayXuat);
+                                else if (item.SoLuong >= 1000)
+                                {
+                                    item.TinhTrang = "Tồn kho";
+                                }
+                                else if (item.SoLuong == 0)
+                                {
+                                    item.TinhTrang = "Hết hàng";
+                                }
+                                break;
+                            }
+                        }
+                    }
                     database.PhieuNhapXuats.Add(phieuNhapXuat);
                     database.SaveChanges();
                     TempData["AlertMessage"] = "Đã thêm";
@@ -815,15 +1109,19 @@ namespace Test02.Controllers
                     TempData["AlertMessage"] = "khonull";
                     return View(phieuNhapXuat);
                 }
-
+                
             }
-
+            
             ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", phieuNhapXuat.MaKho);
             ViewBag.MaNVLap = new SelectList(database.NhanViens, "MaNV", "MaChucVu", phieuNhapXuat.MaNVLap);
             return View(phieuNhapXuat);
         }
 
         //đơn hàng
+        public ActionResult DSDonHang()
+        {
+            return View();
+        }
         public ActionResult ChiTietDonHang(string id)
         {
             Session["madhxk"] = id;
@@ -837,6 +1135,43 @@ namespace Test02.Controllers
         public ActionResult NhapKho()
         {
             return View(database.PhieuNhapXuats.ToList().OrderByDescending(s => s.NgayLap));
+        }
+
+        //cập nhật trạng thái phiếu đề nghị khi đã xét duyệt
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateStatusPhieu(string id)
+        {
+            PhieuNhapXuat phieu = database.PhieuNhapXuats.Find(id);
+            var ctphieu = database.ChiTietPhieuNhapXuats.Where(s=>s.MaPhieu == id).ToList();
+            string str = phieu.MaPhieu.Substring(0, 4);
+            if (str == "KDPX")
+            {
+                foreach (var item in ctphieu)
+                {
+                    var ctkho = database.ChiTietKhoes.Where(s => s.MaKho == item.MaKho && s.MaSP == item.MaSP && s.SoLuong == item.SoLuongTrongKho).FirstOrDefault();
+                    ctkho.SoLuong -= item.SoLuongDeXuat;
+                    ctkho.TinhTrang = "Còn hàng";
+                }
+                phieu.TinhTrang = "Đã xuất";
+                database.Entry(phieu).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                database.SaveChanges();
+            }
+            else if(str == "KDPN")
+            {
+                foreach (var item in ctphieu)
+                {
+                    var ctkho = database.ChiTietKhoes.Where(s => s.MaKho == item.MaKho && s.MaSP == item.MaSP && s.SoLuong == item.SoLuongTrongKho).FirstOrDefault();
+                    ctkho.SoLuong += item.SoLuongDeXuat;
+                    ctkho.TinhTrang = "Còn hàng";
+                }
+                phieu.TinhTrang = "Đã nhập";
+                database.Entry(phieu).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                database.SaveChanges();
+            }
+            TempData["AlertMessage"] = "status";
+            var phieunx = database.PhieuNhapXuats.ToList();
+            return RedirectToAction("NhapKho");
         }
         // GET: PhieuNhapXuats
         //public ActionResult Index()
@@ -852,19 +1187,20 @@ namespace Test02.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+            
             PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
             TempData["maPhieuXuattheodonhang"] = id;
-            //var maDH = phieuNhapXuat.MaDH;
-            //TempData["ctmadh"] = phieuNhapXuat.MaDH;
-            //foreach (var item in database.DonHangs)
-            //{
-            //    if (maDH == item.MaDH)
-            //    {
-            //        TempData["tenDL"] = item.DaiLy.TenDL;
-            //        TempData["diemgiao"] = item.DiemGiao;
-            //    }
-            //}
+            var maDH = phieuNhapXuat.MaDH;
+            TempData["ctmadh"] = phieuNhapXuat.MaDH;
+            foreach (var item in database.DonHangs)
+            {
+                if (maDH == item.MaDH)
+                {
+                    TempData["maDL"] = item.MaDL;
+                    TempData["tenDL"] = item.DaiLy.TenDL;
+                    TempData["diemgiao"] = item.DiemGiao;
+                }
+            }
             if (phieuNhapXuat == null)
             {
                 return HttpNotFound();
@@ -901,5 +1237,12 @@ namespace Test02.Controllers
             return RedirectToAction("NhapKho");
         }
 
+
+        //----------------------------------------
+        //Phân phối sản phẩm
+        public ActionResult PhanPhoiSanPham()
+        {
+            return View();
+        }
     }
 }

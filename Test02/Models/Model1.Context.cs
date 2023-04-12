@@ -12,6 +12,8 @@ namespace Test02.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class QuanLyDLEntities2 : DbContext
     {
@@ -43,5 +45,10 @@ namespace Test02.Models
         public virtual DbSet<PhieuNhapXuat> PhieuNhapXuats { get; set; }
         public virtual DbSet<PhuongTienGH> PhuongTienGHs { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
+    
+        public virtual int sp_capnhat()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_capnhat");
+        }
     }
 }

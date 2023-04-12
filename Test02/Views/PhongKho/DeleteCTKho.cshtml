@@ -5,73 +5,82 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Xóa chi tiết kho";
     ViewBag.qlk = "active";
+    ViewBag.hieuung2 = "bx-tada";
 }
 
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6 tile">
+            <h3 class="tile-title">Bạn muốn xóa chi tiết kho @Model.STT của kho @Model.MaKho?</h3>
+            <div class="text-center">
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        Ngày nhập:
+                    </dt>
 
-<h3>Bạn muốn xóa chi tiết kho @Model.STT của kho @Model.MaKho?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Ngày nhập:
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.NgayNhap)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.NgayNhap)
-        </dd>
+                    <dt>
+                        Ngày xuất gần nhất:
+                    </dt>
 
-        <dt>
-            Ngày xuất gần nhất:
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.NgayXuat)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.NgayXuat)
-        </dd>
+                    <dt>
+                        Số lượng (thùng):
+                    </dt>
 
-        <dt>
-            Số lượng (thùng):
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.SoLuong)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.SoLuong)
-        </dd>
+                    <dt>
+                        Tình trạng:
+                    </dt>
 
-        <dt>
-            Tình trạng:
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.TinhTrang)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.TinhTrang)
-        </dd>
+                    <dt>
+                        Tên kho:
+                    </dt>
 
-        <dt>
-            Tên kho:
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Kho.TenKho)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Kho.TenKho)
-        </dd>
+                    <dt>
+                        Tên sản phẩm:
+                    </dt>
 
-        <dt>
-            Tên sản phẩm:
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.SanPham.TenSP)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.SanPham.TenSP)
-        </dd>
+                </dl>
 
-    </dl>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Xóa vĩnh viễn" class="btn btn-outline-danger" /> 
-            <a class="btn btn-outline-dark btn-sm" href="/PhongKho/ChiTietKho/@Model.MaKho">
-                <i class="fas fa-retweet"></i>
-                Trở lại
-            </a>
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Xóa vĩnh viễn" class="btn btn-outline-danger" />
+                        <a class="btn btn-outline-dark btn-sm" href="/PhongKho/ChiTietKho/@Model.MaKho">
+                            <i class="fas fa-retweet"></i>
+                            Trở lại
+                        </a>
+                    </div>
+                }
+            </div>
         </div>
-    }
-</div>
+        <div class="col-sm-3"></div>
+    </div>
+
+
+
