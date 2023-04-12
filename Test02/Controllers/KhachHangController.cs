@@ -462,7 +462,7 @@ namespace Test02.Controllers
                 else
                 {
                     LuuAnh(daiLy, HinhAnh);
-                    db.Entry(daiLy).State = System.Data.Entity.EntityState.Modified;
+                    //db.Entry(daiLy).State = System.Data.Entity.EntityState.Modified;
                     update.TenDL = daiLy.TenDL;
                     update.Email = daiLy.Email;
                     update.SDT = daiLy.SDT;
