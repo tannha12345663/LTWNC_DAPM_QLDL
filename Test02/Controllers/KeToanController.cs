@@ -24,7 +24,6 @@ namespace Test02.Controllers
      
         public double maxno(string maloai)
         {
-            return View(database.DonHangs.ToList());
             double maxcn = 0;
             if (maloai == "LDL01")
             {
