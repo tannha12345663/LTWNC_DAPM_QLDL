@@ -90,7 +90,7 @@
                             @Html.HiddenFor(model => model.MaLoaiDL)
                             @Html.HiddenFor(model => model.UserName)
                             @Html.HiddenFor(model => model.Password)*@
-                        @Html.HiddenFor(model => model.HinhAnh)
+                            @*@Html.HiddenFor(model => model.HinhAnh)*@
                         @Html.HiddenFor(model => model.NgayTao)
 
                         <div style="text-align: center;">
@@ -100,11 +100,13 @@
                             }
                             else
                             {
-                                <img class="img-avatar" src="@Model.HinhAnh" />
+                                @*<img id="preview1" class="img-avatar" style="visibility:visible;" src="@Model.HinhAnh" />*@
+                                <img id="preview" class="img-avatar" style="visibility: visible;" src="@Model.HinhAnh" />
                             }
                         </div>
                         <div style="margin-top: 20px;">
-                            <input type="file" name="HinhAnh" style="width: 80px;" />
+                            @Html.TextBox("HinhAnh", "", new { type = "file", @class = "form-control text-center text-danger" })
+                            @*<input type="file" name="HinhAnh" style="width: 80px;" />*@
                         </div>
                     </div>
 
@@ -165,6 +167,13 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="Scripts/jquery-1.4.1.js" type="text/javascript"></script>
 <script type="text/javascript">
+    HinhAnh.onchange = evt => {
+        const [file] = HinhAnh.files
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+            document.getElementById("preview").style.visibility = "visible";
+        }
+    }
         function EmailCheck() {
             $("#mess").html("check ...");
             $.post("@Url.Action("CheckEmailAvailability", "LoginDL")",

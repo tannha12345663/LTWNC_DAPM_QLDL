@@ -335,7 +335,7 @@ namespace Test02.Controllers
             var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
             var dsCongNo = db.PhieuCongNoes.Where(s => s.MaDL == daiLy.MaDL).ToList();
 
-            var conNo = db.PhieuCongNoes.Where(s => s.TrangThai == "Chưa thanh toán");
+            var conNo = db.PhieuCongNoes.Where(s => s.TrangThai == "Chưa thanh toán" && s.MaDL == daiLy.MaDL);
 
             if (daiLy.MaLoaiDL == "LDL01")
             {
@@ -462,12 +462,12 @@ namespace Test02.Controllers
                 else
                 {
                     LuuAnh(daiLy, HinhAnh);
+                    db.Entry(daiLy).State = System.Data.Entity.EntityState.Modified;
                     update.TenDL = daiLy.TenDL;
                     update.Email = daiLy.Email;
                     update.SDT = daiLy.SDT;
                     update.DiaChi = daiLy.DiaChi;
-                    update.HinhAnh = daiLy.HinhAnh;
-                    //db.Entry(daiLy).State = System.Data.Entity.EntityState.Modified;
+                    update.HinhAnh = daiLy.HinhAnh;                  
                     db.SaveChanges();
                     TempData["UpdateTC"] = "Cập nhật đại lý thành công";
                     return View(daiLy);

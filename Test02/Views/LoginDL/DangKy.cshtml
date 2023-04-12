@@ -52,12 +52,6 @@
 
             @using (Html.BeginForm("DangKy", "LoginDL", FormMethod.Post))
             {
-                if (TempData["errorInfo"] != null)
-                {
-                    <p style="color: red;">
-                        @TempData["errorInfo"]
-                    </p>
-                }
                 <div class="row" style="padding: 20px; font-size: 18px;">
                     <div class="col-md-6" style="border-right: 2px solid #FFD43B;">
                         <div class="col-md-12" style="padding:0px 40px 0px 40px;">

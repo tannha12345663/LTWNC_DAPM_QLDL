@@ -12,22 +12,28 @@ namespace Test02.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DonHangGiao
+    public partial class ChuyenGiao
     {
-        public int STT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ChuyenGiao()
+        {
+            this.DonHangs = new HashSet<DonHang>();
+            this.NhanVienGHs = new HashSet<NhanVienGH>();
+        }
+    
         public string MaGH { get; set; }
-        public string MaDH { get; set; }
-        public string MaNV { get; set; }
+        public string MaNVLap { get; set; }
         public string MaPT { get; set; }
-        public string DiemGiao { get; set; }
-        public Nullable<bool> TrangThaiXD { get; set; }
         public Nullable<System.DateTime> NgayGiao { get; set; }
         public Nullable<double> TienThu { get; set; }
-        public string XacNhanGH { get; set; }
+        public string TrangThai { get; set; }
         public Nullable<System.DateTime> NgayLap { get; set; }
+        public string KhuVucGiao { get; set; }
     
-        public virtual DonHang DonHang { get; set; }
-        public virtual NhanVienGH NhanVienGH { get; set; }
         public virtual PhuongTienGH PhuongTienGH { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DonHang> DonHangs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NhanVienGH> NhanVienGHs { get; set; }
     }
 }
