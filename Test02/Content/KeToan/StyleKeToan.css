@@ -1,0 +1,45 @@
+﻿.title-ketoan {
+    margin-bottom: 5px;
+    font-size: 20px;
+    border-bottom: 2px solid #FFD43B;
+    padding-bottom: 10px;
+    color: black;
+    text-align: center;
+}
+
+.detail-daily {
+    padding: 10px 10px;
+}
+
+.iddaily {
+    display: flex;
+}
+
+    .iddaily p {
+        padding-right: 20px;
+    }
+
+.daily-name {
+    padding-bottom: 10px;
+}
+
+.btn-func {
+    padding-left: 20px;
+}
+
+.modal-name {
+    margin-top:20px;
+    padding: 10px 0px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.confirmation-dh {
+    padding: 5px 15px;
+    font-size: 18px;
+}
+
+    .confirmation-dh span {
+        font-weight: 600;
+    }
