@@ -7,14 +7,17 @@
     ViewBag.nd = "Bảng điều khiển";
     ViewBag.hieuung1 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    var nv =(NhanVien) Session["user"];
+    var nv = (NhanVien)Session["user"];
     var dsdonhang = db.DonHangs.ToList();
     var dsdl = db.DaiLies.ToList();
     var sldl = db.DaiLies.Count();
-    var sldh = db.DonHangs.Where(s=>s.TinhTrangThanhToan=="Đã thanh toán").Count();
+    var sldh = db.DonHangs.Where(s => s.TinhTrangThanhToan == "Đã thanh toán").Count();
     var slsp = db.SanPhams.Count();
     var sldhchuaxl = db.DonHangs.Where(s => s.TrangThai == "Chưa xử lý").Count();
-    var slbc = db.BaoCaos.Where(s => s.MaNV == nv.MaNV).Count() ;
+    var slbc = db.BaoCaos.Where(s => s.MaNV == nv.MaNV).Count();
+
+    var slpxn = db.PhieuNhapXuats.Where(s=>s.MaPhieu.Substring(0,4)== "KDPX" || s.MaPhieu.Substring(0,4)== "KDPN").Count();
+
 }
 <div class="row">
     <!--Thông tin kho và số sản phẩm sắp hết hàng-->
@@ -90,9 +93,9 @@
                 <a class="widget-small primary coloured-icon " href="#">
                     <i class='icon bx bxs-info-circle fa-3x'></i>
                     <div class="info">
-                        <h4>Phiếu đề nghị xuất kho</h4>
-                        <p><b>Tổng  phiếu được tạo</b></p>
-                        <p class="info-tong">Phiếu xuất hàng hóa ra khỏi kho.</p>
+                        <h4>Phiếu đề nghị xuất/ nhập kho</h4>
+                        <p><b>Tổng số phiếu được tạo: @slpxn</b></p>
+                        <p class="info-tong">Phiếu xuất/ nhập hàng hóa ra khỏi kho.</p>
                     </div>
                 </a>
             </div>
