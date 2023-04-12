@@ -207,6 +207,13 @@ namespace Test02.Controllers
             ViewBag.ChuyenGiao = new SelectList(database.ChuyenGiaos, "MaGH", "MaGH");
             return View(database.DonHangs.Where(s => s.MaDH == id).FirstOrDefault());
         }
+        [HttpPost]
+        public ActionResult CapNhatDonGiaoHang(String id, DonHang donHang)
+        {
+            database.Entry(donHang).State = System.Data.Entity.EntityState.Modified;
+            database.SaveChanges();
+            return RedirectToAction("DonGiaoHang");
+        }
 
 
         //Don hang hoan
