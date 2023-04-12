@@ -1,0 +1,129 @@
+﻿﻿@model Test02.Models.DonHang
+@using Test02.Models;
+@{
+    ViewBag.Title = "InHoaDon";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+    ViewBag.gh_cg = "active";
+    ViewBag.nd = "In hóa đơn";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    List<ChiTietDonHang> ct = db.ChiTietDonHangs.ToList();
+}
+
+<link href="~/Content/KeToan/StyleKeToan.css" rel="stylesheet" />
+
+<div class="container-sm">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile" id="printMe">
+
+                @{
+                    DateTime ngay = (DateTime)(Model.NgayLap);
+                    int thang = ngay.Month;
+
+                    var daily = db.DaiLies.Where(s => s.MaDL == Model.MaDL).FirstOrDefault();
+                    var loaidaily = db.LoaiDLs.Where(s => s.MaLoaiDL == daily.MaLoaiDL).FirstOrDefault();
+                }
+
+                <div style="padding:20px">
+                    <div style="text-align:center">
+                        <h4>HÓA ĐƠN ĐƠN HÀNG</h4>
+                        <p> <strong>Ngày: </strong>@Html.DisplayFor(model => ngay)</p>
+                        <p> <strong>Mã đơn hàng: </strong>@Html.DisplayFor(model => model.MaDH)</p>
+                    </div>
+
+
+                    <p> <strong>Tên đại lý: </strong>@Html.DisplayFor(model => daily.TenDL)</p>
+                    <p> <strong>Loại đại lý: </strong>@Html.DisplayFor(model => loaidaily.MaLoaiDL)</p>
+                    <p> <strong>Địa điểm giao: </strong>@Html.DisplayFor(model => model.DiemGiao)</p>
+                    <div class="row">
+                        <div class="col-sm-12  table-responsive">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                @*//Phần render từng dòng trong C#*@
+                                <thead>
+                                    <tr role="row" style="text-align:center">
+                                        <th>Mã CTDH</th>
+                                        <th>Mã SP</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var total = 0;
+                                        List<ChiTietDonHang> chiTietDonHangs = db.ChiTietDonHangs.Where(s => s.MaDH == Model.MaDH).ToList();
+
+                                    }
+                                    @foreach (var item in chiTietDonHangs)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaCTDH)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaSP)
+                                            </td>
+                                            @{
+                                                var sanpham = db.SanPhams.Where(sp => sp.MaSP == item.MaSP).FirstOrDefault();
+                                            }
+                                            <td>
+                                                @Html.DisplayFor(modelItem => sanpham.TenSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SoLuong)
+                                            </td>
+
+
+                                            <td>
+                                                @{ total += Convert.ToInt32(item.ThanhTien);}
+                                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
+                                                @Html.DisplayFor(modelItem => ThanhTien)
+
+                                            </td>
+
+                                        </tr>
+
+                                    }
+                                    <tr>
+                                        <th colspan="4">Tổng cộng tiền nợ:</th>
+                                        @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                        <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                    </tr>
+                            </table>
+
+                        </div>
+
+                        <h5 style="margin-left:82%;padding-top:20px;" id="sample1">Khách hàng</h5>
+                        <h6 style="margin-left:81%; font-style:italic;" id="sample1">(ký và ghi rõ họ tên)</h6>
+                        <br />
+                        <br />
+                        <br />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-left:10px" id="btnin">
+        @*<div class="col-sm-2">
+            <a class="btn btn-danger" id="btnReturn" href="/GiaoHang/ChiTietChuyenGiaoHang/@TempData["ctmadh"]" title="Trở lại">
+                Trở lại
+            </a>
+        </div>*@
+        <div class="col-sm-2">
+            <a class="btn btn-delete " title="In" onclick="printDiv('printMe')">
+                <i class="fas fa-print"></i> In dữ liệu
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.getElementById("btnin").style.display = "none";
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>

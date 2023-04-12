@@ -1,0 +1,133 @@
+﻿@model IEnumerable<Test02.Models.DonHang>
+
+@using Test02.Models;
+@{
+    ViewBag.Title = "ChiTietDonGiaoHang";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+    ViewBag.gh_donhangmoi = "active";
+    ViewBag.nd = "Chi tiết đơn giao hàng";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    List<ChuyenGiao> ct = db.ChuyenGiaos.ToList();
+    var ctcg = db.ChuyenGiaos.ToList();
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body" id="hd">
+
+                <h3 style="text-align:center">THÔNG TIN ĐƠN HÀNG</h3>
+                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+
+                    @foreach (var item in Model)
+                    {
+                        <p style="text-align:center">
+                            <span>
+                                @{
+                                    var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+                                    var gh = db.ChiTietDonHangs.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
+                                }
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Mã đơn hàng: </strong> @{
+                                var dh01 = db.DonHangs.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
+                            @Html.DisplayFor(modelItem => dh01.MaDH)
+                        </p>
+                        <p>
+                            <strong>Tên Đại lý: </strong> @{
+                                var tendly = db.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();}
+                            @Html.DisplayFor(modelItem => tendly.TenDL)
+                        </p>
+                        <p>
+                            <strong>Địa điểm giao: </strong>
+                            @Html.DisplayFor(modelItem => dh.DiemGiao)
+                        </p>
+
+                        <td style="text-align:center">
+                            <a class="btn  btn-success" href="/GiaoHang/CapNhatTrangThaiDonHang/@item.MaDH">Xếp đơn</a>
+                        </td>
+
+                        break;
+                    }
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0">
+                                <thead>
+                                    <tr role="row" style="text-align:center">
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px;">Mã sản phẩm</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" style="width: 100px;">Tên sản phẩm</th>
+                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" style="width: 100px;">Số lượng</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px;">Đơn vị tính</th>
+                                        @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px;">Đơn giá</th>
+                                            <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" style="width: 120px;">Thành tiền</th>*@
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var total = 0;
+                                    }
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <p style="text-align:center">
+                                            <span>
+                                                @{
+                                                    var dh = db.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
+                                                    var gh = db.ChiTietDonHangs.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();
+                                                    var sp = db.SanPhams.Where(s => s.MaSP == gh.MaSP).FirstOrDefault();}
+                                            </span>
+                                        </p>
+                                        <tr>
+                                            <td>
+                                                @{var masp = db.ChiTietDonHangs.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
+                                                @Html.DisplayFor(modelItem => masp.MaSP)
+                                            </td>
+                                            <td>
+                                                @{var tensp = db.SanPhams.Where(s => s.MaSP == gh.MaSP).FirstOrDefault();}
+                                                @Html.DisplayFor(modelItem => tensp.TenSP)
+                                            </td>
+                                            <td>
+                                                @{var sl = db.ChiTietDonHangs.Where(s => s.MaDH == dh.MaDH).FirstOrDefault();}
+                                                @Html.DisplayFor(modelItem => sl.SoLuong)
+                                            </td>
+                                            <td>
+                                                @{var dvt = db.SanPhams.Where(s => s.MaSP == gh.MaSP).FirstOrDefault();}
+                                                @Html.DisplayFor(modelItem => dvt.DonViTinh)
+                                            </td>
+                                            @*<td>
+                                                    @{ var chuyendoi = string.Format("{0:0,0 vnđ}", tensp.Gia);}
+                                                    @Html.DisplayFor(modelItem => chuyendoi)
+                                                </td>
+
+                                                @{var tt = db.ChiTietDonHangs.Where(s => s.MaDH == gh.MaDH).FirstOrDefault();}
+                                                <td>
+                                                    @{total += Convert.ToInt32(tt.ThanhTien);}
+                                                    @{var ThanhTien = string.Format("{0:0,0 vnđ}", tt.ThanhTien);}
+                                                    @Html.DisplayFor(modelItem => ThanhTien)
+                                                </td>*@
+                                        </tr>
+                                    }
+                                    @*<tr>
+                                            <th colspan="5">Tổng cộng hóa đơn:</th>
+                                            @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
+                                            <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                        </tr>*@
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row element-button">
+    <div class="col-sm-2">
+        <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DonHangMoi"><i class=""></i> Quay lại</a>
+    </div>
+</div>
+
+

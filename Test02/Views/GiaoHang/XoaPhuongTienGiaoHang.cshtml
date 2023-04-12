@@ -1,0 +1,47 @@
+﻿@model Test02.Models.PhuongTienGH
+
+@{
+    ViewBag.Title = "XoaPhuongTienGiaoHang";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+    ViewBag.gh_phuongtienGH = "active";
+    ViewBag.Name = "Xóa phương tiện giao hàng";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h4 style="text-align:center">XÓA PHƯƠNG TIỆN GIAO HÀNG @Model.MaPT</h4>
+
+            <div>
+                <hr />
+                <dl class="dl-horizontal">
+
+                    <dd>
+                        <strong>Tên phương tiện: </strong>
+                        @Html.DisplayFor(model => model.TenPT)
+                    </dd>
+                   
+                    <dd>
+                        <strong>Tình trạng: </strong>
+                        @Html.DisplayFor(model => model.TinhTrang)
+                    </dd>
+
+                </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="row element-button">
+                        <div class="col-sm-2">
+                            <input style="background-color:#00b217" type="submit" value="Xóa" class="btn btn-default" />
+                        </div>
+                        <div class="col-sm-2">
+                            <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachPhuongTienGiaoHang"><i class=""></i> Quay lại</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

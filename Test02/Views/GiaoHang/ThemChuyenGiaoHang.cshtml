@@ -1,0 +1,173 @@
+﻿@model Test02.Models.ChuyenGiao
+@using Test02.Models
+@{
+    ViewBag.Title = "ThemChuyenGiao";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+    ViewBag.nd = "Thêm chuyến giao hàng";
+    ViewBag.gh_cg = "active";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var nvgh = db.NhanVienGHs.ToList();
+    var ptgh = db.PhuongTienGHs.ToList();
+}
+
+@*@{
+        var checkMessage = TempData["AlertMessage"];
+        if (checkMessage == "check null")
+        {
+            <script>
+                swal({
+                    title: "Dữ liệu trống",
+                    text: "Phương tiện giao hàng và nhân viên giao hàng không được để trống!",
+                    icon: "warning",
+                    button: "OK",
+                });
+            </script>
+        }
+    }*@
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="tile" style="margin-left:50px; margin-right:50px">
+                <div class="tile-body">
+                    <h3 class="tile-title" style="text-align:center">THÊM CHUYẾN GIAO HÀNG</h3>
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.MaGH)
+
+
+                        <div class="form-group">
+                            <h5>Phương tiện giao:</h5>
+                            <div class="col-md-12">
+                                @Html.DropDownList("MaPT", (IEnumerable<SelectListItem>)ViewBag.PhuongTien, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.MaPT, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        @*@using (Html.BeginForm("XepXe", "GiaoHang", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.MaNV)
+                            @Html.HiddenFor(model => model.SDT)
+                            @Html.HiddenFor(model => model.DiaChi)
+                            @Html.HiddenFor(model => model.TinhTrang)
+                            @Html.HiddenFor(model => model.TenNV)
+
+                            <div class="form-group">
+                                <h5>Nhân viên giao:</h5>
+                                <div class="col-md-12">
+                                    @Html.DropDownList("TenNV", (IEnumerable<SelectListItem>)ViewBag.NVGiao, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.MaGH, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }*@
+
+
+                        <div class="row justify-content-center">
+                            <div class="col-sm-2">
+                                <input type="submit" value="Thêm" class="btn btn-outline-dark" title="Lưu" />
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-outline-primary btn-group-sm" href="~/GiaoHang/DanhSachCacChuyenGiao" title="Trở về">
+                                    Trở về
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile" style="display:flex" >
+            <div class="tile-body">
+            </div>
+            <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                
+                <div class="row">
+                    <h3 style="margin-left:15%">TRA CỨU NHÂN VIÊN GIAO HÀNG</h3>
+                    <div class="col-sm-11">
+                        <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Mã nhân viên</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Tên nhân viên giao</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Tình trạng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in nvgh)
+                                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaNV)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenNV)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TinhTrang)
+                                    </td>
+
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="tile-body">
+            </div>
+            <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                <div class="row">
+                    <h3 style="margin-left:20%">Tra cứu phương tiện giao hàng</h3>
+                    <div class="col-sm-11">
+                        <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable1" role="grid" aria-describedby="sampleTable_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Mã phương tiện</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 70px; text-align: center ">Tên phương tiện</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Tình trạng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ptgh)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaPT)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TenPT)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TinhTrang)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
