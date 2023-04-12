@@ -2,151 +2,249 @@
 @using Test02.Models;
 
 @{
-    ViewBag.Title = "CongnoDL";
+    ViewBag.Title = "Danh sách đơn hàng chưa thanh toán đại lý";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     ViewBag.dsdl = "active";
     ViewBag.nd = "Danh sách đơn hàng chưa thanh toán";
     var check = 0;
+
 }
+<link href="~/Content/KeToan/StyleKeToan.css" rel="stylesheet" />
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="tile">
-            <div class="tile-body">
+<div class="col-md-12">
+    <div class="tile" id="printme">
+        <h4 class="title-ketoan">THÔNG TIN ĐẠI LÝ</h4>
+        <div class="tile-body">
+            @{
+                var madly = Session["Madly"];
+                var loaidl = db.LoaiDLs.Where(s => s.MaLoaiDL == madly).FirstOrDefault();
+                var daily = db.DaiLies.Where(s => s.MaDL == madly).FirstOrDefault();
 
-                <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                var tongno = string.Format("{0:0,0 vnđ}", ViewBag.TongCN);
+            }
+            <div class="detail-daily">
+                <p style="text-align:center">
+                    <strong>Mã đại lý: </strong>@Html.DisplayFor(modelItem => Session["Madly"])- @Html.DisplayFor(modelItem => daily.MaLoaiDL)
+                </p>
+                <p>
+                    <strong>Tên đại lý: </strong>@Html.DisplayFor(modelItem => daily.TenDL)
+                </p>
+               
+                <div class="thongtin-daily">
+                    <p>
+                        <strong>Địa chỉ </strong>@Html.DisplayFor(modelItem => daily.DiaChi)
+                    </p>
+                    <p>
+                        <strong>Liên lac: </strong>@Html.DisplayFor(modelItem => daily.SDT) - @Html.DisplayFor(modelItem => daily.Email)
+                    </p>
 
-                    @foreach (var i in Model)
-                    {
-                        <h3>DANH SÁCH ĐƠN HÀNG CHƯA THANH TOÁN CỦA ĐẠI LÝ @i.MaDL</h3>
-                        <p><strong>Mã đại lý:</strong> @Html.DisplayFor(modelItem => i.MaDL)</p>
-                        <p>
-                            <strong>Mã đại lý:</strong>
+                </div>
+
+
+
+            </div>
+            <div class="col-sm-6" id="dropdownsort">
+                @using (Html.BeginForm("CongnoDL", "KeToan", FormMethod.Post, new { @class = "form-group-sm" }))
+                {
+
+                    @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" ,}) 
+                    <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
+
+
+                }
+            </div>
+            <div class="row" >
+                <div class="col-sm-12  table-responsive">
+                    <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                        @*//Phần render từng dòng trong C#*@
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Mã đơn hàng</th>
+                                <th class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Mã nhân viên lập</th>
+                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Ngày lập</th>
+                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Điểm giao hàng</th>
+                                <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" style="width: 100px;">Tổng tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @{
-                                var dh = db.DaiLies.Where(s => s.MaDL == i.MaDL).FirstOrDefault();
+                                var total = Model.Count();
+                                //List<DonHang> donhang = db.DonHangs.Where(s => s.MaDL == Model.MaDL).ToList();
+
                             }
-                            @Html.DisplayFor(modelItem => dh.TenDL)
-                        </p>
-                        break;
-                    }
+                            @foreach (var item in Model)
+                            {
+                                if (item.TinhTrangThanhToan == "Chưa thanh toán" && item.TinhTrangGH=="Đã giao")
+                                {
 
-
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
-                                @*//Phần render từng dòng trong C#*@
-                                <thead>
-                                    <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="ID nhân viên: activate to sort column ascending" style="width: 100px;">Mã đơn hàng</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="SĐT: activate to sort column ascending" style="width: 100px;">Mã nhân viên lập</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Ngày lập</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending" style="width: 100px;">Điểm giao hàng</th>
-                                        <th width="100" class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Tính năng: activate to sort column ascending" style="width: 100px;">Tổng tiền</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{ var id = "";
-
-                                        var total = 0;
-                                        
-                                        }
-                                    @foreach (var item in Model)
-                                    {
-                                        id = item.MaDL;
-                                        if (item.TinhTrangThanhToan == "Chưa thanh toán" && item.TrangThai == "Đã xét duyệt")
-                                        {
-
-
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.MaDH)
-                                                </td>
-
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.MaNVLap)
-                                                </td>
-
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.NgayLap)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.DiemGiao)
-                                                </td>
-                                                <td>
-                                                    @{ total += Convert.ToInt32(item.TongTien);
-                                                        check = total;}
-                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
-                                                    @Html.DisplayFor(modelItem => ThanhTien)
-
-                                                </td>
-                                            </tr>
-                                        }
-
-
-                                    }
                                     <tr>
-                                        <th colspan="4">Tổng cộng hóa đơn :</th>
-                                        @{ var TongCong = string.Format("{0:0,0 vnđ}", total);
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaDH)
+                                        </td>
 
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaNVLap)
+                                        </td>
+
+                                        <td>
+                                            @{
+                                                var ngay = String.Format("{0:d/M/yyyy}", item.NgayLap);
                                             }
-                                        <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                            @Html.DisplayFor(modelItem => ngay)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DiemGiao)
+                                        </td>
+                                        <td>
+
+
+                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                            @Html.DisplayFor(modelItem => ThanhTien)
+
+                                        </td>
                                     </tr>
-                                </tbody>
 
 
-                            </table>
 
 
-                        </div>
-                    </div>
+                                }
+
+                            }
+                            <tr>
+                                <th colspan="4">Tổng cộng hóa đơn :</th>
+
+                                <td>@Html.DisplayFor(modelItem => tongno)</td>
+
+                            </tr>
+                        </tbody>
+
+                    </table>
+
 
                 </div>
             </div>
-        </div>
-        <div class="row element-button">
-            @{
-                if (check == 0)
-                {
-                    <div class="col-sm-2">
-                        <a class="btn btn-warning btn-sm " type="button" title="Quay lại" href="~/KeToan/DSDaiLy"><i class="fas fa-copy"></i> Quay lại</a>
-                    </div>
-                    
-                }
-                else
-                {
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/TaoCongno/@id"><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-warning btn-sm " type="button" title="Quay lại" href="~/KeToan/DSDaiLy"><i class="fas fa-copy"></i> Quay lại</a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()">
-                            <i class="fas fa-print"></i> In dữ liệu
-                        </a>
-                    </div>
-                }
-            }
-
 
         </div>
     </div>
-
 </div>
+<div class="btn-func">
+    <div class="row">
+        @{
+            if (total == 0)
+            {
+                <div class="col-sm-2">
+                    <a class="btn btn-warning btn-sm " type="button" title="Quay lại" href="~/KeToan/DSDaiLy"> Quay lại</a>
+                </div>
+
+            }
+            else
+            {
+                <div class="col-sm-2">
+                    <a class="btn btn-warning btn-sm " data-toggle="modal" data-target="#myModal">
+                        Thêm phiếu công nợ
+                    </a>
+                </div>
+                <div class="col-sm-2">
+                    <a class="btn btn-success btn-sm" type="button" title="In" onclick="printDiv('printme')">
+                        <i class="fas fa-print"></i> In dữ liệu
+                    </a>
+                </div>
+                <div class="col-sm-2">
+                    <a class="btn btn-delete btn-sm print-file" type="button" title="Quay lại" href="~/KeToan/DSDaiLy">Quay lại danh sách</a>
+                </div>
+            }
+        }
+
+
+    </div>
+</div>
+
+
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("TaoCongNo", "KeToan", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                var phieucongno = db.PhieuCongNoes.Where(cn => cn.MaDL == daily.MaDL).FirstOrDefault();
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => phieucongno.MaCongNo)
+                @Html.HiddenFor(model => phieucongno.MaDL)
+                @Html.HiddenFor(model => phieucongno.TienNo)
+                @Html.HiddenFor(model => phieucongno.TrangThai)
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="modal-name">THÊM PHIẾU CÔNG NỢ </p>
+                    <div class="confirmation-dh">
+                        <p>
+                            Lập phiếu công nợ tháng @Session["thangs"] cho đại lý <span>@daily.TenDL - @daily.MaDL </span> ?!
+                        </p>
+                        <div class="form-group col-sm-6">
+                            <strong>Mã đại lý</strong>
+                            <div class="col-md-10">
+                                <input name="MaDL" id="MaDL" value="@daily.MaDL" class="form-control col-md-12 text-box single-line"/>
+                            </div>
+                        </div>
+                        @{ 
+                            DateTime time = DateTime.Now;
+                            DateTime maxtime = time.AddDays(30);
+                        }
+                        <div class="form-group col-sm-10">
+                            <strong>Ngày lập công nợ</strong>
+                            <div class="col-md-10">
+                             
+                                <input class="form-control col-md-12 text-box single-line datepicker" name="NgayLapCN" id="NgayLapCN" data-val="true" type="date" value="@time.ToString("yyyy-MM-dd")" required>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-10">
+                            <strong>Hạn trả: </strong>
+                            <div class="col-md-10">
+                                <input class="form-control col-md-12 text-box single-line datepicker" name="Hantra" id="Hantra" data-val="true"  type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@maxtime.ToString("yyyy-MM-dd")" required>
+                                
+                            </div>
+                        </div>
+                        <p>
+                            <span>Tổng công nợ:</span> @tongno
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- Modal footer -->
+        <div class="modal-footer">
+            <a class="btn btn-danger" data-dismiss="modal">Close</a>
+            @*<a class="btn btn-success" href="/KeToan/TaoCongno/@daily.MaDL">Xuất công nợ</a>*@
+            <input type="submit" value="Lập phiếu công nợ" class="btn btn-success" />
+        </div>
+            }
+            </div>
+    </div>
+</div>
+
 
 <script>
     //In dữ liệu
-    var myApp = new function () {
-        this.printTable = function () {
-            var top = document.getElementById('sampleTable_wrapper');
-            var tab = document.getElementById('sampleTable');
-            var win = window.open('', '', 'height=700,width=700');
-            win.document.write(top.outerHTML);
-            win.document.close();
-            win.print();
 
-        }
+
+    function printDiv(divName) {
+        
+        document.getElementById("dropdownsort").style.display = "none";
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+
     }
+
+
 </script>

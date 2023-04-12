@@ -1,0 +1,65 @@
+﻿@model Test02.Models.PhieuNhapXuat
+
+@{
+    ViewBag.Title = "DeletePNX";
+    Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
+    ViewBag.hieuung4 = "bx-tada";
+}
+
+<h3>Bạn có muốn xóa vĩnh viễn phiếu @Model.MaPhieu?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Ngày lập:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayLap)
+        </dd>
+
+        <dt>
+            Loại phiếu:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiPhieu)
+        </dd>
+
+        <dt>
+            Kho xuất
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kho.TenKho)
+        </dd>
+
+        <dt>
+            Mã nhân viên lập:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NhanVien.MaChucVu)
+        </dd>
+
+        <dt>
+            Mã đơn hàng:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaDH)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    <input type="submit" value="Vẫn xóa" class="btn btn-danger" /> |
+    <a class="btn btn-actv btn-sm" href="/PhongKho/NhapKho" title="Trở lại">
+        <i class="fas fa-retweet"></i>
+        Trở lại
+    </a>
+</div>
+    }
+</div>

@@ -1,0 +1,63 @@
+﻿@model Test02.Models.PhuongTienGH
+
+@{
+    ViewBag.Title = "ChinhSuaPhuongTienGiaoHang";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+    ViewBag.gh_phuongtienGH = "active";
+    ViewBag.nd = "Chinh sửa phương tiện giao hàng";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h4 style="text-align:center">PHƯƠNG TIỆN GIAO HÀNG @Model.MaPT</h4>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.MaPT)
+                    @Html.HiddenFor(model => model.TrongTai)
+                    <p>
+                        <strong>Mã phương tiện: </strong>
+                        @Html.DisplayFor(modelItem => Model.MaPT)
+                    </p>
+
+                    <div class="form-group">
+                        <strong>Tên phương tiện: </strong>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.TenPT, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TenPT, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <strong>Tình trạng phương tiện: </strong>
+                        <div class="col-md-10">                           
+                            <select class="form-control" name="tinhtrang">
+                                <option selected="@Model.TinhTrang">@Model.TinhTrang</option>
+                                <option>Sẵn sàng</option>
+                                <option>Bảo trì</option>
+                                <option>Sử dụng</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row element-button">
+                        <div class="col-sm-2">
+                            <input style="background-color:#27a300" type="submit" value="Lưu" class="btn btn-default" />
+                        </div>
+                        <div class="col-sm-2">
+                            <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachPhuongTienGiaoHang"><i class=""></i> Quay lại</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

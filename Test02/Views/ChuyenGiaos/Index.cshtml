@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Test02.Models.ChuyenGiao>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MaNVLap)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayGiao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TienThu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayLap)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KhuVucGiao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhuongTienGH.TenPT)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaNVLap)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayGiao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TienThu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TrangThai)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayLap)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KhuVucGiao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhuongTienGH.TenPT)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaGH }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaGH }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaGH })
+        </td>
+    </tr>
+}
+
+</table>

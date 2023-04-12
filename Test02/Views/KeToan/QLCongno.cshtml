@@ -113,7 +113,11 @@
                                             @Html.DisplayFor(modelItem => Tienno)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.NgayLapCN)
+                                            @{ var ngay = String.Format("{0:d/M/yyyy HH:mm:ss}", item.NgayLapCN); ;}
+                                            @Html.DisplayFor(modelItem => ngay)
+
+                                            
+
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.HanTra)

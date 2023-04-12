@@ -4,91 +4,133 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Chi tiết kho";
     ViewBag.qlk = "active";
+    ViewBag.hieuung2 = "bx-tada";
 }
-
+@{
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "Đã xóa")
+    {
+        <script>
+            swal({
+                title: "Xóa thành công",
+                text: "Đã xóa @TempData["MaCTKkk"]!",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkMessage == "Đã thêm")
+    {
+        <script>
+            swal({
+                title: "Thêm thành công",
+                text: "Đã thêm @TempData["MaCTKkk"]!",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkMessage == "Đã cập nhật")
+    {
+        <script>
+            swal({
+                title: "Cập nhật thành công",
+                text: "Đã cập nhật @TempData["MaCTKkk"]!",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+}
 <div class="row">
     <div class="col-lg-12">
         <div class="tile">
             <h3>Danh sách chi tiết của kho @TempData["makho"]</h3>
             <div class="tile-body">
                 <div class="row element-button">
-                    <a class="btn btn-add btn-sm" href="/PhongKho/CreateCTKho/@TempData["makho"]" title="Thêm" style="margin-left:20px;">
+                    <a class="btn btn-success btn-sm" href="/PhongKho/CreateCTKho/@TempData["makho"]" title="Thêm chi tiết kho" style="margin-left:20px;">
                         <i class="fas fa-plus"></i>
                         Thêm chi tiết kho
                     </a>
+                    <a class="btn btn-primary btn-sm" href="/PhongKho/PhanPhoiSanPham" title="Phân phối sản phẩm" style="margin-left:20px;">
+                        <i class="fa fa-truck"></i>
+                        Phân phối sản phẩm
+                    </a>
                 </div>
-                <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
-                       id="sampleTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                Mã chi tiết kho
-                            </th>
-                            <th>
-                                Mã sản phẩm
-                            </th>
-                            <th>
-                                Tên sản phẩm
-                            </th>
-                            <th>
-                                Ngày nhập
-                            </th>
-                            <th>
-                                Ngày xuất
-                            </th>
-                            <th>
-                                Số lượng
-                            </th>
-                            <th>
-                                Tình trạng
-                            </th>
-                            <th>
-                                Chức năng
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                           id="sampleTable">
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MaCTKho)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MaSP)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SanPham.TenSP)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NgayNhap)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NgayXuat)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SoLuong)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TinhTrang)
-                                </td>
-
-                                <td>
-                                    <a href="/PhongKho/EditCTKho//@item.MaCTKho" class="btn btn-primary btn-sm edit">
-                                        <i class="fas fa-edit"></i>
-                                    </a>||
-                                    <a href="/PhongKho/DeleteCTKho//@item.MaCTKho" class="btn btn-primary btn-sm trash">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </td>
+                                <th>
+                                    STT
+                                </th>
+                                <th>
+                                    Mã sản phẩm
+                                </th>
+                                <th>
+                                    Tên sản phẩm
+                                </th>
+                                <th>
+                                    Ngày nhập
+                                </th>
+                                <th>
+                                    Ngày xuất gần nhất
+                                </th>
+                                <th>
+                                    Số lượng
+                                </th>
+                                <th>
+                                    Tình trạng
+                                </th>
+                                <th>
+                                    Chức năng
+                                </th>
                             </tr>
-                        }
-                    </tbody>
-                    
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.STT)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaSP)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NgayNhap)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NgayXuat)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SoLuong)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TinhTrang)
+                                    </td>
+
+                                    <td>
+                                        <a href="/PhongKho/EditCTKho/@item.STT" class="btn btn-primary btn-sm edit" title="Chỉnh sửa">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="/PhongKho/DeleteCTKho/@item.STT" class="btn btn-primary btn-sm trash" title="Xóa kho">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
             </div>
             <div>
-                <a class="btn btn-danger btn-sm" href="/PhongKho/QuanLyKho" title="Thêm">
+                <a class="btn btn-outline-danger btn-sm" href="~/PhongKho/QuanLyKho" title="Trở lại">
                     <i class="fas fa-retweet"></i>
                     Trở lại danh sách kho
                 </a>
@@ -99,32 +141,32 @@
 
 
 <script>
-    function deleteRow(r) {
-        var i = r.parentNode.parentNode.rowIndex;
-        document.getElementById("myTable").deleteRow(i);
-    }
-    jQuery(function () {
-        jQuery(".trash").click(function () {
-            swal({
-                title: "Cảnh báo",
+    //function deleteRow(r) {
+    //    var i = r.parentNode.parentNode.rowIndex;
+    //    document.getElementById("myTable").deleteRow(i);
+    //}
+    //jQuery(function () {
+    //    jQuery(".trash").click(function () {
+    //        swal({
+    //            title: "Cảnh báo",
 
-                text: "Bạn có chắc chắn là muốn xóa sản phẩm?",
-                buttons: ["Hủy bỏ", "Đồng ý"],
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        swal("Đã xóa thành công.!", {
+    //            text: "Bạn có chắc chắn là muốn xóa sản phẩm?",
+    //            buttons: ["Hủy bỏ", "Đồng ý"],
+    //        })
+    //            .then((willDelete) => {
+    //                if (willDelete) {
+    //                    swal("Đã xóa thành công.!", {
 
-                        });
-                    }
-                });
-        });
-    });
-    oTable = $('#sampleTable').dataTable();
-    $('#all').click(function (e) {
-        $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
-        e.stopImmediatePropagation();
-    });
+    //                    });
+    //                }
+    //            });
+    //    });
+    //});
+    //oTable = $('#sampleTable').dataTable();
+    //$('#all').click(function (e) {
+    //    $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
+    //    e.stopImmediatePropagation();
+    //});
 
     //EXCEL
     // $(document).ready(function () {

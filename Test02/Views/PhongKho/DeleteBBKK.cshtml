@@ -1,62 +1,153 @@
-﻿@model Test02.Models.BienBangKiemKe
+﻿@model Test02.Models.ChiTietBienBang
 @{
     ViewBag.Title = "DeleteBBKK";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.bc = "active";
     ViewBag.Name = "Xóa biên bản";
 }
-<h3>Bạn muốn xóa biên bản kiểm kê này?</h3>
 <hr />
-<dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.TenNV)
-    </dt>
+<div class="row">
+    <div class="col-lg-3 col-md-2 col-sm-12"></div>
+    <div class="col-lg-6 col-md-8 col-sm-12">
+        <div class="tile">
+            <h3 class="text-center tile-title">Bạn muốn xóa biên bản kiểm kê này?</h3>
 
-    <dd>
-        @Html.DisplayFor(model => model.TenNV)
-    </dd>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-    <dt>
-        @Html.DisplayNameFor(model => model.TenBienBang)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.TenBienBang)
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.NgayLap)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.NgayLap)
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.NhanVien.MaChucVu)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.NhanVien.MaChucVu)
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.SanPham.TenSP)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.SanPham.TenSP)
-    </dd>
-
-</dl>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-actions no-color">
-        <input type="submit" value="Xóa" class="btn btn-danger" /> |
-        @Html.ActionLink("Quay lại", "BaoCao")
+                <div class="form-actions text-center no-color">
+                    <input type="submit" value="Xóa biên bảng" class="btn btn-danger" />
+                    <a class="btn btn-actv btn-sm" id="btnReturn" href="/PhongKho/BaoCao" title="Trở lại">
+                        <i class="fas fa-retweet"></i>
+                        Trở lại
+                    </a>
+                </div>
+            }
+        </div>
     </div>
-}
+    <div class="col-lg-3 col-md-2 col-sm-12"></div>
 </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile" id="printMe">
+                <h2 style="text-align:center">BIÊN BẢNG KIỂM KÊ HÀNG HÓA</h2>
+                <form style="text-align:center" id="sample2">
+                    <label for="date">Ngày:</label>
+                    @Html.DisplayFor(model => model.BienBangKiemKe.NgayLap)<br>
+                    <label for="date">Mã số:</label>
+                    @Html.DisplayFor(model => model.MaKK)<span>_</span>
+                    @Html.DisplayFor(model => model.STT)<br>
+                </form>
+                <div class="tile-body">
+                    <form class="row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label"> Tên biên bản: </label>
+                            @Html.DisplayFor(model => model.BienBangKiemKe.TenBienBang)
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Nhân viên kiểm kê: </label>
+                            @Html.DisplayFor(item => item.BienBangKiemKe.MaNVLap) -
+                            @Html.DisplayFor(item => item.BienBangKiemKe.NhanVien.TenNV)
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-md-2"><label class="control-label">Thông tin kho: </label> <br /></div>
+                                <div class="col-md-10">
+                                    <label class="control-label">-  Mã kho: </label>
+                                    @Html.DisplayFor(item => item.BienBangKiemKe.MaKho) <br />
+                                    <label class="control-label">-  Tên kho: </label>
+                                    @Html.DisplayFor(item => item.BienBangKiemKe.Kho.TenKho) <br />
+                                    <label class="control-label">-  Địa chỉ kho: </label>
+                                    @Html.DisplayFor(item => item.BienBangKiemKe.Kho.DiaChi)
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label"> Thông tin sản phẩm: </label> <br />
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" style="text-align:center">Mã sản phẩm</th>
+                                        <th rowspan="2" style="text-align:center">Tên sản phẩm</th>
+                                        <th rowspan="2" style="text-align:center">Đơn vị tính</th>
+                                        <th rowspan="2" style="text-align:center">Đơn giá</th>
+                                        <th rowspan="2" style="text-align:center">Ngày sản xuất</th>
+                                        <th rowspan="2" style="text-align:center">Hạn sử dụng</th>
+                                        <th colspan="2" style="text-align:center">Theo sổ kho</th>
+                                        <th colspan="2" style="text-align:center">Theo kiểm kê</th>
+                                        <th colspan="2" style="text-align:center">Chênh lệnh</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:center">Số lượng</th>
+                                        <th style="text-align:center">Thành tiền</th>
+                                        <th style="text-align:center">Số lượng</th>
+                                        <th style="text-align:center">Thành tiền</th>
+                                        <th style="text-align:center">Số lượng</th>
+                                        <th style="text-align:center">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center">@Html.DisplayFor(model => model.MaSP)</td>
+                                        <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.TenSP)</td>
+                                        <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.DonViTinh)</td>
+                                        <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.Gia)</td>
+                                        <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.NgaySX)</td>
+                                        <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.HanSD)</td>
+                                        <td style="text-align:center">@Html.DisplayFor(model => model.SLTonKho)</td>
+                                        <td style="text-align:center">
+                                            @{
+                                                var sl = Model.SLTonKho;
+                                                var gia = Model.SanPham.Gia;
+
+                                                var result = sl * gia;
+                                            }
+                                            @string.Format("{0:#,##0}", result)
+                                        </td>
+                                        <td style="text-align:center">@Html.DisplayFor(model => model.SLThucTe)</td>
+                                        <td style="text-align:center">
+                                            @{
+                                                var sl1 = Model.SLThucTe;
+                                                var gia1 = Model.SanPham.Gia;
+
+                                                var result1 = sl1 * gia1;
+                                            }
+                                            @string.Format("{0:#,##0}", result1)
+                                        </td>
+                                        <td style="text-align:center">@Html.DisplayFor(model => model.ChenhLech)</td>
+                                        <td style="text-align:center">
+                                            @{
+                                                var sl2 = Model.ChenhLech;
+                                                var gia2 = Model.SanPham.Gia;
+
+                                                var result2 = sl2 * gia2;
+                                            }
+                                            @string.Format("{0:#,##0}", result2)
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Chi tiết: </label>
+                            @Html.DisplayFor(model => model.LyDo)
+                        </div>
+                        <div>
+
+                        </div>
+                        <h5 style="margin-left:82%;" id="sample1">Thủ kho</h5>
+                        <h6 style="margin-left:80%; font-style:italic;" id="sample1">(ký và ghi rõ họ tên)</h6>
+                        <br />
+                        <br />
+                        <br />
+                        <h6 style="margin-left:80%;" id="sample1">Nguyễn Thị Diễm Khang</h6>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+

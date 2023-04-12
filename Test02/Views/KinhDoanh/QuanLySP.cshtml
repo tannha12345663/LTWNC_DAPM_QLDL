@@ -4,6 +4,7 @@
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.sp = "active";
     ViewBag.nd = "Danh sách sản phẩm";
+    ViewBag.hieuung5 = "bx-tada";
 }
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @{
@@ -14,6 +15,28 @@
             swal({
                 title: "Thêm sản phẩm thành công",
                 text: "Mã sản phẩm @TempData["maspTT"] đã được thêm mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "Đã xóa sản phẩm")
+    {
+        <script>
+            swal({
+                title: "Xóa sản phẩm thành công",
+                text: "Mã sản phẩm @TempData["maspTT"] đã được xóa khỏi danh sách !",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "Đã cập nhật sản phẩm")
+    {
+        <script>
+            swal({
+                title: "Cập nhật sản phẩm thành công",
+                text: "Mã sản phẩm @TempData["maspTT"] đã được cập nhật !",
                 icon: "success",
                 button: "OK",
             });
@@ -38,64 +61,68 @@
             </div>
 
         </div>
-        <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
-               id="sampleTable">
-            <thead>
-                <tr>
-                    <th>Mã sản phẩm</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Hình ảnh</th>
-                    <th>Giá</th>
-                    <th>Đơn vị tính</th>
-                    <th>Ngày sản xuất</th>
-                    <th>Hạn sử dụng</th>
-                    <th>Tổng tồn</th>
-                    <th>Chức năng</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                   id="sampleTable">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MaSP)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TenSP)
-                        </td>
-                        <td>
-                            <img src="@item.HinhAnh" style="width:100px" />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Gia)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DonViTinh)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NgaySX)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.HanSD)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TongTon)
-                        </td>
-
-                        <td>
-                            <a href="/KinhDoanh/ChinhSuaSP/@item.MaSP" class="btn btn-primary btn-sm edit"> Chỉnh sửa</a>
-
-                            ||
-                            <a href="/KinhDoanh/XoaSP/@item.MaSP" class="btn btn-primary btn-sm deleted">
-                                Xóa sản phẩm
-                            </a>
-                        </td>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Hình ảnh</th>
+                        <th>Giá</th>
+                        <th>Đơn vị tính</th>
+                        <th>Ngày sản xuất</th>
+                        <th>Hạn sử dụng</th>
+                        <th>Tổng tồn</th>
+                        <th>Chức năng</th>
                     </tr>
-                }
-            </tbody>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaSP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenSP)
+                            </td>
+                            <td>
+                                <img height="150" width="400" src="@item.HinhAnh" style="width:100px" />
+                            </td>
+                            <td>
+                                @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.Gia);}
+                                @Html.DisplayFor(modelItem => ThanhTien)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DonViTinh)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgaySX)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HanSD)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TongTon)
+                            </td>
+
+                            <td>
+                                <a href="/KinhDoanh/ChinhSuaSP/@item.MaSP" class="btn btn-primary btn-sm edit"> Chỉnh sửa</a>
+
+                                ||
+                                <a href="/KinhDoanh/XoaSP/@item.MaSP" class="btn btn-primary btn-sm deleted">
+                                    Xóa sản phẩm
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
 
 
-        </table>
+            </table>
+        </div>
+
     </div>
 </div>
 
@@ -112,16 +139,16 @@
     }
 </script>
 <!-- Essential javascripts for application to work-->
-<script src="~/Content/js/jquery-3.2.1.min.js"></script>
+<!--<script src="~/Content/js/jquery-3.2.1.min.js"></script>
 <script src="~/Content/js/popper.min.js"></script>
 <script src="~/Content/js/bootstrap.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="src/jquery.table2excel.js"></script>
-<script src="~/Content/js/main.js"></script>
+<script src="~/Content/js/main.js"></script>-->
 <!-- The javascript plugin to display page loading on top-->
-<script src="~/Content/js/plugins/pace.min.js"></script>
+<!--<script src="~/Content/js/plugins/pace.min.js"></script>-->
 <!-- Page specific javascripts-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>-->
 <!-- Data table plugin-->
-<script type="text/javascript" src="~/Content/js/plugins/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="~/Content/js/plugins/dataTables.bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="~/Content/js/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="~/Content/js/plugins/dataTables.bootstrap.min.js"></script>-->

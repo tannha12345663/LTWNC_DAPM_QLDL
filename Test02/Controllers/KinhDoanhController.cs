@@ -27,6 +27,46 @@ namespace Test02.Controllers
         {
             return View(database.DaiLies.ToList().OrderByDescending(s=> s.NgayTao));
         }
+        //Kiểm tra tên đại lý
+        [HttpPost]
+        public ActionResult KTTenDL(string TenDL)
+        {
+            var check = database.DaiLies.Where(s => s.TenDL == TenDL).FirstOrDefault();
+            if(check != null)
+            {
+                return Json(new { success = false}, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult KTSDT(string SDT)
+        {
+            var check = database.DaiLies.Where(s => s.SDT == SDT).FirstOrDefault();
+            if (check != null)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult KTEmail(string Email)
+        {
+            var check = database.DaiLies.Where(s => s.Email == Email).FirstOrDefault();
+            if (check != null)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult ThemDL()
         {
             ViewBag.MaLoaiDL = new SelectList(database.LoaiDLs, "MaLoaiDL", "TenDaiLy");
@@ -108,7 +148,30 @@ namespace Test02.Controllers
         //Quản lý đơn hàng
         public ActionResult QuanLyDH()
         {
-            return View(database.DonHangs.ToList().OrderByDescending(s => s.NgayLap));
+            return View(database.DonHangs.ToList().OrderBy(s => s.NgayLap));
+        }
+        [HttpPost]
+        public ActionResult CheckCongNoDL(string MaDL, string ThanhTien)
+        {
+            var tongtiendh = 0;
+            var daily = database.DaiLies.Where(s => s.MaDL == MaDL).FirstOrDefault();
+            tongtiendh += Convert.ToInt32(ThanhTien);
+            if (daily.MaLoaiDL == "LDL01" && tongtiendh <= 500000000)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            else if (daily.MaLoaiDL == "LDL02" && tongtiendh <= 250000000)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            else if (daily.MaLoaiDL == "LDL03" && tongtiendh <= 100000000)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
         }
         //Thêm mới đơn hàng
         public ActionResult ThemDH()
@@ -141,7 +204,6 @@ namespace Test02.Controllers
             if (ModelState.IsValid)
             {
                 
-
                 var user = (Test02.Models.NhanVien)Session["user"];
                 Random rd = new Random();
                 var madh = "DH" + rd.Next(1, 1000);
@@ -185,7 +247,6 @@ namespace Test02.Controllers
         //Thêm mới chi tiết đơn hàng bán tự động
         public ActionResult ThemCTHD()
         {
-
             ViewBag.MaDH = new SelectList(database.DonHangs, "MaDH", "MaDL");
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP");
             return View();
@@ -247,6 +308,12 @@ namespace Test02.Controllers
                     }
                     database.ChiTietDonHangs.Add(chiTietDonHang);
                     database.SaveChanges();
+                    //THêm tổng tiền của đơn hàng
+                    var dh = database.DonHangs.Find(chiTietDonHang.MaDH);
+                    dh.TongTien = chiTietDonHang.ThanhTien;
+                    database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
+                    database.SaveChanges();
+
                     TempData["messageAlert"] = "Đã thêm mới đơn hàng";
                     TempData["themmadh"] = chiTietDonHang.MaDH;
                     return RedirectToAction("QuanLyDH");
@@ -257,6 +324,137 @@ namespace Test02.Controllers
 
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
             return View(chiTietDonHang);
+        }
+        //Version 2.0 mới 
+        [HttpPost]
+        public ActionResult ThemDH02(DonHang dh)
+        {
+            int id = int.Parse(Request["sl"]);
+            if (id > 0)
+            {
+                var user = (Test02.Models.NhanVien)Session["user"];
+                Random rd = new Random();
+                var madh = "DH" + rd.Next(1, 1000);
+                dh.MaDH = madh;
+                dh.NgayLap = System.DateTime.Now;
+                dh.MaNVLap = user.MaNV;
+                dh.TinhTrangThanhToan = "Chưa thanh toán";
+                dh.TrangThai = "Chưa xử lý";
+                dh.TongTien = 0;
+                var ldl = database.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();
+                dh.DiemGiao = ldl.DiaChi;
+                dh.PhieuXuatKho = false;
+                dh.XuatHoaDon = false;
+                dh.TinhTrangGH = null;
+                database.DonHangs.Add(dh);
+                database.SaveChanges();
+                var loaidl = database.DaiLies.Find(dh.MaDL);
+                var ck = database.LoaiDLs.Where(s => s.MaLoaiDL == loaidl.MaLoaiDL).FirstOrDefault();
+
+                for (int i = 1; i <= id; i++)
+                {
+                    ChiTietDonHang ctdh = new ChiTietDonHang();
+                    ctdh.MaDH = dh.MaDH;
+                    ctdh.MaSP = Request["MaSP"+i];
+                    ctdh.SoLuong =Convert.ToInt32( Request["SoLuong" + i]);
+                    //ctdh.ChietKhau = ck.ChietKhau;
+                    var dg = database.SanPhams.Where(s => s.MaSP == ctdh.MaSP).FirstOrDefault();
+                    if (ctdh.ChietKhau == null)
+                    {
+                        ctdh.ThanhTien = (dg.Gia) * (ctdh.SoLuong);
+                    }
+                    //else
+                    //{
+                    //    ctdh.ThanhTien = (ctdh.SoLuong) * (dg.Gia) * (ctdh.ChietKhau);
+                    //}
+                    //Kiểm tra số lượng sản phẩm tồn trong kho
+                    var checkslp = database.SanPhams.Where(s => s.MaSP == ctdh.MaSP).FirstOrDefault();
+                    if (ctdh.SoLuong > checkslp.TongTon)
+                    {
+                        database.DonHangs.Remove(dh);
+                        TempData["messageAlert"] = "Không đủ số lượng để đặt";
+                        return RedirectToAction("QuanLyDH");
+                    }
+                    else
+                    {
+                        //var ctk = database.ChiTietKhoes.Where(s => s.MaSP == ctdh.MaSP).ToList();
+                        //var slsp = (int)ctdh.SoLuong;
+                        //var checksl = -slsp;
+                        //foreach (var udk in ctk)
+                        //{
+                        //    checksl += (int)udk.SoLuong;
+                        //    if (checksl >= 0)
+                        //    {
+                        //        udk.SoLuong = checksl;
+                        //        if (udk.SoLuong < 1500)
+                        //        {
+                        //            udk.TinhTrang = "Sắp hết hàng";
+                        //        }
+                        //        database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
+                        //        database.SaveChanges();
+                        //        break;
+                        //    }
+                        //    else if (checksl < 0)
+                        //    {
+                        //        udk.TinhTrang = "Hết hàng";
+                        //        udk.SoLuong = 0;
+                        //        database.Entry(udk).State = System.Data.Entity.EntityState.Modified;
+                        //        database.SaveChanges();
+                        //    }
+                        //}
+                    }
+                    dh.TongTien += ctdh.ThanhTien;
+                    
+                    database.ChiTietDonHangs.Add(ctdh);
+                    database.SaveChanges();
+                }
+                if (ldl.MaLoaiDL == "LDL01")
+                {
+                    if (dh.TongTien > 500000000)
+                    {
+                        TempData["messageAlert"] = "error01";
+                        TempData["themmadh"] = dh.MaDH;
+                        TempData["madl"] = dh.MaDL;
+                        database.DonHangs.Remove(dh);
+                        database.SaveChanges();
+                        return RedirectToAction("QuanLyDH");
+                    }
+                }
+                else if (ldl.MaLoaiDL == "LDL02")
+                {
+                    if (dh.TongTien > 250000000)
+                    {
+                        TempData["messageAlert"] = "error01";
+                        TempData["themmadh"] = dh.MaDH;
+                        TempData["madl"] = dh.MaDL;
+                        database.DonHangs.Remove(dh);
+                        database.SaveChanges();
+                        return RedirectToAction("QuanLyDH");
+                    }
+                }
+                else if (ldl.MaLoaiDL == "LDL03")
+                {
+                    if (dh.TongTien > 100000000)
+                    {
+                        TempData["messageAlert"] = "error01";
+                        TempData["themmadh"] = dh.MaDH;
+                        TempData["madl"] = dh.MaDL;
+                        database.DonHangs.Remove(dh);
+                        database.SaveChanges();
+                        return RedirectToAction("QuanLyDH");
+                    }
+                }
+                dh.TongTien = dh.TongTien - (dh.TongTien * ck.ChietKhau);
+                database.Entry(dh).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                database.SaveChanges();
+
+                TempData["messageAlert"] = "Đã thêm mới đơn hàng";
+                TempData["themmadh"] = dh.MaDH;
+                return RedirectToAction("QuanLyDH");
+
+            }
+            TempData["messageAlert"] = "Không đủ số lượng để đặt";
+            return RedirectToAction("QuanLyDH");
         }
         public void LuudhvaoDB()
         {
@@ -346,6 +544,7 @@ namespace Test02.Controllers
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
             return View(chiTietDonHang);
         }
+
         //Hiển thị danh sách CTDH
         public ActionResult DanhSachCTDH(string id)
         {
@@ -361,32 +560,122 @@ namespace Test02.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemCTHD1([Bind(Include = "MaSP,SoLuong,DonGia,DiemGiao,DonViTinh")] ChiTietDonHang chiTietDonHang)
+        public ActionResult ThemCTHD2([Bind(Include = "MaDH,MaSP,SoLuong")] ChiTietDonHang chiTietDonHang)
         {
             if (ModelState.IsValid)
             {
-                //Thêm chi tiết đơn hàng
-
-                chiTietDonHang.MaDH = (string)Session["mdh1"];
-                var dongia = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
-                if (chiTietDonHang.ChietKhau == null)
+                int sl = int.Parse (Request["sl"]);
+                double total = 0;
+                var dh = database.DonHangs.Find(chiTietDonHang.MaDH);
+                var ldl = database.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();
+                var ck = database.LoaiDLs.Where(s => s.MaLoaiDL == ldl.MaLoaiDL).FirstOrDefault();
+                for (int i = 1; i <= sl; i++)
                 {
-                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia);
+                    chiTietDonHang.MaSP = Request["MaSP" + i];
+                    chiTietDonHang.SoLuong = Convert.ToInt32(Request["SoLuong" + i]);
+                    //ctdh.ChietKhau = ck.ChietKhau;
+                    var dg = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
+                    chiTietDonHang.ThanhTien = (dg.Gia) * (chiTietDonHang.SoLuong);
+                    //Kiểm tra số lượng sản phẩm tồn trong kho
+                    var checkslp = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
+                    if (chiTietDonHang.SoLuong > checkslp.TongTon)
+                    {
+                        TempData["messageAlert"] = "Không đủ số lượng để đặt";
+                        TempData["slmasp"] = chiTietDonHang.MaSP;
+                        return RedirectToAction("DanhSachCTDH","KinhDoanh",new { id= chiTietDonHang.MaDH});
+                    }
+                    database.ChiTietDonHangs.Add(chiTietDonHang);
+                    database.SaveChanges();
                 }
-                else
+                //Kiểm tra tổng tiền hiện tại đơn hàng
+                var checktongtien = database.ChiTietDonHangs.Where(s => s.MaDH == chiTietDonHang.MaDH).ToList();
+                foreach(var item01 in checktongtien)
                 {
-                    chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia) * (chiTietDonHang.ChietKhau);
+                    total += (double) item01.ThanhTien;
                 }
-                database.ChiTietDonHangs.Add(chiTietDonHang);
+                dh.TongTien = total;
+                if (ldl.MaLoaiDL == "LDL01")
+                {
+                    if (dh.TongTien > 500000000)
+                    {
+                        TempData["messageAlert"] = "error01";
+                        TempData["themmadh"] = chiTietDonHang.MaDH;
+                        TempData["madl"] = dh.MaDL;
+                        return RedirectToAction("QuanLyDH");
+                    }
+                }
+                else if (ldl.MaLoaiDL == "LDL02")
+                {
+                    if (dh.TongTien > 250000000)
+                    {
+                        TempData["messageAlert"] = "error01";
+                        TempData["themmadh"] = dh.MaDH;
+                        TempData["madl"] = dh.MaDL;
+                        return RedirectToAction("QuanLyDH");
+                    }
+                }
+                else if (ldl.MaLoaiDL == "LDL03")
+                {
+                    if (dh.TongTien > 100000000)
+                    {
+                        TempData["messageAlert"] = "error01";
+                        TempData["themmadh"] = dh.MaDH;
+                        TempData["madl"] = dh.MaDL;
+                        return RedirectToAction("QuanLyDH");
+                    }
+                }
+                dh.TongTien = dh.TongTien - (dh.TongTien * ck.ChietKhau);
+                //Cập nhật lại tổng tiền của đơn hàng
+                //dh.TongTien += chiTietDonHang.ThanhTien;
+                database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
                 TempData["messageAlert"] = "Đã cập nhật chi tiết đơn hàng";
                 TempData["capnhatdh"] = chiTietDonHang.MaDH;
-                return RedirectToAction("QuanLyDH");
-
+                TempData["messageAlert"] = "Đã cập nhật chi tiết đơn hàng";
+                return RedirectToAction("DanhSachCTDH","KinhDoanh",new { id= chiTietDonHang.MaDH });
             }
 
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
             return View(chiTietDonHang);
+        }
+        //Check tổng tiền trước
+        [HttpPost]
+        public ActionResult CheckTongTien(string MaSP, int SoLuong)
+        {
+            var total = 0;
+            var checksp = database.SanPhams.Where(s => s.MaSP == MaSP).FirstOrDefault(); 
+            var tongton = checksp.TongTon;
+            total = (int)(checksp.Gia * SoLuong);
+            return Json(new { data=total,tongton},JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult CheckCongNo(string MaDH, string ThanhTien)
+        {
+            var tongtiendh = 0;
+            var checkdh = database.DonHangs.Where(s => s.MaDH == MaDH).FirstOrDefault();
+            var daily = database.DaiLies.Where(s => s.MaDL == checkdh.MaDL).FirstOrDefault();
+            var ctdh = database.ChiTietDonHangs.Where(s => s.MaDH == MaDH);
+            foreach(var item in ctdh)
+            {
+                var sp = database.SanPhams.Where(s => s.MaSP == item.MaSP).FirstOrDefault();
+                tongtiendh += Convert.ToInt32(sp.Gia * item.SoLuong);
+            }
+            tongtiendh += Convert.ToInt32(ThanhTien);
+            if (daily.MaLoaiDL == "LDL01" && tongtiendh <=500000000)
+            {
+                return Json(new { success=true }, JsonRequestBehavior.AllowGet);
+            }
+            else if (daily.MaLoaiDL == "LDL02" && tongtiendh <= 250000000)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }else if (daily.MaLoaiDL == "LDL03" && tongtiendh <= 100000000)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
         }
         //Chỉnh sửa thông tin đơn hàng
         public ActionResult ChinhSuaDH(string id)
@@ -462,8 +751,11 @@ namespace Test02.Controllers
         public ActionResult XoaDHConfirm(string id)
         {
             DonHang donHang = database.DonHangs.Find(id);
+            TempData["capnhatdh"] = donHang.MaDH;
             database.DonHangs.Remove(donHang);
             database.SaveChanges();
+            TempData["messageAlert"] = "Đã xóa đơn hàng";
+            
             return RedirectToAction("QuanLyDH");
         }
 
@@ -533,8 +825,8 @@ namespace Test02.Controllers
             {
                 LuuAnh(sanPham, HinhAnh);
                 Random rd = new Random();
-                var themSP = "SP" + rd.Next(1, 100);
-                sanPham.TongTon = 0;
+                var themSP = "SP" + rd.Next(0,9)+rd.Next(0,9)+rd.Next(0,9);
+                
                 sanPham.MaSP = themSP;
                 database.SanPhams.Add(sanPham);
                 database.SaveChanges();
@@ -554,6 +846,7 @@ namespace Test02.Controllers
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
             SanPham sanPham = database.SanPhams.Find(id);
+
             if (sanPham == null)
             {
                 return HttpNotFound();
@@ -570,9 +863,23 @@ namespace Test02.Controllers
         {
             if (ModelState.IsValid)
             {
-                LuuAnh(sanPham, HinhAnh);
-                database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
-                database.SaveChanges();
+                if(HinhAnh == null)
+                {
+                    var hac = database.SanPhams.AsNoTracking().Where(s=>s.MaSP==sanPham.MaSP).FirstOrDefault();
+                    sanPham.HinhAnh = hac.HinhAnh;
+                    database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.SaveChanges();
+                    TempData["messageAlert"] = "Đã cập nhật sản phẩm";
+                    TempData["maspTT"] = sanPham.MaSP;
+                }
+                else
+                {
+                    LuuAnh(sanPham, HinhAnh);
+                    database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.SaveChanges();
+                    TempData["messageAlert"] = "Đã cập nhật sản phẩm";
+                    TempData["maspTT"] = sanPham.MaSP;
+                }
                 return RedirectToAction("QuanLySP");
             }
             return View(sanPham);
@@ -601,6 +908,9 @@ namespace Test02.Controllers
                 SanPham sanPham = database.SanPhams.Find(id);
                 database.SanPhams.Remove(sanPham);
                 database.SaveChanges();
+
+                TempData["messageAlert"] = "Đã xóa sản phẩm";
+                TempData["maspTT"] = sanPham.MaSP;
                 return RedirectToAction("QuanLySP");
             }
             catch
@@ -617,6 +927,61 @@ namespace Test02.Controllers
         {
             return View();
         }
+        //Tiếp nhận phiếu đề nghị nhập/ xuất hàng hóa
+        public ActionResult TiepNhanHH()
+        {
+            var dstiepnhan = database.PhieuNhapXuats.ToList();
+            return View(dstiepnhan);
+        }
+        //Phiếu nhập kho
+        public ActionResult ChiTietPhieuNhapKho(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TempData["maPhieuNhap"] = id;
+            Session["KinhGui"] = "Trưởng phòng kinh doanh";
+            Session["HoTen"] = "Nguyễn Thị Diễm Khang";
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            if (phieuNhapXuat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phieuNhapXuat);
+        }
+
+        //Phiếu xuất kho
+        public ActionResult ChiTietPhieuXuatKho(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TempData["maPhieuXuat"] = id;
+            Session["KinhGui"] = "Trưởng phòng kinh doanh";
+            Session["HoTen"] = "Nguyễn Thị Diễm Khang";
+            PhieuNhapXuat phieuNhapXuat = database.PhieuNhapXuats.Find(id);
+            if (phieuNhapXuat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phieuNhapXuat);
+        }
+        //Xét duyệt phiếu
+        public ActionResult XetDuyetPhieu(string MaPhieu)
+        {
+            var check = database.PhieuNhapXuats.Where(s => s.MaPhieu == MaPhieu).FirstOrDefault();
+            if(check != null)
+            {
+                check.TinhTrang = "Đã xét duyệt";
+                database.Entry(check).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
+                return Json(new { success = true,MaPhieu=check.MaPhieu }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+        }
+        // Báo cáo
         public ActionResult BaoCao()
         {
             return View();

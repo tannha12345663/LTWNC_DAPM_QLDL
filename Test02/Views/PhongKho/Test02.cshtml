@@ -4,16 +4,16 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Tổng quan";
     ViewBag.tq = "active";
-    
+    ViewBag.hieuung1 = "bx-tada";
 }
 
 <div class="row">
-    <!--Left-->
-    <div class="col-md-12 col-lg-12">
+    <!--Thông tin kho và số sản phẩm sắp hết hàng-->
+    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
         <div class="row">
             <!-- col-6 -->
-            <div class="col-6">
-                <a class="widget-small primary coloured-icon @ViewBag.qlk" href="QuanLyKho">
+            <div class="col-lg-6 col-xs-12">
+                <a class="widget-small info coloured-icon @ViewBag.qlk" href="~/PhongKho/QuanLyKho">
                     <i class='icon bx bxs-user-account fa-3x'></i>
                     <div class="info">
                         <h4>Thông tin kho</h4>
@@ -23,8 +23,8 @@
                 </a>
             </div>
             <!-- col-6 -->
-            <div class="col-6">
-                <a class="widget-small danger coloured-icon @ViewBag.hh" href="QuanLyDL">
+            <div class="col-lg-6 col-xs-12">
+                <a class="widget-small warning coloured-icon @ViewBag.hh" href="~/PhongKho/QuanLyDL">
                     <i class='icon bx bxs-error-alt fa-3x'></i>
                     <div class="info">
                         <h4>Sắp hết hàng</h4>
@@ -35,17 +35,75 @@
             </div>
         </div>
     </div>
-    <!--END left-->
+    <!--Tổng sản phẩm và sản phẩm tồn kho-->
+    <div class="col-md-12 col-lg-12">
+        <div class="row">
+            <!-- col-6 -->
+            <div class="col-lg-6 col-xs-12">
+                <a class="widget-small primary coloured-icon @ViewBag.qlk" href="~/PhongKho/QuanLyDL">
+                    <i class='icon bx bxs-shopping-bag-alt fa-3x'></i>
+                    <div class="info">
+                        <h4>Thông tin sản phẩm</h4>
+                        <p><b>Tổng @TempData["Tongsp1"] sản phẩm</b></p>
+                        <p class="info-tong">Tổng số sản phẩm có trong các kho.</p>
+                    </div>
+                </a>
+            </div>
+            <!-- col-6 -->
+            <div class="col-lg-6 col-xs-12">
+                <a class="widget-small danger coloured-icon @ViewBag.hh" href="~/PhongKho/TonKho">
+                    <i class='icon bx bxs-tag-x fa-3x'></i>
+                    <div class="info">
+                        <h4>Sản phẩm tồn kho</h4>
+                        <p><b>@TempData["TongSPTK"] sản phẩm</b></p>
+                        <p class="info-tong">Tổng số sản phẩm tồn kho trong các kho.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--Tổng phiếu xuất và tổng phiếu nhập-->
+    <div class="col-md-12 col-lg-12">
+        <div class="row">
+            <!-- col-6 -->
+            <div class="col-lg-6 col-xs-12">
+                <a class="widget-small info coloured-icon @ViewBag.qlk" href="~/PhongKho/NhapKho">
+                    <i class='icon bx bxs-receipt fa-3x'></i>
+                    <div class="info">
+                        <h4>Phiếu nhập kho</h4>
+                        <p><b>Tổng @TempData["Tongpn"] phiếu được tạo</b></p>
+                        <p class="info-tong">Phiếu nhập hàng hóa vào kho.</p>
+                    </div>
+                </a>
+            </div>
+            <!-- col-6 -->
+            <div class="col-lg-6 col-xs-12">
+                <a class="widget-small primary coloured-icon @ViewBag.hh" href="~/PhongKho/NhapKho">
+                    <i class='icon bx bxs-info-circle fa-3x'></i>
+                    <div class="info">
+                        <h4>Phiếu xuất kho</h4>
+                        <p><b>Tổng @TempData["Tongpx"] phiếu được tạo</b></p>
+                        <p class="info-tong">Phiếu xuất hàng hóa ra khỏi kho.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--END-->
 </div>
+@* 
+    Thông tin tổng quan từ báo cáo dời lên
+*@
+
 <!-- col-12 -->
 <div class="row">
     <div class="col-lg-12">
         <div class="tile">
             <h3 class="tile-title">Danh sách kho hàng</h3>
-            <div class="tile-body">
+            <div class="tile-body table-responsive">
                 <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
                        id="sampleTable">
-                    <thead>
+                    <thead class="table-success">
                         <tr>
                             <th>
                                 Mã kho
@@ -55,6 +113,9 @@
                             </th>
                             <th>
                                 Địa chỉ
+                            </th>
+                            <th>
+                                Số lượng
                             </th>
                         </tr>
                     </thead>
@@ -72,6 +133,9 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.DiaChi)
                                 </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ChiTietKhoes.Count) sản phẩm
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -81,47 +145,7 @@
     </div>
 </div>
 <!-- / col-12 -->
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/main.js"></script>
-<!-- The javascript plugin to display page loading on top-->
-<script src="~/Scripts/pace.min.js"></script>
-<!-- Page specific javascripts-->
-<script type="text/javascript" src="~/Scripts/chart.js"></script>
-<script type="text/javascript">
-    var data = {
-        labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
-        datasets: [{
-            label: "Dữ liệu đầu tiên",
-            fillColor: "rgba(255, 255, 255, 0.158)",
-            strokeColor: "black",
-            pointColor: "rgb(220, 64, 59)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "green",
-            data: [20, 59, 90, 51, 56, 100, 40, 60, 78, 53, 33, 81]
-        },
-        {
-            label: "Dữ liệu kế tiếp",
-            fillColor: "rgba(255, 255, 255, 0.158)",
-            strokeColor: "rgb(220, 64, 59)",
-            pointColor: "black",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "green",
-            data: [48, 48, 49, 39, 86, 10, 50, 70, 60, 70, 75, 90]
-        }
-        ]
-    };
 
-
-    var ctxl = $("#lineChartDemo").get(0).getContext("2d");
-    var lineChart = new Chart(ctxl).Line(data);
-
-    var ctxb = $("#barChartDemo").get(0).getContext("2d");
-    var barChart = new Chart(ctxb).Bar(data);
-</script>
 <!-- Google analytics script-->
 <script type="text/javascript">
     if (document.location.hostname == 'pratikborsadiya.in') {

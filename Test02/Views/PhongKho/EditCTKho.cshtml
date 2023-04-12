@@ -1,13 +1,28 @@
-﻿
-@model Test02.Models.ChiTietKho
+﻿@model Test02.Models.ChiTietKho
+    @using Test02.Models
 @{
     ViewBag.Title = "EditCTKho";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Chỉnh sửa chi tiết kho";
     ViewBag.qlk = "active";
+    ViewBag.hieuung2 = "bx-tada";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
-
-<h2>Chỉnh sửa chi tiết kho @Model.MaKho có mã chi tiết @Model.MaCTKho</h2>
+@{
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "check null")
+    {
+        <script>
+            swal({
+                title: "Lỗi số lượng",
+                text: "Số lượng không được để trống hoặc nhỏ hơn 0!",
+                icon: "warning",
+                button: "Nhập lại",
+            });
+        </script>
+    }
+}
+<h2>Chỉnh sửa chi tiết kho số @Model.STT của kho @Model.MaKho</h2>
 
 @using (Html.BeginForm())
 {
@@ -16,67 +31,73 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.MaCTKho)
+        @Html.HiddenFor(model => model.STT)
+        @Html.HiddenFor(model => model.NgayNhap)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MaSP, "MaSP", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control" })
+            @Html.LabelFor(model => model.MaSP, "Tên sản phẩm:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12">
+                @*@Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control", @value = Model.MaSP })*@
+                <select class="form-control col-md-12" name="MaSP" required>
+                    <option selected value="@Model.MaSP">@Model.MaSP - @Model.SanPham.TenSP</option>
+                    @{ 
+                        var sp = db.SanPhams.ToList();
+                        foreach(var item in sp)
+                {
+                    <option value="@item.MaSP" >@item.MaSP - @item.TenSP</option>
+                }
+                    }
+                </select>
                 @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
             </div>
         </div>
 
         @*<div class="form-group">
-            @Html.LabelFor(model => model.MaKho, "MaKho", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MaKho", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MaKho, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                @Html.LabelFor(model => model.MaKho, "MaKho", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("MaKho", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MaKho, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NgayNhap, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NgayNhap, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NgayNhap, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.NgayNhap, "Ngày nhập:", htmlAttributes: new { @class = "control-label col-md-12" })
+        <p class="col-md-12"><span> *Ngày nhập gần nhất: </span>@Html.DisplayFor(model => model.NgayNhap)</p>
+
+        <div class="col-md-12">
+            @Html.TextBoxFor(model => model.NgayNhap, "{0:yyyy-MM-dd HH:mm:ss}", new { @class = "form-control col-md-12", type = "datetime-local"})
+
+            @Html.ValidationMessageFor(model => model.NgayNhap, "", new { @class = "text-danger" })
         </div>
+    </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.NgayXuat, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NgayXuat, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(model => model.NgayXuat, "Ngày xuất:", htmlAttributes: new { @class = "control-label col-md-12" }) 
+            <p class="col-md-12"><span> *Ngày xuất gần nhất: </span>@Html.DisplayFor(model => model.NgayXuat)</p>
+            
+            <div class="col-md-12">
+                @*<input class="form-control text-box single-line" data-val="true" value="@Model.NgayXuat" id="NgayXuat" name="NgayXuat" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>*@
+                @Html.TextBoxFor(model => model.NgayXuat, "{0:yyyy-MM-dd HH:mm:ss}", new { @class = "form-control col-md-12", type = "datetime-local", min = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:00") })
                 @Html.ValidationMessageFor(model => model.NgayXuat, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SoLuong, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.SoLuong, "Số lượng trong kho:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12">
                 @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.TinhTrang, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TinhTrang, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TinhTrang, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lưu chi tiết kho @Model.MaCTKho" class="btn btn-add" />
+            <div class="col-md-offset-5 col-md-10">
+                <input type="submit" value="Lưu chi tiết kho @Model.STT" class="btn btn-outline-success" />
+                <a class="btn btn-outline-dark btn-sm" href="~/PhongKho/ChiTietKho/@Model.MaKho">
+                    <i class="fas fa-retweet"></i>
+                    Trở lại
+                </a>
             </div>
         </div>
     </div>
 }
-
-<div>
-    <a class="btn btn-danger btn-sm" href="/PhongKho/QuanLyKho" title="Trở lại">
-        <i class="fas fa-retweet"></i>
-        Trở lại danh sách kho
-    </a>
-</div>
