@@ -83,7 +83,7 @@ namespace Test02.Controllers
             DateTime homnay = DateTime.Now;
             
             List<DonHang> donhang = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && s.TinhTrangThanhToan == "Đã thanh toán" 
-            &&s.TinhTrangGH=="Đã giao hàng").ToList();
+            &&s.TinhTrangGH=="Đã giao").ToList();
             foreach(var item in donhang)
             {
                 DateTime thang = (DateTime)item.NgayLap;
@@ -391,7 +391,7 @@ namespace Test02.Controllers
         {
             List<DonHang> donhang = database.DonHangs.Where(s => s.MaDL == madl 
             && s.TinhTrangThanhToan == "Chưa thanh toán" 
-            && s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao hàng").ToList();
+            && s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao").ToList();
 
             return donhang;
         }
@@ -420,7 +420,7 @@ namespace Test02.Controllers
             BindDropDownList();
             var c = database.DaiLies.Where(s => s.MaDL == id).ToList().FirstOrDefault();
             List<DonHang> dhchuathanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" 
-            && s.TinhTrangThanhToan == "Chưa thanh toán" && s.TinhTrangGH=="Đã giao hàng").ToList();
+            && s.TinhTrangThanhToan == "Chưa thanh toán" && s.TinhTrangGH=="Đã giao").ToList();
             List<DonHang> dhchon = LayDonHang_TheoThang(thangs, dhchuathanhtoan);
             List<DonHang> dhnew = new List<DonHang>();
             foreach (var dh in dhchon)
@@ -469,7 +469,7 @@ namespace Test02.Controllers
             if (t!=null)
             {
                 List<DonHang> dhchuathanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" && 
-                s.TinhTrangThanhToan == "Chưa thanh toán" && s.TinhTrangGH=="Đã giao hàng").ToList();
+                s.TinhTrangThanhToan == "Chưa thanh toán" && s.TinhTrangGH=="Đã giao").ToList();
                 List<DonHang> dhchon = LayDonHang_TheoThang(t, dhchuathanhtoan);
                 dhnew = Xet_DonHang(MaDL, dhchon);
             } else
@@ -577,7 +577,7 @@ namespace Test02.Controllers
                 database.Entry(phieuCongNo).State = System.Data.Entity.EntityState.Modified;
                 List<DonHang> donhang = database.DonHangs.Where(s => s.MaDL == phieuCongNo.MaDL
                  && s.TinhTrangThanhToan == "Đang nợ"
-                 && s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao hàng").ToList();
+                 && s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao").ToList();
                 if (phieuCongNo.TrangThai=="Đã thanh toán")
                 {
                     foreach(var item in donhang)
@@ -632,7 +632,7 @@ namespace Test02.Controllers
         {
             BindDropDownList();
             List<DonHang> dhthanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt"
-            && s.TinhTrangThanhToan == "Đã thanh toán" && s.TinhTrangGH == "Đã giao hàng").ToList();
+            && s.TinhTrangThanhToan == "Đã thanh toán" && s.TinhTrangGH == "Đã giao").ToList();
             return View(dhthanhtoan);
         }
         [HttpPost]
@@ -640,7 +640,7 @@ namespace Test02.Controllers
         {
             BindDropDownList();
             List<DonHang> dhthanhtoan = database.DonHangs.Where(s => s.TrangThai == "Đã xét duyệt" 
-            && s.TinhTrangThanhToan == "Đã thanh toán" && s.TinhTrangGH=="Đã giao hàng").ToList();
+            && s.TinhTrangThanhToan == "Đã thanh toán" && s.TinhTrangGH=="Đã giao").ToList();
             List<DonHang> dhchon = LayDonHang_TheoThang(thangs,dhthanhtoan);
 
             return View(dhchon);
