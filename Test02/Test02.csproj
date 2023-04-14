@@ -311,13 +311,6 @@
     <Content Include="Data\Images\sting.jpg" />
     <Content Include="Data\Images\stingVang.jpg" />
     <Content Include="Content\Img\neo.jpg" />
-    <Content Include="Content\Img\SanPham\7up.jpg" />
-    <Content Include="Content\Img\SanPham\coca.png" />
-    <Content Include="Content\Img\SanPham\cocalight.jpg" />
-    <Content Include="Content\Img\SanPham\pepsi.jpg" />
-    <Content Include="Content\Img\SanPham\pepsi0calo.jpg" />
-    <Content Include="Content\Img\SanPham\sting.jpg" />
-    <Content Include="Content\Img\SanPham\stingVang.jpg" />
     <Content Include="Content\images\teamwork-la-gi-3.jpg" />
     <Content Include="Data\Images\traolong.png" />
     <Content Include="Content\js\bootstrap.min.js" />
@@ -601,7 +594,6 @@
     <Content Include="Views\PhongKho\XoaKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuNhapKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuXuatKho.cshtml" />
-    <Content Include="Views\KinhDoanh\BaoCaoTaiChinh.cshtml" />
     <Content Include="Views\DaiLies\Create.cshtml" />
     <Content Include="Views\DaiLies\Delete.cshtml" />
     <Content Include="Views\DaiLies\Details.cshtml" />
@@ -623,6 +615,7 @@
     <Content Include="Views\KhachHang\DSChoGiao.cshtml" />
     <Content Include="Views\KhachHang\CongNo.cshtml" />
     <Content Include="Views\KhachHang\LienHe.cshtml" />
+    <Content Include="Views\PhongKho\ChiTietDonHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\KeToan\ChitietCN.cshtml" />
@@ -640,11 +633,6 @@
     <Content Include="Views\PhongKho\DeletePNX.cshtml" />
     <Content Include="Views\PhongKho\DSDonHang.cshtml" />
     <Content Include="Views\PhongKho\PhanPhoiSanPham.cshtml" />
-    <Content Include="Views\BienBangKiemKes\Create.cshtml" />
-    <Content Include="Views\BienBangKiemKes\Delete.cshtml" />
-    <Content Include="Views\BienBangKiemKes\Details.cshtml" />
-    <Content Include="Views\BienBangKiemKes\Edit.cshtml" />
-    <Content Include="Views\BienBangKiemKes\Index.cshtml" />
     <Content Include="Views\GiaoHang\DonHangMoi.cshtml" />
     <Content Include="Views\GiaoHang\Layout\LayoutGH.cshtml" />
     <Content Include="Views\GiaoHang\DanhSachPhuongTienGiaoHang.cshtml" />
@@ -676,6 +664,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Img\SanPham\" />
     <Folder Include="Data\ImagesDL\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Test01\Layout\" />

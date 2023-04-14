@@ -728,7 +728,24 @@ namespace Test02.Controllers
         public ActionResult XoaCTDH1(string id)
         {
             var madh = database.ChiTietDonHangs.Where(s => s.MaDH == id).FirstOrDefault();
+
             database.ChiTietDonHangs.Remove(madh);
+            database.SaveChanges();
+
+            var dh = database.DonHangs.Find(id);
+            var ldl = database.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();
+            var ck = database.LoaiDLs.Where(s => s.MaLoaiDL == ldl.MaLoaiDL).FirstOrDefault();
+            double total = 0;
+            var checktongtien = database.ChiTietDonHangs.Where(s => s.MaDH == id).ToList();
+            foreach (var item01 in checktongtien)
+            {
+                total += (double)item01.ThanhTien;
+            }
+
+            
+            dh.TongTien = total - (total*ck.ChietKhau);
+
+            database.Entry(dh).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
             database.SaveChanges();
             return RedirectToAction("QuanLyDH");
         }

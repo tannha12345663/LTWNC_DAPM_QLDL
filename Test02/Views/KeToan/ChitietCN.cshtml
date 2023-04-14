@@ -10,6 +10,21 @@
 }
 
 <link href="~/Content/KeToan/StyleKeToan.css" rel="stylesheet" />
+    @if (TempData["huyxoacn"] != null)
+    {
+<script>
+    swal({
+        title: "Phiếu công nợ đã thanh toán !!!!",
+        icon: "error",
+        button: "Thoát",
+    });
+
+</script>
+
+
+
+    }
+}
 
 
 <div class="container-sm">
@@ -59,7 +74,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @{ 
+                                    @{
                                         var total = 0;
                                         List<DonHang> donhang = new List<DonHang>();
                                         donhang = Session["donhangcheck"] as List<DonHang>;

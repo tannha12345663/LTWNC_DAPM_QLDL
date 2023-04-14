@@ -9,6 +9,7 @@
     ViewBag.hieuung = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dssp = db.SanPhams.ToList();
+    var madh="";
 }
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -80,6 +81,7 @@
                                     @{ var total = 0;}
                                     @foreach (var item in Model)
                                     {
+                                        madh = item.MaDH;
                                         <tr>
                                             <td>
                                                 @{ Session["mdh1"] = item.MaDH;}
@@ -114,12 +116,23 @@
                                             </td>
 
                                             <td>
-                                                <a href="/KinhDoanh/XoaCTDH/@item.MaDH" class="btn btn-primary btn-sm trash">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a> ||
-                                                <a href="/KinhDoanh/ChinhSuaCTDH/@item.MaDH" class="btn btn-primary btn-sm edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
+                                                @{
+                                                    var check01 = db.DonHangs.Find(item.MaDH);
+                                                    if (check01.TrangThai == "Chưa xử lý")
+                                                    {
+                                                        <a href="/KinhDoanh/XoaCTDH/@item.MaDH" class="btn btn-primary btn-sm trash">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </a>
+                                                        <a href="/KinhDoanh/ChinhSuaCTDH/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="badge badge-warning">None</p>
+                                                    }
+                                                }
+
                                             </td>
                                         </tr>
                                     }
@@ -133,9 +146,22 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <a class="btn btn-delete btn-sm nhap-tu-file" data-target="#myModal" data-toggle="modal" @*href="~/KinhDoanh/ThemCTHD1/@Session["mdh1"]"*@><i class="fas fa-file-upload"></i> Thêm một sản phẩm</a>
-            </div>
+            @{
+                var check02 = db.DonHangs.Find(madh);
+                if (check02.TrangThai == "Chưa xử lý")
+                {
+                    <div class="col-sm-12">
+                        <a class="btn btn-delete btn-sm nhap-tu-file" data-target="#myModal" data-toggle="modal" @*href="~/KinhDoanh/ThemCTHD1/@Session["mdh1"]"*@><i class="fas fa-file-upload"></i> Thêm một sản phẩm</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-sm-12">
+                        <a class="btn btn-delete btn-sm nhap-tu-file" ><i class="fas fa-file-upload"></i> Không thể thêm sản phẩm</a>
+                    </div>
+                }
+            }
+
         </div>
     </div>
 </div>
@@ -178,7 +204,7 @@
                         </div>
                         <div class="form-group col-md-12" style="text-align:end">
                             <label style="font-size:20px;color:red" id="TongTien" class="control-label">Tổng tiền: </label>
-                            
+
                         </div>
                         <div class="form-group col-md-12" style="text-align:center">
                             <label style="font-size:16px;color:blue" id="CongNo" class="control-label" hidden>Đang kiểm tra... </label>
@@ -257,7 +283,7 @@
             $("#btnadd").attr("action", "/KinhDoanh/ThemCTHD2/" + i);
         } else if (i = 0) {
             $("#xoasp").attr("disabled", "disabled");
-            
+
         };
         KTSoDu();
         var TongTien=  $("#TongTien").data("value");
@@ -269,7 +295,7 @@
         var resetp = '';
         document.getElementById("themdong").innerHTML=resetp;
         }
-        
+
         $(document).ready(function () {
             const VND = new Intl.NumberFormat('vi-VN', {
                 style: 'currency',
@@ -288,7 +314,7 @@
                 //        });
                 //    }
                 //})
-                
+
                 for (var item = 1; item <= i; item++) {
                     var value = $("#ChonSP" + item).val();
                     if (value != null) {
@@ -302,11 +328,11 @@
                             // console.log("Item trước khi thêm vào tổng tiền " + item + "Với tổng tiền là : " + TinhTongTien(model));
                             console.log(model);
                             TinhTongTien(model, item);
-                            
+
                         }
-                        
+
                     }
-                    
+
                 }
             });
         });
@@ -315,7 +341,7 @@
                 style: 'currency',
                 currency: 'VND',
             });
-            
+
             var total = 0;
             for (var item01 = 1; item01 < 3; item01++) {
                 var check = $("#Total" + item01).data("value");
@@ -335,7 +361,7 @@
                 style: 'currency',
                 currency: 'VND',
             });
-            
+
             $.ajax({
                 url: '/KinhDoanh/CheckTongTien',
                 type: 'POST',
@@ -344,7 +370,7 @@
                 success: function (res) {
                     console.log("Tổng tiền :" + res.data);
                     var result = res.data;
-                    
+
                     $("#Total" + item).html("Thành tiền " + VND.format(result));
                     $("#Total" + item).attr('data-value', result);
                     //CheckTongTien();
