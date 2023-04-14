@@ -53,7 +53,6 @@
                         <label class="control-label">Phương tiện giao hàng: </label> <a>@TempData["phuongtien"]</a> <br />
                         <label class="control-label">Danh sách sản phẩm: </label> <br />
                         <table class="table table-hover table-striped table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
-                            @*//Phần render từng dòng trong C#*@
                             <thead>
                                 <tr>
                                     <th>Mã sản phẩm</th>
@@ -120,11 +119,6 @@
     </div>
 </div>
 <div class="row" style="padding-left:10px" id="btnin">
-    @*<div class="col-sm-2">
-            <a class="btn btn-danger" id="btnReturn" href="/GiaoHang/ChiTietChuyenGiaoHang/@TempData["ctmadh"]" title="Trở lại">
-                Trở lại
-            </a>
-        </div>*@
     <div class="col-sm-2">
         <a class="btn btn-delete " title="In" onclick="printDiv('printMe')">
             <i class="fas fa-print"></i> In dữ liệu

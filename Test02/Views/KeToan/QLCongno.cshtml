@@ -55,8 +55,8 @@
 
                 <div class="row element-button">
                     @*<div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/ThemCongno "><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
-                    </div>*@
+                            <a class="btn btn-delete btn-sm nhap-tu-file" href="~/KeToan/ThemCongno "><i class="fas fa-file-upload"></i> Thêm phiếu công nợ</a>
+                        </div>*@
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-copy"></i> Làm mới danh sách</a>
                     </div>
@@ -116,7 +116,7 @@
                                             @{ var ngay = String.Format("{0:d/M/yyyy HH:mm:ss}", item.NgayLapCN); ;}
                                             @Html.DisplayFor(modelItem => ngay)
 
-                                            
+
 
                                         </td>
                                         <td>
@@ -149,5 +149,19 @@
     </div>
 
 
+    <script>
+        function CheckTT() {
+            var inputValue = document.getElementById("number").value;
+            if (inputValue == "Chưa thanh toán") {
+                document.getElementById("myButton").disabled = false;
 
+            }
+            else {
+                document.getElementById("myButton").disabled = true;
+                alert("Đơn hàng đã thanh toán !!");
+
+            }
+
+        }
+    </script>
 

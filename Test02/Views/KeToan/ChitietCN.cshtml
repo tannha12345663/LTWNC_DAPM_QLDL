@@ -61,9 +61,9 @@
                                 <tbody>
                                     @{ 
                                         var total = 0;
-                                        List<DonHang> donhang = db.DonHangs.Where(s => s.MaDL == Model.MaDL
-                                        && s.TinhTrangThanhToan == "Đang nợ"
-                                        && s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao hàng").ToList();
+                                        List<DonHang> donhang = new List<DonHang>();
+                                        donhang = Session["donhangcheck"] as List<DonHang>;
+
                                     }
                                     @foreach (var item in donhang)
                                     {

@@ -137,9 +137,14 @@
                                             }
                                         </td>
                                         <td>
-                                            <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
+                                            @{
+                                                if (item.TrangThai == "Chưa thanh toán")
+                                                {
+                                                    <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                }
+                                            }
 
                                             <a href="/KeToan/ChitietCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
                                                 <i class="fas fa-train"></i>
@@ -147,6 +152,7 @@
 
                                         </td>
                                     </tr>
+                                  
                                 }
                             </tbody>
                         </table>
@@ -173,7 +179,23 @@
 
 
     }
+    //function CheckTT() {
+    //    var inputValue = document.getElementById("number").value;
+    //    if (inputValue == "Chưa thanh toán") {
+    //        document.getElementById("checktt").disabled = false;
+
+    //    }
+    //    else {
+    //        document.getElementById("checktt").disabled = true;
+    //        alert("Phiếu công nợ đã thanh toán !!");
+
+    //    }
+
+    
 </script>
+
+   
+
 
 
 
