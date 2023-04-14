@@ -169,7 +169,7 @@ namespace Test02.Controllers
         }
        
 
-        //Cap nhat trang thai don hang
+        //Cap nhat trang thai don hang, cap nhat tong tien thu khi tinh trang don hang la "Chua thanh toan"
         public ActionResult CapNhatTrangThaiDonHang(string id)
         {           
             TempData["madh01"] = id;
@@ -198,8 +198,9 @@ namespace Test02.Controllers
                     database.SaveChanges();
                     TempData["messageAlert"] = "Xếp đơn thành công";               
             }    
-            return RedirectToAction("DonHangMoi");           
+            return RedirectToAction("DanhSachCacChuyenGiao");           
         }
+
 
         public ActionResult CapNhatDonGiaoHang(string id)
         {
@@ -215,7 +216,6 @@ namespace Test02.Controllers
             return RedirectToAction("DonGiaoHang");
         }
 
-
         //Don hang hoan
         public ActionResult DanhSachDonHoan()
         {
@@ -229,33 +229,6 @@ namespace Test02.Controllers
         }
 
 
-
-        ////---------------------------------------------BAO CAO PHONG GIAO HANG-------------------------------------------
-        //[HttpPost]
-        //[ValidateInput(false)]
-        //public ActionResult BaoCaoPhongGiaoHang(BaoCao baocao)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-
-        //        Random rd = new Random();
-        //        var mabc = "BC" + rd.Next(1, 1000);
-        //        baocao.MaBC = mabc;
-        //        var manv = (Test02.Models.NhanVien)Session["user"];
-        //        baocao.MaNV = manv.MaNV;
-        //        database.BaoCaos.Add(baocao);
-        //        database.SaveChanges();
-        //        return RedirectToAction("BaoCaoPhongGiaoHang");
-        //    }
-
-        //    return View(baocao);
-        //}
-        //public ActionResult BaoCaoPhongGiaoHang()
-        //{
-        //    return View();
-        //}
-
-
         //-------------------------------------------------SHIPPER-----------------------------------------------------
 
         //Danh sach shipper
@@ -265,8 +238,7 @@ namespace Test02.Controllers
         }
 
         public ActionResult ThemShipper()
-        {
-            
+        {           
             return View();
         }
 
