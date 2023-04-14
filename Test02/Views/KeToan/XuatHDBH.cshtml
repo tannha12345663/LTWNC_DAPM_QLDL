@@ -99,11 +99,24 @@
 
                                     }
                                     <tr>
-                                        <th colspan="4">Tổng cộng tiền nợ:</th>
+                                        <th colspan="4">Tổng tiền</th>
                                         @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
                                         <td>@Html.DisplayFor(modelItem => TongCong)</td>
                                     </tr>
-                            </table>
+
+                                    <tr>
+                                        <th colspan="4">Chiết khấu</th>
+                                        @{ var ck = loaidaily.ChietKhau * 100;}
+                                        <td>@Html.DisplayFor(modelItem => ck)%</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th colspan="4">Tổng hóa đơn</th>
+                                        @{ var tongsale = total * (1 - loaidaily.ChietKhau);
+                                            var tongcuoicung = string.Format("{0:0,0 vnđ}", tongsale);}
+                                        <td>@Html.DisplayFor(modelItem => tongcuoicung)</td>
+                                    </tr>
+</table>
 
                         </div>
 
