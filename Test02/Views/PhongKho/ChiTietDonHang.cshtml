@@ -211,41 +211,54 @@
                                             }
                                             @foreach (var item in Model)
                                             {
-                                                <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.MaCTDH)
-                                                    </td>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaCTDH)
+                                                </td>
 
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.MaSP)
-                                                    </td>
-                                                    @{
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MaSP)
+                                                </td>
+                                                @{
                                                         var sanpham = db.SanPhams.Where(sp => sp.MaSP == item.MaSP).FirstOrDefault();
-                                                    }
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => sanpham.TenSP)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.SoLuong)
-                                                    </td>
+                                                }
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => sanpham.TenSP)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SoLuong)
+                                                </td>
 
 
-                                                    <td>
-                                                        @{ total1 += Convert.ToInt32(item.ThanhTien);}
-                                                        @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
-                                                        @Html.DisplayFor(modelItem => ThanhTien)
+                                                <td>
+                                                    @{ total1 += Convert.ToInt32(item.ThanhTien);}
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
+                                                    @Html.DisplayFor(modelItem => ThanhTien)
 
-                                                    </td>
+                                                </td>
 
-                                                </tr>
+                                            </tr>
 
                                             }
                                             <tr>
-                                                <th colspan="4">Tổng cộng tiền nợ:</th>
+                                                <th colspan="4">Tổng tiền</th>
                                                 @{ var TongCong1 = string.Format("{0:0,0 vnđ}", total1);}
                                                 <td>@Html.DisplayFor(modelItem => TongCong1)</td>
                                             </tr>
-                                    </table>
+
+                                            <tr>
+                                                <th colspan="4">Chiết khấu</th>
+                                                @{ var ck = loaidaily.ChietKhau * 100;}
+                                                <td>@Html.DisplayFor(modelItem => ck)%</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th colspan="4">Tổng hóa đơn</th>
+                                                @{ var tongsale = total * (1 - loaidaily.ChietKhau);
+                                            var tongcuoicung = string.Format("{0:0,0 vnđ}", tongsale);}
+                                                <td>@Html.DisplayFor(modelItem => tongcuoicung)</td>
+                                            </tr>
+</table>
 
                                 </div>
 
