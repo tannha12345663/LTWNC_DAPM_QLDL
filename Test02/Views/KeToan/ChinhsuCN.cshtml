@@ -53,7 +53,7 @@
                                         @{ var total = 0;
                                             List<DonHang> donhang = db.DonHangs.Where(s => s.MaDL == Model.MaDL
                                 && s.TinhTrangThanhToan == "Đang nợ"
-                                && s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao hàng").ToList();
+                                && s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao").ToList();
                                         }
                                         @foreach (var item in donhang)
                                         {
