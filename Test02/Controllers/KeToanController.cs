@@ -484,7 +484,7 @@ namespace Test02.Controllers
             
             double tien = (double)TinhTongDonHang(dhnew); 
             Random rd = new Random();
-            var macn = "CN" + rd.Next(1, 1000);
+            var macn = "CN" + rd.Next(1, 9)+ rd.Next(1, 20)+ rd.Next(21, 99);
             phieuCongNo.MaCongNo = macn;
 
             phieuCongNo.TrangThai = "Chưa thanh toán";
@@ -603,6 +603,14 @@ namespace Test02.Controllers
             {
                 phieuCongNo = database.PhieuCongNoes.Where(s => s.MaCongNo == id).FirstOrDefault();
                 Session["matim"] = phieuCongNo.MaDL;
+                if (phieuCongNo.TrangThai=="Đã thanh toán")
+                {
+                    TempData["huyxoacn"] = "khongxoa";
+                    return RedirectToAction("ChitietCN", new RouteValueDictionary(
+                                      new { controller = "KeToan", action = "ChitietCN", Id = phieuCongNo.MaCongNo }));
+
+                }    
+                
                 database.PhieuCongNoes.Remove(phieuCongNo);
                 database.SaveChanges();
                 
