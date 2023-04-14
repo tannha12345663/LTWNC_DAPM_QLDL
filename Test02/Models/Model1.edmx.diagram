@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b60ef4e69c184902acf82092f83ed3fb" Name="Diagram1">
+      <Diagram DiagramId="c8d458a9c36d40b693140b19d1f2acc4" Name="Diagram1">
         <EntityTypeShape EntityType="QuanLyDLModel.BaoCao" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.BienBangKiemKe" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.ChiTietBienBang" Width="1.5" PointX="10.5" PointY="8.5" IsExpanded="true" />
@@ -23,7 +23,6 @@
         <EntityTypeShape EntityType="QuanLyDLModel.PhieuNhapXuat" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.PhuongTienGH" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.SanPham" Width="1.5" PointX="5.25" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.sysdiagram" Width="1.5" PointX="8.75" PointY="1.75" IsExpanded="true" />
         <AssociationConnector Association="QuanLyDLModel.FK_BaoCao_NhanVien" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_BienBangKiemKe_Kho" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_BienBangKiemKe_NhanVien1" ManuallyRouted="false" />
