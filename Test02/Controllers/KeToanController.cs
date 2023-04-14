@@ -625,8 +625,19 @@ namespace Test02.Controllers
 
         public ActionResult ChitietCN(String id)
         {
-
-            return View(database.PhieuCongNoes.Where(s => s.MaCongNo == id).FirstOrDefault());
+            var phieucn = database.PhieuCongNoes.Where(s => s.MaCongNo == id).FirstOrDefault();
+            List<DonHang> donhang = new List<DonHang>();
+            if (phieucn.TrangThai == "Chưa thanh toán")
+            {
+                donhang = database.DonHangs.Where(s =>s.TinhTrangThanhToan == "Đang nợ"
+            && s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao").ToList();
+            }
+            else
+            {
+                donhang = database.DonHangs.Where(s =>s.TinhTrangThanhToan == "Đã thanh toán" && s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao").ToList();
+            }
+            Session["donhangcheck"] = donhang;
+            return View(phieucn);
         }
 
         public ActionResult Doanhthu()
