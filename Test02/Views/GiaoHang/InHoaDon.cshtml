@@ -30,8 +30,6 @@
                         <p> <strong>Ngày: </strong>@Html.DisplayFor(model => ngay)</p>
                         <p> <strong>Mã đơn hàng: </strong>@Html.DisplayFor(model => model.MaDH)</p>
                     </div>
-
-
                     <p> <strong>Tên đại lý: </strong>@Html.DisplayFor(model => daily.TenDL)</p>
                     <p> <strong>Loại đại lý: </strong>@Html.DisplayFor(model => loaidaily.MaLoaiDL)</p>
                     <p> <strong>Địa điểm giao: </strong>@Html.DisplayFor(model => model.DiemGiao)</p>
@@ -72,17 +70,12 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.SoLuong)
                                             </td>
-
-
                                             <td>
                                                 @{ total += Convert.ToInt32(item.ThanhTien);}
                                                 @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
                                                 @Html.DisplayFor(modelItem => ThanhTien)
-
                                             </td>
-
                                         </tr>
-
                                     }
                                     <tr>
                                         <th colspan="4">Tổng cộng tiền nợ:</th>
@@ -105,11 +98,6 @@
         </div>
     </div>
     <div class="row" style="padding-left:10px" id="btnin">
-        @*<div class="col-sm-2">
-            <a class="btn btn-danger" id="btnReturn" href="/GiaoHang/ChiTietChuyenGiaoHang/@TempData["ctmadh"]" title="Trở lại">
-                Trở lại
-            </a>
-        </div>*@
         <div class="col-sm-2">
             <a class="btn btn-delete " title="In" onclick="printDiv('printMe')">
                 <i class="fas fa-print"></i> In dữ liệu

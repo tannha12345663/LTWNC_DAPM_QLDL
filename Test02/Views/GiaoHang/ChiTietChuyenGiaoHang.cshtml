@@ -40,23 +40,14 @@
                                         }
                                     </span>
                                 </p>
-                                foreach (var nhanvien in Model)
-                                {@*<p style="text-align:center">
-                                            <span>
-                                                @{
-                                                    var macg1 = db.ChuyenGiaos.Where(s => s.MaGH == nhanvien.MaGH).FirstOrDefault();
-                                                    var nvgh = db.NhanVienGHs.Where(s => s.MaGH == nhanvien.MaGH).FirstOrDefault();
-                                                }
-                                            </span>
-                                        </p>*@
+
                                 <p>
                                     <strong>Tên nhân viên giao: </strong>
                                     @{var tendnv = db.NhanVienGHs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
                                     @Html.DisplayFor(modelItem => tendnv.TenNV) - @{var sdt = db.NhanVienGHs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
                                     @Html.DisplayFor(modelItem => tendnv.SDT)
                                 </p>
-                                break;
-                            }
+                            
                             <p>
                                 <strong>Phương tiện: </strong>
                                 @{var pt = db.PhuongTienGHs.Where(s => s.MaPT == macg.MaPT).FirstOrDefault();}

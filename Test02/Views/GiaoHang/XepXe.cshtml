@@ -4,7 +4,7 @@
     ViewBag.Title = "NhanVienGiaoHang";
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
     ViewBag.gh_shippers = "active";
-    ViewBag.nd = "Cập nhật thông tin nhân viên giao";
+    ViewBag.nd = "Xếp chuyến giao";
 
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     List<ChuyenGiao> ct = db.ChuyenGiaos.ToList();
@@ -31,29 +31,6 @@
             @Html.HiddenFor(model => model.DiaChi)
             @Html.HiddenFor(model => model.TinhTrang)
             @Html.HiddenFor(model => model.TenNV)
-
-            @*<p>
-            <strong>Mã nhân viên: </strong>
-            @Html.DisplayFor(modelItem => Model.MaNV)
-        </p>
-
-        <p>
-            <strong>Tên nhân viên: </strong>
-            @Html.DisplayFor(model => model.TenNV)
-            @Html.ValidationMessageFor(model => model.TenNV, "", new { @class = "text-danger" })
-        </p>*@
-
-            @*<div class="form-group">
-            <strong>Tình trạng làm việc: </strong>
-            <div class="col-md-10">
-                <select class="form-control" name="tinhtrang">
-                    <option>----Chọn tình trạng làm việc----</option>
-                    <option>Sẵn sàng</option>
-                    <option>Đang giao hàng</option>
-                    <option>Nghỉ phép</option>
-                </select>
-            </div>
-        </div>*@
 
             <div class="form-group">
                 <strong>Xếp chuyến giao: </strong>
@@ -83,8 +60,7 @@
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-body">
-                <div class="row element-button">
-                    @*<a class="btn btn-delete btn-sm nhap-tu-file" href="/GiaoHang/ThemChuyenGiaoHang"><i class="fas fa-file-upload"></i> Thêm chuyến giao hàng</a>*@
+                <div class="row element-button">                 
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
                     </div>
@@ -103,8 +79,6 @@
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Trạng thái</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Khu vực giao</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Ngày giao</th>
-                                        @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tổng tiền thu về</th>*@
-                                        @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Xếp đơn</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -121,14 +95,6 @@
 
                                         if (item.TrangThai == "Chờ giao")
                                         {
-                                            @*<p style="text-align:center">
-                                                <span>
-                                                    @{
-                                                        var gh = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
-                                                        var dh = db.NhanVienGHs.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();
-                                                    }
-                                                </span>
-                                            </p>*@
                                             <tr>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.MaGH)
@@ -161,11 +127,6 @@
                                                         var ng = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
                                                     @Html.DisplayFor(modelItem => kvg.NgayGiao)
                                                 </td>
-                                                @*<td style="text-align:center">
-                        <a class="btn  btn-primary btn-sm edit" href="/GiaoHang/ChiTietChuyenGiaoHang/@item.MaGH">
-                            <i class='bx bxs-cube-alt'></i>
-                        </a>
-                    </td>*@
                                             </tr>
                                         }
                                     }

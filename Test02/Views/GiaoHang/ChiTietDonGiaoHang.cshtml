@@ -97,24 +97,9 @@
                                                 @{var dvt = db.SanPhams.Where(s => s.MaSP == gh.MaSP).FirstOrDefault();}
                                                 @Html.DisplayFor(modelItem => dvt.DonViTinh)
                                             </td>
-                                            @*<td>
-                                                    @{ var chuyendoi = string.Format("{0:0,0 vnđ}", tensp.Gia);}
-                                                    @Html.DisplayFor(modelItem => chuyendoi)
-                                                </td>
-
-                                                @{var tt = db.ChiTietDonHangs.Where(s => s.MaDH == gh.MaDH).FirstOrDefault();}
-                                                <td>
-                                                    @{total += Convert.ToInt32(tt.ThanhTien);}
-                                                    @{var ThanhTien = string.Format("{0:0,0 vnđ}", tt.ThanhTien);}
-                                                    @Html.DisplayFor(modelItem => ThanhTien)
-                                                </td>*@
                                         </tr>
                                     }
-                                    @*<tr>
-                                            <th colspan="5">Tổng cộng hóa đơn:</th>
-                                            @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
-                                            <td>@Html.DisplayFor(modelItem => TongCong)</td>
-                                        </tr>*@
+                                   
                             </table>
                         </div>
                     </div>

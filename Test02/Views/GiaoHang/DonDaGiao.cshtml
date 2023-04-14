@@ -37,7 +37,6 @@
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 160px; text-align: center ">Địa chỉ giao</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tình trạng thanh toán</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 60px; text-align: center ">Tình trạng giao</th>
-                                        @*<th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Cập nhật</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -105,12 +104,8 @@
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
-
         document.body.innerHTML = printContents;
-
         window.print();
-
         document.body.innerHTML = originalContents;
-
     }
 </script>
