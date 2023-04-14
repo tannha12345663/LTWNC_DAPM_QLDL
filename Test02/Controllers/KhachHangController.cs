@@ -440,7 +440,8 @@ namespace Test02.Controllers
                     update.Email = daiLy.Email;
                     update.SDT = daiLy.SDT;
                     update.DiaChi = daiLy.DiaChi;
-                    update.HinhAnh = daiLy.HinhAnh;                  
+                    update.HinhAnh = daiLy.HinhAnh;
+                    Session["userDL"] = info;
                     db.SaveChanges();
                     TempData["UpdateTC"] = "Cập nhật đại lý thành công";
                     return RedirectToAction("ThongTinDL");
