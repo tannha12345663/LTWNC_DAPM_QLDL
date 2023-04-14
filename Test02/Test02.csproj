@@ -304,11 +304,17 @@
     <Content Include="Content\Test01\UploadAnh.css" />
     <Content Include="Data\Images\7up.jpg" />
     <Content Include="Data\Images\account.png" />
+    <Content Include="Data\Images\coca.jpg" />
     <Content Include="Data\Images\coca.png" />
     <Content Include="Data\Images\cocalight.jpg" />
+    <Content Include="Data\Images\monster.jpg" />
+    <Content Include="Data\Images\numberone.jpg" />
+    <Content Include="Data\Images\NuocYenNhaDam.png" />
     <Content Include="Data\Images\pepsi.jpg" />
     <Content Include="Data\Images\pepsi0calo.jpg" />
     <Content Include="Data\Images\sting.jpg" />
+    <Content Include="Data\Images\stingdau.jpg" />
+    <Content Include="Data\Images\stingthai.jpg" />
     <Content Include="Data\Images\stingVang.jpg" />
     <Content Include="Content\Img\neo.jpg" />
     <Content Include="Content\images\teamwork-la-gi-3.jpg" />
