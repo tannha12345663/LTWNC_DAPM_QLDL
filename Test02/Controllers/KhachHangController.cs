@@ -240,7 +240,7 @@ namespace Test02.Controllers
                 donHang.TrangThai = "Chưa xử lý";
                 donHang.TinhTrangThanhToan = "Chưa thanh toán";
                 donHang.DiemGiao = daiLy.DiaChi;
-                donHang.TongTien = thanhtien;
+                donHang.TongTien = (float)thanhtien;
                 donHang.PhieuXuatKho = false;
                 donHang.XuatHoaDon = false;
                 db.DonHangs.Add(donHang);
@@ -413,25 +413,10 @@ namespace Test02.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ThongTinDL(DaiLy daiLy, HttpPostedFileBase HinhAnh, string id)
         {
-            //var email = db.DaiLies.FirstOrDefault(s => s.Email == daiLy.Email);
-            //var noPhone = db.DaiLies.FirstOrDefault(s => s.SDT == daiLy.SDT);
             DaiLy info = db.DaiLies.Find(id);
 
             var totalEmail = db.DaiLies.Count(s => s.Email == daiLy.Email);
             var totalNoPhone = db.DaiLies.Count(s => s.SDT == daiLy.SDT);
-
-            //if (daiLy.SDT != info.SDT && totalNoPhone >= 1)
-            //{
-            //    //ModelState.AddModelError(string.Empty, "Số điện thoại này đã được sử dụng");
-            //    TempData["errorPhone"] = "Không thể cập nhật số điện thoại này, vì số điện thoại này đã được sử dụng";
-            //    return View(daiLy);
-            //}
-            //if (daiLy.Email != info.Email && totalEmail >= 1)
-            //{
-            //    TempData["errorEmail"] = "Không thể cập nhật email này, vì số điện thoại này đã được sử dụng";
-            //    //ModelState.AddModelError(string.Empty, "Email này đã được sử dụng");
-            //    return View(daiLy);
-            //}
 
             if ((daiLy.SDT != info.SDT && totalNoPhone >= 1) ||
                 (daiLy.Email != info.Email && totalEmail >= 1))
@@ -445,35 +430,24 @@ namespace Test02.Controllers
                 DaiLy update = db.DaiLies.Find(id);
                 if (daiLy.Email == info.Email && daiLy.SDT == info.SDT && daiLy.DiaChi == info.DiaChi && HinhAnh == null)
                 {
-                    return View(daiLy);
+                    return RedirectToAction("ThongTinDL");
                 }
 
-                //else if (HinhAnh == null)
-                //{
-                //    update.TenDL = daiLy.TenDL;
-                //    update.Email = daiLy.Email;
-                //    update.SDT = daiLy.SDT;
-                //    update.DiaChi = daiLy.DiaChi;
-                //    //db.Entry(daiLy).State = System.Data.Entity.EntityState.Modified;
-                //    db.SaveChanges();
-                //    TempData["UpdateTC"] = "Cập nhật đại lý thành công";
-                //    return RedirectToAction("ThongTinDL");
-                //}
                 else
                 {
                     LuuAnh(daiLy, HinhAnh);
-                    db.Entry(daiLy).State = System.Data.Entity.EntityState.Modified;
                     update.TenDL = daiLy.TenDL;
                     update.Email = daiLy.Email;
                     update.SDT = daiLy.SDT;
                     update.DiaChi = daiLy.DiaChi;
-                    update.HinhAnh = daiLy.HinhAnh;                  
+                    update.HinhAnh = daiLy.HinhAnh;
+                    Session["userDL"] = info;
                     db.SaveChanges();
                     TempData["UpdateTC"] = "Cập nhật đại lý thành công";
-                    return View(daiLy);
+                    return RedirectToAction("ThongTinDL");
                 }
             }
-            return View(daiLy);
+            return RedirectToAction("ThongTinDL");
         }
 
         public ActionResult CapNhatMatKhau(string id)

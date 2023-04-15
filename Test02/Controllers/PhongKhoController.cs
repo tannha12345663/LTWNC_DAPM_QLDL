@@ -299,6 +299,7 @@ namespace Test02.Controllers
                         return RedirectToAction("EditCTKho");
                     }
                     database.Entry(chiTietKho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    updateTongTon();
                     database.SaveChanges();
                     TempData["AlertMessage"] = "Đã cập nhật";
                     TempData["MaCTKkk"] = Session["Mactkho"];
@@ -1152,6 +1153,7 @@ namespace Test02.Controllers
                     var ctkho = database.ChiTietKhoes.Where(s => s.MaKho == item.MaKho && s.MaSP == item.MaSP && s.SoLuong == item.SoLuongTrongKho).FirstOrDefault();
                     ctkho.SoLuong -= item.SoLuongDeXuat;
                     ctkho.TinhTrang = "Còn hàng";
+                    updateTongTon();
                 }
                 phieu.TinhTrang = "Đã xuất";
                 database.Entry(phieu).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
@@ -1164,6 +1166,7 @@ namespace Test02.Controllers
                     var ctkho = database.ChiTietKhoes.Where(s => s.MaKho == item.MaKho && s.MaSP == item.MaSP && s.SoLuong == item.SoLuongTrongKho).FirstOrDefault();
                     ctkho.SoLuong += item.SoLuongDeXuat;
                     ctkho.TinhTrang = "Còn hàng";
+                    updateTongTon();
                 }
                 phieu.TinhTrang = "Đã nhập";
                 database.Entry(phieu).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;

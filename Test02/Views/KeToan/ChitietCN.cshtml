@@ -10,6 +10,21 @@
 }
 
 <link href="~/Content/KeToan/StyleKeToan.css" rel="stylesheet" />
+    @if (TempData["huyxoacn"] != null)
+    {
+<script>
+    swal({
+        title: "Phiếu công nợ đã thanh toán !!!!",
+        icon: "error",
+        button: "Thoát",
+    });
+
+</script>
+
+
+
+    }
+}
 
 
 <div class="container-sm">
@@ -59,11 +74,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @{ 
+                                    @{
                                         var total = 0;
-                                        List<DonHang> donhang = db.DonHangs.Where(s => s.MaDL == Model.MaDL
-                                        && s.TinhTrangThanhToan == "Đang nợ"
-                                        && s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao hàng").ToList();
+                                        List<DonHang> donhang = new List<DonHang>();
+                                        donhang = Session["donhangcheck"] as List<DonHang>;
+
                                     }
                                     @foreach (var item in donhang)
                                     {

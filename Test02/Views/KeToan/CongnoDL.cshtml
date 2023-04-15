@@ -175,36 +175,34 @@
                 @Html.HiddenFor(model => phieucongno.MaDL)
                 @Html.HiddenFor(model => phieucongno.TienNo)
                 @Html.HiddenFor(model => phieucongno.TrangThai)
-
+                <input name="MaDL" id="MaDL" value="@daily.MaDL"style="visibility:hidden" />
                 <!-- Modal body -->
                 <div class="modal-body">
                     <p class="modal-name">THÊM PHIẾU CÔNG NỢ </p>
                     <div class="confirmation-dh">
                         <p>
-                            Lập phiếu công nợ tháng @Session["thangs"] cho đại lý <span>@daily.TenDL - @daily.MaDL </span> ?!
+                            Lập phiếu công nợ tháng @Session["thangs"]
                         </p>
-                        <div class="form-group col-sm-6">
-                            <strong>Mã đại lý</strong>
-                            <div class="col-md-10">
-                                <input name="MaDL" id="MaDL" value="@daily.MaDL" class="form-control col-md-12 text-box single-line"/>
-                            </div>
+                        <div class="form-group col-sm-12">
+                            <strong>Thông tin đại lý</strong>@daily.TenDL - @daily.MaDL
+
                         </div>
-                        @{ 
+                        @{
                             DateTime time = DateTime.Now;
                             DateTime maxtime = time.AddDays(30);
                         }
                         <div class="form-group col-sm-10">
                             <strong>Ngày lập công nợ</strong>
                             <div class="col-md-10">
-                             
+
                                 <input class="form-control col-md-12 text-box single-line datepicker" name="NgayLapCN" id="NgayLapCN" data-val="true" type="date" value="@time.ToString("yyyy-MM-dd")" required>
                             </div>
                         </div>
                         <div class="form-group col-sm-10">
                             <strong>Hạn trả: </strong>
                             <div class="col-md-10">
-                                <input class="form-control col-md-12 text-box single-line datepicker" name="Hantra" id="Hantra" data-val="true"  type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@maxtime.ToString("yyyy-MM-dd")" required>
-                                
+                                <input class="form-control col-md-12 text-box single-line datepicker" name="Hantra" id="Hantra" data-val="true" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@maxtime.ToString("yyyy-MM-dd")" required>
+
                             </div>
                         </div>
                         <p>
@@ -216,13 +214,13 @@
 
 
                 <!-- Modal footer -->
-        <div class="modal-footer">
-            <a class="btn btn-danger" data-dismiss="modal">Close</a>
-            @*<a class="btn btn-success" href="/KeToan/TaoCongno/@daily.MaDL">Xuất công nợ</a>*@
-            <input type="submit" value="Lập phiếu công nợ" class="btn btn-success" />
-        </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger" data-dismiss="modal">Close</a>
+                    @*<a class="btn btn-success" href="/KeToan/TaoCongno/@daily.MaDL">Xuất công nợ</a>*@
+                    <input type="submit" value="Lập phiếu công nợ" class="btn btn-success" />
+                </div>
             }
-            </div>
+        </div>
     </div>
 </div>
 
