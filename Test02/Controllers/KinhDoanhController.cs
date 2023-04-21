@@ -110,6 +110,7 @@ namespace Test02.Controllers
                 var madl = "DL" + rd.Next(1, 1000);
                 daiLy.MaDL = madl;
                 daiLy.NgayTao = System.DateTime.Now;
+                daiLy.Password = "123456";
                 database.DaiLies.Add(daiLy);
                 database.SaveChanges();
                 TempData["messageAlert"] = "Đã thêm mới";
