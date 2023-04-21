@@ -123,7 +123,7 @@
                                                         <a href="/KinhDoanh/XoaCTDH/@item.MaDH" class="btn btn-primary btn-sm trash">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </a>
-                                                        <a href="/KinhDoanh/ChinhSuaCTDH/@item.MaDH" class="btn btn-primary btn-sm edit">
+                                                        <a href="/KinhDoanh/ChinhSuaCTDH/@item.MaSP" class="btn btn-primary btn-sm edit">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
                                                     }
@@ -137,9 +137,30 @@
                                         </tr>
                                     }
                                     <tr>
-                                        <th colspan="7">Tổng cộng đơn hàng:</th>
+                                        <th colspan="7" style="text-align:end">Tạm tính:</th>
                                         @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
                                         <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                    </tr>
+                                    @{ 
+                                        var madh01 = TempData["madh"];
+                                        var dh = db.DonHangs.Find(madh01);
+                                        var madl = db.DaiLies.Find(dh.MaDL);
+                                        var ck = db.LoaiDLs.Find(madl.MaLoaiDL);
+                                        var chietkhau = ck.ChietKhau * 100;
+                                    }
+                                    <tr>
+                                        <th colspan="7" style="text-align:end">Chiết khấu : </th>
+                                        <td> -@chietkhau%</td>
+                                    </tr>
+                                    <tr>
+                                        @{ 
+                                            var TongHD = (total - (total * ck.ChietKhau));
+                                            var chuyendoi01 = string.Format("{0:0,0 vnđ}",TongHD);
+                                        }
+                                        <th colspan="7" style="text-align:end">Tổng tiền:</th>
+                                        <td>
+                                            @chuyendoi01
+                                        </td>
                                     </tr>
                             </table>
                         </div>

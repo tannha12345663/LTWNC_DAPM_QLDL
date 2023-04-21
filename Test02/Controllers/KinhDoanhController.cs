@@ -508,7 +508,7 @@ namespace Test02.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            var madh = database.ChiTietDonHangs.Where(s => s.MaDH == id).FirstOrDefault();
+            var madh = database.ChiTietDonHangs.Where(s => s.MaSP == id).FirstOrDefault();
             if (madh == null)
             {
                 return HttpNotFound();
@@ -538,9 +538,11 @@ namespace Test02.Controllers
                     chiTietDonHang.ThanhTien = (chiTietDonHang.SoLuong) * (dongia.Gia) * (chiTietDonHang.ChietKhau);
                 }
                 chiTietDonHang.MaDH = (string)Session["madh"];
+                TempData["messageAlert"] = "Đã cập nhật chi tiết đơn hàng";
+                TempData["capnhatdh"] = chiTietDonHang.MaDH;
                 database.Entry(chiTietDonHang).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
-                return RedirectToAction("QuanLyDH");
+                return RedirectToAction("DanhSachCTDH","KinhDoanh",new {id = chiTietDonHang.MaDH });
             }
             ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietDonHang.MaSP);
             return View(chiTietDonHang);
