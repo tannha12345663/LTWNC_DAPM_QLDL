@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Test02.App_Start;
 using Test02.Models;
+using PagedList;
 
 namespace Test02.Controllers
 {
@@ -16,9 +17,26 @@ namespace Test02.Controllers
         QuanLyDLEntities2 db = new QuanLyDLEntities2();
         // GET: KhachHang
 
-        public ActionResult PageSanPham()
+        public ActionResult PageSanPham(int? page, string query)
         {
-            return View(db.SanPhams.ToList().OrderByDescending(s => s.TenSP));
+            TempData["timkiem"] = query;
+            int pageSize = 4;
+            int pageNum = (page ?? 1);   
+            if (query == null || query == "")
+            {
+                return View(db.SanPhams.ToList().OrderByDescending(s => s.TenSP).ToPagedList(pageNum, pageSize));
+            }
+            
+            if (query.Length == 1)
+            {
+                var data = db.SanPhams.Where(s => s.MaSP.Substring(0, 1) == query || s.TenSP.Substring(0, 1) == query).ToList().OrderByDescending(s => s.TenSP).ToPagedList(pageNum, pageSize);
+                return View(data);
+            }
+            else 
+            {
+                var data = db.SanPhams.Where(s => s.MaSP.Contains(query)|| s.TenSP.Contains(query)).ToList().OrderByDescending(s => s.TenSP).ToPagedList(pageNum, pageSize);
+                return View(data);
+            }
         }
 
         // Chi tiết sản phẩm

@@ -262,8 +262,8 @@
                 '</div>';
             $("#xoasp").prop('disabled', false);
             var div = document.getElementById("themdong");
-            div.innerHTML += row;
-
+            //div.innerHTML += row;
+            $("#themdong").append(row);
             console.log(i);
             $("#SoLuongSP").attr("value", i);
             //$("#btnadd").attr("action", "/KinhDoanh/ThemCTHD2/" + i);
