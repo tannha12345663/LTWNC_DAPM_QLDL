@@ -22,7 +22,7 @@ namespace Test02.Controllers
             TempData["timkiem"] = query;
             Session["page"] = page;
             Session["query"] = query;
-            int pageSize = 4;
+            int pageSize = 6;
             int pageNum = (page ?? 1);   
             if (query == null || query == "")
             {
