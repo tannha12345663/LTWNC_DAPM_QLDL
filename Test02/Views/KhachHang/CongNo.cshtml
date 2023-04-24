@@ -1,19 +1,46 @@
 ﻿@model IEnumerable<Test02.Models.PhieuCongNo>
-
+@using Test02.Models;
 @{
     ViewBag.Title = "CongNo";
     Layout = "~/Views/KhachHang/Layout/_LayoutKhachHang.cshtml";
     ViewBag.nd = "Trang công nợ";
     ViewBag.cn = "active";
+
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var maDL = ViewBag.daiLy;
+    var doanhThu = db.DonHangs.ToList().Where(s => s.MaDL == TempData["daiLy"].ToString() && s.TinhTrangThanhToan == "Đã thanh toán" && s.TinhTrangGH == "Đã giao" && s.NgayLap.Value.Month == DateTime.Now.Month);
 }
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">DOANH SỐ</h3>
+            <div class="tile-body">
+                <div>
+                    <div style="margin: 20px 0px 20px 0px">
+                        @{ double tongdoanhThu = 0;}
+                        @foreach (var item in doanhThu)
+                        {
+                            tongdoanhThu += (double)item.TongTien;
+                        }
+                        <b>Doanh số tháng @DateTime.Now.Month: </b> @{ var tongDT = string.Format("{0:0,0 VNĐ}", @tongdoanhThu); } @tongDT
+                    </div>
+                    <p >Điều kiện loại đại lý: </p>
+                    <p>+ Doanh số 1 tháng trên 1.000.000.000 VNĐ (Loại đai lý - Đại lý lớn)</p>
+                    <p>+ Doanh số 1 tháng từ 500.000.000 VNĐ - dưới 1.000.000.000 VNĐ (Loại đai lý - Đại lý vừa)</p>
+                    <p>+ Doanh số 1 tháng dưới 500.000.000 VNĐ (Loại đai lý - Đại lý nhỏ)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
             <h3 class="tile-title">DANH SÁCH CÔNG NỢ</h3>
             <div class="tile-body table-responsive">
-                <div>
+                <div style="margin: 10px 0px 10px 0px">
                     @{ var congno = string.Format("{0:0,0 VNĐ}", @ViewBag.CongNo);}
-                    <b>Mức mua hàng tối đa của đại lý: @congno</b>
+                    <b>Mức công nợ tối đa của đại lý: @congno</b>
                 </div>
                 <table>
                     <tr>
