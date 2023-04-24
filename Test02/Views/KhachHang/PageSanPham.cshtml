@@ -49,8 +49,9 @@
             <div class="tile-title form-group" style="display: flex;">
                 <h3 style="margin-top: 10px; font-size: 20px;">DANH SÁCH SẢN PHẨM</h3>
                 <div style="width: 75%;">
-                    <form method="GET" class="pull-right">
-                        <input class="form-control" name="query" id="timkiem" type="text" placeholder="Tìm kiếm" />
+                    <form method="GET" class="pull-right" style="display: flex; width: 200px;">
+                        <input class="form-control" name="query" id="timkiem" type="text" placeholder="Tìm kiếm" value="@TempData["timkiem"]" />
+                        <a href="/KhachHang/PageSanPham" style="margin-left: -30px; margin-top: 8px;"><i class="fa fa-close"></i></a>
                     </form>
                 </div>
             </div>
@@ -115,15 +116,14 @@
                 </div>
                 <style>
                     .MenuTrang li {
-                        display: inline;
                         width:30px;
                         height:30px;
                         text-align:center;
                     }
                     .MenuTrang ul{
                         width:100%;
-                        text-align:center;
                         justify-content:center;
+                        margin-top: 10px;
                     }
                     .pagination {
                         display: compact;
@@ -140,11 +140,11 @@
                             .pagination > li > span {
                                 position: relative;
                                 float: left;
-                                padding: 0;
-                                margin-left: -1px;
+                                padding-top: 5px;
+                                /*margin-left: -1px;*/
                                 line-height: 1.428571429;
-                                text-decoration: none;
-                                background-color: #eee;
+                                /*text-decoration: none;
+                                background-color: #eee;*/
                                 border: 1px solid #dddddd;
                             }
 
