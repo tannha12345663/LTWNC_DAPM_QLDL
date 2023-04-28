@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="QuanLyDLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QuanLyDLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BaoCao">
           <Key>
             <PropertyRef Name="MaBC" />
@@ -29,13 +29,13 @@
           <Key>
             <PropertyRef Name="STT" />
           </Key>
-          <Property Name="STT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STT" Type="int" Nullable="false" />
           <Property Name="MaKK" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="MaSP" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="SLTonKho" Type="int" />
           <Property Name="SLThucTe" Type="int" />
           <Property Name="ChenhLech" Type="int" />
-          <Property Name="LyDo" Type="nvarchar" MaxLength="50" />
+          <Property Name="LyDo" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="ChiTietDonHang">
           <Key>
@@ -52,7 +52,7 @@
           <Key>
             <PropertyRef Name="STT" />
           </Key>
-          <Property Name="STT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STT" Type="int" Nullable="false" />
           <Property Name="MaSP" Type="varchar" MaxLength="10" />
           <Property Name="MaKho" Type="varchar" MaxLength="10" />
           <Property Name="NgayNhap" Type="datetime" />
@@ -69,7 +69,7 @@
           <Property Name="MaKho" Type="varchar" MaxLength="10" />
           <Property Name="SoLuongDeXuat" Type="int" />
           <Property Name="SoLuongTrongKho" Type="int" />
-          <Property Name="MaPhieu" Type="varchar" MaxLength="10" />
+          <Property Name="MaPhieu" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="ChucVu">
           <Key>
@@ -183,7 +183,7 @@
           <Key>
             <PropertyRef Name="MaPhieu" />
           </Key>
-          <Property Name="MaPhieu" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MaPhieu" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="MaKho" Type="varchar" MaxLength="10" />
           <Property Name="NgayLap" Type="datetime" />
           <Property Name="LoaiPhieu" Type="nvarchar" MaxLength="50" />
@@ -507,6 +507,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="pr_SapxepDonHang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_capnhat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="QuanLyDLModelStoreContainer">
           <EntitySet Name="BaoCao" EntityType="Self.BaoCao" Schema="dbo" store:Type="Tables" />
@@ -612,7 +613,8 @@
             <End Role="PhieuNhapXuat" EntitySet="PhieuNhapXuat" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyDLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -644,13 +646,13 @@
           <Key>
             <PropertyRef Name="STT" />
           </Key>
-          <Property Name="STT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STT" Type="Int32" Nullable="false" />
           <Property Name="MaKK" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MaSP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SLTonKho" Type="Int32" />
           <Property Name="SLThucTe" Type="Int32" />
           <Property Name="ChenhLech" Type="Int32" />
-          <Property Name="LyDo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LyDo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BienBangKiemKe" Relationship="Self.FK_ChiTietBienBang_BienBangKiemKe1" FromRole="ChiTietBienBang" ToRole="BienBangKiemKe" />
           <NavigationProperty Name="SanPham" Relationship="Self.FK_ChiTietBienBang_SanPham1" FromRole="ChiTietBienBang" ToRole="SanPham" />
         </EntityType>
@@ -671,7 +673,7 @@
           <Key>
             <PropertyRef Name="STT" />
           </Key>
-          <Property Name="STT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STT" Type="Int32" Nullable="false" />
           <Property Name="MaSP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MaKho" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="NgayNhap" Type="DateTime" Precision="3" />
@@ -690,7 +692,7 @@
           <Property Name="MaKho" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="SoLuongDeXuat" Type="Int32" />
           <Property Name="SoLuongTrongKho" Type="Int32" />
-          <Property Name="MaPhieu" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MaPhieu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PhieuNhapXuat" Relationship="Self.FK_ChiTietPhieuNhapXuat_PhieuNhapXuat1" FromRole="ChiTietPhieuNhapXuat" ToRole="PhieuNhapXuat" />
           <NavigationProperty Name="SanPham" Relationship="Self.FK_ChiTietPhieuNhapXuat_SanPham1" FromRole="ChiTietPhieuNhapXuat" ToRole="SanPham" />
         </EntityType>
@@ -828,7 +830,7 @@
           <Key>
             <PropertyRef Name="MaPhieu" />
           </Key>
-          <Property Name="MaPhieu" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaPhieu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MaKho" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="NgayLap" Type="DateTime" Precision="3" />
           <Property Name="LoaiPhieu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1263,8 +1265,23 @@
             <End Role="NhanVien" EntitySet="NhanViens" />
             <End Role="PhieuNhapXuat" EntitySet="PhieuNhapXuats" />
           </AssociationSet>
+          <FunctionImport Name="pr_SapxepDonHang" ReturnType="Collection(QuanLyDLModel.pr_SapxepDonHang_Result)" />
           <FunctionImport Name="sp_capnhat" />
         </EntityContainer>
+        <ComplexType Name="pr_SapxepDonHang_Result">
+          <Property Type="String" Name="MaDH" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="MaDL" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="MaNVLap" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="NgayLap" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TinhTrangThanhToan" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DiemGiao" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="TongTien" Nullable="true" />
+          <Property Type="Boolean" Name="PhieuXuatKho" Nullable="true" />
+          <Property Type="Boolean" Name="XuatHoaDon" Nullable="true" />
+          <Property Type="String" Name="TinhTrangGH" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MaGH" Nullable="true" MaxLength="10" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1499,6 +1516,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="pr_SapxepDonHang" FunctionName="QuanLyDLModel.Store.pr_SapxepDonHang">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyDLModel.pr_SapxepDonHang_Result">
+                <ScalarProperty Name="MaDH" ColumnName="MaDH" />
+                <ScalarProperty Name="MaDL" ColumnName="MaDL" />
+                <ScalarProperty Name="MaNVLap" ColumnName="MaNVLap" />
+                <ScalarProperty Name="NgayLap" ColumnName="NgayLap" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="TinhTrangThanhToan" ColumnName="TinhTrangThanhToan" />
+                <ScalarProperty Name="DiemGiao" ColumnName="DiemGiao" />
+                <ScalarProperty Name="TongTien" ColumnName="TongTien" />
+                <ScalarProperty Name="PhieuXuatKho" ColumnName="PhieuXuatKho" />
+                <ScalarProperty Name="XuatHoaDon" ColumnName="XuatHoaDon" />
+                <ScalarProperty Name="TinhTrangGH" ColumnName="TinhTrangGH" />
+                <ScalarProperty Name="MaGH" ColumnName="MaGH" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_capnhat" FunctionName="QuanLyDLModel.Store.sp_capnhat" />
         </EntityContainerMapping>
       </Mapping>
