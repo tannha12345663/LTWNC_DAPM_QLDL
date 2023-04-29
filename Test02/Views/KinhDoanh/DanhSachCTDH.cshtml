@@ -240,7 +240,7 @@
                             <input class="btn btn-cancel" id="xoasp" type="button" name="DiemGiao" disabled value="Xóa SP" onclick="xoaSP()" required />
                         </div>
                         <div style="text-align:end" class="col-lg-12">
-                            <button class="btn btn-save" id="CapNhatDh" style="margin-left:15px" type="submit">Thêm mới đơn hàng</button>
+                            <button class="btn btn-save" id="CapNhatDh" disabled style="margin-left:15px" type="submit">Thêm mới đơn hàng</button>
                             <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
 
                         </div>
@@ -252,11 +252,6 @@
     </div>
 </div>
 <script>
-
-
-</script>
-@section script{
-    <script>
         var i = 0;
     function themSP() {
         if (i >= 3) {
@@ -288,27 +283,33 @@
             console.log(i);
             $("#SoLuongSP").attr("value", i);
             //$("#btnadd").attr("action", "/KinhDoanh/ThemCTHD2/" + i);
+            $("#CapNhatDh").prop("disabled", false);
         };
 
     }
     function xoaSP() {
 
-        if (i > 0) {
+        if (i >= 1) {
             $("#themsp").prop('disabled', false);
-            document.getElementById('nd'+i).remove();
+            document.getElementById('nd' + i).remove();
             i--;
             console.log(i);
             $("#SoLuongSP").attr("value", i);
             console.log("Đã xóa kiểm tra");
             $("#CongNo").attr("hidden", true);
             $("#btnadd").attr("action", "/KinhDoanh/ThemCTHD2/" + i);
-        } else if (i = 0) {
-            $("#xoasp").attr("disabled", "disabled");
+            KTSoDu();
+            var TongTien = $("#TongTien").data("value");
+            KTCongNo(TongTien);
+            console.log('i hiện tại là ', i);
+            if (i < 1) {
+                console.log('Khi i = 0 thì ');
+                $("#xoasp").attr("disabled", "disabled");
+                setTimeout(() => { $("#CapNhatDh").attr("disabled", "disabled");},100)
 
+            }
         };
-        KTSoDu();
-        var TongTien=  $("#TongTien").data("value");
-        KTCongNo(TongTien);
+
     }
     function resetpage() {
         i = 0;
@@ -341,7 +342,7 @@
                     if (value != null) {
                         var sL = $("#SoLuong" + item).val();
                         if (sL >= 0) {
-                           // console.log("Bạn đã chọn sản phẩm với mã "+ value +" Với số lượng là :"+sL);
+                           //console.log("Bạn đã chọn sản phẩm với mã "+ value +" Với số lượng là :"+sL);
                             var model = {
                                 MaSP: value,
                                 SoLuong: sL
@@ -454,5 +455,7 @@
                 }
             });
         }
-    </script>
+</script>
+@section script{
+    
 }

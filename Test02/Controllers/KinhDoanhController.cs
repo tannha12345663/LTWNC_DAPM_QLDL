@@ -9,6 +9,7 @@ using Test02.App_Start;
 using System.Data;
 using System.Net;
 using System.IO;
+using System.Web.Helpers;
 
 namespace Test02.Controllers
 {
@@ -107,7 +108,7 @@ namespace Test02.Controllers
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
-                var madl = "DL" + rd.Next(1, 1000);
+                var madl = "DL" + rd.Next(0, 10) + rd.Next(0, 10) + rd.Next(0, 10) + rd.Next(0, 10);
                 daiLy.MaDL = madl;
                 daiLy.NgayTao = System.DateTime.Now;
                 daiLy.Password = "123456";
@@ -115,9 +116,19 @@ namespace Test02.Controllers
                 database.SaveChanges();
                 TempData["messageAlert"] = "Đã thêm mới";
                 TempData["TenDLthem"] = daiLy.TenDL;
+                //Gửi emil về tk
+                string content = System.IO.File.ReadAllText(Server.MapPath("~/TemplateMail/AddAccount.html"));
+                content = content.Replace("{{email}}", daiLy.Email);
+                content = content.Replace("{{Password}}", daiLy.Password);
+                content = content.Replace("{{tentk}}", daiLy.TenDL);
+                //content = content.Replace("{{Total}}", tongtien);
+                //content = content.Replace("{{Thoigian}}", Convert.ToString(ttkh.CreateDate));
+                //content = content.Replace("{{Invoice}}", themhd.MaHD);
+                string subject = "Đây là tin nhắn tự động từ hệ thống POS";
+                WebMail.Send(daiLy.Email, subject, content, null, null, null, true, null, null, null, null, null, null);
                 return RedirectToAction("QuanLyDL");
             }
-
+            
             ViewBag.MaLoaiDL = new SelectList(database.LoaiDLs, "MaLoaiDL", "TenDaiLy", daiLy.MaLoaiDL);
             return View(daiLy);
         }
@@ -355,6 +366,7 @@ namespace Test02.Controllers
                 for (int i = 1; i <= id; i++)
                 {
                     ChiTietDonHang ctdh = new ChiTietDonHang();
+                    ctdh.MaCTDH = rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
                     ctdh.MaDH = dh.MaDH;
                     ctdh.MaSP = Request["MaSP"+i];
                     ctdh.SoLuong =Convert.ToInt32( Request["SoLuong" + i]);
@@ -575,20 +587,33 @@ namespace Test02.Controllers
                 for (int i = 1; i <= sl; i++)
                 {
                     chiTietDonHang.MaSP = Request["MaSP" + i];
-                    chiTietDonHang.SoLuong = Convert.ToInt32(Request["SoLuong" + i]);
-                    //ctdh.ChietKhau = ck.ChietKhau;
+                    var soluong = Convert.ToInt32(Request["SoLuong" + i]);
                     var dg = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
-                    chiTietDonHang.ThanhTien = (dg.Gia) * (chiTietDonHang.SoLuong);
                     //Kiểm tra số lượng sản phẩm tồn trong kho
                     var checkslp = database.SanPhams.Where(s => s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
-                    if (chiTietDonHang.SoLuong > checkslp.TongTon)
+                    if (soluong > checkslp.TongTon)
                     {
                         TempData["messageAlert"] = "Không đủ số lượng để đặt";
                         TempData["slmasp"] = chiTietDonHang.MaSP;
-                        return RedirectToAction("DanhSachCTDH","KinhDoanh",new { id= chiTietDonHang.MaDH});
+                        return RedirectToAction("DanhSachCTDH", "KinhDoanh", new { id = chiTietDonHang.MaDH });
                     }
-                    database.ChiTietDonHangs.Add(chiTietDonHang);
-                    database.SaveChanges();
+                    var checkdh = database.ChiTietDonHangs.Where(s => s.MaDH == chiTietDonHang.MaDH && s.MaSP == chiTietDonHang.MaSP).FirstOrDefault();
+                    if (checkdh != null)
+                    {
+                        chiTietDonHang = checkdh;
+                        //Nếu trùng sản phẩm
+                        chiTietDonHang.MaCTDH = checkdh.MaCTDH;
+                        chiTietDonHang.SoLuong = checkdh.SoLuong + soluong;
+                        chiTietDonHang.ThanhTien = (dg.Gia) * (chiTietDonHang.SoLuong);
+                        database.Entry(chiTietDonHang).State = System.Data.Entity.EntityState.Modified;
+                        database.SaveChanges();
+                    }
+                    else
+                    {
+                        chiTietDonHang.ThanhTien = (dg.Gia) * (soluong);
+                        database.ChiTietDonHangs.Add(chiTietDonHang);
+                        database.SaveChanges();
+                    }
                 }
                 //Kiểm tra tổng tiền hiện tại đơn hàng
                 var checktongtien = database.ChiTietDonHangs.Where(s => s.MaDH == chiTietDonHang.MaDH).ToList();

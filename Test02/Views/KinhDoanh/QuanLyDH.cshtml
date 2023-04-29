@@ -554,7 +554,7 @@
             }
         });
     });
-
+    
 </script>
 
 @* '<div class="form-group col-md-12">' +
@@ -604,16 +604,19 @@
                 document.body.innerHTML = "";
             }
         </script>*@
-    <script>
+<script>
         //Check người dùng phải chọn mã đại lý trước khi thực hiện thêm
-        $("#MaDL").change(function () {
-            var check = $("#MaDL").val();
-            if (check != null) {
-                $("#themsp").prop("disabled", false);
-            }
-            else {
-                $("#themsp").attr("disabled");
-            }
+        $(document).ready(function () {
+            $("#MaDL").change(function () {
+                var check = $("#MaDL").val();
+                console.log('Bạn đã chọn');
+                if (check != null) {
+                    $("#themsp").prop("disabled", false);
+                }
+                else {
+                    $("#themsp").attr("disabled");
+                }
+            })
         })
         var i = 0;
         function themSP() {
@@ -628,7 +631,7 @@
         }
         else {
             i++;
-            var row = '<div class="row" id="nd' + i + '">' +
+             var row = '<div class="row" id="nd' + i + '">' +
                 '<div class="form-group col-lg-6">' +
                     '<label class="control-label">Tên sản phẩm</label>' +
                 ' <select class="form-control" id="ChonSP'+i+'" name="MaSP' + i +'" required>' +
@@ -820,5 +823,5 @@
                 }
             });
         }
-    </script>
+</script>
 }
