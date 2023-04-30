@@ -9,7 +9,7 @@
     ViewBag.hieuung = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dssp = db.SanPhams.ToList();
-    var madh="";
+    var madh = "";
 }
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -141,7 +141,7 @@
                                         @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
                                         <td>@Html.DisplayFor(modelItem => TongCong)</td>
                                     </tr>
-                                    @{ 
+                                    @{
                                         var madh01 = TempData["madh"];
                                         var dh = db.DonHangs.Find(madh01);
                                         var madl = db.DaiLies.Find(dh.MaDL);
@@ -153,9 +153,9 @@
                                         <td> -@chietkhau%</td>
                                     </tr>
                                     <tr>
-                                        @{ 
+                                        @{
                                             var TongHD = (total - (total * ck.ChietKhau));
-                                            var chuyendoi01 = string.Format("{0:0,0 vnđ}",TongHD);
+                                            var chuyendoi01 = string.Format("{0:0,0 vnđ}", TongHD);
                                         }
                                         <th colspan="7" style="text-align:end">Tổng tiền:</th>
                                         <td>
@@ -178,7 +178,7 @@
                 else
                 {
                     <div class="col-sm-12">
-                        <a class="btn btn-delete btn-sm nhap-tu-file" ><i class="fas fa-file-upload"></i> Không thể thêm sản phẩm</a>
+                        <a class="btn btn-delete btn-sm nhap-tu-file"><i class="fas fa-file-upload"></i> Không thể thêm sản phẩm</a>
                     </div>
                 }
             }
@@ -251,7 +251,8 @@
         </div>
     </div>
 </div>
-<script>
+@section script{
+    <script>
         var i = 0;
     function themSP() {
         if (i >= 3) {
@@ -313,51 +314,56 @@
     }
     function resetpage() {
         i = 0;
-        $("#themsp").prop("disabled",false);
+        $("#themsp").prop("disabled", false);
         var resetp = '';
-        document.getElementById("themdong").innerHTML=resetp;
-        }
+        document.getElementById("themdong").innerHTML = resetp;
+    }
+    $(document).ready(function () {
+        var divElement = $("#themdong").change(function () {
+            console.log('Bạn đã chọn sp');
+        });
+    })
+    $(document).ready(function () {
+        const VND = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+        });
+        var divElement = $("#themdong").change(function () {
+            $("#CongNo").prop('hidden', false);
+            //var kt = divElement.on('change', 'select', function (e) {
+            //    console.log("Mã sản phẩm đã chọn "+$(e.target).val());
+            //    var value = $(e.target).val();
+            //    if (value != null) {
+            //        var kt01 = divElement.on('change', 'input', function (e1) {
+            //            console.log("Mã sản phẩm đã chọn khi có số lượng :" + value);
+            //            var soluong = $(e1.currentTarget).val();
+            //            console.log("Số lượng đã mua :"+ soluong);
+            //        });
+            //    }
+            //})
 
-        $(document).ready(function () {
-            const VND = new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
-            });
-            var divElement = $("#themdong").change(function () {
-                $("#CongNo").prop('hidden', false);
-                //var kt = divElement.on('change', 'select', function (e) {
-                //    console.log("Mã sản phẩm đã chọn "+$(e.target).val());
-                //    var value = $(e.target).val();
-                //    if (value != null) {
-                //        var kt01 = divElement.on('change', 'input', function (e1) {
-                //            console.log("Mã sản phẩm đã chọn khi có số lượng :" + value);
-                //            var soluong = $(e1.currentTarget).val();
-                //            console.log("Số lượng đã mua :"+ soluong);
-                //        });
-                //    }
-                //})
-
-                for (var item = 1; item <= i; item++) {
-                    var value = $("#ChonSP" + item).val();
-                    if (value != null) {
-                        var sL = $("#SoLuong" + item).val();
-                        if (sL >= 0) {
-                           //console.log("Bạn đã chọn sản phẩm với mã "+ value +" Với số lượng là :"+sL);
-                            var model = {
-                                MaSP: value,
-                                SoLuong: sL
-                            };
-                            // console.log("Item trước khi thêm vào tổng tiền " + item + "Với tổng tiền là : " + TinhTongTien(model));
-                            console.log(model);
-                            TinhTongTien(model, item);
-
-                        }
+            for (var item = 1; item <= i; item++) {
+                var value = $("#ChonSP" + item).val();
+                if (value != null) {
+                    var sL = $("#SoLuong" + item).val();
+                    if (sL >= 0) {
+                        // console.log("Bạn đã chọn sản phẩm với mã "+ value +" Với số lượng là :"+sL);
+                        var model = {
+                            MaSP: value,
+                            SoLuong: sL
+                        };
+                        // console.log("Item trước khi thêm vào tổng tiền " + item + "Với tổng tiền là : " + TinhTongTien(model));
+                        console.log(model);
+                        TinhTongTien(model, item);
 
                     }
 
                 }
-            });
+
+            }
         });
+    });
+
         function CheckTongTien() {
             const VND = new Intl.NumberFormat('vi-VN', {
                 style: 'currency',
@@ -455,7 +461,6 @@
                 }
             });
         }
-</script>
-@section script{
-    
+    </script>
+
 }

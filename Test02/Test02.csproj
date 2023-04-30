@@ -515,6 +515,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="TemplateMail\AddAccount.html" />
+    <Content Include="TemplateMail\CancleOrder.html" />
+    <Content Include="TemplateMail\DeleteAccount.html" />
+    <Content Include="TemplateMail\NewOrder.html" />
     <Content Include="Views\KeToan\ChinhsuCN.cshtml" />
     <Content Include="Views\KeToan\Doanhthu.cshtml" />
     <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />

@@ -155,6 +155,16 @@ namespace Test02.Controllers
             DaiLy daiLy = database.DaiLies.Find(id);
             database.DaiLies.Remove(daiLy);
             database.SaveChanges();
+            //Gửi emil về tk
+            string content = System.IO.File.ReadAllText(Server.MapPath("~/TemplateMail/DeleteAccount.html"));
+            content = content.Replace("{{TenDL}}", daiLy.TenDL);
+            content = content.Replace("{{username}}", daiLy.UserName);
+            content = content.Replace("{{time}}", DateTime.Now.ToString());
+            //content = content.Replace("{{Total}}", tongtien);
+            //content = content.Replace("{{Thoigian}}", Convert.ToString(ttkh.CreateDate));
+            //content = content.Replace("{{Invoice}}", themhd.MaHD);
+            string subject = "BẠN ĐÃ XÓA TÀI KHOẢN ĐẠI LÝ";
+            WebMail.Send(daiLy.Email, subject, content, null, null, null, true, null, null, null, null, null, null);
             return RedirectToAction("QuanLyDL");
         }
         //Quản lý đơn hàng
@@ -366,7 +376,7 @@ namespace Test02.Controllers
                 for (int i = 1; i <= id; i++)
                 {
                     ChiTietDonHang ctdh = new ChiTietDonHang();
-                    ctdh.MaCTDH = rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
+                    ctdh.MaCTDH = rd.Next(0, 10000);
                     ctdh.MaDH = dh.MaDH;
                     ctdh.MaSP = Request["MaSP"+i];
                     ctdh.SoLuong =Convert.ToInt32( Request["SoLuong" + i]);
@@ -417,10 +427,10 @@ namespace Test02.Controllers
                         //}
                     }
                     dh.TongTien += ctdh.ThanhTien;
-                    
                     database.ChiTietDonHangs.Add(ctdh);
                     database.SaveChanges();
                 }
+                dh.TongTien = dh.TongTien - (dh.TongTien * ck.ChietKhau);
                 if (ldl.MaLoaiDL == "LDL01")
                 {
                     if (dh.TongTien > 500000000)
@@ -457,12 +467,35 @@ namespace Test02.Controllers
                         return RedirectToAction("QuanLyDH");
                     }
                 }
-                dh.TongTien = dh.TongTien - (dh.TongTien * ck.ChietKhau);
-                database.Entry(dh).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
-                database.SaveChanges();
-
+                
+                
                 TempData["messageAlert"] = "Đã thêm mới đơn hàng";
                 TempData["themmadh"] = dh.MaDH;
+
+                //Gửi email đã lên đơn hàng thành công
+                //Lấy thông tin kh
+                var ttkh = database.DaiLies.Find(dh.MaDL);
+                var tongtien = string.Format("{0:0,0 vnđ}", dh.TongTien);
+                //Lấy thông tin IP
+                string ipAddress = Request.UserHostAddress;
+                string content = System.IO.File.ReadAllText(Server.MapPath("~/TemplateMail/NewOrder.html"));
+                content = content.Replace("{{Username}}", ttkh.UserName);
+                content = content.Replace("{{IdOrder}}", dh.MaDH);
+                content = content.Replace("{{datetime}}", DateTime.Now.ToString());
+                content = content.Replace("{{TenDL}}", ttkh.TenDL);
+                content = content.Replace("{{MyIP}}", ipAddress);
+                content = content.Replace("{{emailntt}}", ttkh.Email);
+                content = content.Replace("{{email}}", ttkh.Email);
+                content = content.Replace("{{TinhTrang}}", dh.TrangThai);
+                content = content.Replace("{{SDT}}", ttkh.SDT);
+                content = content.Replace("{{Tongtien}}", tongtien);
+                content = content.Replace("{{chietkhau}}", ck.ChietKhau.ToString());
+                content = content.Replace("{{DCGH}}", ttkh.DiaChi);
+                //content = content.Replace("{{Total}}", tongtien);
+                //content = content.Replace("{{Thoigian}}", Convert.ToString(ttkh.CreateDate));
+                //content = content.Replace("{{Invoice}}", themhd.MaHD);
+                string subject = "Đại lý phân phối nước ngọt - Đơn hàng mới "+dh.MaDH;
+                WebMail.Send(ttkh.Email, subject, content, null, null, null, true, null, null, null, null, null, null);
                 return RedirectToAction("QuanLyDH");
 
             }
@@ -584,6 +617,7 @@ namespace Test02.Controllers
                 var dh = database.DonHangs.Find(chiTietDonHang.MaDH);
                 var ldl = database.DaiLies.Where(s => s.MaDL == dh.MaDL).FirstOrDefault();
                 var ck = database.LoaiDLs.Where(s => s.MaLoaiDL == ldl.MaLoaiDL).FirstOrDefault();
+                Random rd = new Random();
                 for (int i = 1; i <= sl; i++)
                 {
                     chiTietDonHang.MaSP = Request["MaSP" + i];
@@ -610,6 +644,7 @@ namespace Test02.Controllers
                     }
                     else
                     {
+                        chiTietDonHang.MaCTDH = rd.Next(0, 100000);
                         chiTietDonHang.ThanhTien = (dg.Gia) * (soluong);
                         database.ChiTietDonHangs.Add(chiTietDonHang);
                         database.SaveChanges();
@@ -796,11 +831,24 @@ namespace Test02.Controllers
         public ActionResult XoaDHConfirm(string id)
         {
             DonHang donHang = database.DonHangs.Find(id);
+            var daily = database.DaiLies.Find(donHang.MaDL);
             TempData["capnhatdh"] = donHang.MaDH;
             database.DonHangs.Remove(donHang);
             database.SaveChanges();
             TempData["messageAlert"] = "Đã xóa đơn hàng";
             
+            //Gửi emil về tk
+            string content = System.IO.File.ReadAllText(Server.MapPath("~/TemplateMail/CancleOrder.html"));
+            content = content.Replace("{{Username}}", daily.UserName);
+            content = content.Replace("{{Madh}}", donHang.MaDH);
+            content = content.Replace("{{datetime}}", DateTime.Now.ToString());
+            content = content.Replace("{{tinhtrangTT}}", donHang.TrangThai);
+            content = content.Replace("{{TrangThaiGH}}", donHang.TinhTrangGH);
+            //content = content.Replace("{{Total}}", tongtien);
+            //content = content.Replace("{{Thoigian}}", Convert.ToString(ttkh.CreateDate));
+            //content = content.Replace("{{Invoice}}", themhd.MaHD);
+            string subject = "ĐƠN HÀNG "+donHang.MaDH+" ĐÃ ĐƯỢC HỦY";
+            WebMail.Send(daily.Email, subject, content, null, null, null, true, null, null, null, null, null, null);
             return RedirectToAction("QuanLyDH");
         }
 
