@@ -102,6 +102,35 @@ namespace Test02.Controllers
             return View(daiLy);
         }
         [HttpPost]
+        public ActionResult ResetPass(string madl)
+        {
+            if (madl == null)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var resetpass = database.DaiLies.Find(madl);
+                resetpass.Password = "123456";
+                database.Entry(resetpass).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
+                TempData["madl"] = madl;
+                //Gửi emil về tk
+                var daily = database.DaiLies.Find(madl);
+                string content = System.IO.File.ReadAllText(Server.MapPath("~/TemplateMail/ResetPasss.html"));
+                content = content.Replace("{{TenDL}}", daily.Email);
+                content = content.Replace("{{username}}", daily.UserName);
+                content = content.Replace("{{time}}", DateTime.Now.ToString());
+                //content = content.Replace("{{Total}}", tongtien);
+                //content = content.Replace("{{Thoigian}}", Convert.ToString(ttkh.CreateDate));
+                //content = content.Replace("{{Invoice}}", themhd.MaHD);
+                string subject = "Tài khoản đại lý "+daily.MaDL+" của bạn vừa được cập nhật !";
+                WebMail.Send(daily.Email, subject, content, null, null, null, true, null, null, null, null, null, null);
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            
+        }
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ThemDL([Bind(Include = "MaLoaiDL,UserName,Password,TenDL,SDT,DiaChi,Email")] DaiLy daiLy)
         {

@@ -518,6 +518,7 @@
     <Content Include="TemplateMail\CancleOrder.html" />
     <Content Include="TemplateMail\DeleteAccount.html" />
     <Content Include="TemplateMail\NewOrder.html" />
+    <Content Include="TemplateMail\ResetPasss.html" />
     <Content Include="Views\KeToan\ChinhsuCN.cshtml" />
     <Content Include="Views\KeToan\Doanhthu.cshtml" />
     <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
