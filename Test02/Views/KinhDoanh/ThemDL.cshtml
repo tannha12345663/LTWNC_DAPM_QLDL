@@ -81,7 +81,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label class="control-label" for="SDT">Số điện thoại</label>
-                        @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", type = "number", required = "true", id = "SDT",min=0 } })
+                        @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", type = "number", required = "true", id = "SDT", min = 0 } })
                         @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
                         <p style="color:red ;font-weight:bold" id="Error01" hidden>Đang kiểm tra thông tin số điện thoại ....</p>
                     </div>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label class="control-label" for="Email">Email</label>
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email", required = "true", id = "Email" } })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email", pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+[a-z]{2,}$", required = "true", id = "Email" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         <p style="color:red ;font-weight:bold" id="Error02" hidden>Đang kiểm tra thông tin email ....</p>
                     </div>
@@ -151,11 +151,13 @@
     </div>
 </div>
 @section script{
+
     <script>
-        //Kiểm tra nội dung thêm mới đại lý 
+        //Kiểm tra nội dung thêm mới đại lý
         $(document).ready(function () {
             $("#TenDL").on("input", function () {
-                $("#Error").prop("hidden",false);
+                $("#Error").prop("hidden", false);
+
                 var input = $("#TenDL").val();
                 if (input.length > 0) {
                     var model = {
@@ -179,7 +181,7 @@
                 } else {
                     $("#Error").html('Vui lòng nhập !');
                 }
-                
+
             });
             $("#SDT").on("input", function () {
                 $("#Error01").prop("hidden", false);
@@ -203,20 +205,28 @@
                             }
                         }
                     });
-                } else if (input.length < 10 ) {
+                } else if (input.length < 10) {
                     $("#Error01").html('Số điện thoại nhập đủ 10 số !');
-                } else if (input.length == 0 ){
+                } else if (input.length == 0) {
                     $("#Error01").html('Vui lòng nhập số điện thoại !');
                 };
             });
             $("#Email").on("input", function () {
                 $("#Error02").prop("hidden", false);
+                $("#Error02").html('Đang kiểm tra email...');
                 var input = $("#Email").val();
                 if (input.length > 0) {
+                    if (input.indexOf("@@") > 0) {
+
+                    }
+                    else {
+                        $("#Error02").html('Vui lòng nhập đúng định dạng Email !');
+                    }
                     var model = {
                         Email: input
                     };
                     //Tạo Ajax để kiểm tra nội dung nhập
+                    
                     $.ajax({
                         url: '/KinhDoanh/KTEmail',
                         type: 'POST',
@@ -224,18 +234,24 @@
                         data: model,
                         success: function (res) {
                             if (res.success == true) {
-                                $("#Error02").html('Email này hợp lệ !');
+                                $("#Error02").html('Email này có thể sử dụng !');
+                                $('#Error02').attr('style', 'color:green');
                             }
-                            else {
+                            else if (res.success == false) {
                                 $("#Error02").html('Email này không hợp lệ hoặc đã được sử dụng !');
+                                $('#Error02').attr('style', 'color:red');
+                            } else if (res.faile == false) {
+                                $("#Error02").html('Vui lòng nhập đúng định dạng Email !');
+                                $('#Error02').attr('style', 'color:red');
                             }
                         }
                     });
-                } else {
-                    $("#Error02").html('Vui lòng nhập Email !');
+                }
+                else {
+                    $("#Error02").html('Vui lòng nhập đúng định dạng Email !');
                 };
             });
         });
     </script>
 
-    }
+}

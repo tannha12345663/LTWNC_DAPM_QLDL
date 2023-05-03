@@ -58,15 +58,23 @@ namespace Test02.Controllers
         [HttpPost]
         public ActionResult KTEmail(string Email)
         {
-            var check = database.DaiLies.Where(s => s.Email == Email).FirstOrDefault();
-            if (check != null)
+            if (Email.IndexOf("@gmail.com") > 0)
             {
-                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                var check = database.DaiLies.Where(s => s.Email == Email).FirstOrDefault();
+                if (check != null)
+                {
+                    return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
             }
             else
             {
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
+            
         }
         public ActionResult ThemDL()
         {
@@ -674,6 +682,7 @@ namespace Test02.Controllers
                     else
                     {
                         chiTietDonHang.MaCTDH = rd.Next(0, 100000);
+                        chiTietDonHang.SoLuong = soluong;
                         chiTietDonHang.ThanhTien = (dg.Gia) * (soluong);
                         database.ChiTietDonHangs.Add(chiTietDonHang);
                         database.SaveChanges();
