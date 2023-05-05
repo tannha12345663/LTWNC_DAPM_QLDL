@@ -72,14 +72,40 @@
                                                 </span>
                                             </td>
                                         }
-                                        <td style="text-align:center">
-                                            <a href="/GiaoHang/ChinhSuaPhuongTienGiaoHang/@item.MaPT" class="btn btn-primary btn-sm edit">
-                                                <i class='bx bxs-edit-alt'></i>
-                                            </a>
-                                            <a href="/GiaoHang/XoaPhuongTienGiaoHang/@item.MaPT" class="btn btn-primary btn-sm deleted">
-                                                <i class="bx bxs-trash-alt"></i>
-                                            </a>
-                                        </td>
+
+                                        @if (item.TinhTrang == "Sẵn sàng")
+                                        {
+                                    <td style="text-align:center">
+                                        <a href="/GiaoHang/ChinhSuaPhuongTienGiaoHang/@item.MaPT" class="btn btn-primary btn-sm edit">
+                                            <i class='bx bxs-edit-alt'></i>
+                                        </a>
+                                        <a href="/GiaoHang/XoaPhuongTienGiaoHang/@item.MaPT" class="btn btn-primary btn-sm deleted">
+                                            <i class="bx bxs-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                        }
+                                        else if (item.TinhTrang == "Sử dụng")
+                                        {
+                                    <td style="text-align:center">
+                                        <a anchor.href = "javascript:void(0)" class="btn btn-primary btn-sm edit">
+                                            <i class='bx bxs-edit-alt'></i>
+                                        </a>
+                                        <a anchor.href = "javascript:void(0)" class="btn btn-primary btn-sm deleted">
+                                            <i class="bx bxs-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                        }
+                                        else if (item.TinhTrang == "Bảo trì")
+                                        {
+                                    <td style="text-align:center">
+                                        <a href="/GiaoHang/ChinhSuaPhuongTienGiaoHang/@item.MaPT" class="btn btn-primary btn-sm edit">
+                                            <i class='bx bxs-edit-alt'></i>
+                                        </a>
+                                        <a href="/GiaoHang/XoaPhuongTienGiaoHang/@item.MaPT" class="btn btn-primary btn-sm deleted">
+                                            <i class="bx bxs-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                        }                                    
                                     </tr>
                                     }
                                 </tbody>

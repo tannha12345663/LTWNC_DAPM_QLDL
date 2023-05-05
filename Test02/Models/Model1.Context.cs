@@ -46,6 +46,11 @@ namespace Test02.Models
         public virtual DbSet<PhuongTienGH> PhuongTienGHs { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
     
+        public virtual ObjectResult<pr_SapxepDonHang_Result> pr_SapxepDonHang()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<pr_SapxepDonHang_Result>("pr_SapxepDonHang");
+        }
+    
         public virtual int sp_capnhat()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_capnhat");
