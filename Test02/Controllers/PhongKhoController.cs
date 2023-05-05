@@ -169,7 +169,35 @@ namespace Test02.Controllers
         // Quản lý kho
         public ActionResult QuanLyKho()
         {
-            return View(database.Khoes.ToList().OrderByDescending(s => s.TenKho));
+            return View(database.Khoes.ToList().OrderByDescending(s => s.ChiTietKhoes.Count()));
+        }
+
+        [HttpPost]
+        public ActionResult QuanLyKho(string Masp)
+        {
+            var masp = Masp.ToUpper();
+            var khoes = new List<Kho>();
+            var chitietkho = database.ChiTietKhoes.Where(s => s.MaSP == masp).ToList();
+            if(chitietkho.Count() == 0)
+            {
+                TempData["AlertMessage"] = "NoFind";
+                return View(khoes);
+            }
+            else
+            {
+                foreach (var item in database.Khoes.ToList())
+                {
+                    foreach(var item2 in chitietkho)
+                    {
+                        if(item.MaKho == item2.MaKho)
+                        {
+                            khoes.Add(item);
+                            break;
+                        }
+                    }
+                }
+                return View(khoes);
+            }
         }
         // GET: Khoes/Details/5
         //----------------------------------------------------------------------------------
