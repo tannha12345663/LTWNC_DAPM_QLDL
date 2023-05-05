@@ -188,39 +188,42 @@
                         @daily.SDT -@daily.Email
                         <br />
                         <b>Công nợ tháng:</b>@thangdh
-                        <input value="@thangdh" id="thangtrongdh" name="thangtrongdh" style="visibility:hidden"/>
+                        <input value="@thangdh" id="thangtrongdh" name="thangtrongdh" style="visibility:hidden" />
                     </div>
-                 
-                <div>
-                    <div class="form-group col-sm-10">
-                        <strong>Ngày lập công nợ</strong>
-                        <div class="col-md-10">
-                            <input class="form-control col-md-12 text-box single-line datepicker" name="NgayLapCN" id="NgayLapCN" data-val="true" type="date"  onchange="KtraNgayLapCN()" required>
-                            <p id="checkngay"></p>
+
+                    <div>
+                        <div class="form-group col-sm-10">
+                            <strong>Ngày lập công nợ</strong>
+                            <div class="col-md-10">
+                                <input class="form-control col-md-12 text-box single-line datepicker" name="NgayLapCN" id="NgayLapCN" data-val="true" type="date" onchange="KtraNgayLapCN()" required>
+                                <p id="checkngay"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-10">
+                            <strong>Hạn trả </strong>
+                            <div class="col-md-10">
+                                <input class="form-control col-md-12 text-box single-line datepicker" name="Hantra" id="Hantra" data-val="true" type="date" required>
+                                <p id="hantra"></p>
+                            </div>
                         </div>
                     </div>
-                   
-                    <div class="form-group col-sm-10">
-                        <strong>Hạn trả </strong>
-                        <div class="col-md-10">
-                            <input class="form-control col-md-12 text-box single-line datepicker" onchange="KiemtraHanTra()"  name="Hantra" id="Hantra" data-val="true" type="date" required>
-                            <p id="hantra"></p>
-                        </div>
-                    </div>
-                </div>
                     <div class="col-sm-12">
                         <b>TỔNG CÔNG NỢ : </b> @tongno
                     </div>
                 </div>
+
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <a class="btn btn-danger" data-dismiss="modal">Close</a>
-                    <input type="submit" id="btn-submit" value="Lập phiếu công nợ" class="btn btn-success" />
+                    <input type="submit" id="btntaocn" value="Lập phiếu công nợ" class="btn btn-success" />
                 </div>
             }
+            
         </div>
     </div>
 </div>
+
 <input value="@Session["KtraDH"]" id="kiemtradh" style="visibility:hidden" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="Scripts/jquery-1.4.1.js" type="text/javascript"></script>
@@ -246,9 +249,8 @@
         }
 
     }
-
-    function KtraNgayLapCN() {
-        $("#checkngay").html("check ...");
+    document.getElementById("NgayLapCN").onchange = function () {
+         $("#checkngay").html("check ...");
         $.post("@Url.Action("KtraNgayLapCN", "KeToan")",
             {
                 ngaylap: $("#NgayLapCN").val(),
@@ -258,39 +260,50 @@
                 if (data == 0) {
                     $("#checkngay").html('<font color="Green">Hợp lệ!</font>');
                     $("#NgayLapCN").css("border-color", "Green");
-                    document.getElementById('btn-submit').disabled = false;
+                   
+                    document.getElementById('btntaocn').disabled = false;
+                    var minngay = document.getElementById("NgayLapCN");
+                    var input = document.getElementById("Hantra");
+                    input.min = minngay.value;
+                    var d = new Date(minngay.value);
+                    var maxday = new Date();
+                    maxday.setDate(d.getDate() + 30);
+                    var formattedDate = maxday.toISOString().slice(0, 10);
+                    input.max = formattedDate;
+
                 }
                 else {
                     $("#checkngay").html('<font color="Red">Chọn đúng tháng lập!!</font>');
                     $("#NgayLapCN").css("border-color", "Red");
-                    document.getElementById('btn-submit').disabled = true;
+                    document.getElementById('btntaocn').disabled = true;
                 }
             }
         )
     }
-    function KiemtraHanTra() {
-        var min = document.getElementById("NgayLapCN").value;
-        var input = document.getElementById("Hantra");
-        input.min = min;
+  
+
+    @*function kiemtrahantra() {
+
         $("#hantra").html("check ...");
-        $.post("@Url.Action("KtraHanCN", "KeToan")",
+        $.post("@url.action("ktrahancn", "ketoan")",
             {
-                ngaylap: $("#NgayLapCN").val(),
-                hantra: $("#Hantra").val()
+                ngaylap: $("#ngaylapcn").val(),
+                hantra: $("#hantra").val()
             },
             function (data) {
                 if (data == 0) {
-                    $("#hantra").html('<font color="Green">Hợp lệ!</font>');
-                    $("#Hantra").css("border-color", "Green");
-                    document.getElementById('btn-submit').disabled = false;
+                    $("#hantra").html('<font color="green">hợp lệ!</font>');
+                    $("#hantra").css("border-color", "green");
+                    document.getelementbyid('btn-submit').disabled = false;
                 }
                 else {
-                    $("#hantra").html('<font color="Red">Không đúng theo quy định 30 ngày!!</font>');
-                    $("#Hantra").css("border-color", "Red");
-                    document.getElementById('btn-submit').disabled = true;
+                    $("#hantra").html('<font color="red">không đúng theo quy định 30 ngày!!</font>');
+                    $("#hantra").css("border-color", "red");
+                    document.getelementbyid('btn-submit').disabled = true;
                 }
             }
         )
-    }
-   
+    }*@
+
+
 </script>

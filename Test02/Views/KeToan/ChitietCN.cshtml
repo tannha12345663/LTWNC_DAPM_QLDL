@@ -20,10 +20,19 @@
     });
 
 </script>
-
-
-
     }
+    
+@{ 
+    string thongbao = (string)TempData["baono"];
+    if(thongbao=="thanhcong")
+    { <script>
+    swal({
+        title: "Đã gửi mail thành công !!!!",
+        icon: "success",
+        button: "Thoát",
+    });
+
+</script>}
 }
 
 
@@ -117,14 +126,15 @@
                             </table>
                         </div>
                     </div>
-
-
-
-
                 </div>
             </div>
         </div>
     </div>
+    @{
+        DateTime aDatetime = DateTime.Now;
+        DateTime hant = (DateTime)Model.HanTra;
+        TimeSpan interval = hant.Subtract(aDatetime);
+    }
     <div class="row" style="padding:5px 10px">
         <div class="col-sm-2">
             <a class="btn btn-delete btn-sm " title="In" id="btnin" onclick="printDiv('body')">
@@ -141,6 +151,22 @@
                 Quay lại danh sách
             </a>
         </div>
+        <div class="col-sm-2">
+            @{
+                if (interval.Days <= 0 && Model.TrangThai == "Chưa thanh toán")
+                {
+                    //Model xóa phản hồi
+                    using (Html.BeginForm("SendMailCN/" + Model.MaCongNo, "KeToan", FormMethod.Post, null))
+                    {
+                        @Html.AntiForgeryToken();
+
+                        <input type="submit" value="Gửi Mail Hủy" class="btn btn-outline-dark btn-sm" />
+                    }
+
+                }
+            }
+        </div>
+        
 
     </div>
 </div>

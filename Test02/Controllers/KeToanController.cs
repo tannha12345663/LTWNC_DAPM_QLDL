@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Test02.App_Start;
@@ -633,6 +634,28 @@ namespace Test02.Controllers
             return View(dscn);
 
         }
+
+        //GUI MAIL
+        public ActionResult SendMailCN(string id)
+        {
+            var cn = database.PhieuCongNoes.Where(t => t.MaCongNo == id).FirstOrDefault();
+            var daily = database.DaiLies.Where(t => t.MaDL == cn.MaDL).FirstOrDefault();
+            string content = System.IO.File.ReadAllText(Server.MapPath("~/TemplateMail/Doino.html"));
+            
+            content = content.Replace("{{Username}}", daily.TenDL);
+            content = content.Replace("{{MaCN}}", cn.MaCongNo);
+            content = content.Replace("{{Tienno}}", cn.TienNo.ToString());
+            content = content.Replace("{{NgayLap}}", cn.NgayLapCN.ToString());
+            content = content.Replace("{{Han}}", cn.HanTra.ToString());
+
+
+            string subject = "Thư báo công nợ chưa thanh toán";
+
+            WebMail.Send(daily.Email, subject, content, null, null, null, true, null, null, null, null, null, null);
+            TempData["baono"] = "thanhcong";
+            return RedirectToAction("ChitietCN", "KeToan", new { id = id });
+        }
+
         public ActionResult ChinhsuCN(String id)
         {
             return View(database.PhieuCongNoes.Where(s => s.MaCongNo == id).FirstOrDefault());
