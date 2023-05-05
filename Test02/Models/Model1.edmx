@@ -29,7 +29,7 @@
           <Key>
             <PropertyRef Name="STT" />
           </Key>
-          <Property Name="STT" Type="int" Nullable="false" />
+          <Property Name="STT" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="MaKK" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="MaSP" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="SLTonKho" Type="int" />

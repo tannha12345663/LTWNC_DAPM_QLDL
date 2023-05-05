@@ -1,14 +1,110 @@
-﻿
+﻿@model IEnumerable<Test02.Models.ChiTietKho>
+@using Test02.Models
 @{
     ViewBag.Title = "PhanPhoiSanPham";
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.Name = "Phân phối sản phẩm";
     ViewBag.qlk = "active";
     ViewBag.hieuung2 = "bx-tada";
-}
 
-<div class="tile">
-    <h2>Tính năng sắp ra mắt</h2>
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var makho = (string)Session["PPMaKho"];
+    var kho = db.Khoes.Where(s => s.MaKho == makho).FirstOrDefault();
+}
+@{
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "Invalid1")
+    {
+        <script>
+            swal({
+                title: "Phân phối sản phẩm thất bại!",
+                text: "Sản phẩm đã hết hàng tại kho @makho!",
+                icon: "warning",
+                button: "Trở lại",
+            });
+        </script>
+    }
+    else if (checkMessage == "Invalid2")
+    {
+        <script>
+            swal({
+                title: "Phân phối sản phẩm thất bại!",
+                text: "Sản phẩm bên kho nhận phải khác null và nhỏ hơn sản phẩm trong kho @makho đã chọn!",
+                icon: "warning",
+                button: "Trở lại",
+            });
+        </script>
+    }
+    else if (checkMessage == "Valid")
+    {
+        <script>
+            swal({
+                title: "Phân phối sản phẩm thành công!",
+                text: "Bạn có thể phân phối hàng hóa tiếp tục!",
+                icon: "success",
+                button: "Trở lại",
+            });
+        </script>
+    }
+}
+<style>
+    .center123 {
+        height: 300px;
+    }
+</style>
+<div class="container-fluid">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-lg-5 col-md-4 col-sm-12">
+                <div class="tile center123">
+                    <h4 style="margin-bottom: 10px; text-align:center;">Kho xuất: @kho.MaKho - @kho.TenKho</h4>
+
+                    <h5 class="float-left" style="margin-top: 10%">Chọn sản phẩm: </h5>
+                    <select class="form-control col-md-12" name="STT" required>
+                        @{
+                            foreach (var item in Model)
+                            {
+                                <option value="@item.STT">@item.MaSP - @item.SanPham.TenSP - @item.SoLuong</option>
+                            }
+                        }
+                    </select>
+                    <p class="text-muted">(*) Mã SP - Tên SP - Số lượng</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-12">
+                <div class=" center123 text-center">
+                    <div><i class='bx bxs-hand-down bx-tada text-muted' style="font-size:50px; margin-top: 97px"></i></div>
+                    <button type="submit" class="btn btn-outline-dark">Phân phối ngay</button>
+                    <div>
+                        <i class='bx bxs-right-arrow-square bx-fade-right' style="font-size:30px;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-4 col-sm-12">
+                <div class="tile center123">
+                    <h5 class="float-left" style="margin-top: 9%">Chọn kho nhận: </h5>
+                    <select class="form-control col-md-12" name="MaKhoNhan" required>
+                        @{
+                            var khoes = db.Khoes.Where(s => s.MaKho != makho).ToList();
+                            foreach (var item in khoes)
+                            {
+                                <option value="@item.MaKho">@item.MaKho - @item.TenKho - @item.DiaChi</option>
+                            }
+                        }
+                    </select>
+                    <p class="text-muted">(*) Mã kho - Tên kho - Địa chỉ</p>
+                    <h5 class="control-label" style="margin-top: 10px">Nhập số lượng (Nhỏ hơn sản phẩm đã chọn)</h5>
+                    <input class="form-control" name="SLNhan" type="number" min="1" placeholder="Nhập vào số lượng cần nhập vào kho này!" />
+                </div>
+            </div>
+        </div>
+    }
+    <a class="btn btn-outline-danger btn-sm" href="~/PhongKho/ChiTietKho/@makho">
+        <i class="fas fa-retweet"></i>
+        Trở lại
+    </a>
 </div>
 
 

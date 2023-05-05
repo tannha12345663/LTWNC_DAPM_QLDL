@@ -40,12 +40,12 @@
                 @*@Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control", @value = Model.MaSP })*@
                 <select class="form-control col-md-12" name="MaSP" required>
                     <option selected value="@Model.MaSP">@Model.MaSP - @Model.SanPham.TenSP</option>
-                    @{ 
+                    @{
                         var sp = db.SanPhams.ToList();
-                        foreach(var item in sp)
-                {
-                    <option value="@item.MaSP" >@item.MaSP - @item.TenSP</option>
-                }
+                        foreach (var item in sp)
+                        {
+                            <option value="@item.MaSP">@item.MaSP - @item.TenSP</option>
+                        }
                     }
                 </select>
                 @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
@@ -62,10 +62,8 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.NgayNhap, "Ngày nhập:", htmlAttributes: new { @class = "control-label col-md-12" })
-        <p class="col-md-12"><span> *Ngày nhập gần nhất: </span>@Html.DisplayFor(model => model.NgayNhap)</p>
-
         <div class="col-md-12">
-            @Html.TextBoxFor(model => model.NgayNhap, "{0:yyyy-MM-dd HH:mm:ss}", new { @class = "form-control col-md-12", type = "datetime-local"})
+            @Html.TextBoxFor(model => model.NgayNhap, "{0:yyyy-MM-dd HH:mm:ss}", new { @class = "form-control col-md-12", type = "datetime-local", @readonly = "readonly"})
 
             @Html.ValidationMessageFor(model => model.NgayNhap, "", new { @class = "text-danger" })
         </div>
