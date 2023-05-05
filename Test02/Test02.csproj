@@ -222,6 +222,9 @@
     <Compile Include="Models\PhuongTienGH.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\pr_SapxepDonHang_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SanPham.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -651,6 +654,8 @@
     <Content Include="Views\KhachHang\CongNo.cshtml" />
     <Content Include="Views\KhachHang\LienHe.cshtml" />
     <Content Include="Views\PhongKho\ChiTietDonHang.cshtml" />
+    <Content Include="Views\GiaoHang\ChiTietDonHang.cshtml" />
+    <Content Include="Views\GiaoHang\XoaChuyenGiao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\KeToan\ChitietCN.cshtml" />

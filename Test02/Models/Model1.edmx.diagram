@@ -4,7 +4,6 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-
       <Diagram DiagramId="37c20cbbf53041f29818019cea3912b7" Name="Diagram1" ZoomLevel="58">
 
         <EntityTypeShape EntityType="QuanLyDLModel.BaoCao" Width="1.5" PointX="1" PointY="8.5" IsExpanded="true" />

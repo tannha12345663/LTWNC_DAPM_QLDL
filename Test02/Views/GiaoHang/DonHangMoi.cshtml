@@ -14,10 +14,6 @@
         <div class="tile">
             <div class="tile-body">
                 <div class="row element-button">
-
-                    <div class="col-sm-2">
-                        <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
-                    </div>
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file" title="In" onclick="printDiv('printMe')">
                             <i class="fas fa-print"></i> In dữ liệu
@@ -29,7 +25,6 @@
                         <h2 style="margin-left:29%">DANH SÁCH ĐƠN HÀNG MỚI CẦN GIAO</h2>
                         <div class="col-sm-12">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info" >
-
                                 <thead>
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align:center">Mã đơn hàng</th>
@@ -96,7 +91,6 @@
                                                     <a href="/GiaoHang/ChiTietDonGiaoHang/@item.MaDH" class="btn btn-primary btn-sm edit">
                                                         <i class='bx bxs-cube-alt'></i>
                                                     </a>
-
                                                 </td>
                                             </tr>
                                         }
@@ -117,9 +111,11 @@
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
-        document.getElementById("btnin").style.display = "none";
+
         document.body.innerHTML = printContents;
+
         window.print();
+
         document.body.innerHTML = originalContents;
     }
 </script>

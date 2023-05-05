@@ -45,7 +45,7 @@ namespace Test02.Models
         public virtual DbSet<PhieuNhapXuat> PhieuNhapXuats { get; set; }
         public virtual DbSet<PhuongTienGH> PhuongTienGHs { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
-    
+
         public virtual ObjectResult<sp_CNDenHan_Result> sp_CNDenHan()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CNDenHan_Result>("sp_CNDenHan");

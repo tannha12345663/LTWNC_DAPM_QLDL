@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="QuanLyDLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QuanLyDLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BaoCao">
           <Key>
             <PropertyRef Name="MaBC" />
@@ -91,6 +91,7 @@
           <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
           <Property Name="NgayLap" Type="datetime" />
           <Property Name="KhuVucGiao" Type="nvarchar" MaxLength="102" />
+          <Property Name="MaNVGiao" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="DaiLy">
           <Key>
@@ -546,7 +547,6 @@
           <Parameter Name="madl" Type="varchar" Mode="In" />
           <Parameter Name="thang" Type="varchar" Mode="In" />
         </Function>
-
         <EntityContainer Name="QuanLyDLModelStoreContainer">
           <EntitySet Name="BaoCao" EntityType="Self.BaoCao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BienBangKiemKe" EntityType="Self.BienBangKiemKe" Schema="dbo" store:Type="Tables" />
@@ -651,7 +651,8 @@
             <End Role="PhieuNhapXuat" EntitySet="PhieuNhapXuat" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyDLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -754,6 +755,7 @@
           <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NgayLap" Type="DateTime" Precision="3" />
           <Property Name="KhuVucGiao" Type="String" MaxLength="102" FixedLength="false" Unicode="true" />
+          <Property Name="MaNVGiao" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PhuongTienGH" Relationship="Self.FK_ChuyenGiao_PhuongTienGH" FromRole="ChuyenGiao" ToRole="PhuongTienGH" />
           <NavigationProperty Name="DonHangs" Relationship="Self.FK_DonHang_ChuyenGiao" FromRole="ChuyenGiao" ToRole="DonHang" />
           <NavigationProperty Name="NhanVienGHs" Relationship="Self.FK_NhanVienGH_ChuyenGiao" FromRole="ChuyenGiao" ToRole="NhanVienGH" />
@@ -1362,7 +1364,6 @@
           <Property Type="String" Name="TinhTrangGH" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="MaGH" Nullable="true" MaxLength="10" />
         </ComplexType>
-
         <ComplexType Name="sp_TaoCongNo_Result">
           <Property Type="String" Name="MaCongNo" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="MaDL" Nullable="true" MaxLength="10" />
@@ -1387,7 +1388,6 @@
           <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="NgayLapCN" Nullable="true" />
         </ComplexType>
-
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1486,6 +1486,7 @@
                 <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
                 <ScalarProperty Name="NgayLap" ColumnName="NgayLap" />
                 <ScalarProperty Name="KhuVucGiao" ColumnName="KhuVucGiao" />
+                <ScalarProperty Name="MaNVGiao" ColumnName="MaNVGiao" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1622,7 +1623,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-
           <FunctionImportMapping FunctionImportName="sp_CountCN" FunctionName="QuanLyDLModel.Store.sp_CountCN" />
           <FunctionImportMapping FunctionImportName="sp_DHtheotinhtrang" FunctionName="QuanLyDLModel.Store.sp_DHtheotinhtrang" />
           <FunctionImportMapping FunctionImportName="sp_DoanhThutrongthang" FunctionName="QuanLyDLModel.Store.sp_DoanhThutrongthang" />
@@ -1630,7 +1630,6 @@
           <FunctionImportMapping FunctionImportName="sp_LocDonHang" FunctionName="QuanLyDLModel.Store.sp_LocDonHang">
             <ResultMapping>
               <ComplexTypeMapping TypeName="QuanLyDLModel.sp_LocDonHang_Result">
-
                 <ScalarProperty Name="MaDH" ColumnName="MaDH" />
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
                 <ScalarProperty Name="MaNVLap" ColumnName="MaNVLap" />
@@ -1646,7 +1645,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-
           <FunctionImportMapping FunctionImportName="sp_SoDHDaiLy" FunctionName="QuanLyDLModel.Store.sp_SoDHDaiLy" />
           <FunctionImportMapping FunctionImportName="sp_SumCN" FunctionName="QuanLyDLModel.Store.sp_SumCN" />
           <FunctionImportMapping FunctionImportName="sp_TaoCongNo" FunctionName="QuanLyDLModel.Store.sp_TaoCongNo">
@@ -1686,7 +1684,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
