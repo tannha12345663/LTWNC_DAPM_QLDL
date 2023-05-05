@@ -111,12 +111,13 @@
                                             DateTime aDatetime = DateTime.Now;
                                             DateTime hant = (DateTime)item.HanTra;
                                             TimeSpan interval = hant.Subtract(aDatetime);
+                                           
 
                                             if (interval.Days <= 0)
                                             {
                                                 <span class="badge badge-danger">Đến hạn</span>
                                             }
-                                            else if (interval.Days > 0 && interval.Days <= 7)
+                                            else if (interval.Days > 0 && interval.Days <= 5)
                                             {
                                                 <span class="badge badge-warning">Sắp đến hạn</span>
                                             }
@@ -128,20 +129,41 @@
                                         }
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.TrangThai)
+                                        <p id="thanhtoan">
+                                            @Html.DisplayFor(modelItem => item.TrangThai)
+                                        </p>
                                     </td>
                                     <td>
-                                        @{
-                                            if (item.TrangThai == "Chưa thanh toán")
+                                                                        @*@{
+                                            if (item.TrangThai == "Đã thanh toán")
+                                            {
+                                                <a href="javascript:void(0)" class="btn btn-outline-primary btn-sm ">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            }
+                                            else
                                             {
                                                 <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                             }
-                                        }
+                                        }*@
+
+
+                                        <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
                                         <a href="/KeToan/ChitietCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
                                             <i class="fas fa-train"></i>
                                         </a>
+                                        @{
+                                            if (interval.Days <= 0)
+                                            {
+                                                <a href="" class="btn btn-outline-danger btn-sm ">
+                                                    <i class="fas fa-mail-bulk"></i>
+                                                </a>
+                                            }
+                                        }
 
                                     </td>
                                 </tr>
@@ -172,14 +194,14 @@
 
 
     }
-    //function CheckTT() {
-    //    var inputValue = document.getElementById("number").value;
-    //    if (inputValue == "Chưa thanh toán") {
-    //        document.getElementById("checktt").disabled = false;
+    //function KiemtraThanhToan() {
+    //    var value = document.getElementById("thanhtoan").innerHTML;
+    //    if (value == "Chưa thanh toán") {
+    //        //document.getElementById("checktt").disabled = false;
 
     //    }
     //    else {
-    //        document.getElementById("checktt").disabled = true;
+    //        //document.getElementById("checktt").disabled = true;
     //        alert("Phiếu công nợ đã thanh toán !!");
 
     //    }

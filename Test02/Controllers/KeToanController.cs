@@ -16,8 +16,6 @@ namespace Test02.Controllers
     [Authentication(MaChucVu ="NVKT")]
     public class KeToanController : Controller
     {
-        
-
         QuanLyDLEntities2 database = new QuanLyDLEntities2();
         // GET: KeToan
         public ActionResult Index()
@@ -430,6 +428,7 @@ namespace Test02.Controllers
         public int KtraDH(List<DonHang> dh)
         {
             int c = 0;
+            
             for(int i=0;i<dh.Count-1;i++)
             {
                 DateTime m = (DateTime)dh[i].NgayLap;
@@ -439,12 +438,28 @@ namespace Test02.Controllers
             }
             return c;
         }
+
+        public int KtraThang(List<DonHang> dh)
+        {
+            DateTime thangdau =(DateTime) dh.Take(1).FirstOrDefault().NgayLap;
+            int thang =thangdau.Month;
+
+            //for (int i = 0; i < dh.Count - 1; i++)
+            //{
+            //    DateTime m = (DateTime)dh[i].NgayLap;
+            //    DateTime m1 = (DateTime)dh[i + 1].NgayLap;
+            //    if (m.Month == m1.Month)
+            //        thang++;
+            //}
+            return thang;
+        }
         public ActionResult CongnoDL(string id)
         {
             BindDropDownList();
             List<DonHang> dh = Get_DonHang("All","Chưa thanh toán","Đã xét duyệt").Where(s=>s.MaDL==id && s.TinhTrangGH=="Đã giao").ToList();
             ViewBag.TongCN = database.sp_TienDHNoDaiLy(id,"All").FirstOrDefault();
             Session["Madly"] = id;
+            Session["thangtrongdonhang"] = KtraThang(dh);
             Session["KtraDH"] = KtraDH(dh);
             return View(dh);
         }
@@ -455,8 +470,40 @@ namespace Test02.Controllers
             List<DonHang> dh = Get_DonHang(thangs, "Chưa thanh toán", "Đã xét duyệt").Where(s => s.MaDL == id && s.TinhTrangGH == "Đã giao").ToList();
             ViewBag.TongCN = database.sp_TienDHNoDaiLy(id, thangs).FirstOrDefault();
             Session["KtraDH"] = KtraDH(dh);
-            Session["m"] = thangs;
+            Session["Madly"] = id;
+            Session["thangtrongdonhang"] = KtraThang(dh);
             return View(dh);
+
+        }
+        public JsonResult KtraNgayLapCN(DateTime ngaylap,string thanglap)
+        {
+            System.Threading.Thread.Sleep(200);
+            int t = ngaylap.Month;
+
+
+            if (t != int.Parse(thanglap))
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(0);
+            }
+
+        }
+        public JsonResult KtraHanCN(DateTime ngaylap, DateTime hantra)
+        {
+            System.Threading.Thread.Sleep(200);
+            TimeSpan Time = hantra - ngaylap;
+            int TongSoNgay = Time.Days;
+            if (TongSoNgay>30 || TongSoNgay<=0)
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(0);
+            }
 
         }
 
