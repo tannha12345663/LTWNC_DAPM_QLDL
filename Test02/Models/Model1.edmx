@@ -29,7 +29,7 @@
           <Key>
             <PropertyRef Name="STT" />
           </Key>
-          <Property Name="STT" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="STT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaKK" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="MaSP" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="SLTonKho" Type="int" />
@@ -1334,14 +1334,14 @@
           </FunctionImport>
           <FunctionImport Name="sp_CongNoDenHan" ReturnType="Collection(QuanLyDLModel.sp_CongNoDenHan_Result)" />
           <FunctionImport Name="sp_CountCN" ReturnType="Collection(Int32)">
-            <Parameter Name="madl" Mode="In" Type="String" />
+          <Parameter Name="madl" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_DHtheotinhtrang" ReturnType="Collection(Int32)">
-            <Parameter Name="thanhtoan" Mode="In" Type="String" />
+          <Parameter Name="thanhtoan" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_DoanhThutrongthang" ReturnType="Collection(Double)" />
           <FunctionImport Name="sp_DonHangtrongngay" ReturnType="Collection(Int32)">
-            <Parameter Name="thanhtoan" Mode="In" Type="String" />
+          <Parameter Name="thanhtoan" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_LocDonHang" ReturnType="Collection(QuanLyDLModel.sp_LocDonHang_Result)">
             <Parameter Name="thang" Mode="In" Type="String" />
@@ -1354,10 +1354,10 @@
             <Parameter Name="madl" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_SoDHDaiLy" ReturnType="Collection(Int32)">
-            <Parameter Name="madl" Mode="In" Type="String" />
+          <Parameter Name="madl" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_SumCN" ReturnType="Collection(Double)">
-            <Parameter Name="madl" Mode="In" Type="String" />
+          <Parameter Name="madl" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_TaoCongNo" ReturnType="Collection(QuanLyDLModel.sp_TaoCongNo_Result)">
             <Parameter Name="madl" Mode="In" Type="String" />

@@ -1299,7 +1299,7 @@ namespace Test02.Controllers
             }
             //trừ số lượng của sản phẩm trong kho cần xuất
             ctkho.SoLuong -= SLNhan;
-            database.Entry(ctkho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+            database.Entry(ctkho).State = System.Data.EntityState.Modified;
             database.SaveChanges();
             //Tạo chi tiết kho mới của kho nhận
             ChiTietKho chiTietKho = new ChiTietKho();
