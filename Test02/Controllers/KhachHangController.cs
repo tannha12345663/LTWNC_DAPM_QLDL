@@ -8,7 +8,6 @@ using System.Web.Mvc;
 using Test02.App_Start;
 using Test02.Models;
 using PagedList;
-
 namespace Test02.Controllers
 {
     [AuthenticationDL]
@@ -20,7 +19,9 @@ namespace Test02.Controllers
         public ActionResult PageSanPham(int? page, string query)
         {
             TempData["timkiem"] = query;
-            int pageSize = 4;
+            Session["page"] = page;
+            Session["query"] = query;
+            int pageSize = 6;
             int pageNum = (page ?? 1);   
             if (query == null || query == "")
             {
@@ -80,7 +81,7 @@ namespace Test02.Controllers
                 TempData["Themvaogiohang"] = "thanhcong";
                 GetCart().Add(sp);
             }
-            return RedirectToAction("PageSanPham", "KhachHang");
+            return RedirectToAction("PageSanPham", new { page = Session["page"], query = Session["query"] });
         }
 
         public ActionResult ThemVaoGHViewChiTietSP(string id)
@@ -100,59 +101,44 @@ namespace Test02.Controllers
         }
 
         //Update số lượng sản phẩm
-        public ActionResult CapNhatSL(FormCollection form)
-        {
-            Cart cart = Session["Cart"] as Cart;
-            string id = form["MaSP"];
-            int sl = int.Parse(form["soluong"]);
-            var sol = db.SanPhams.Find(id);
-            if (sl > sol.TongTon)
-            {
-                TempData["Warning"] = "Số lượng cập nhật lớn hơn số lượng tồn!!!";
-                return RedirectToAction("GioHangDL", "KhachHang");
-            }
-            if (sl <= 0)
-            {
-                TempData["SLSP=0"] = "Số lượng sản phẩm phải lớn hơn 0";
-                return RedirectToAction("GioHangDL", "KhachHang");
-            }
-            cart.CapNhatSL(id, sl);
-            return RedirectToAction("GioHangDL", "KhachHang");
-        }
-
-        //[HttpPost]
-        //public ActionResult CapNhatSL(string MaSP, int soluong)
+        //public ActionResult CapNhatSL(FormCollection form)
         //{
-        //    var cart = GetCart();
-        //    var maSP = db.SanPhams.FirstOrDefault(s => s.MaSP == MaSP);
-        //    if (soluong > maSP.TongTon)
+        //    Cart cart = Session["Cart"] as Cart;
+        //    string id = form["MaSP"];
+        //    int sl = int.Parse(form["soluong"]);
+        //    var sol = db.SanPhams.Find(id);
+        //    if (sl > sol.TongTon)
         //    {
         //        TempData["Warning"] = "Số lượng cập nhật lớn hơn số lượng tồn!!!";
-        //        //return Json(new { success = "false" });
         //        return RedirectToAction("GioHangDL", "KhachHang");
         //    }
-
-        //    if (soluong <= 0)
+        //    if (sl <= 0)
         //    {
         //        TempData["SLSP=0"] = "Số lượng sản phẩm phải lớn hơn 0";
         //        return RedirectToAction("GioHangDL", "KhachHang");
         //    }
-
-        //    else
-        //    {
-        //        cart.CapNhatSL(MaSP, soluong);
-
-        //        double tongTien = cart.TongTien();
-        //        double thanhTien = cart.ThanhTien(maSP.MaSP);
-        //        var result = new
-        //        {
-        //            tongTien = "Tổng tiền: " + tongTien.ToString("#,##0") + " VNĐ",
-        //            thanhTien = thanhTien.ToString("#,##0") + " VNĐ",
-        //        };
-        //        return Json(result);
-        //    }
-        //    //return RedirectToAction("GioHangDL");
+        //    cart.CapNhatSL(id, sl);
+        //    return RedirectToAction("GioHangDL", "KhachHang");
         //}
+
+        [HttpPost]
+        public ActionResult CapNhatSL(string MaSP, int soluong)
+        {
+            var cart = GetCart();
+            var maSP = db.SanPhams.FirstOrDefault(s => s.MaSP == MaSP);
+
+            cart.CapNhatSL(MaSP, soluong);
+
+            double tongTien = cart.TongTien();
+            double thanhTien = cart.ThanhTien(maSP.MaSP);
+
+            var result = new
+            {
+                tongTien = "Tổng tiền: " + tongTien.ToString("#,##0") + " VNĐ",
+                thanhTien = thanhTien.ToString("#,##0") + " VNĐ",
+            };
+            return Json(result);
+        }
 
         //Xóa sản phẩm khỏi giỏ hàng
         public ActionResult XoaSP(string id)
@@ -217,7 +203,17 @@ namespace Test02.Controllers
                 double maxCN = MaxNo(daiLy.MaLoaiDL);
                 double tong = tongphu + tongTienCN;
 
-                if (tong > maxCN)
+                var gioHang = cart.Items.ToList();
+                foreach (var item in gioHang)
+                {
+                    if (item.soLuong > item.idSP.TongTon || item.soLuong < 0)
+                    {
+                        TempData["ErrorSL"] = "Số lượng không hợp lệ";
+                        return RedirectToAction("GioHangDL", "KhachHang");
+                    }
+                }
+
+                if (tong >= maxCN)
                 {
                     TempData["MaxCN"] = "Công nợ vượt quá mức quy định, vui lòng thanh toán công nợ trước khi đặt hàng";
                     return RedirectToAction("GioHangDL", "KhachHang");
@@ -266,7 +262,11 @@ namespace Test02.Controllers
                 //Thêm vào bảng chi tiết đơn hàng
                 foreach (var item in cart.Items)
                 {
+                    Random maCTDH = new Random();
+                    var iDCTDH = maCTDH.Next(0, 9) + maCTDH.Next(0, 9) + maCTDH.Next(0, 9) + maCTDH.Next(0, 9);
+
                     ChiTietDonHang chiTietDonHang = new ChiTietDonHang();
+                    chiTietDonHang.MaCTDH = iDCTDH;
                     chiTietDonHang.MaDH = maDH;
                     chiTietDonHang.MaSP = item.idSP.MaSP;
                     chiTietDonHang.SoLuong = item.soLuong;
@@ -348,9 +348,31 @@ namespace Test02.Controllers
             return RedirectToAction("DonHangDL");
         }
 
+        public ActionResult Thang()
+        {
+            List<SelectListItem> months = new List<SelectListItem>();
+            months.Add(new SelectListItem { Text = "Tất cả", Value = "0" });
+            months.Add(new SelectListItem { Text = "Tháng 1", Value = "1" });
+            months.Add(new SelectListItem { Text = "Tháng 2", Value = "2" });
+            months.Add(new SelectListItem { Text = "Tháng 3", Value = "3" });
+            months.Add(new SelectListItem { Text = "Tháng 4", Value = "4" });
+            months.Add(new SelectListItem { Text = "Tháng 5", Value = "5" });
+            months.Add(new SelectListItem { Text = "Tháng 6", Value = "6" });
+            months.Add(new SelectListItem { Text = "Tháng 7", Value = "7" });
+            months.Add(new SelectListItem { Text = "Tháng 8", Value = "8" });
+            months.Add(new SelectListItem { Text = "Tháng 9", Value = "9" });
+            months.Add(new SelectListItem { Text = "Tháng 10", Value = "10" });
+            months.Add(new SelectListItem { Text = "Tháng 11", Value = "11" });
+            months.Add(new SelectListItem { Text = "Tháng 12", Value = "12" });
+            ViewBag.Months = months;
+            return View();
+        }
+
         public ActionResult CongNo()
         {
+            Thang();
             var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
+            TempData["daiLy"] = daiLy.MaDL;
             var dsCongNo = db.PhieuCongNoes.Where(s => s.MaDL == daiLy.MaDL).ToList();
 
             var conNo = db.PhieuCongNoes.Where(s => s.TrangThai == "Chưa thanh toán" && s.MaDL == daiLy.MaDL);

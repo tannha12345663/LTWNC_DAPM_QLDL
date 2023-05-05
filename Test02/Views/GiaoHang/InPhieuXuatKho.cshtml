@@ -9,6 +9,7 @@
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var kho = db.Khoes.ToList();
     var ctdonhang = db.ChiTietDonHangs.ToList();
+    var donhang = db.DonHangs.ToList();
 }
 
 
@@ -17,7 +18,7 @@
         <div class="tile" id="printMe">
             <p>Tên đơn vị: Công ty TNHH nước giải khát NQK</p>
             <p>Theo mã đơn hàng số: @TempData["ctmadh"]</p>
-            <h2 style="text-align:center" id="sample1">PHIẾU XUẤT KHO THEO ĐƠN HÀNG @*@TempData["ctmadh"]*@</h2>
+            <h2 style="text-align:center" id="sample1">PHIẾU XUẤT KHO THEO ĐƠN HÀNG @TempData["ctmadh"]</h2>
             <form style="text-align:center">
                 <label for="date">Ngày:</label>
                 @TempData["ngaylap"]<br>
@@ -123,6 +124,13 @@
         <a class="btn btn-delete " title="In" onclick="printDiv('printMe')">
             <i class="fas fa-print"></i> In dữ liệu
         </a>
+    </div>
+    <div class="col-sm-2">
+        @{
+            var donhang01 = db.DonHangs.Where(s => s.MaDH == Model.MaDH).FirstOrDefault();
+            var chuyengiao = db.ChuyenGiaos.Where(s => s.MaGH == donhang01.MaGH).FirstOrDefault();
+            <a class="btn  btn-danger" href="/GiaoHang/ChiTietChuyenGiaoHang/@chuyengiao.MaGH">Quay lại</a>
+        }
     </div>
 </div>
 

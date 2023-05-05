@@ -90,17 +90,52 @@
                                                     </span>
                                                 </td>
                                             }
-                                            <td style="text-align:center">
-                                                <a href="/GiaoHang/ChinhSuaShipper/@item.MaNV" class="btn btn-primary btn-sm edit">
-                                                    <i class='bx bxs-edit-alt'></i>
-                                                </a>
-                                                <a href="/GiaoHang/XepXe/@item.MaNV" class="btn btn-primary btn-sm deleted">
-                                                    <i class='bx bx-car'></i>
-                                                </a>
-                                                <a href="/GiaoHang/XoaShipper/@item.MaNV" class="btn btn-primary btn-sm deleted">
-                                                    <i class="bx bxs-trash-alt"></i>
-                                                </a>
-                                            </td>
+
+
+
+                                            @* Tình trạng nghỉ phép không xếp chuyến giao*@
+                                            @if (item.TinhTrang == "Sẵn sàng")
+                                                {
+                                                    <td style="text-align:center">
+                                                        <a href="/GiaoHang/ChinhSuaShipper/@item.MaNV" class="btn btn-primary btn-sm edit">
+                                                            <i class='bx bxs-edit-alt'></i>
+                                                        </a>
+                                                        <a href="/GiaoHang/XepXe/@item.MaNV" class="btn btn-primary btn-sm deleted">
+                                                            <i class='bx bx-car'></i>
+                                                        </a>
+                                                        <a href="/GiaoHang/XoaShipper/@item.MaNV" class="btn btn-primary btn-sm deleted">
+                                                            <i class="bx bxs-trash-alt"></i>
+                                                        </a>
+                                                    </td>
+                                                }
+                                                else if (item.TinhTrang == "Đang giao hàng")
+                                                {
+                                                    <td style="text-align:center">
+                                                        <a anchor.href = "javascript:void(0)" class="btn btn-primary btn-sm edit">
+                                                            <i class='bx bxs-edit-alt'></i>
+                                                        </a>
+                                                        <a anchor.href = "javascript:void(0)" class="btn btn-primary btn-sm deleted">
+                                                            <i class='bx bx-car'></i>
+                                                        </a>
+                                                        <a anchor.href = "javascript:void(0)" class="btn btn-primary btn-sm deleted">
+                                                            <i class="bx bxs-trash-alt"></i>
+                                                        </a>
+                                                    </td>
+                                                }
+                                                else if (item.TinhTrang == "Nghỉ phép")
+                                                {
+                                                    <td style="text-align:center">
+                                                        <a href="/GiaoHang/ChinhSuaShipper/@item.MaNV" class="btn btn-primary btn-sm edit">
+                                                            <i class='bx bxs-edit-alt'></i>
+                                                        </a>
+                                                        <a anchor.href = "javascript:void(0)" class="btn btn-primary btn-sm deleted" >
+                                                            <i class='bx bx-car'></i>
+                                                        </a>
+                                                        <a href="/GiaoHang/XoaShipper/@item.MaNV" class="btn btn-primary btn-sm deleted">
+                                                            <i class="bx bxs-trash-alt"></i>
+                                                        </a>
+                                                    </td>
+                                                }                                           
                                         </tr>
                                     }
                                 </tbody>
@@ -112,6 +147,13 @@
         </div>
     </div>
 </div>
+
+
+@*<script>
+    function disableBtn() {
+        document.getElementById("#update-ttdh").disabled = true;
+    }
+</script>*@
 
 <script>
     //In dữ liệu

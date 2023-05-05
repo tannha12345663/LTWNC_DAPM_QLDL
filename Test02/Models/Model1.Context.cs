@@ -45,10 +45,137 @@ namespace Test02.Models
         public virtual DbSet<PhieuNhapXuat> PhieuNhapXuats { get; set; }
         public virtual DbSet<PhuongTienGH> PhuongTienGHs { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
-    
-        public virtual int sp_capnhat()
+
+        public virtual ObjectResult<sp_CNDenHan_Result> sp_CNDenHan()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_capnhat");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CNDenHan_Result>("sp_CNDenHan");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_CountCN(string madl)
+        {
+            var madlParameter = madl != null ?
+                new ObjectParameter("madl", madl) :
+                new ObjectParameter("madl", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_CountCN", madlParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_DHtheotinhtrang(string thanhtoan)
+        {
+            var thanhtoanParameter = thanhtoan != null ?
+                new ObjectParameter("thanhtoan", thanhtoan) :
+                new ObjectParameter("thanhtoan", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_DHtheotinhtrang", thanhtoanParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<double>> sp_DoanhThutrongthang()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("sp_DoanhThutrongthang");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_DonHangtrongngay(string thanhtoan)
+        {
+            var thanhtoanParameter = thanhtoan != null ?
+                new ObjectParameter("thanhtoan", thanhtoan) :
+                new ObjectParameter("thanhtoan", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_DonHangtrongngay", thanhtoanParameter);
+        }
+    
+        public virtual ObjectResult<sp_LocDonHang_Result> sp_LocDonHang(string thang, string thanhtoan, string tinhtrang)
+        {
+            var thangParameter = thang != null ?
+                new ObjectParameter("thang", thang) :
+                new ObjectParameter("thang", typeof(string));
+    
+            var thanhtoanParameter = thanhtoan != null ?
+                new ObjectParameter("thanhtoan", thanhtoan) :
+                new ObjectParameter("thanhtoan", typeof(string));
+    
+            var tinhtrangParameter = tinhtrang != null ?
+                new ObjectParameter("tinhtrang", tinhtrang) :
+                new ObjectParameter("tinhtrang", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LocDonHang_Result>("sp_LocDonHang", thangParameter, thanhtoanParameter, tinhtrangParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_SoDHDaiLy(string madl)
+        {
+            var madlParameter = madl != null ?
+                new ObjectParameter("madl", madl) :
+                new ObjectParameter("madl", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_SoDHDaiLy", madlParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<double>> sp_SumCN(string madl)
+        {
+            var madlParameter = madl != null ?
+                new ObjectParameter("madl", madl) :
+                new ObjectParameter("madl", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("sp_SumCN", madlParameter);
+        }
+    
+        public virtual ObjectResult<sp_TaoCongNo_Result> sp_TaoCongNo(string madl, Nullable<double> tienno, Nullable<System.DateTime> hantra, Nullable<System.DateTime> ngaylap, string thang)
+        {
+            var madlParameter = madl != null ?
+                new ObjectParameter("madl", madl) :
+                new ObjectParameter("madl", typeof(string));
+    
+            var tiennoParameter = tienno.HasValue ?
+                new ObjectParameter("tienno", tienno) :
+                new ObjectParameter("tienno", typeof(double));
+    
+            var hantraParameter = hantra.HasValue ?
+                new ObjectParameter("hantra", hantra) :
+                new ObjectParameter("hantra", typeof(System.DateTime));
+    
+            var ngaylapParameter = ngaylap.HasValue ?
+                new ObjectParameter("ngaylap", ngaylap) :
+                new ObjectParameter("ngaylap", typeof(System.DateTime));
+    
+            var thangParameter = thang != null ?
+                new ObjectParameter("thang", thang) :
+                new ObjectParameter("thang", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_TaoCongNo_Result>("sp_TaoCongNo", madlParameter, tiennoParameter, hantraParameter, ngaylapParameter, thangParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<double>> sp_TienDHNoDaiLy(string madl, string thang)
+        {
+            var madlParameter = madl != null ?
+                new ObjectParameter("madl", madl) :
+                new ObjectParameter("madl", typeof(string));
+    
+            var thangParameter = thang != null ?
+                new ObjectParameter("thang", thang) :
+                new ObjectParameter("thang", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("sp_TienDHNoDaiLy", madlParameter, thangParameter);
+        }
+    
+        public virtual ObjectResult<sp_CongNoDenHan_Result> sp_CongNoDenHan()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CongNoDenHan_Result>("sp_CongNoDenHan");
+        }
+    
+        public virtual ObjectResult<sp_LocPhieuCongNo_Result> sp_LocPhieuCongNo(string thang, string thanhtoan, string madl)
+        {
+            var thangParameter = thang != null ?
+                new ObjectParameter("thang", thang) :
+                new ObjectParameter("thang", typeof(string));
+    
+            var thanhtoanParameter = thanhtoan != null ?
+                new ObjectParameter("thanhtoan", thanhtoan) :
+                new ObjectParameter("thanhtoan", typeof(string));
+    
+            var madlParameter = madl != null ?
+                new ObjectParameter("madl", madl) :
+                new ObjectParameter("madl", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LocPhieuCongNo_Result>("sp_LocPhieuCongNo", thangParameter, thanhtoanParameter, madlParameter);
         }
     }
 }
