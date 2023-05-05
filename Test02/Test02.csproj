@@ -529,6 +529,7 @@
     <Content Include="TemplateMail\AddAccount.html" />
     <Content Include="TemplateMail\CancleOrder.html" />
     <Content Include="TemplateMail\DeleteAccount.html" />
+    <Content Include="TemplateMail\Doino.html" />
     <Content Include="TemplateMail\NewOrder.html" />
     <Content Include="TemplateMail\ResetPasss.html" />
     <Content Include="Views\KeToan\ChinhsuCN.cshtml" />

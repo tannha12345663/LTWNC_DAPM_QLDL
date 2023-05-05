@@ -8,7 +8,6 @@ using System.Web.Mvc;
 using Test02.App_Start;
 using Test02.Models;
 using PagedList;
-
 namespace Test02.Controllers
 {
     [AuthenticationDL]
