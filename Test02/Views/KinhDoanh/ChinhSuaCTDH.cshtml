@@ -29,7 +29,24 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MaSP, "MaSP", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control" })
+                        @{ 
+                            var dssp = db.SanPhams.ToList().OrderBy(s=>s.MaSP);
+                            var tensp = db.SanPhams.Where(s => s.MaSP == Model.MaSP).FirstOrDefault();
+                        }
+                        <select class="form-control" id="MaSP" name="MaSP">
+                            <option value="@Model.MaSP">@Model.MaSP -- @tensp.TenSP </option>
+                            @{
+                                foreach (var item01 in dssp)
+                                {
+                                    if (Model.MaSP != item01.MaSP) 
+                                    { 
+                                        <option value="@item01.MaSP">@item01.MaSP -- @item01.TenSP</option>
+                                    }
+                                    
+                                }
+
+                            }
+                        </select>
                         @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
                     </div>
                 </div>

@@ -62,7 +62,7 @@
         <hr>
         <ul class="app-menu">
             <li>
-                <a class="app-menu__item haha" href="phan-mem-ban-hang.html">
+                <a class="app-menu__item haha" @*href="phan-mem-ban-hang.html"*@>
                     <i class='app-menu__icon bx bx-badge-check'></i>
                     <span class="app-menu__label">
                         @{ var ldl = user.MaLoaiDL;
@@ -91,9 +91,15 @@
             <li>
                 <a class="app-menu__item @ViewBag.cn" href="~/KhachHang/CongNo">
                     <i class="app-menu__icon bx bx-money-withdraw"></i>
-                    <span class="app-menu__label">Công nợ</span>
+                    <span class="app-menu__label">Doanh số & Công nợ</span>
                 </a>
             </li>
+            @*<li>
+                <a class="app-menu__item @ViewBag.cn" href="~/KhachHang/DoanhSo">
+                    <i class="app-menu__icon bx bx-money-withdraw"></i>
+                    <span class="app-menu__label">Doanh số</span>
+                </a>
+            </li>*@
             <li>
                 <a class="app-menu__item @ViewBag.lh" href="~/KhachHang/LienHe">
                     <i class="app-menu__icon bx bxs-message-dots"></i>
