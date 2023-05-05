@@ -160,7 +160,7 @@ namespace Test02.Controllers
                         sp.TongTon += ctk.SoLuong;
                     }
                 }
-                database.Entry(sp).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                database.Entry(sp).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
             }
             return View();
@@ -298,7 +298,7 @@ namespace Test02.Controllers
                         TempData["AlertMessage"] = "check null";
                         return RedirectToAction("EditCTKho");
                     }
-                    database.Entry(chiTietKho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.Entry(chiTietKho).State = System.Data.Entity.EntityState.Modified;
                     updateTongTon();
                     database.SaveChanges();
                     TempData["AlertMessage"] = "Đã cập nhật";
@@ -450,7 +450,7 @@ namespace Test02.Controllers
                 }
                 else
                 {
-                    database.Entry(kho).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.Entry(kho).State = System.Data.Entity.EntityState.Modified;
                     database.SaveChanges();
                     TempData["AlertMessage"] = "Đã cập nhật";
                     TempData["MaCTKkk"] = kho.MaKho;
@@ -1160,7 +1160,7 @@ namespace Test02.Controllers
                     updateTongTon();
                 }
                 phieu.TinhTrang = "Đã xuất";
-                database.Entry(phieu).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                database.Entry(phieu).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
             }
             else if(str == "KDPN")
@@ -1177,7 +1177,7 @@ namespace Test02.Controllers
                     updateTongTon();
                 }
                 phieu.TinhTrang = "Đã nhập";
-                database.Entry(phieu).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                database.Entry(phieu).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
             }
             TempData["AlertMessage"] = "status";
