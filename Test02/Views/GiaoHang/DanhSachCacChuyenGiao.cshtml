@@ -39,28 +39,19 @@
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Trạng thái</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 60px; text-align: center ">Khu vực giao</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Ngày giao</th>
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 25px; text-align: center ">Chi tiết</th>
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Chi tiết</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <p style="text-align:center">
-                                            <span>
-                                                @{
-                                                    var cg = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
-                                                    var gh = db.NhanVienGHs.Where(s => s.MaGH == cg.MaGH).FirstOrDefault();}
-                                            </span>
-                                        </p>
                                         <tr>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.MaGH)
                                             </td>
                                             <td>
-                                                @{ 
-                                                    var tennv = db.NhanVienGHs.Where(s => s.MaGH == cg.MaGH).FirstOrDefault();
-                                                }
-                                                @Html.DisplayFor(modelItem => tennv.TenNV)
+                                                @{var tendnv = db.NhanVienGHs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                                @Html.DisplayFor(modelItem => tendnv.TenNV)
                                             </td>
 
                                             <td>
@@ -101,12 +92,32 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.NgayGiao)
                                             </td>
-                                            <td style="text-align:center">
-                                                <a href="/GiaoHang/ChiTietChuyenGiaoHang/@item.MaGH" class="btn btn-primary btn-sm edit">
-                                                    <i class='bx bxs-cube-alt'></i>
-                                                </a>
+                                            @{
+                                                var donhang = db.DonHangs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                                            }
+                                            @if (donhang == null)
+                                            {
+                                                <td style="text-align:center">
+                                                    <a anchor.href="javascript:void(0)" class="btn btn-primary btn-sm edit">
+                                                        <i class='bx bxs-cube-alt'></i>
+                                                    </a>
+                                                    <a href="/GiaoHang/XoaChuyenGiao/@item.MaGH" class="btn btn-primary btn-sm edit">
+                                                        <i class='bx bxs-trash-alt'></i>
+                                                    </a>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td style="text-align:center">
+                                                    <a href="/GiaoHang/ChiTietChuyenGiaoHang/@item.MaGH" class="btn btn-primary btn-sm edit">
+                                                        <i class='bx bxs-cube-alt'></i>
+                                                    </a>
+                                                    <a anchor.href="javascript:void(0)" class="btn btn-primary btn-sm edit">
+                                                        <i class='bx bxs-trash-alt'></i>
+                                                    </a>
+                                                </td>
+                                            }
 
-                                            </td>
                                         </tr>
                                     }
                                 </tbody>

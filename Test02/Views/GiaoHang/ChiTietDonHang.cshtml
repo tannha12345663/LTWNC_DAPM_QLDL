@@ -3,13 +3,38 @@
 @{
     ViewBag.Title = "ChiTietDonHang";
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
-    ViewBag.gh_donhangmoi = "active";
+    ViewBag.gh_dongiaohang = "active";
     ViewBag.nd = "Chi tiết đơn hàng";
     ViewBag.hieuung4 = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 }
 
+@{
+    var checkMessage = TempData["AlertMessage"];
+    if (checkMessage == "Đã thêm")
+    {
+        <script>
+            swal({
+                title: "Thêm thành công",
+                text: "Đã thêm phiếu xuất kho theo đơn hàng số @Session["madhxk"]!",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkMessage == "noKho")
+    {
+        <script>
+            swal({
+                title: "Không tìm thấy kho!",
+                text: "Không có kho nào đáp ứng đủ cho đơn hàng @Session["madhxk"]!",
+                icon: "warning",
+                button: "OK",
+            });
+        </script>
+    }
 
+}
 <link href="~/Content/toastNoti.css" rel="stylesheet" />
 <div class="row">
 
@@ -20,14 +45,14 @@
             </div>
             <div class="tile-body">
                 <div style="text-align:center">
-                    <h3>Danh sách chi tiết của đơn hàng @TempData["madh"]</h3>
+                    <h3>Danh sách chi tiết của đơn hàng @TempData["madh02"]</h3>
                 </div>
                 <hr />
                 <h6>
                     Tên đại lý nhận:
                     <span class="badge bg-success">
                         @{
-                            var madh = @TempData["madh"];
+                            var madh = @TempData["madh02"];
                             var tendl = db.DonHangs.Where(s => s.MaDH == (string)madh).FirstOrDefault(); }
                         @Html.DisplayFor(modelItem => tendl.DaiLy.TenDL)
                     </span>
@@ -39,7 +64,7 @@
                                 Điểm giao hàng:
                                 <span class="badge bg-success">
                                     @{
-                                        var madh01 = @TempData["madh"];
+                                        var madh01 = @TempData["madh02"];
                                         var diemgiao = db.DonHangs.Where(s => s.MaDH == (string)madh01).FirstOrDefault(); }
                                     @Html.DisplayFor(modelItem => diemgiao.DiemGiao)
                                 </span>
@@ -102,14 +127,7 @@
                         </table>
 
                         <div class="row justify-content-between" style="margin:8px;">
-                            <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DonHangMoi"><i class=""></i> Quay lại</a>
-                            @{
-                                var dhang = db.DonHangs.Where(s => s.MaDH == madh).FirstOrDefault();
-                                <td style="text-align:center">
-                                    <a class="btn  btn-success" href="/GiaoHang/CapNhatTrangThaiDonHang/@dhang.MaDH">Xếp đơn</a>
-                                </td>
-                            }
-
+                            <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DonGiaoHang"><i class=""></i> Quay lại</a>
                         </div>
                     </div>
                 </div>
