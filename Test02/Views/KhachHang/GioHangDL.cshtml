@@ -122,7 +122,7 @@
                                         @{ var tien = string.Format("{0:0,0 VNĐ}", Model.ThanhTien(item.idSP.MaSP)); ;} @tien
                                     </td>
                                     <td style="text-align: center;">
-                                        <a href="/KhachHang/XoaSP/@item.idSP.MaSP" class="btn btn-primary btn-sm trash"><i class="fas fa-trash-alt"></i></a>
+                                        <a href="/KhachHang/XoaSP/@item.idSP.MaSP" class="btn btn-primary trash"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                             }
@@ -135,7 +135,7 @@
                             </tr>
                             <tr>
                                 <td colspan="7" style="text-align: right; border: 0px;">
-                                    <a class="btn btn-primary" href="/KhachHang/PageDatHang">Đặt hàng</a>
+                                    <a id="dathang" class="btn btn-primary dathang" href="/KhachHang/PageDatHang">Đặt hàng</a>
                                 </td>
                             </tr>
                         </tfoot>
@@ -164,7 +164,7 @@
                         <tfoot>
                             <tr>
                                 <td colspan="7" style="text-align: right;">
-                                    Thành tiền: 00 VND
+                                    Thành tiền: 00 VNĐ
                                 </td>
                             </tr>
                             <tr>
@@ -195,7 +195,7 @@
                 data: { MaSP: productId, soluong: quantity },
                 success: function (result) {
                     if (quantity <= 0) {
-                        location.reload();
+                        //location.reload();
                         swal({
                             title: "Số lượng sản phẩm phải lớn hơn 0",
                             icon: "warning",
@@ -203,21 +203,56 @@
                         });
                     }
 
-                    if (quantity > soluongton) {
-                        /*location.reload();*/
-                        swal({
-                            title: "Số lượng cập nhật lớn hơn số lượng tồn!!!",
-                            icon: "warning",
-                            button: "Thoát",
-                        });
-                    }
-
                     else {
-                        $('#tongtien').text(result.tongTien);
-                        $('#thanhtien-' + productId).text(result.thanhTien);
+                        if (quantity > soluongton) {
+                            /*location.reload();*/
+                            swal({
+                                title: "Số lượng cập nhật lớn hơn số lượng tồn!!!",
+                                icon: "warning",
+                                button: "Thoát",
+                            });
+                        }
+
+                        else {
+                            $('#tongtien').text(result.tongTien);
+                            $('#thanhtien-' + productId).text(result.thanhTien);
+                        }
                     }
                 }
             });
         });
     });
 </script>
+
+@*<script>
+    $(document).click(function () {
+        $('.dathang').click(function () {
+            var quantity = $('.quantity').val();
+            var soluongton = $('.quantity').data('tong-ton');
+
+            if (quantity <= 0) {
+                //location.reload();
+                swal({
+                    title: "Số lượng sản phẩm phải lớn hơn 0",
+                    icon: "warning",
+                    button: "Thoát",
+                });
+            }
+
+            else {
+                if (quantity > soluongton) {
+                    /*location.reload();*/
+                    swal({
+                        title: "Số lượng cập nhật lớn hơn số lượng tồn!!!",
+                        icon: "warning",
+                        button: "Thoát",
+                    });
+                }
+                else {
+                    let a = document.getElementById("dathang");
+                    a.setAttribute("href", "/KhachHang/PageDatHang")
+                }
+            }
+        });
+    });
+</script>*@
