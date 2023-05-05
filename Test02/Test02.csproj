@@ -222,7 +222,25 @@
     <Compile Include="Models\PhuongTienGH.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\pr_SapxepDonHang_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SanPham.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_CNDenHan_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_CongNoDenHan_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_LocDonHang_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_LocPhieuCongNo_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_TaoCongNo_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -485,6 +503,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -510,6 +529,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="TemplateMail\AddAccount.html" />
+    <Content Include="TemplateMail\CancleOrder.html" />
+    <Content Include="TemplateMail\DeleteAccount.html" />
+    <Content Include="TemplateMail\NewOrder.html" />
+    <Content Include="TemplateMail\ResetPasss.html" />
     <Content Include="Views\KeToan\ChinhsuCN.cshtml" />
     <Content Include="Views\KeToan\Doanhthu.cshtml" />
     <Content Include="Views\KeToan\Layout\_LayoutPageKeToan.cshtml" />
@@ -678,6 +702,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Img\SanPham\" />
+    <Folder Include="Content\SelectDropdown\" />
     <Folder Include="Data\ImagesDL\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Test01\Layout\" />

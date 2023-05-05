@@ -5,7 +5,7 @@
     ViewBag.Title = "Công nợ đại lý";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     ViewBag.dsdl = "active";
-    ViewBag.nd = "Danh sách công nợ chưa thanh toán";
+    ViewBag.nd = "Danh sách công nợ ";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
 
 }
@@ -22,14 +22,11 @@
             });
         </script>
     }
-
-
 }
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-body">
-              
                 <div class="btn-func col-sm-12" style="padding:10px;">
                     <div class="row">
                         <div class="col-sm-2">
@@ -76,6 +73,7 @@
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable">Ngày tạo phiếu</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable">Hạn trả</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable">Tình trạng</th>
+                                    <th class="sorting" tabindex="0" aria-controls="sampleTable">Thanh toán</th>
                                     <th class="sorting" tabindex="0" aria-controls="sampleTable">Chức năng</th>
                                 </tr>
                             </thead>
@@ -83,75 +81,92 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaCongNo)
-                                        </td>
-                                        <td>
-                                            @{var tendl = db.DaiLies.Find(item.MaDL);
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaCongNo)
+                                    </td>
+                                    <td>
+                                        @{var tendl = db.DaiLies.Find(item.MaDL);
+                                        }
+                                        @Html.DisplayFor(modelItem => tendl.TenDL)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaDL)
+                                    </td>
+                                    <td>
+                                        @{ var Tienno = string.Format("{0:0,0 vnđ}", item.TienNo);}
+                                        @Html.DisplayFor(modelItem => Tienno)
+                                    </td>
+                                    <td>
+                                        @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLapCN); ;}
+                                        @Html.DisplayFor(modelItem => ngay)
+                                    </td>
+                                    <td>
+                                        @{ var han = String.Format("{0:d/M/yyyy}", item.HanTra);}
+                                        @Html.DisplayFor(modelItem => han)
+                                    </td>
+                                    <td>
+                                        @{
+                                            DateTime aDatetime = DateTime.Now;
+                                            DateTime hant = (DateTime)item.HanTra;
+                                            TimeSpan interval = hant.Subtract(aDatetime);
+                                           
+
+                                            if (interval.Days <= 0)
+                                            {
+                                                <span class="badge badge-danger">Đến hạn</span>
                                             }
-                                            @Html.DisplayFor(modelItem => tendl.TenDL)
-
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MaDL)
-                                        </td>
-
-
-                                        <td>
-                                            @{ var Tienno = string.Format("{0:0,0 vnđ}", item.TienNo);}
-                                            @Html.DisplayFor(modelItem => Tienno)
-                                        </td>
-                                        <td>
-                                            @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLapCN); ;}
-                                            @Html.DisplayFor(modelItem => ngay)
-
-
-
-                                        </td>
-                                        <td>
-                                            @{ var han = String.Format("{0:d/M/yyyy}", item.HanTra);}
-                                            @Html.DisplayFor(modelItem => han)
-
-                                        </td>
-
-                                        <td>
-                                            @{
-                                                DateTime aDatetime = DateTime.Now;
-                                                DateTime hant = (DateTime)item.HanTra;
-                                                TimeSpan interval = hant.Subtract(aDatetime);
-
-                                                if (interval.Days <= 0)
-                                                {
-                                                    <span class="badge badge-danger">Đến hạn</span>
-                                                }
-                                                else if (interval.Days > 0 && interval.Days <= 7)
-                                                {
-                                                    <span class="badge badge-warning">Sắp đến hạn</span>
-                                                }
-                                                else
-                                                {
-                                                    <span class="badge badge-success">Còn hạn</span>
-                                                }
-
+                                            else if (interval.Days > 0 && interval.Days <= 5)
+                                            {
+                                                <span class="badge badge-warning">Sắp đến hạn</span>
                                             }
-                                        </td>
-                                        <td>
-                                            @{
-                                                if (item.TrangThai == "Chưa thanh toán")
-                                                {
-                                                    <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                }
+                                            else
+                                            {
+                                                <span class="badge badge-success">Còn hạn</span>
                                             }
 
-                                            <a href="/KeToan/ChitietCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
-                                                <i class="fas fa-train"></i>
-                                            </a>
+                                        }
+                                    </td>
+                                    <td>
+                                        <p id="thanhtoan">
+                                            @Html.DisplayFor(modelItem => item.TrangThai)
+                                        </p>
+                                    </td>
+                                    <td>
+                                                                        @*@{
+                                            if (item.TrangThai == "Đã thanh toán")
+                                            {
+                                                <a href="javascript:void(0)" class="btn btn-outline-primary btn-sm ">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            }
+                                        }*@
 
-                                        </td>
-                                    </tr>
+
+                                        <a href="/KeToan/ChinhsuCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="/KeToan/ChitietCN/@item.MaCongNo" class="btn btn-outline-primary btn-sm ">
+                                            <i class="fas fa-train"></i>
+                                        </a>
+                                        @{
+                                            if (interval.Days <= 0)
+                                            {
+                                                <a href="" class="btn btn-outline-danger btn-sm ">
+                                                    <i class="fas fa-mail-bulk"></i>
+                                                </a>
+                                            }
+                                        }
+
+                                    </td>
+                                </tr>
                                   
                                 }
                             </tbody>
@@ -179,14 +194,14 @@
 
 
     }
-    //function CheckTT() {
-    //    var inputValue = document.getElementById("number").value;
-    //    if (inputValue == "Chưa thanh toán") {
-    //        document.getElementById("checktt").disabled = false;
+    //function KiemtraThanhToan() {
+    //    var value = document.getElementById("thanhtoan").innerHTML;
+    //    if (value == "Chưa thanh toán") {
+    //        //document.getElementById("checktt").disabled = false;
 
     //    }
     //    else {
-    //        document.getElementById("checktt").disabled = true;
+    //        //document.getElementById("checktt").disabled = true;
     //        alert("Phiếu công nợ đã thanh toán !!");
 
     //    }
