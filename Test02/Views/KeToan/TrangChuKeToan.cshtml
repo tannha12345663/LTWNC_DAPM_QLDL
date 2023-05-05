@@ -6,96 +6,26 @@
     ViewBag.homekt = "active";
     ViewBag.nd = "Trang chủ";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    
+
 
 }
-
-<style>
-    /*  TRANG CHỦ*/
-    .stat-card {
-        background: #fff;
-        padding: 20px;
-        margin-bottom: 25px;
-        border-radius: 5px;
-        overflow: hidden;
-        display: flex;
-        justify-content: space-between;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        transition: all 0.2s;
-    }
-
-        .stat-card:hover {
-            box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
-        }
-
-    .stat-card__icon-circle {
-        height: 60px;
-        width: 60px;
-        border-radius: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-        .stat-card__icon-circle i {
-            font-size: 30px;
-        }
-</style>
-
-
-
-@{ 
-    List<DonHang> dhngay = Session["dsdonngay"] as List<DonHang>;
-    int countcho = 0;
-    int countgiao = 0;
-    int countduyet = 0;
-    foreach (var item in dhngay)
-    {
-        if (item.TinhTrangGH == "Chờ giao")
-        { countcho++; }
-        else if (item.TinhTrangGH == "Đã giao hàng")
-        {
-            countgiao++;
-        }
-        else if (item.TinhTrangGH == null)
-        {
-            countduyet++;
-        }
-
-
-    }
-    List<DonHang> donHangs = db.DonHangs.Where(s =>s.TrangThai == "Đã xét duyệt").ToList();
-    int cchoduyet = 0;
-    int cdagiao = 0;
-    int cchogiao = 0;
-    foreach(var item in donHangs)
-    {
-        if(item.TinhTrangGH==null)
-        {
-            cchoduyet++;
-        }
-        else if(item.TinhTrangGH=="Chờ giao")
-        {
-            cchogiao++;
-        }
-        else if (item.TinhTrangGH == "Đã giao hàng")
-        {
-            cdagiao++;
-        }
-    }
+@{
+    int tongthanhtoan = (int)Session["tongdathanhtoan"];
+    int tongchuathanhtoan = (int)Session["tongchuathanhtoan"];
+    int tongdonno = (int)Session["tongno"];
 }
 <div class="tongquan">
     <div class="container">
         <div class="row">
-            @*NULL*@
+            @*CHƯA THANH TOÁN*@
             <div class="col-sm-4">
                 <a href="/KeToan/QLDonHang">
                     <div class="stat-card">
                         <div class="stat-card__content">
                             <p class="text-uppercase mb-1 text-muted">ĐƠN HÀNG ĐẠI LÝ</p>
-                            <h4>@cchoduyet đơn chờ duyệt</h4>
+                            <h4>@tongchuathanhtoan đơn chưa thanh toán</h4>
                             <div style="font-size:16px">
-                                <span class="text-success font-weight-bold ">+@countduyet</span>
+                                <span class="text-success font-weight-bold ">+ @Session["sodonctt"]</span>
                                 <span class="text-muted">đơn mới trong ngày</span>
                             </div>
                         </div>
@@ -108,15 +38,15 @@
                 </a>
 
             </div>
-            @*CHỜ GIAO*@
+            @*ĐANG NỢ*@
             <div class="col-sm-4">
                 <a href="#idcho">
                     <div class="stat-card">
                         <div class="stat-card__content">
                             <p class="text-uppercase mb-1 text-muted">ĐƠN HÀNG ĐẠI LÝ</p>
-                            <h4>@cchogiao đơn chờ giao</h4>
+                            <h4>@tongdonno đơn đang nợ</h4>
                             <div style="font-size:16px">
-                                <span class="text-success font-weight-bold ">+@countcho</span>
+                                <span class="text-success font-weight-bold ">+@Session["sodonno"]</span>
                                 <span class="text-muted">đơn mới trong ngày</span>
                             </div>
                         </div>
@@ -134,9 +64,9 @@
                     <div class="stat-card">
                         <div class="stat-card__content">
                             <p class="text-uppercase mb-1 text-muted">ĐƠN HÀNG ĐẠI LÝ</p>
-                            <h4>@cdagiao đơn đã giao</h4>
+                            <h4>@tongthanhtoan đơn đã thanh toán</h4>
                             <div style="font-size:16px">
-                                <span class="text-success font-weight-bold ">+@countgiao</span>
+                                <span class="text-success font-weight-bold ">+@Session["sodontt"]</span>
                                 <span class="text-muted"> đơn mới trong ngày</span>
                             </div>
                         </div>
@@ -174,14 +104,14 @@
             </div>
             @{
                 List<PhieuCongNo> cnhan = Session["cndenhan"] as List<PhieuCongNo>;
-                int countcn = cnhan.Count();
+                int tongphieu = cnhan.Count;
             }
             <div class="col-sm-4">
                 <a href="#congno">
                     <div class="stat-card">
                         <div class="stat-card__content">
                             <p class="text-uppercase mb-1 text-muted">PHIẾU CÔNG NỢ ĐẠI LÝ</p>
-                            <h4>@countcn công nợ</h4>
+                            <h4> @tongphieu công nợ</h4>
                             <div style="font-size:16px">
                                 <span class="text-muted">Công nợ gần đến hạn trả</span>
                             </div>
@@ -225,6 +155,7 @@
     </div>
 </div>
 @*CONGNO*@
+
 <div class="col-md-12" id="congno">
     <div class="tile">
         <h3 class="tile-title">Danh sách công nợ sắp tới hạn</h3>
@@ -244,6 +175,7 @@
 
                         </tr>
                     </thead>
+                   
                     <tbody>
                         @foreach (var item in cnhan)
                         {
@@ -289,15 +221,15 @@
     </div>
 </div>
 
-<div class="col-md-12" id="tinhtrangdl">
+<!--<div class="col-md-12" id="tinhtrangdl">
     <div class="tile">
         <h3 class="tile-title" style="padding-bottom:10px;">Tình trạng đại lý</h3>
         <a href="/KeToan/DSDaiLy" class="btn btn-success btn-sm">Xem chi tiết</a>
         <div class="row">
             <div class="col-sm-12 table-responsive" style="padding-top:10px;">
-                <table class="table table-hover table-bordered js-copytextarea" role="grid">
+                <table class="table table-hover table-bordered js-copytextarea" role="grid">-->
                     @*//Phần render từng dòng trong C#*@
-                    <thead>
+                    <!--<thead>
                         <tr role="row">
                             <th>Mã đại lý</th>
                             <th>Tên đại lý</th>
@@ -390,9 +322,40 @@
 
         </div>
     </div>
-</div>
+</div>-->
 
 
+<style>
+    /*  TRANG CHỦ*/
+    .stat-card {
+        background: #fff;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 5px;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s;
+    }
+
+        .stat-card:hover {
+            box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
+        }
+
+    .stat-card__icon-circle {
+        height: 60px;
+        width: 60px;
+        border-radius: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .stat-card__icon-circle i {
+            font-size: 30px;
+        }
+</style>
 
 
 

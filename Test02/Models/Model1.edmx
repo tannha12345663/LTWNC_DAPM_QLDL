@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuanLyDLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QuanLyDLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BaoCao">
           <Key>
             <PropertyRef Name="MaBC" />
@@ -507,8 +507,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="pr_SapxepDonHang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="sp_capnhat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+
+        <Function Name="sp_CongNoDenHan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_CountCN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="madl" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_DHtheotinhtrang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="thanhtoan" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_DoanhThutrongthang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_DonHangtrongngay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="thanhtoan" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_LocDonHang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="thang" Type="varchar" Mode="In" />
+          <Parameter Name="thanhtoan" Type="nvarchar" Mode="In" />
+          <Parameter Name="tinhtrang" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_LocPhieuCongNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="thang" Type="varchar" Mode="In" />
+          <Parameter Name="thanhtoan" Type="nvarchar" Mode="In" />
+          <Parameter Name="madl" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_SoDHDaiLy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="madl" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_SumCN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="madl" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_TaoCongNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="madl" Type="varchar" Mode="In" />
+          <Parameter Name="tienno" Type="float" Mode="In" />
+          <Parameter Name="hantra" Type="datetime" Mode="In" />
+          <Parameter Name="ngaylap" Type="datetime" Mode="In" />
+          <Parameter Name="thang" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_TienDHNoDaiLy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="madl" Type="varchar" Mode="In" />
+          <Parameter Name="thang" Type="varchar" Mode="In" />
+        </Function>
+
         <EntityContainer Name="QuanLyDLModelStoreContainer">
           <EntitySet Name="BaoCao" EntityType="Self.BaoCao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BienBangKiemKe" EntityType="Self.BienBangKiemKe" Schema="dbo" store:Type="Tables" />
@@ -613,8 +651,7 @@
             <End Role="PhieuNhapXuat" EntitySet="PhieuNhapXuat" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyDLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1265,10 +1302,53 @@
             <End Role="NhanVien" EntitySet="NhanViens" />
             <End Role="PhieuNhapXuat" EntitySet="PhieuNhapXuats" />
           </AssociationSet>
-          <FunctionImport Name="pr_SapxepDonHang" ReturnType="Collection(QuanLyDLModel.pr_SapxepDonHang_Result)" />
-          <FunctionImport Name="sp_capnhat" />
+
+          <FunctionImport Name="sp_CNDenHan" ReturnType="Collection(QuanLyDLModel.sp_CNDenHan_Result)" />
+          <FunctionImport Name="sp_CountCN" ReturnType="Collection(Int32)">
+          <Parameter Name="madl" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DHtheotinhtrang" ReturnType="Collection(Int32)">
+          <Parameter Name="thanhtoan" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DoanhThutrongthang" ReturnType="Collection(Double)" />
+          <FunctionImport Name="sp_DonHangtrongngay" ReturnType="Collection(Int32)">
+          <Parameter Name="thanhtoan" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_LocDonHang" ReturnType="Collection(QuanLyDLModel.sp_LocDonHang_Result)">
+            <Parameter Name="thang" Mode="In" Type="String" />
+            <Parameter Name="thanhtoan" Mode="In" Type="String" />
+            <Parameter Name="tinhtrang" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_SoDHDaiLy" ReturnType="Collection(Int32)">
+          <Parameter Name="madl" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_SumCN" ReturnType="Collection(Double)">
+          <Parameter Name="madl" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TaoCongNo" ReturnType="Collection(QuanLyDLModel.sp_TaoCongNo_Result)">
+            <Parameter Name="madl" Mode="In" Type="String" />
+            <Parameter Name="tienno" Mode="In" Type="Double" />
+            <Parameter Name="hantra" Mode="In" Type="DateTime" />
+            <Parameter Name="ngaylap" Mode="In" Type="DateTime" />
+            <Parameter Name="thang" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TienDHNoDaiLy" ReturnType="Collection(Double)">
+            <Parameter Name="madl" Mode="In" Type="String" />
+            <Parameter Name="thang" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CongNoDenHan" ReturnType="Collection(QuanLyDLModel.sp_CongNoDenHan_Result)" />
+          <FunctionImport Name="sp_LocPhieuCongNo" ReturnType="Collection(QuanLyDLModel.sp_LocPhieuCongNo_Result)">
+            <Parameter Name="thang" Mode="In" Type="String" />
+            <Parameter Name="thanhtoan" Mode="In" Type="String" />
+            <Parameter Name="madl" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="pr_SapxepDonHang_Result">
+        <ComplexType Name="sp_CNDenHan_Result">
+          <Property Type="Int32" Name="Column1" Nullable="true" />
+          <Property Type="DateTime" Name="HanTra" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_LocDonHang_Result">
+
           <Property Type="String" Name="MaDH" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="MaDL" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="MaNVLap" Nullable="true" MaxLength="10" />
@@ -1282,6 +1362,32 @@
           <Property Type="String" Name="TinhTrangGH" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="MaGH" Nullable="true" MaxLength="10" />
         </ComplexType>
+
+        <ComplexType Name="sp_TaoCongNo_Result">
+          <Property Type="String" Name="MaCongNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="MaDL" Nullable="true" MaxLength="10" />
+          <Property Type="Double" Name="TienNo" Nullable="true" />
+          <Property Type="DateTime" Name="HanTra" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="NgayLapCN" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_CongNoDenHan_Result">
+          <Property Type="String" Name="MaCongNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="MaDL" Nullable="true" MaxLength="10" />
+          <Property Type="Double" Name="TienNo" Nullable="true" />
+          <Property Type="DateTime" Name="HanTra" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="NgayLapCN" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_LocPhieuCongNo_Result">
+          <Property Type="String" Name="MaCongNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="MaDL" Nullable="true" MaxLength="10" />
+          <Property Type="Double" Name="TienNo" Nullable="true" />
+          <Property Type="DateTime" Name="HanTra" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="NgayLapCN" Nullable="true" />
+        </ComplexType>
+
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1516,9 +1622,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="pr_SapxepDonHang" FunctionName="QuanLyDLModel.Store.pr_SapxepDonHang">
+
+          <FunctionImportMapping FunctionImportName="sp_CountCN" FunctionName="QuanLyDLModel.Store.sp_CountCN" />
+          <FunctionImportMapping FunctionImportName="sp_DHtheotinhtrang" FunctionName="QuanLyDLModel.Store.sp_DHtheotinhtrang" />
+          <FunctionImportMapping FunctionImportName="sp_DoanhThutrongthang" FunctionName="QuanLyDLModel.Store.sp_DoanhThutrongthang" />
+          <FunctionImportMapping FunctionImportName="sp_DonHangtrongngay" FunctionName="QuanLyDLModel.Store.sp_DonHangtrongngay" />
+          <FunctionImportMapping FunctionImportName="sp_LocDonHang" FunctionName="QuanLyDLModel.Store.sp_LocDonHang">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyDLModel.pr_SapxepDonHang_Result">
+              <ComplexTypeMapping TypeName="QuanLyDLModel.sp_LocDonHang_Result">
+
                 <ScalarProperty Name="MaDH" ColumnName="MaDH" />
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
                 <ScalarProperty Name="MaNVLap" ColumnName="MaNVLap" />
@@ -1534,7 +1646,47 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_capnhat" FunctionName="QuanLyDLModel.Store.sp_capnhat" />
+
+          <FunctionImportMapping FunctionImportName="sp_SoDHDaiLy" FunctionName="QuanLyDLModel.Store.sp_SoDHDaiLy" />
+          <FunctionImportMapping FunctionImportName="sp_SumCN" FunctionName="QuanLyDLModel.Store.sp_SumCN" />
+          <FunctionImportMapping FunctionImportName="sp_TaoCongNo" FunctionName="QuanLyDLModel.Store.sp_TaoCongNo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyDLModel.sp_TaoCongNo_Result">
+                <ScalarProperty Name="MaCongNo" ColumnName="MaCongNo" />
+                <ScalarProperty Name="MaDL" ColumnName="MaDL" />
+                <ScalarProperty Name="TienNo" ColumnName="TienNo" />
+                <ScalarProperty Name="HanTra" ColumnName="HanTra" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="NgayLapCN" ColumnName="NgayLapCN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_TienDHNoDaiLy" FunctionName="QuanLyDLModel.Store.sp_TienDHNoDaiLy" />
+          <FunctionImportMapping FunctionImportName="sp_CongNoDenHan" FunctionName="QuanLyDLModel.Store.sp_CongNoDenHan">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyDLModel.sp_CongNoDenHan_Result">
+                <ScalarProperty Name="MaCongNo" ColumnName="MaCongNo" />
+                <ScalarProperty Name="MaDL" ColumnName="MaDL" />
+                <ScalarProperty Name="TienNo" ColumnName="TienNo" />
+                <ScalarProperty Name="HanTra" ColumnName="HanTra" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="NgayLapCN" ColumnName="NgayLapCN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_LocPhieuCongNo" FunctionName="QuanLyDLModel.Store.sp_LocPhieuCongNo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyDLModel.sp_LocPhieuCongNo_Result">
+                <ScalarProperty Name="MaCongNo" ColumnName="MaCongNo" />
+                <ScalarProperty Name="MaDL" ColumnName="MaDL" />
+                <ScalarProperty Name="TienNo" ColumnName="TienNo" />
+                <ScalarProperty Name="HanTra" ColumnName="HanTra" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="NgayLapCN" ColumnName="NgayLapCN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
