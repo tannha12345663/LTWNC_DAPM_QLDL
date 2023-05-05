@@ -16,8 +16,7 @@
     var sldhchuaxl = db.DonHangs.Where(s => s.TrangThai == "Chưa xử lý").Count();
     var slbc = db.BaoCaos.Where(s => s.MaNV == nv.MaNV).Count();
 
-    var slpxn = db.PhieuNhapXuats.Where(s=>s.MaPhieu.Substring(0,4)== "KDPX" || s.MaPhieu.Substring(0,4)== "KDPN").Count();
-
+    var slpxn = db.PhieuNhapXuats.Where(s => s.MaPhieu.Substring(0, 4) == "KDPX" || s.MaPhieu.Substring(0, 4) == "KDPN").Count();
 }
 <div class="row">
     <!--Thông tin kho và số sản phẩm sắp hết hàng-->
@@ -185,34 +184,41 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @{ var check = 0;}
                     @foreach (var item in dsdl.OrderByDescending(s => s.NgayTao))
                     {
-                        <tr>
-                            <td style="width: 150px;">
-                                @Html.DisplayFor(modelItem => item.MaDL)
-                            </td>
-                            <td>
-                                @{var tenldk = db.LoaiDLs.Find(item.MaLoaiDL);
-                                }
-                                @Html.DisplayFor(modelItem => tenldk.TenDaiLy)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TenDL)
-                            </td>
-                            <td style="width:250px;">
-                                @Html.DisplayFor(modelItem => item.DiaChi)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SDT)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NgayTao)
-                            </td>
 
-                        </tr>
+                        if (check <= 7)
+                        {
+                            <tr>
+                                <td style="width: 150px;">
+                                    @Html.DisplayFor(modelItem => item.MaDL)
+                                </td>
+                                <td>
+                                    @{var tenldk = db.LoaiDLs.Find(item.MaLoaiDL);
+                                    }
+                                    @Html.DisplayFor(modelItem => tenldk.TenDaiLy)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TenDL)
+                                </td>
+                                <td style="width:250px;">
+                                    @Html.DisplayFor(modelItem => item.DiaChi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SDT)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NgayTao)
+                                </td>
+
+                            </tr>
+
+                        }
+                        check++;
                     }
                 </tbody>
             </table>
