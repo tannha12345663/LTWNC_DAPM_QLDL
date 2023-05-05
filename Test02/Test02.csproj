@@ -629,6 +629,7 @@
     <Content Include="Views\KhachHang\CongNo.cshtml" />
     <Content Include="Views\KhachHang\LienHe.cshtml" />
     <Content Include="Views\PhongKho\ChiTietDonHang.cshtml" />
+    <Content Include="Views\PhongKho\CreatePXuat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\KeToan\ChitietCN.cshtml" />
