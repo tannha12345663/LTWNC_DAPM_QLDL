@@ -1151,6 +1151,10 @@ namespace Test02.Controllers
                 foreach (var item in ctphieu)
                 {
                     var ctkho = database.ChiTietKhoes.Where(s => s.MaKho == item.MaKho && s.MaSP == item.MaSP && s.SoLuong == item.SoLuongTrongKho).FirstOrDefault();
+                    if (ctkho == null)
+                    {
+                        break;
+                    }
                     ctkho.SoLuong -= item.SoLuongDeXuat;
                     ctkho.TinhTrang = "Còn hàng";
                     updateTongTon();
@@ -1164,6 +1168,10 @@ namespace Test02.Controllers
                 foreach (var item in ctphieu)
                 {
                     var ctkho = database.ChiTietKhoes.Where(s => s.MaKho == item.MaKho && s.MaSP == item.MaSP && s.SoLuong == item.SoLuongTrongKho).FirstOrDefault();
+                    if(ctkho == null)
+                    {
+                        break;
+                    }
                     ctkho.SoLuong += item.SoLuongDeXuat;
                     ctkho.TinhTrang = "Còn hàng";
                     updateTongTon();

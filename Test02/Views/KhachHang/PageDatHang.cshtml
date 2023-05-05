@@ -6,17 +6,6 @@
     ViewBag.gh = "active";
     ViewBag.nd = "Trang đặt hàng";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-
-    if (TempData["GHNull"] != null)
-    {
-        <script>
-            swal({
-                title: "@TempData["GHNull"]",
-                icon: "warning",
-                button: "Thoát",
-            });
-        </script>
-    }
 }
 
 <div class="row">
@@ -69,7 +58,7 @@
                                 <tr>
                                     <td colspan="6" style="text-align: right;">
                                         <label>Tổng: </label> @{ var tong = string.Format("{0:0,0 VNĐ}", @Model.TongTien());} @tong <br />
-                                        <label>Chiết khấu giảm: @TempData["giam"] VNĐ</label> <br />
+                                        <label>Chiết khấu giảm (Áp dụng từ loại đại lý): @TempData["giam"] VNĐ</label> <br />
                                         <label>Thành tiền: @TempData["thanhtien"] VNĐ</label>
                                     </td>
                                 </tr>

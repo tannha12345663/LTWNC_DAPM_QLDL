@@ -9,6 +9,7 @@
     ViewBag.hieuung = "bx-tada";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
     var dssp = db.SanPhams.ToList();
+    var madh = "";
 }
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -80,6 +81,7 @@
                                     @{ var total = 0;}
                                     @foreach (var item in Model)
                                     {
+                                        madh = item.MaDH;
                                         <tr>
                                             <td>
                                                 @{ Session["mdh1"] = item.MaDH;}
@@ -114,28 +116,73 @@
                                             </td>
 
                                             <td>
-                                                <a href="/KinhDoanh/XoaCTDH/@item.MaDH" class="btn btn-primary btn-sm trash">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a> ||
-                                                <a href="/KinhDoanh/ChinhSuaCTDH/@item.MaDH" class="btn btn-primary btn-sm edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
+                                                @{
+                                                    var check01 = db.DonHangs.Find(item.MaDH);
+                                                    if (check01.TrangThai == "Chưa xử lý")
+                                                    {
+                                                        <a href="/KinhDoanh/XoaCTDH/@item.MaDH" class="btn btn-primary btn-sm trash">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </a>
+                                                        <a href="/KinhDoanh/ChinhSuaCTDH/@item.MaSP" class="btn btn-primary btn-sm edit">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="badge badge-warning">None</p>
+                                                    }
+                                                }
+
                                             </td>
                                         </tr>
                                     }
                                     <tr>
-                                        <th colspan="7">Tổng cộng đơn hàng:</th>
+                                        <th colspan="7" style="text-align:end">Tạm tính:</th>
                                         @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
                                         <td>@Html.DisplayFor(modelItem => TongCong)</td>
+                                    </tr>
+                                    @{
+                                        var madh01 = TempData["madh"];
+                                        var dh = db.DonHangs.Find(madh01);
+                                        var madl = db.DaiLies.Find(dh.MaDL);
+                                        var ck = db.LoaiDLs.Find(madl.MaLoaiDL);
+                                        var chietkhau = ck.ChietKhau * 100;
+                                    }
+                                    <tr>
+                                        <th colspan="7" style="text-align:end">Chiết khấu : </th>
+                                        <td> -@chietkhau%</td>
+                                    </tr>
+                                    <tr>
+                                        @{
+                                            var TongHD = (total - (total * ck.ChietKhau));
+                                            var chuyendoi01 = string.Format("{0:0,0 vnđ}", TongHD);
+                                        }
+                                        <th colspan="7" style="text-align:end">Tổng tiền:</th>
+                                        <td>
+                                            @chuyendoi01
+                                        </td>
                                     </tr>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <a class="btn btn-delete btn-sm nhap-tu-file" data-target="#myModal" data-toggle="modal" @*href="~/KinhDoanh/ThemCTHD1/@Session["mdh1"]"*@><i class="fas fa-file-upload"></i> Thêm một sản phẩm</a>
-            </div>
+            @{
+                var check02 = db.DonHangs.Find(madh);
+                if (check02.TrangThai == "Chưa xử lý")
+                {
+                    <div class="col-sm-12">
+                        <a class="btn btn-delete btn-sm nhap-tu-file" data-target="#myModal" data-toggle="modal" @*href="~/KinhDoanh/ThemCTHD1/@Session["mdh1"]"*@><i class="fas fa-file-upload"></i> Thêm một sản phẩm</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-sm-12">
+                        <a class="btn btn-delete btn-sm nhap-tu-file"><i class="fas fa-file-upload"></i> Không thể thêm sản phẩm</a>
+                    </div>
+                }
+            }
+
         </div>
     </div>
 </div>
@@ -178,7 +225,7 @@
                         </div>
                         <div class="form-group col-md-12" style="text-align:end">
                             <label style="font-size:20px;color:red" id="TongTien" class="control-label">Tổng tiền: </label>
-                            
+
                         </div>
                         <div class="form-group col-md-12" style="text-align:center">
                             <label style="font-size:16px;color:blue" id="CongNo" class="control-label" hidden>Đang kiểm tra... </label>
@@ -193,7 +240,7 @@
                             <input class="btn btn-cancel" id="xoasp" type="button" name="DiemGiao" disabled value="Xóa SP" onclick="xoaSP()" required />
                         </div>
                         <div style="text-align:end" class="col-lg-12">
-                            <button class="btn btn-save" id="CapNhatDh" style="margin-left:15px" type="submit">Thêm mới đơn hàng</button>
+                            <button class="btn btn-save" id="CapNhatDh" disabled style="margin-left:15px" type="submit">Thêm mới đơn hàng</button>
                             <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
 
                         </div>
@@ -204,11 +251,9 @@
         </div>
     </div>
 </div>
-<script>
-
-
-</script>
 @section script{
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         var i = 0;
     function themSP() {
@@ -228,7 +273,7 @@
                     '</div>' +
                 '<div class="form-group col-md-3">' +
                     '<label class="control-label">Số lượng:</label>' +
-                    '<input class="form-control" type="number" min=0 name="SoLuong' + i + '" id="SoLuong' + i +'" required />' +
+                    '<input style="height:30px" class="form-control" type="number" min=0 name="SoLuong' + i + '" id="SoLuong' + i +'" required />' +
                 '</div>' +
                 '<div class="form-group col-md-3">' +
                     '<p class="control-label" style="margin-top: 16px;" id="Total'+i+'">Thành tiền: 0 VNĐ </p>' +
@@ -236,86 +281,100 @@
                 '</div>';
             $("#xoasp").prop('disabled', false);
             var div = document.getElementById("themdong");
-            div.innerHTML += row;
-
+            //div.innerHTML += row;
+            $("#themdong").append(row);
             console.log(i);
+            $('#ChonSP' + i).select2({
+                dropdownParent: $('#myModal')
+            });
             $("#SoLuongSP").attr("value", i);
             //$("#btnadd").attr("action", "/KinhDoanh/ThemCTHD2/" + i);
+            $("#CapNhatDh").prop("disabled", false);
         };
 
     }
     function xoaSP() {
 
-        if (i > 0) {
+        if (i >= 1) {
             $("#themsp").prop('disabled', false);
-            document.getElementById('nd'+i).remove();
+            document.getElementById('nd' + i).remove();
             i--;
             console.log(i);
             $("#SoLuongSP").attr("value", i);
             console.log("Đã xóa kiểm tra");
             $("#CongNo").attr("hidden", true);
             $("#btnadd").attr("action", "/KinhDoanh/ThemCTHD2/" + i);
-        } else if (i = 0) {
-            $("#xoasp").attr("disabled", "disabled");
-            
+            KTSoDu();
+            var TongTien = $("#TongTien").data("value");
+            KTCongNo(TongTien);
+            console.log('i hiện tại là ', i);
+            if (i < 1) {
+                console.log('Khi i = 0 thì ');
+                $("#xoasp").attr("disabled", "disabled");
+                setTimeout(() => { $("#CapNhatDh").attr("disabled", "disabled");},100)
+
+            }
         };
-        KTSoDu();
-        var TongTien=  $("#TongTien").data("value");
-        KTCongNo(TongTien);
+
     }
     function resetpage() {
         i = 0;
-        $("#themsp").prop("disabled",false);
+        $("#themsp").prop("disabled", false);
         var resetp = '';
-        document.getElementById("themdong").innerHTML=resetp;
-        }
-        
-        $(document).ready(function () {
-            const VND = new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
-            });
-            var divElement = $("#themdong").change(function () {
-                $("#CongNo").prop('hidden', false);
-                //var kt = divElement.on('change', 'select', function (e) {
-                //    console.log("Mã sản phẩm đã chọn "+$(e.target).val());
-                //    var value = $(e.target).val();
-                //    if (value != null) {
-                //        var kt01 = divElement.on('change', 'input', function (e1) {
-                //            console.log("Mã sản phẩm đã chọn khi có số lượng :" + value);
-                //            var soluong = $(e1.currentTarget).val();
-                //            console.log("Số lượng đã mua :"+ soluong);
-                //        });
-                //    }
-                //})
-                
-                for (var item = 1; item <= i; item++) {
-                    var value = $("#ChonSP" + item).val();
-                    if (value != null) {
-                        var sL = $("#SoLuong" + item).val();
-                        if (sL >= 0) {
-                           // console.log("Bạn đã chọn sản phẩm với mã "+ value +" Với số lượng là :"+sL);
-                            var model = {
-                                MaSP: value,
-                                SoLuong: sL
-                            };
-                            // console.log("Item trước khi thêm vào tổng tiền " + item + "Với tổng tiền là : " + TinhTongTien(model));
-                            console.log(model);
-                            TinhTongTien(model, item);
-                            
-                        }
-                        
-                    }
-                    
-                }
-            });
+        document.getElementById("themdong").innerHTML = resetp;
+    }
+    $(document).ready(function () {
+        var divElement = $("#themdong").change(function () {
+            console.log('Bạn đã chọn sp');
         });
+    })
+    $(document).ready(function () {
+        const VND = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+        });
+        var divElement = $("#themdong").change(function () {
+            $("#CongNo").prop('hidden', false);
+            //var kt = divElement.on('change', 'select', function (e) {
+            //    console.log("Mã sản phẩm đã chọn "+$(e.target).val());
+            //    var value = $(e.target).val();
+            //    if (value != null) {
+            //        var kt01 = divElement.on('change', 'input', function (e1) {
+            //            console.log("Mã sản phẩm đã chọn khi có số lượng :" + value);
+            //            var soluong = $(e1.currentTarget).val();
+            //            console.log("Số lượng đã mua :"+ soluong);
+            //        });
+            //    }
+            //})
+
+            for (var item = 1; item <= i; item++) {
+                var value = $("#ChonSP" + item).val();
+                if (value != null) {
+                    var sL = $("#SoLuong" + item).val();
+                    if (sL >= 0) {
+                        // console.log("Bạn đã chọn sản phẩm với mã "+ value +" Với số lượng là :"+sL);
+                        var model = {
+                            MaSP: value,
+                            SoLuong: sL
+                        };
+                        // console.log("Item trước khi thêm vào tổng tiền " + item + "Với tổng tiền là : " + TinhTongTien(model));
+                        console.log(model);
+                        TinhTongTien(model, item);
+
+                    }
+
+                }
+
+            }
+        });
+    });
+
         function CheckTongTien() {
             const VND = new Intl.NumberFormat('vi-VN', {
                 style: 'currency',
                 currency: 'VND',
             });
-            
+
             var total = 0;
             for (var item01 = 1; item01 < 3; item01++) {
                 var check = $("#Total" + item01).data("value");
@@ -335,7 +394,7 @@
                 style: 'currency',
                 currency: 'VND',
             });
-            
+
             $.ajax({
                 url: '/KinhDoanh/CheckTongTien',
                 type: 'POST',
@@ -344,7 +403,7 @@
                 success: function (res) {
                     console.log("Tổng tiền :" + res.data);
                     var result = res.data;
-                    
+
                     $("#Total" + item).html("Thành tiền " + VND.format(result));
                     $("#Total" + item).attr('data-value', result);
                     //CheckTongTien();
@@ -408,4 +467,5 @@
             });
         }
     </script>
+
 }
