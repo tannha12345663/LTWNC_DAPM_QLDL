@@ -5,26 +5,26 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
 
-      <Diagram DiagramId="37c20cbbf53041f29818019cea3912b7" Name="Diagram1">
+      <Diagram DiagramId="37c20cbbf53041f29818019cea3912b7" Name="Diagram1" ZoomLevel="58">
 
-        <EntityTypeShape EntityType="QuanLyDLModel.BaoCao" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.BienBangKiemKe" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.ChiTietBienBang" Width="1.5" PointX="10.5" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.ChiTietDonHang" Width="1.5" PointX="7.5" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.ChiTietKho" Width="1.5" PointX="10.25" PointY="12.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.ChiTietPhieuNhapXuat" Width="1.5" PointX="7.5" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.ChucVu" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.ChuyenGiao" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.BaoCao" Width="1.5" PointX="1" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.BienBangKiemKe" Width="1.5" PointX="11.5" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.ChiTietBienBang" Width="1.5" PointX="11.375" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.ChiTietDonHang" Width="1.5" PointX="7.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.ChiTietKho" Width="1.5" PointX="11.375" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.ChiTietPhieuNhapXuat" Width="1.5" PointX="7.375" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.ChucVu" Width="1.5" PointX="0.875" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.ChuyenGiao" Width="1.5" PointX="7.375" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyDLModel.DaiLy" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.DonHang" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.Kho" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.LoaiDL" Width="1.5" PointX="0.75" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.NhanVien" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.NhanVienGH" Width="1.5" PointX="5.25" PointY="25.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.PhieuCongNo" Width="1.5" PointX="5.25" PointY="21.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.PhieuNhapXuat" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.PhuongTienGH" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDLModel.SanPham" Width="1.5" PointX="5.25" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.DonHang" Width="1.5" PointX="5.125" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.Kho" Width="1.5" PointX="9.375" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.LoaiDL" Width="1.5" PointX="1" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.NhanVien" Width="1.5" PointX="2.875" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.NhanVienGH" Width="1.5" PointX="9.375" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.PhieuCongNo" Width="1.5" PointX="1" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.PhieuNhapXuat" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.PhuongTienGH" Width="1.5" PointX="5.125" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDLModel.SanPham" Width="1.5" PointX="9.375" PointY="12" IsExpanded="true" />
         <AssociationConnector Association="QuanLyDLModel.FK_BaoCao_NhanVien" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_BienBangKiemKe_Kho" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyDLModel.FK_BienBangKiemKe_NhanVien1" ManuallyRouted="false" />
