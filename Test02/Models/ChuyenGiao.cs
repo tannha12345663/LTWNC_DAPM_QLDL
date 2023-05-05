@@ -29,7 +29,6 @@ namespace Test02.Models
         public string TrangThai { get; set; }
         public Nullable<System.DateTime> NgayLap { get; set; }
         public string KhuVucGiao { get; set; }
-        public string MaNVGiao { get; set; }
     
         public virtual PhuongTienGH PhuongTienGH { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

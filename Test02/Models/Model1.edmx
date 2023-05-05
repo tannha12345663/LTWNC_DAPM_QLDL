@@ -91,7 +91,6 @@
           <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
           <Property Name="NgayLap" Type="datetime" />
           <Property Name="KhuVucGiao" Type="nvarchar" MaxLength="102" />
-          <Property Name="MaNVGiao" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="DaiLy">
           <Key>
@@ -718,7 +717,6 @@
           <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NgayLap" Type="DateTime" Precision="3" />
           <Property Name="KhuVucGiao" Type="String" MaxLength="102" FixedLength="false" Unicode="true" />
-          <Property Name="MaNVGiao" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PhuongTienGH" Relationship="Self.FK_ChuyenGiao_PhuongTienGH" FromRole="ChuyenGiao" ToRole="PhuongTienGH" />
           <NavigationProperty Name="DonHangs" Relationship="Self.FK_DonHang_ChuyenGiao" FromRole="ChuyenGiao" ToRole="DonHang" />
           <NavigationProperty Name="NhanVienGHs" Relationship="Self.FK_NhanVienGH_ChuyenGiao" FromRole="ChuyenGiao" ToRole="NhanVienGH" />
@@ -1382,7 +1380,6 @@
                 <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
                 <ScalarProperty Name="NgayLap" ColumnName="NgayLap" />
                 <ScalarProperty Name="KhuVucGiao" ColumnName="KhuVucGiao" />
-                <ScalarProperty Name="MaNVGiao" ColumnName="MaNVGiao" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

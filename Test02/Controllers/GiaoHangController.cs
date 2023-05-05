@@ -385,9 +385,9 @@ namespace Test02.Controllers
         [HttpPost]
         public ActionResult ThemPhuongTienGiaoHang(PhuongTienGH phuongtien)
         {
-            Random rd = new Random();
-            var mapt = "51A-" + rd.Next(1, 1000);
-            phuongtien.MaPT = mapt;
+            //Random rd = new Random();
+            //var mapt = "51A-" + rd.Next(1, 1000);
+            //phuongtien.MaPT = mapt;
             phuongtien.TinhTrang = Convert.ToString("Sẵn sàng");
             database.PhuongTienGHs.Add(phuongtien);
             database.SaveChanges();
