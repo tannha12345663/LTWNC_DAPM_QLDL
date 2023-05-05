@@ -12,7 +12,7 @@
 
 <div>
     <!-- Nav tabs -->
-    <ul class="nav nav-tabs">
+    @*<ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#donduyet">Đơn duyệt</a>
         </li>
@@ -22,7 +22,7 @@
         <li class="nav-item">
             <a class="nav-link"  href="/KeToan/QLDonDaGiao">Đơn đã giao</a>
         </li>
-    </ul>
+    </ul>*@
 
     <!-- Tab panes -->
     <div class="tab-content">
@@ -36,10 +36,11 @@
                                     <i class="fas fa-print"></i> In dữ liệu
                                 </a>
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-4">
                                 @using (Html.BeginForm("QLDonHang", "KeToan", FormMethod.Post, new { @clas = "" }))
                                 {
                                     <div class="row">
+                                        
                                         <div class="col-sm-2">
                                             @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
                                         </div>
@@ -47,11 +48,12 @@
                                             @Html.DropDownList("tinhtrangdh", (IEnumerable<SelectListItem>)TempData["tinhtrangdh"], htmlAttributes: new { @class = "form-control-sm", })
                                         </div>
                                         <div class="col-sm-2">
-                                            <input type="submit" class="btn btn-danger btn-sm" value="Tìm theo tháng">
+                                            <input type="submit" class="btn btn-danger btn-sm" value="Tìm kiếm">
                                         </div>
                                     </div>
                                 }
                             </div>
+
                         </div>
                         <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                             <div class="row" id="printMe">
@@ -60,23 +62,20 @@
                                         @*//Phần render từng dòng trong C#*@
                                         <thead>
                                             <tr role="row">
-                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã đơn hàng</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã DH</th>
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Đại lý</th>
                                                 <th tabindex="0" aria-controls="sampleTable">Điểm điểm giao</th>
                                                 <th tabindex="0" aria-controls="sampleTable">Tình trạng thanh toán</th>
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Ngày lập đơn</th>
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng tiền</th>
-                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Xuất hóa đơn</th>
-                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Xuất kho</th>
-                                                <th class="sorting" id="functionHD">Chức năng</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Tình trạng giao hàng</th>
+                                                <th class="sorting">Chức năng</th>
 
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (var item in Model)
                                             {
-                                                if (item.TinhTrangGH == null)
-                                                {
                                                     <tr style="text-align:center">
                                                         <td>
                                                             @Html.DisplayFor(modelItem => item.MaDH)
@@ -106,27 +105,21 @@
                                                             @Html.DisplayFor(modelItem => ThanhTien)
                                                         </td>
                                                         <td>
-                                                            @if (item.XuatHoaDon == true)
+                                                            @if (item.TinhTrangGH == null)
                                                             {
-                                                                <span class="badge badge-success">Đã xuất</span>
+                                                                <span class="badge badge-danger">Chờ giao</span>
                                                             }
-                                                            else
+                                                            else if (item.TinhTrangGH == "Đang giao")
                                                             {
-                                                                <span class="badge badge-warning">Chưa xuất</span>
+                                                                <span class="badge badge-warning">Đang giao</span>
                                                             }
-
-                                                        </td>
-                                                        <td>
-                                                            @if (item.PhieuXuatKho == true)
+                                                            else 
                                                             {
-                                                                <span class="badge badge-success">Đã xuất</span>
-                                                            }
-                                                            else
-                                                            {
-                                                                <span class="badge badge-warning">Chưa xuất</span>
+                                                                <span class="badge badge-success">Đã giao</span>
                                                             }
 
                                                         </td>
+                                                       
                                                         <td>
                                                             @*<a href="/KeToan/ChinhsuaHD/@item.MaDH" id="btnedit" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Cập nhật đơn hàng">
                                                                 <i class="fas fa-pen-square"></i>
@@ -134,12 +127,8 @@
                                                             <a href="/KeToan/XuatHDBH/@item.MaDH" id="" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
                                                                 <i class="fas fa-info-circle"></i>
                                                             </a>
-
                                                         </td>
-
                                                     </tr>
-
-                                                }
                                             }
                                         </tbody>
                                     </table>

@@ -182,7 +182,7 @@
                                                             {
                                                                 <a href="/KinhDoanh/ChinhSuaDH/@item.MaDH" class="btn btn-primary btn-sm edit">
                                                                     <i class="fa fa-edit"></i>
-                                                                </a> 
+                                                                </a>
                                                             }
                                                         }
 
@@ -191,7 +191,7 @@
                                                             </a> ||*@
                                                         <a href="/KinhDoanh/XoaDH/@item.MaDH" class="btn btn-primary btn-sm trash">
                                                             <i class="fas fa-trash-alt"></i>
-                                                        </a> 
+                                                        </a>
                                                         <a href="/KinhDoanh/DanhSachCTDH/@item.MaDH" class="btn btn-primary btn-sm edit">
                                                             <i class="fas fa-train"></i>
                                                         </a>
@@ -420,7 +420,7 @@
                                                                 </a> ||*@
                                                             <a href="/KinhDoanh/XoaDH/@item.MaDH" class="btn btn-primary btn-sm trash">
                                                                 <i class="fas fa-trash-alt"></i>
-                                                            </a> 
+                                                            </a>
                                                             <a href="/KinhDoanh/DanhSachCTDH/@item.MaDH" class="btn btn-primary btn-sm edit">
                                                                 <i class="fas fa-train"></i>
                                                             </a>
@@ -456,10 +456,10 @@
                                 <h5>Thêm mới đơn hàng cho đại lý</h5>
                             </span>
                         </div>
-                        <div class="form-group col-md-8">
+                        <div class=" col-lg-12">
                             <label class="control-label">Chọn mã đại lý</label>
-                            <select class="form-control" id="MaDL" name="MaDL" required>
-                                <option selected disabled>-----Vui lòng chọn------</option>
+                            <select style="width:250px" class="js-example-basic-single" id="MaDL" name="MaDL" data-search="true" required>
+                                <option value="1" selected disabled>-----Vui lòng chọn------</option>
                                 @{ foreach (var item01 in dsdl)
                                     {
                                         <option value="@item01.MaDL">@item01.MaDL - @item01.MaLoaiDL - @item01.TenDL</option>
@@ -568,6 +568,9 @@
     '<input class="form-check" type="number" name="SoLuong" value="true" id="SoLuong" required />' +
     '/<div>'; *@
 @section script{
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script src="~/Content/js/tableToExcel.js"></script>
     @*<script>
             document.addEventListener('keydown', function (event) {
@@ -606,14 +609,25 @@
         </script>*@
     <script>
         //Check người dùng phải chọn mã đại lý trước khi thực hiện thêm
-        $("#MaDL").change(function () {
-            var check = $("#MaDL").val();
-            if (check != null) {
-                $("#themsp").prop("disabled", false);
-            }
-            else {
-                $("#themsp").attr("disabled");
-            }
+        $(document).ready(function () {
+            //Set up khi chọn đại lý
+            $('#MaDL').select2({
+                dropdownParent: $('#myModal')
+            });
+            $('#ChonSP1').select2({
+                dropdownParent: $('#myModal')
+            });
+            $("#MaDL").change(function () {
+                var check = $("#MaDL").val();
+
+                console.log('Bạn đã chọn');
+                if (check != null) {
+                    $("#themsp").prop("disabled", false);
+                }
+                else {
+                    $("#themsp").attr("disabled");
+                }
+            })
         })
         var i = 0;
         function themSP() {
@@ -628,29 +642,33 @@
         }
         else {
             i++;
-            var row = '<div class="row" id="nd' + i + '">' +
+             var row = '<div class="row" id="nd' + i + '">' +
                 '<div class="form-group col-lg-6">' +
                     '<label class="control-label">Tên sản phẩm</label>' +
                 ' <select class="form-control" id="ChonSP'+i+'" name="MaSP' + i +'" required>' +
-                    '<option selected disabled>----Vui lòng chọn sản phẩm----</option>' +
+                    '<option value="1" selected disabled>----Vui lòng chọn sản phẩm----</option>' +
                     '@{ foreach (var item01 in dssp)
                         {<option value="@item01.MaSP">@item01.MaSP - @item01.TenSP - SL: @item01.TongTon</option> } }' +
                 '</select>' +
                     '</div>' +
                 '<div class="form-group col-md-3">' +
                     '<label class="control-label">Số lượng:</label>' +
-                    '<input class="form-control" type="number" min=0 name="SoLuong' + i + '" id="SoLuong' + i +'" required />' +
+                    '<input style="height:30px" class="form-control" type="number" min=0 name="SoLuong' + i + '" id="SoLuong' + i +'" required />' +
                 '</div>' +
                 '<div class="form-group col-md-3">' +
                     '<p class="control-label" style="margin-top: 16px;" id="Total'+i+'">Thành tiền: 0 VNĐ </p>' +
                 '</div>' +
                 '</div>';
+                    
             $("#xoasp").prop('disabled', false);
             var div = document.getElementById("themdong");
             //div.innerHTML += row;
             $("#themdong").append(row);
             console.log(i);
             $("#SoLuongSP").attr("value", i);
+                    $('#ChonSP'+i).select2({
+                        dropdownParent: $('#myModal')
+                    });
             //$("#btnadd").attr("action", "/KinhDoanh/ThemCTHD2/" + i);
         };
             };
@@ -682,7 +700,6 @@
         var resetp = '';
         document.getElementById("themdong").innerHTML=resetp;
         }
-
         $(document).ready(function () {
             const VND = new Intl.NumberFormat('vi-VN', {
                 style: 'currency',

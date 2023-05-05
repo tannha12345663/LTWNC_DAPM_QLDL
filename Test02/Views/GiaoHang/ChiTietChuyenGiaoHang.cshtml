@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Test02.Models.DonHang>
+﻿@model IEnumerable<Test02.Models.ChuyenGiao>
 @using Test02.Models
 @{
     ViewBag.Title = "ChiTietChuyenGiao";
@@ -11,7 +11,6 @@
     var chuyengiao = db.ChuyenGiaos.ToList();
     var nv = db.NhanVienGHs.ToList();
 }
-
 
 
 <div class="row">
@@ -27,42 +26,45 @@
                 </div>
                 <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                     <div class="row" id="printMe">
-                        <h2 style="margin-left:35%">CHI TIẾT CHUYẾN GIAO @TempData["magh"]</h2>
+                        <h2 style="margin-left:35%">CHI TIẾT CHUYẾN GIAO @TempData["magh01"]</h2>
 
                         <div class="col-sm-12">
                             @foreach (var item in Model)
                             {
                                 <p style="text-align:center">
-                                    <span>
-                                        @{
-                                            var gh = db.DonHangs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
-                                            var macg = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();
-                                        }
-                                    </span>
+                                    @*<span>
+                                        @{var macg = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                                          var gh = db.DonHangs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                    </span>*@
                                 </p>
 
                                 <p>
                                     <strong>Tên nhân viên giao: </strong>
-                                    @{var tendnv = db.NhanVienGHs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                    @{
+                                        var tendnv = db.NhanVienGHs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
                                     @Html.DisplayFor(modelItem => tendnv.TenNV) - @{var sdt = db.NhanVienGHs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
                                     @Html.DisplayFor(modelItem => tendnv.SDT)
                                 </p>
-                            
-                            <p>
-                                <strong>Phương tiện: </strong>
-                                @{var pt = db.PhuongTienGHs.Where(s => s.MaPT == macg.MaPT).FirstOrDefault();}
-                                @Html.DisplayFor(modelItem => pt.MaPT)
-                            </p>
-                            <p>
-                                <strong>Khu vực giao: </strong>
-                                @Html.DisplayFor(modelItem => macg.KhuVucGiao)
-                            </p>
-                            break;
-                        }
+
+                                <p>
+                                    <strong>Phương tiện: </strong>
+                                    @{var pt = db.PhuongTienGHs.Where(s => s.MaPT == item.MaPT).FirstOrDefault();}
+                                    @Html.DisplayFor(modelItem => pt.MaPT)
+                                </p>
+                                <p>
+                                    <strong>Khu vực giao: </strong>
+                                    @Html.DisplayFor(modelItem => item.KhuVucGiao)
+                                </p>
+                                <p>
+                                    <strong>Ngày giao: </strong>
+                                    @Html.DisplayFor(modelItem => item.NgayGiao)
+                                </p>
+                                break;
+                            }
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align:center">Mã đơn hàng</th>                                      
+                                        <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align:center">Mã đơn hàng</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 40px; text-align: center ">Mã đại lý </th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 100px; text-align: center ">Tên đại lý</th>
                                         <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" style="width: 50px; text-align: center ">Số điện thoại đại lý</th>
@@ -81,38 +83,37 @@
                                         <p style="text-align:center">
                                             <span>
                                                 @{
-                                                    var gh = db.DonHangs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
-                                                    var macg = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();
+                                                    var macg = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                                                    var donhang1 = db.DonHangs.Where(s => s.MaGH == macg.MaGH).FirstOrDefault();
                                                 }
                                             </span>
                                         </p>
                                         <tr>
                                             <td>
-
-                                                @Html.DisplayFor(modelItem => item.MaDH)
+                                                @Html.DisplayFor(modelItem => donhang1.MaDH)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.DaiLy.MaDL)
-                                            </td>
-
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.DaiLy.TenDL)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.DaiLy.SDT)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                @Html.DisplayFor(modelItem => donhang1.DaiLy.MaDL)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                @Html.DisplayFor(modelItem => donhang1.DaiLy.TenDL)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => donhang1.DaiLy.SDT)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => donhang1.DiemGiao)
                                             </td>
 
-                                            @if (item.TinhTrangThanhToan == "Đã thanh toán")
+                                            <td>
+                                                @Html.DisplayFor(modelItem => donhang1.TinhTrangThanhToan)
+                                            </td>
+
+                                            @if (donhang1.TinhTrangThanhToan == "Đã thanh toán")
                                             {
                                                 <td>
-                                                    @{var tien = string.Format("{0:0,0 vnđ}", item.TongTien);
+                                                    @{var tien = string.Format("{0:0,0 vnđ}", donhang1.TongTien);
                                                         @Html.DisplayFor(modelItem => tien)}
                                                 </td>
 
@@ -120,22 +121,22 @@
                                             else
                                             {
                                                 <td>
-                                                    @{ total += Convert.ToInt32(item.TongTien);}
-                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                    @{ total += Convert.ToInt32(donhang1.TongTien);}
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", donhang1.TongTien);}
                                                     @Html.DisplayFor(modelItem => ThanhTien)
                                                 </td>
                                             }
                                             <td style="text-align:center" id="btnin">
                                                 <p>
-                                                    <a href="~/GiaoHang/InHoaDon/@item.MaDH" style="color:#002483; font-weight:bold">
+                                                    <a href="~/GiaoHang/InHoaDon/@donhang1.MaDH" style="color:#002483; font-weight:bold">
                                                         @{
-                                                            var hoadon = db.ChiTietDonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
+                                                            var hoadon = db.ChiTietDonHangs.Where(s => s.MaDH == donhang1.MaDH).FirstOrDefault();}
                                                         @Html.DisplayFor(modelItem => hoadon.MaDH)
                                                     </a>
                                                 </p>
 
                                                 <p>
-                                                    @{ var pxk = db.PhieuNhapXuats.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
+                                                    @{ var pxk = db.PhieuNhapXuats.Where(s => s.MaDH == donhang1.MaDH).FirstOrDefault();}
                                                 </p>
 
                                             </td>
@@ -143,7 +144,7 @@
                                                 <p>
                                                     <a href="~/GiaoHang/InPhieuXuatKho/@pxk.MaPhieu" style="color:#002483; font-weight:bold">
                                                         @{
-                                                            var phieuxuat = db.PhieuNhapXuats.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
+                                                            var phieuxuat = db.PhieuNhapXuats.Where(s => s.MaDH == donhang1.MaDH).FirstOrDefault();}
                                                         @Html.DisplayFor(modelItem => phieuxuat.MaPhieu)
                                                     </a>
                                                 </p>
@@ -165,32 +166,24 @@
                         <br />
                         <h6 style="margin-left:82%;" id="sample1">--------------</h6>
                     </div>
+                    <div style="margin:7px;">
+                        @foreach (var item in Model)
+                        {
+                            if (item.TrangThai == "Chờ giao")
+                            {
+
+                                <a class="btn btn-warning" type="button" title="update " href="~/GiaoHang/ChinhSuaChuyenGiao/@TempData["magh01"]"><i class=""></i>Cập nhật trạng thái</a>
+                            }
+                            else if (item.TrangThai == "Đang giao")
+                            {
+                                <a class="btn btn-warning" type="button" title="update " href="~/GiaoHang/ChinhSuaChuyenGiao/@TempData["magh01"]"><i class=""></i>Cập nhật trạng thái</a>
+                            }
+                            break;
+                        }
+                        <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachCacChuyenGiao"><i class=""></i> Quay lại</a>
+                    </div>
                 </div>
             </div>
-            @foreach (var item in Model)
-            {
-                if (item.ChuyenGiao.TrangThai == "Đã giao")
-                {
-                    <div class="row element-button">
-                        <div class="col-sm-2">
-                            <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachCacChuyenGiao/@TempData["magh"]"><i class=""></i> Quay lại</a>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="row element-button">
-                        <div class="col-sm-2">
-                            <a anchor.href="javascript:void(0)" class="btn btn-warning" type="button" title="update " href="~/GiaoHang/ChinhSuaChuyenGiao/@TempData["magh"]"><i class=""></i>Cập nhật trạng thái</a>
-                        </div>
-                        <div class="col-sm-2">
-                            <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachCacChuyenGiao/@TempData["magh"]"><i class=""></i> Quay lại</a>
-                        </div>
-                    </div>
-                }
-                break;
-            }
-
         </div>
     </div>
 </div>

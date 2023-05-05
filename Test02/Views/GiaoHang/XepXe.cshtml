@@ -22,33 +22,34 @@
             {
                 @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
+                <div class="form-horizontal">
 
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.MaNV)
-            @Html.HiddenFor(model => model.SDT)
-            @Html.HiddenFor(model => model.DiaChi)
-            @Html.HiddenFor(model => model.TinhTrang)
-            @Html.HiddenFor(model => model.TenNV)
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.MaNV)
+                    @Html.HiddenFor(model => model.SDT)
+                    @Html.HiddenFor(model => model.DiaChi)
+                    @Html.HiddenFor(model => model.TinhTrang)
+                    @Html.HiddenFor(model => model.TenNV)
+                    @*@Html.HiddenFor(model => model.MaGH)*@
 
-            <div class="form-group">
-                <strong>Xếp chuyến giao: </strong>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.MaGH, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.MaGH, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                    <div class="form-group">
+                        <strong>Xếp chuyến giao: </strong>
+                        <div class="col-md-10">
+                            @Html.DropDownList("MaGH", (IEnumerable<SelectListItem>)ViewBag.ChuyenGiao, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MaGH, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-            <div class="row element-button">
-                <div class="col-sm-2">
-                    <input style="background-color:#27a300" type="submit" value="Lưu" class="btn btn-default" />
+                    <div class="row element-button">
+                        <div class="col-sm-2">
+                            <input style="background-color:#27a300" type="submit" value="Lưu" class="btn btn-default" />
+                        </div>
+                        <div class="col-sm-2">
+                            <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachShipper"><i class=""></i> Quay lại</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-2">
-                    <a class="btn btn-danger" type="button" title="Quay lại " href="~/GiaoHang/DanhSachShipper"><i class=""></i> Quay lại</a>
-                </div>
-            </div>
-        </div>
             }
         </div>
     </div>
@@ -60,7 +61,7 @@
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-body">
-                <div class="row element-button">                 
+                <div class="row element-button">
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
                     </div>
@@ -83,7 +84,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach (var item in ctcg)
-                                    { 
+                                    {
                                         <p style="text-align:center">
                                             <span>
                                                 @{

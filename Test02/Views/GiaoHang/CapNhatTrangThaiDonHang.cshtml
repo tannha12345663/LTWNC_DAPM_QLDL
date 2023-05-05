@@ -34,38 +34,45 @@
                     @Html.HiddenFor(model => model.PhieuXuatKho)
                     @Html.HiddenFor(model => model.XuatHoaDon)
                     @Html.HiddenFor(model => model.DiemGiao)
+                    @Html.HiddenFor(model => model.TinhTrangGH)
 
                     <div class="form-group">
-                        <h5>Tên đại lý: </h5>
-                        <div class="col-md-10">
-                            @Html.DisplayFor(model => model.DaiLy.TenDL, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.DiemGiao, "", new { @class = "text-danger" })
-                        </div>
+                        <h6>
+                            Tên đại lý: 
+                            <span class="badge bg-success">
+                                @Html.DisplayFor(model => model.DaiLy.TenDL, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DiemGiao, "", new { @class = "text-danger" })
+                            </span>
+                        </h6>
+
                     </div>
 
                     <div class="form-group">
-                        <h5>Địa điểm giao: </h5>
-                        <div class="col-md-10">
-                            @Html.DisplayFor(model => model.DiemGiao, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.DaiLy.TenDL, "", new { @class = "text-danger" })
-                        </div>
+                        <h6>
+                            Địa điểm giao: 
+                            <span class="badge bg-success">
+                                @Html.DisplayFor(model => model.DiemGiao, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DaiLy.TenDL, "", new { @class = "text-danger" })
+                            </span>
+                        </h6>
+
                     </div>
 
-                    <div class="form-group">
-                        <h5>Tình trạng giao hàng:</h5>
-                        <div class="col-md-10">
-                            <select class="form-control" id="TrangThai" name="TinhTrangGH">
-                                <option selected="@Model.TinhTrangGH">@Model.TinhTrangGH</option>
-                                <option>Chờ giao</option>
-                                <option>Đang giao</option>
-                                <option>Đã giao</option>
-                            </select>
-                            @Html.ValidationMessageFor(model => model.TinhTrangGH, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+                    @*<div class="form-group">
+                            <h5>Tình trạng giao hàng:</h5>
+                            <div class="col-md-10">
+                                <select class="form-control" id="TrangThai" name="TinhTrangGH">
+                                    <option selected="@Model.TinhTrangGH">@Model.TinhTrangGH</option>
+                                    <option>Chờ giao</option>
+                                    <option>Đang giao</option>
+                                    <option>Đã giao</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.TinhTrangGH, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
 
                     <div class="form-group">
-                        <h5>Chuyến giao:</h5>
+                        <h6>Chuyến giao:</h6>
                         <div class="col-md-10">
                             @Html.DropDownList("MaGH", (IEnumerable<SelectListItem>)ViewBag.ChuyenGiao, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.MaGH, "", new { @class = "text-danger" })
@@ -75,7 +82,7 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Xếp đơn hàng @Model.MaDH" class="btn btn-default" id="btn_submit"/>
+                            <input type="submit" value="Xếp đơn hàng @Model.MaDH" class="btn  btn-success" id="btn_submit" />
                         </div>
                     </div>
                 </div>
@@ -92,7 +99,7 @@
         <div class="tile">
             <div class="tile-body">
                 <div class="row element-button">
-                    <a class="btn btn-delete btn-sm nhap-tu-file" href="/GiaoHang/ThemChuyenGiaoHang"><i class="fas fa-file-upload"></i> Thêm chuyến giao hàng</a>
+                    @*<a class="btn btn-delete btn-sm nhap-tu-file" href="/GiaoHang/ThemChuyenGiaoHang"><i class="fas fa-file-upload"></i> Thêm chuyến giao hàng</a>*@
                     <div class="col-sm-2">
                         <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" href="#"><i class="fas fa-refresh"></i> Làm mới danh sách</a>
                     </div>
