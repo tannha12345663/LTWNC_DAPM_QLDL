@@ -68,6 +68,7 @@ namespace Test02.Controllers
             }
             return cart;
         }
+
         //Thêm vào giỏ hàng
         public ActionResult ThemVaoGH(string id)
         {
@@ -232,60 +233,52 @@ namespace Test02.Controllers
         //Đặt hàng
         public ActionResult DatHang(FormCollection form)
         {
-            try
+            Random rd = new Random();
+            Cart cart = Session["Cart"] as Cart;
+            DonHang donHang = new DonHang();
+            var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
+            //Tính tổng tiền
+            double tongphu = cart.TongTien();
+            //Tính chiết khấu
+            double giam = tongphu * (double)daiLy.LoaiDL.ChietKhau;
+            //Tính thành tiền
+            double thanhtien = tongphu - giam;
+
+            //Thêm vào bảng đơn hàng
+            var maDH = "DH" + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
+
+            donHang.MaDH = maDH;
+            donHang.MaDL = daiLy.MaDL;
+            donHang.MaNVLap = null;
+            donHang.NgayLap = DateTime.Now;
+            donHang.TrangThai = "Chưa xử lý";
+            donHang.TinhTrangThanhToan = "Chưa thanh toán";
+            donHang.DiemGiao = daiLy.DiaChi;
+            donHang.TongTien = (float)thanhtien;
+            donHang.PhieuXuatKho = false;
+            donHang.XuatHoaDon = false;
+            db.DonHangs.Add(donHang);
+
+            //Thêm vào bảng chi tiết đơn hàng
+            Random maCTDH = new Random();
+            foreach (var item in cart.Items)
             {
-                Random rd = new Random();
-                Cart cart = Session["Cart"] as Cart;
-                DonHang donHang = new DonHang();
-                var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
-                //Tính tổng tiền
-                double tongphu = cart.TongTien();
-                //Tính chiết khấu
-                double giam = tongphu * (double)daiLy.LoaiDL.ChietKhau;
-                //Tính thành tiền
-                double thanhtien = tongphu - giam;
-
-                //Thêm vào bảng đơn hàng
-                var maDH = "DH" + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
-
-                donHang.MaDH = maDH;
-                donHang.MaDL = daiLy.MaDL;
-                donHang.MaNVLap = null;
-                donHang.NgayLap = DateTime.Now;
-                donHang.TrangThai = "Chưa xử lý";
-                donHang.TinhTrangThanhToan = "Chưa thanh toán";
-                donHang.DiemGiao = daiLy.DiaChi;
-                donHang.TongTien = (float)thanhtien;
-                donHang.PhieuXuatKho = false;
-                donHang.XuatHoaDon = false;
-                db.DonHangs.Add(donHang);
-
-                //Thêm vào bảng chi tiết đơn hàng
-                foreach (var item in cart.Items)
-                {
-                    Random maCTDH = new Random();
-                    var iDCTDH = maCTDH.Next(0, 9) + maCTDH.Next(0, 9) + maCTDH.Next(0, 9) + maCTDH.Next(0, 9);
-
-                    ChiTietDonHang chiTietDonHang = new ChiTietDonHang();
-                    chiTietDonHang.MaCTDH = iDCTDH;
-                    chiTietDonHang.MaDH = maDH;
-                    chiTietDonHang.MaSP = item.idSP.MaSP;
-                    chiTietDonHang.SoLuong = item.soLuong;
-                    chiTietDonHang.ThanhTien = item.soLuong * item.idSP.Gia.Value;
-                    db.ChiTietDonHangs.Add(chiTietDonHang);
-                }
-                db.SaveChanges();
-                cart.XoaSauKhiDat();
-                TempData["muahangthanhcong"] = "Đặt hàng thành công";
-                return RedirectToAction("PageSanPham", "KhachHang");
+                var iDCTDH = maCTDH.Next(1, 9) + maCTDH.Next(10, 100);
+                ChiTietDonHang chiTietDonHang = new ChiTietDonHang();
+                chiTietDonHang.MaCTDH = iDCTDH;
+                chiTietDonHang.MaDH = maDH;
+                chiTietDonHang.MaSP = item.idSP.MaSP;
+                chiTietDonHang.SoLuong = item.soLuong;
+                chiTietDonHang.ThanhTien = item.soLuong * item.idSP.Gia.Value;
+                db.ChiTietDonHangs.Add(chiTietDonHang);
             }
-            catch
-            {
-                return Content("không thành công");
-            }
+            db.SaveChanges();
+            cart.XoaSauKhiDat();
+            TempData["muahangthanhcong"] = "Đặt hàng thành công";
+            return RedirectToAction("PageSanPham", "KhachHang");
         }
 
-        // GET: ChiTietDonHangs
+        // Danh sách đơn hàng
         public ActionResult DonHangDL()
         {
             var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
@@ -314,7 +307,7 @@ namespace Test02.Controllers
             return View(dsDH);
         }
 
-        // GET: ChiTietDonHangs/Details/5
+        // Chi tiết đơn hàng
         public ActionResult DetailsDH(string id)
         {
             TempData["madh"] = id;
@@ -323,7 +316,7 @@ namespace Test02.Controllers
             return View(db.ChiTietDonHangs.Where(s => s.MaDH == id).ToList());
         }
 
-        // GET: ChiTietDonHangs/Delete/5
+        // Xóa đơn hàng
         public ActionResult DeleteDH(string id)
         {
             if (id == null)
@@ -338,7 +331,6 @@ namespace Test02.Controllers
             return View(donHang);
         }
 
-        // POST: ChiTietDonHangs/Delete/5
         [HttpPost, ActionName("DeleteDH")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteDHConfirmed(string id)
@@ -349,29 +341,28 @@ namespace Test02.Controllers
             return RedirectToAction("DonHangDL");
         }
 
-        public ActionResult Thang()
-        {
-            List<SelectListItem> months = new List<SelectListItem>();
-            months.Add(new SelectListItem { Text = "Tất cả", Value = "0" });
-            months.Add(new SelectListItem { Text = "Tháng 1", Value = "1" });
-            months.Add(new SelectListItem { Text = "Tháng 2", Value = "2" });
-            months.Add(new SelectListItem { Text = "Tháng 3", Value = "3" });
-            months.Add(new SelectListItem { Text = "Tháng 4", Value = "4" });
-            months.Add(new SelectListItem { Text = "Tháng 5", Value = "5" });
-            months.Add(new SelectListItem { Text = "Tháng 6", Value = "6" });
-            months.Add(new SelectListItem { Text = "Tháng 7", Value = "7" });
-            months.Add(new SelectListItem { Text = "Tháng 8", Value = "8" });
-            months.Add(new SelectListItem { Text = "Tháng 9", Value = "9" });
-            months.Add(new SelectListItem { Text = "Tháng 10", Value = "10" });
-            months.Add(new SelectListItem { Text = "Tháng 11", Value = "11" });
-            months.Add(new SelectListItem { Text = "Tháng 12", Value = "12" });
-            ViewBag.Months = months;
-            return View();
-        }
+        //public ActionResult Thang()
+        //{
+        //    List<SelectListItem> months = new List<SelectListItem>();
+        //    months.Add(new SelectListItem { Text = "Tất cả", Value = "0" });
+        //    months.Add(new SelectListItem { Text = "Tháng 1", Value = "1" });
+        //    months.Add(new SelectListItem { Text = "Tháng 2", Value = "2" });
+        //    months.Add(new SelectListItem { Text = "Tháng 3", Value = "3" });
+        //    months.Add(new SelectListItem { Text = "Tháng 4", Value = "4" });
+        //    months.Add(new SelectListItem { Text = "Tháng 5", Value = "5" });
+        //    months.Add(new SelectListItem { Text = "Tháng 6", Value = "6" });
+        //    months.Add(new SelectListItem { Text = "Tháng 7", Value = "7" });
+        //    months.Add(new SelectListItem { Text = "Tháng 8", Value = "8" });
+        //    months.Add(new SelectListItem { Text = "Tháng 9", Value = "9" });
+        //    months.Add(new SelectListItem { Text = "Tháng 10", Value = "10" });
+        //    months.Add(new SelectListItem { Text = "Tháng 11", Value = "11" });
+        //    months.Add(new SelectListItem { Text = "Tháng 12", Value = "12" });
+        //    ViewBag.Months = months;
+        //    return View();
+        //}
 
         public ActionResult CongNo()
         {
-            Thang();
             var daiLy = (Test02.Models.DaiLy)HttpContext.Session["userDL"];
             TempData["daiLy"] = daiLy.MaDL;
             var dsCongNo = db.PhieuCongNoes.Where(s => s.MaDL == daiLy.MaDL).ToList();
@@ -469,7 +460,7 @@ namespace Test02.Controllers
             if (ModelState.IsValid)
             {
                 DaiLy update = db.DaiLies.Find(id);
-                if (daiLy.Email == info.Email && daiLy.SDT == info.SDT && daiLy.DiaChi == info.DiaChi && HinhAnh == null)
+                if (daiLy.TenDL == info.TenDL && daiLy.Email == info.Email && daiLy.SDT == info.SDT && daiLy.DiaChi == info.DiaChi && HinhAnh == null)
                 {
                     return RedirectToAction("ThongTinDL");
                 }
