@@ -202,7 +202,7 @@ namespace Test02.Controllers
         public ActionResult ChiTietChuyenGiaoHang(string id)
         {
             TempData["magh01"] = id;
-            return View(database.ChuyenGiaos.ToList().Where(s => s.MaGH == id));
+            return View(database.DonHangs.ToList().Where(s => s.MaGH == id));
         }
 
         //Huy chuyen giao

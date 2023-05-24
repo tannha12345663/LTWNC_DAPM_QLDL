@@ -259,13 +259,14 @@ namespace Test02.Controllers
                 donHang.XuatHoaDon = false;
                 db.DonHangs.Add(donHang);
 
+                ChiTietDonHang chiTietDonHang = new ChiTietDonHang();
+                Random maCTDH = new Random();
                 //Thêm vào bảng chi tiết đơn hàng
                 foreach (var item in cart.Items)
                 {
-                    Random maCTDH = new Random();
-                    var iDCTDH = maCTDH.Next(0, 9) + maCTDH.Next(0, 9) + maCTDH.Next(0, 9) + maCTDH.Next(0, 9);
-
-                    ChiTietDonHang chiTietDonHang = new ChiTietDonHang();
+                    
+                    var iDCTDH = maCTDH.Next(1, 10000);
+                    chiTietDonHang = new ChiTietDonHang();
                     chiTietDonHang.MaCTDH = iDCTDH;
                     chiTietDonHang.MaDH = maDH;
                     chiTietDonHang.MaSP = item.idSP.MaSP;
