@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Test02.Models.ChuyenGiao>
+﻿@model IEnumerable<Test02.Models.DonHang>
 @using Test02.Models
 @{
     ViewBag.Title = "ChiTietChuyenGiao";
@@ -32,10 +32,11 @@
                             @foreach (var item in Model)
                             {
                                 <p style="text-align:center">
-                                    @*<span>
-                                        @{var macg = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
-                                          var gh = db.DonHangs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
-                                    </span>*@
+                                    <span>
+                                        @{var gh = db.DonHangs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                                            var macg = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();
+                                          }
+                                    </span>
                                 </p>
 
                                 <p>
@@ -48,16 +49,16 @@
 
                                 <p>
                                     <strong>Phương tiện: </strong>
-                                    @{var pt = db.PhuongTienGHs.Where(s => s.MaPT == item.MaPT).FirstOrDefault();}
+                                    @{var pt = db.PhuongTienGHs.Where(s => s.MaPT == macg.MaPT).FirstOrDefault();}
                                     @Html.DisplayFor(modelItem => pt.MaPT)
                                 </p>
                                 <p>
                                     <strong>Khu vực giao: </strong>
-                                    @Html.DisplayFor(modelItem => item.KhuVucGiao)
+                                    @Html.DisplayFor(modelItem => macg.KhuVucGiao)
                                 </p>
                                 <p>
                                     <strong>Ngày giao: </strong>
-                                    @Html.DisplayFor(modelItem => item.NgayGiao)
+                                    @Html.DisplayFor(modelItem => macg.NgayGiao)
                                 </p>
                                 break;
                             }
@@ -80,40 +81,40 @@
                                     }
                                     @foreach (var item in Model)
                                     {
-                                        <p style="text-align:center">
+                                        @*<p style="text-align:center">
                                             <span>
                                                 @{
                                                     var macg = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
                                                     var donhang1 = db.DonHangs.Where(s => s.MaGH == macg.MaGH).FirstOrDefault();
                                                 }
                                             </span>
-                                        </p>
+                                        </p>*@
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => donhang1.MaDH)
+                                                @Html.DisplayFor(modelItem => item.MaDH)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => donhang1.DaiLy.MaDL)
+                                                @Html.DisplayFor(modelItem => item.DaiLy.MaDL)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => donhang1.DaiLy.TenDL)
+                                                @Html.DisplayFor(modelItem => item.DaiLy.TenDL)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => donhang1.DaiLy.SDT)
+                                                @Html.DisplayFor(modelItem => item.DaiLy.SDT)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => donhang1.DiemGiao)
+                                                @Html.DisplayFor(modelItem => item.DiemGiao)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => donhang1.TinhTrangThanhToan)
+                                                @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
                                             </td>
 
-                                            @if (donhang1.TinhTrangThanhToan == "Đã thanh toán")
+                                            @if (item.TinhTrangThanhToan == "Đã thanh toán")
                                             {
                                                 <td>
-                                                    @{var tien = string.Format("{0:0,0 vnđ}", donhang1.TongTien);
+                                                    @{var tien = string.Format("{0:0,0 vnđ}", item.TongTien);
                                                         @Html.DisplayFor(modelItem => tien)}
                                                 </td>
 
@@ -121,22 +122,22 @@
                                             else
                                             {
                                                 <td>
-                                                    @{ total += Convert.ToInt32(donhang1.TongTien);}
-                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", donhang1.TongTien);}
+                                                    @{ total += Convert.ToInt32(item.TongTien);}
+                                                    @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
                                                     @Html.DisplayFor(modelItem => ThanhTien)
                                                 </td>
                                             }
                                             <td style="text-align:center" id="btnin">
                                                 <p>
-                                                    <a href="~/GiaoHang/InHoaDon/@donhang1.MaDH" style="color:#002483; font-weight:bold">
+                                                    <a href="~/GiaoHang/InHoaDon/@item.MaDH" style="color:#002483; font-weight:bold">
                                                         @{
-                                                            var hoadon = db.ChiTietDonHangs.Where(s => s.MaDH == donhang1.MaDH).FirstOrDefault();}
+                                                            var hoadon = db.ChiTietDonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
                                                         @Html.DisplayFor(modelItem => hoadon.MaDH)
                                                     </a>
                                                 </p>
 
                                                 <p>
-                                                    @{ var pxk = db.PhieuNhapXuats.Where(s => s.MaDH == donhang1.MaDH).FirstOrDefault();}
+                                                    @{ var pxk = db.PhieuNhapXuats.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
                                                 </p>
 
                                             </td>
@@ -144,7 +145,7 @@
                                                 <p>
                                                     <a href="~/GiaoHang/InPhieuXuatKho/@pxk.MaPhieu" style="color:#002483; font-weight:bold">
                                                         @{
-                                                            var phieuxuat = db.PhieuNhapXuats.Where(s => s.MaDH == donhang1.MaDH).FirstOrDefault();}
+                                                            var phieuxuat = db.PhieuNhapXuats.Where(s => s.MaDH == item.MaDH).FirstOrDefault();}
                                                         @Html.DisplayFor(modelItem => phieuxuat.MaPhieu)
                                                     </a>
                                                 </p>
