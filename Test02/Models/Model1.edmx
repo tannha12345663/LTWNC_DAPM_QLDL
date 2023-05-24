@@ -29,7 +29,7 @@
           <Key>
             <PropertyRef Name="STT" />
           </Key>
-          <Property Name="STT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STT" Type="int" Nullable="false" />
           <Property Name="MaKK" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="MaSP" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="SLTonKho" Type="int" />
@@ -41,7 +41,7 @@
           <Key>
             <PropertyRef Name="MaCTDH" />
           </Key>
-          <Property Name="MaCTDH" Type="int" Nullable="false" />
+          <Property Name="MaCTDH" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaDH" Type="varchar" MaxLength="10" />
           <Property Name="MaSP" Type="varchar" MaxLength="10" />
           <Property Name="SoLuong" Type="int" />
@@ -507,22 +507,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="pr_SapxepDonHang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="sp_capnhat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="sp_CapnhatDL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="MaDL" Type="varchar" Mode="In" />
-          <Parameter Name="LoaiDL" Type="varchar" Mode="In" />
-          <Parameter Name="user" Type="nvarchar" Mode="In" />
-          <Parameter Name="pass" Type="nvarchar" Mode="In" />
-          <Parameter Name="tenDL" Type="nvarchar" Mode="In" />
-          <Parameter Name="diachi" Type="nvarchar" Mode="In" />
-          <Parameter Name="sdt" Type="nvarchar" Mode="In" />
-          <Parameter Name="email" Type="nvarchar" Mode="In" />
-          <Parameter Name="hinhanh" Type="nvarchar" Mode="In" />
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
         </Function>
+        <Function Name="sp_capnhat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_CongNoDenHan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_CountCN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="madl" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
         </Function>
         <Function Name="sp_DHtheotinhtrang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="thanhtoan" Type="nvarchar" Mode="In" />
@@ -530,6 +531,18 @@
         <Function Name="sp_DoanhThutrongthang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_DonHangtrongngay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="thanhtoan" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_LocDonHang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="thang" Type="varchar" Mode="In" />
@@ -540,6 +553,11 @@
           <Parameter Name="thang" Type="varchar" Mode="In" />
           <Parameter Name="thanhtoan" Type="nvarchar" Mode="In" />
           <Parameter Name="madl" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_SoDHDaiLy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="madl" Type="nvarchar" Mode="In" />
@@ -558,9 +576,7 @@
           <Parameter Name="madl" Type="varchar" Mode="In" />
           <Parameter Name="thang" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="sp_XoaDL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="MaDL" Type="varchar" Mode="In" />
-        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="QuanLyDLModelStoreContainer">
           <EntitySet Name="BaoCao" EntityType="Self.BaoCao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BienBangKiemKe" EntityType="Self.BienBangKiemKe" Schema="dbo" store:Type="Tables" />
@@ -1370,6 +1386,36 @@
             <Parameter Name="madl" Mode="In" Type="String" />
             <Parameter Name="thang" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(QuanLyDLModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(QuanLyDLModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
         <ComplexType Name="pr_SapxepDonHang_Result">
           <Property Type="String" Name="MaDH" Nullable="false" MaxLength="10" />
@@ -1422,6 +1468,17 @@
           <Property Type="DateTime" Name="HanTra" Nullable="true" Precision="23" />
           <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="NgayLapCN" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1657,27 +1714,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="pr_SapxepDonHang" FunctionName="QuanLyDLModel.Store.pr_SapxepDonHang">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyDLModel.pr_SapxepDonHang_Result">
-                <ScalarProperty Name="MaDH" ColumnName="MaDH" />
-                <ScalarProperty Name="MaDL" ColumnName="MaDL" />
-                <ScalarProperty Name="MaNVLap" ColumnName="MaNVLap" />
-                <ScalarProperty Name="NgayLap" ColumnName="NgayLap" />
-                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
-                <ScalarProperty Name="TinhTrangThanhToan" ColumnName="TinhTrangThanhToan" />
-                <ScalarProperty Name="DiemGiao" ColumnName="DiemGiao" />
-                <ScalarProperty Name="TongTien" ColumnName="TongTien" />
-                <ScalarProperty Name="PhieuXuatKho" ColumnName="PhieuXuatKho" />
-                <ScalarProperty Name="XuatHoaDon" ColumnName="XuatHoaDon" />
-                <ScalarProperty Name="TinhTrangGH" ColumnName="TinhTrangGH" />
-                <ScalarProperty Name="MaGH" ColumnName="MaGH" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_capnhat" FunctionName="QuanLyDLModel.Store.sp_capnhat" />
-          <FunctionImportMapping FunctionImportName="sp_CapnhatDL" FunctionName="QuanLyDLModel.Store.sp_CapnhatDL" />
-          <FunctionImportMapping FunctionImportName="sp_XoaDL" FunctionName="QuanLyDLModel.Store.sp_XoaDL" />
           <FunctionImportMapping FunctionImportName="sp_CongNoDenHan" FunctionName="QuanLyDLModel.Store.sp_CongNoDenHan">
             <ResultMapping>
               <ComplexTypeMapping TypeName="QuanLyDLModel.sp_CongNoDenHan_Result">
@@ -1739,6 +1776,30 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_TienDHNoDaiLy" FunctionName="QuanLyDLModel.Store.sp_TienDHNoDaiLy" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="QuanLyDLModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="QuanLyDLModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="QuanLyDLModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="QuanLyDLModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyDLModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="QuanLyDLModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyDLModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="QuanLyDLModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="QuanLyDLModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
