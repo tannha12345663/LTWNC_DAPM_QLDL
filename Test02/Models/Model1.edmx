@@ -41,7 +41,7 @@
           <Key>
             <PropertyRef Name="MaCTDH" />
           </Key>
-          <Property Name="MaCTDH" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaCTDH" Type="int" Nullable="false" />
           <Property Name="MaDH" Type="varchar" MaxLength="10" />
           <Property Name="MaSP" Type="varchar" MaxLength="10" />
           <Property Name="SoLuong" Type="int" />
@@ -655,7 +655,7 @@
           <Key>
             <PropertyRef Name="MaCTDH" />
           </Key>
-          <Property Name="MaCTDH" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaCTDH" Type="Int32" Nullable="false" />
           <Property Name="MaDH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MaSP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="SoLuong" Type="Int32" />
@@ -1258,7 +1258,12 @@
           </AssociationSet>
           <FunctionImport Name="pr_SapxepDonHang" ReturnType="Collection(QuanLyDLModel2.pr_SapxepDonHang_Result)" />
         </EntityContainer>
-        <ComplexType Name="pr_SapxepDonHang_Result">
+        <ComplexType Name="sp_CNDenHan_Result">
+          <Property Type="Int32" Name="Column1" Nullable="true" />
+          <Property Type="DateTime" Name="HanTra" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_LocDonHang_Result">
+
           <Property Type="String" Name="MaDH" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="MaDL" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="MaNVLap" Nullable="true" MaxLength="10" />
@@ -1272,6 +1277,32 @@
           <Property Type="String" Name="TinhTrangGH" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="MaGH" Nullable="true" MaxLength="10" />
         </ComplexType>
+
+        <ComplexType Name="sp_TaoCongNo_Result">
+          <Property Type="String" Name="MaCongNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="MaDL" Nullable="true" MaxLength="10" />
+          <Property Type="Double" Name="TienNo" Nullable="true" />
+          <Property Type="DateTime" Name="HanTra" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="NgayLapCN" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_CongNoDenHan_Result">
+          <Property Type="String" Name="MaCongNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="MaDL" Nullable="true" MaxLength="10" />
+          <Property Type="Double" Name="TienNo" Nullable="true" />
+          <Property Type="DateTime" Name="HanTra" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="NgayLapCN" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_LocPhieuCongNo_Result">
+          <Property Type="String" Name="MaCongNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="MaDL" Nullable="true" MaxLength="10" />
+          <Property Type="Double" Name="TienNo" Nullable="true" />
+          <Property Type="DateTime" Name="HanTra" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="NgayLapCN" Nullable="true" />
+        </ComplexType>
+
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

@@ -6,7 +6,7 @@
     ViewBag.bc = "active";
     ViewBag.Name = "Chi tiết biên bản";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    var ctBBKK = db.ChiTietBienBangs.ToList();
+    var ctBBKK = db.ChiTietBienBangs.Where(s => s.MaKK == Model.MaKK).ToList();
     var BBKK = db.BienBangKiemKes.ToList();
 }
 
@@ -74,44 +74,49 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td style="text-align:center">@Html.DisplayFor(model => model.MaSP)</td>
-                                    <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.TenSP)</td>
-                                    <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.DonViTinh)</td>
-                                    <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.Gia)</td>
-                                    <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.NgaySX)</td>
-                                    <td style="text-align:center">@Html.DisplayFor(model => model.SanPham.HanSD)</td>
-                                    <td style="text-align:center">@Html.DisplayFor(model => model.SLTonKho)</td>
-                                    <td style="text-align:center">
-                                        @{
-                                            var sl = Model.SLTonKho;
-                                            var gia = Model.SanPham.Gia;
+                                @{
+                                    foreach (var item in ctBBKK)
+                                    {
+                                        <tr>
+                                            <td style="text-align:center">@item.MaSP</td>
+                                            <td style="text-align:center">@item.SanPham.TenSP</td>
+                                            <td style="text-align:center">@item.SanPham.DonViTinh</td>
+                                            <td style="text-align:center">@string.Format("{0:#,##0}", item.SanPham.Gia)</td>
+                                            <td style="text-align:center">@Html.DisplayFor(model => item.SanPham.NgaySX)</td>
+                                            <td style="text-align:center">@Html.DisplayFor(model => item.SanPham.HanSD)</td>
+                                            <td style="text-align:center">@Html.DisplayFor(model => item.SLTonKho)</td>
+                                            <td style="text-align:center">
+                                                @{
+                                                    var sl = item.SLTonKho;
+                                                    var gia = item.SanPham.Gia;
 
-                                            var result = sl * gia;
-                                        }
-                                        @string.Format("{0:#,##0}", result)
-                                    </td>
-                                    <td style="text-align:center">@Html.DisplayFor(model => model.SLThucTe)</td>
-                                    <td style="text-align:center">
-                                        @{
-                                            var sl1 = Model.SLThucTe;
-                                            var gia1 = Model.SanPham.Gia;
+                                                    var result = sl * gia;
+                                                }
+                                                @string.Format("{0:#,##0}", result)
+                                            </td>
+                                            <td style="text-align:center">@Html.DisplayFor(model => item.SLThucTe)</td>
+                                            <td style="text-align:center">
+                                                @{
+                                                    var sl1 = item.SLThucTe;
+                                                    var gia1 = item.SanPham.Gia;
 
-                                            var result1 = sl1 * gia1;
-                                        }
-                                        @string.Format("{0:#,##0}", result1)
-                                    </td>
-                                    <td style="text-align:center">@Html.DisplayFor(model => model.ChenhLech)</td>
-                                    <td style="text-align:center">
-                                        @{
-                                            var sl2 = Model.ChenhLech;
-                                            var gia2 = Model.SanPham.Gia;
+                                                    var result1 = sl1 * gia1;
+                                                }
+                                                @string.Format("{0:#,##0}", result1)
+                                            </td>
+                                            <td style="text-align:center">@Html.DisplayFor(model => item.ChenhLech)</td>
+                                            <td style="text-align:center">
+                                                @{
+                                                    var sl2 = item.ChenhLech;
+                                                    var gia2 = item.SanPham.Gia;
 
-                                            var result2 = sl2 * gia2;
-                                        }
-                                        @string.Format("{0:#,##0}", result2)
-                                    </td>
-                                </tr>
+                                                    var result2 = sl2 * gia2;
+                                                }
+                                                @string.Format("{0:#,##0}", result2)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
                             </tbody>
                         </table>
                     </div>

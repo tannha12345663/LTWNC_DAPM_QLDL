@@ -5,16 +5,21 @@
     Layout = "~/Views/KinhDoanh/Layout/LayoutKD.cshtml";
     ViewBag.dl = "active";
     ViewBag.nd = "Chỉnh sửa đại lý";
+    var MADL = Model.MaDL.ToString();
 }
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
             <h3 class="tile-title">Chỉnh sửa đại lý @Model.MaDL</h3>
+            <input id="madl" value="@Model.MaDL" hidden/>
             <div class="tile-body mt-3">
-                <form class="row" action="~/KinhDoanh/ThemDL" method="post">
+                <form class="row" action="~/KinhDoanh/ChinhSuaDL" method="post">
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.MaDL)
+                    @Html.HiddenFor(model => model.NgayTao)
 
                     <div class="form-group  col-md-2">
                         <label class="control-label col-md-8 " for="MaLoaiDL">Mã loại đại lý</label>
@@ -28,11 +33,11 @@
                         @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                     </div>
 
-                    <div class="form-group col-md-4">
-                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <input class="form-control text-box single-line" data-val="true" id="Password" name="Password" type="password" required>
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                    </div>
+                    @*<div class="form-group col-md-4">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <input class="form-control text-box single-line" data-val="true" id="Password" name="Password" type="password" required>
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>*@
 
                     <div class="form-group col-md-4">
                         <label class="control-label col-md-6" for="TenDL">Tên đại lý</label>
@@ -52,24 +57,53 @@
                         @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
                     </div>
 
-                    <div class="form-group col-md-4" >
+                    <div class="form-group col-md-4">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email", required = "true" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group col-md-12 mt-3 ">
-
                         <a class="btn btn-outline-warning" href="~/KinhDoanh/QuanLyDL">
                             Quay lại danh sách sản phẩm
                         </a>
+                        <button class="btn btn-warning" id="resetPass" style="margin-left:15px" type="button" onclick=" ResetPass()">Reset Password</button>
                         <input type="submit" value="Cập nhật" class="btn btn-outline-success" style="margin-left:10px" />
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
 </div>
-<div>
-    
-</div>
+@section script{
+    <script>
+        function ResetPass() {
+            var madl = $('#madl').val();
+            $.ajax({
+                url: '/KinhDoanh/ResetPass',
+                type: 'POST',
+                dataType: "json",
+                data: {madl:madl},
+                success: function (res) {
+                    if (res.success == true) {
+                        swal({
+                            title: "Đã reset password thành công",
+                            text: "Đại lý @TempData["madl"] đã được reset password .",
+                            icon: "success",
+                            button: "OK",
+                        });
+                    }
+                    else if (res.success == false) {
+                        swal({
+                            title: "Reset password không thành công",
+                            text: "Đại lý đã không thể reset password thành công .",
+                            icon: "error",
+                            button: "OK",
+                        });
+                    };
+                }
+            });
+        }
+    </script>
+}

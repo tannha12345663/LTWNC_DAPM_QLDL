@@ -143,8 +143,8 @@
             </a>
         </div>
         <div class="col-sm-2">
-
-            @if (Model.TinhTrangGH == null)
+            <a class="btn btn-danger btn-sm" type="button" title="Quay lại " href="~/KeToan/QLDonHang">Quay lại</a>
+            @*@if (Model.TinhTrangGH == null)
             {
                 <a class="btn btn-danger btn-sm" type="button" title="Quay lại " href="~/KeToan/QLDonHang">Quay lại</a>
             }
@@ -155,7 +155,7 @@
             else if (Model.TinhTrangGH == "Chờ giao")
             {
                 <a class="btn btn-danger btn-sm" type="button" title="Quay lại " href="~/KeToan/QLDonChoGiao">Quay lại</a>
-            }
+            }*@
 
         </div>
 
@@ -220,7 +220,8 @@
                 <div class="modal-footer" style="padding-top:10px;">
                     <a class="btn btn-danger" data-dismiss="modal">Close</a>
                     @*<a class="btn btn-success" href="/KeToan/TaoCongno/@daily.MaDL">Xuất công nợ</a>*@
-                    <input type="submit" value="Lập phiếu công nợ" class="btn btn-success" />
+                    <input type="submit" value="Cập nhật
+                           " class="btn btn-success" />
                 </div>
             }
         </div>
