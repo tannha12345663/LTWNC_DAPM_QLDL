@@ -97,7 +97,7 @@ namespace Test02.Controllers
         }
 
         //Danh sach don hang hoan
-        public ActionResult DonHangHoan()
+        public ActionResult DonChoGiao()
         {
             return View(database.DonHangs.ToList().OrderByDescending(s => s.MaDH));
         }
@@ -185,43 +185,50 @@ namespace Test02.Controllers
         //Xoa chuyen giao hang
         public ActionResult XoaChuyenGiao(String id)
         {
-
             return View(database.ChuyenGiaos.Where(s => s.MaGH == id).FirstOrDefault());
         }
         [HttpPost]
-        public ActionResult XoaChuyenGiao(String id, ChuyenGiao chuyengiao)
+        public ActionResult XoaChuyenGiao(String id, ChuyenGiao chuyengiao, NhanVienGH shipper, PhuongTienGH phuongtien)
         {
-            chuyengiao = database.ChuyenGiaos.Where(s => s.MaGH == id).FirstOrDefault();
+            chuyengiao = database.ChuyenGiaos.Where(s => s.MaGH == id).FirstOrDefault();                                    
+            shipper = database.NhanVienGHs.Where(s => s.MaGH == id).FirstOrDefault();
+            phuongtien = database.PhuongTienGHs.Where(s => s.MaPT == chuyengiao.MaPT).FirstOrDefault();
+            shipper.TinhTrang = Convert.ToString("Sẵn sàng");
+            shipper.MaGH = null;
+            phuongtien.TinhTrang = Convert.ToString("Sẵn sàng");
+            database.Entry(shipper).State = System.Data.Entity.EntityState.Modified;
+            database.Entry(phuongtien).State = System.Data.Entity.EntityState.Modified;
             database.ChuyenGiaos.Remove(chuyengiao);
             database.SaveChanges();
             TempData["AlertMessage"] = "Xóa thành công";
             return RedirectToAction("DanhSachCacChuyenGiao");
-
         }
-        //Chi tiet chuyen giao
+
+            
+        //Chi tiet chuyen giao(xoa)
         public ActionResult ChiTietChuyenGiaoHang(string id)
         {
             TempData["magh01"] = id;
-            return View(database.ChuyenGiaos.ToList().Where(s => s.MaGH == id));
+            return View(database.DonHangs.ToList().Where(s => s.MaGH == id));
         }
 
         //Huy chuyen giao
-        public ActionResult HuyChuyenGiao(String id)
-        {
+        //public ActionResult HuyChuyenGiao(String id)
+        //{
 
-            return View(database.ChuyenGiaos.Where(s => s.MaGH == id).FirstOrDefault());
-        }
+        //    return View(database.ChuyenGiaos.Where(s => s.MaGH == id).FirstOrDefault());
+        //}
 
-        [HttpPost]
-        public ActionResult HuyChuyenGiao(String id, ChuyenGiao chuyengiao)
-        {
-            chuyengiao = database.ChuyenGiaos.Where(s => s.MaGH == id).FirstOrDefault();
-            database.ChuyenGiaos.Remove(chuyengiao);
-            database.SaveChanges();
-            TempData["AlertMessage"] = "Xóa thành công";
-            return RedirectToAction("DanhSachCacChuyenGiao");
+        //[HttpPost]
+        //public ActionResult HuyChuyenGiao(String id, ChuyenGiao chuyengiao)
+        //{
+        //    chuyengiao = database.ChuyenGiaos.Where(s => s.MaGH == id).FirstOrDefault();
+        //    database.ChuyenGiaos.Remove(chuyengiao);
+        //    database.SaveChanges();
+        //    TempData["AlertMessage"] = "Xóa thành công";
+        //    return RedirectToAction("DanhSachCacChuyenGiao");
 
-        }
+        //}
 
         //Xep don 
         public ActionResult XepDon()
@@ -341,10 +348,15 @@ namespace Test02.Controllers
         }
 
         [HttpPost]
-        public ActionResult XepXe(String id, NhanVienGH nhanVien)
-        {
-            database.Entry(nhanVien).State = System.Data.Entity.EntityState.Modified;
+        public ActionResult XepXe(String id, NhanVienGH nhanVien, ChuyenGiao chuyengiao)
+        {           
             nhanVien.TinhTrang = Convert.ToString("Đang giao hàng");
+            database.Entry(nhanVien).State = System.Data.Entity.EntityState.Modified;
+
+            chuyengiao = database.ChuyenGiaos.Where(s => s.MaGH == nhanVien.MaGH).FirstOrDefault();
+            chuyengiao.MaNVLap = nhanVien.MaNV;
+            database.Entry(chuyengiao).State = System.Data.Entity.EntityState.Modified;
+
             database.SaveChanges();
             TempData["AlertMessage"] = "Xếp xe thành công";
             return RedirectToAction("DanhSachShipper");

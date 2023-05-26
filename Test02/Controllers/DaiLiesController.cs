@@ -86,7 +86,7 @@ namespace Test02.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(daiLy).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                db.Entry(daiLy).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

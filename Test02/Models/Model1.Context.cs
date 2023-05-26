@@ -50,10 +50,5 @@ namespace Test02.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<pr_SapxepDonHang_Result>("pr_SapxepDonHang");
         }
-    
-        public virtual int sp_capnhat()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_capnhat");
-        }
     }
 }

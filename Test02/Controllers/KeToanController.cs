@@ -385,7 +385,7 @@ namespace Test02.Controllers
 
         public ActionResult DSDaiLy()
         {
-            database.sp_capnhat();
+            //database.sp_capnhat();
             return View(database.DaiLies.ToList().OrderBy(s => s.MaDL));
         }
         public List<DonHang> LayDonHang_ChuaThanhToan(string madl)

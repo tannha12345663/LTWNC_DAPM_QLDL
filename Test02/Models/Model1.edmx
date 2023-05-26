@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuanLyDLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QuanLyDLModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BaoCao">
           <Key>
             <PropertyRef Name="MaBC" />
@@ -368,9 +368,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChuyenGiao_PhuongTienGH">
-          <End Role="PhuongTienGH" Type="Self.PhuongTienGH" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="PhuongTienGH" Type="Self.PhuongTienGH" Multiplicity="0..1" />
           <End Role="ChuyenGiao" Type="Self.ChuyenGiao" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PhuongTienGH">
@@ -452,9 +450,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NhanVienGH_ChuyenGiao">
-          <End Role="ChuyenGiao" Type="Self.ChuyenGiao" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="ChuyenGiao" Type="Self.ChuyenGiao" Multiplicity="0..1" />
           <End Role="NhanVienGH" Type="Self.NhanVienGH" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChuyenGiao">
@@ -508,8 +504,7 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="pr_SapxepDonHang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="sp_capnhat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="QuanLyDLModelStoreContainer">
+        <EntityContainer Name="QuanLyDLModel2StoreContainer">
           <EntitySet Name="BaoCao" EntityType="Self.BaoCao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BienBangKiemKe" EntityType="Self.BienBangKiemKe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChiTietBienBang" EntityType="Self.ChiTietBienBang" Schema="dbo" store:Type="Tables" />
@@ -617,7 +612,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="QuanLyDLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="QuanLyDLModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="BaoCao">
           <Key>
             <PropertyRef Name="MaBC" />
@@ -1037,9 +1032,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChuyenGiao_PhuongTienGH">
-          <End Role="PhuongTienGH" Type="Self.PhuongTienGH" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="PhuongTienGH" Type="Self.PhuongTienGH" Multiplicity="0..1" />
           <End Role="ChuyenGiao" Type="Self.ChuyenGiao" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PhuongTienGH">
@@ -1065,9 +1058,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NhanVienGH_ChuyenGiao">
-          <End Role="ChuyenGiao" Type="Self.ChuyenGiao" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="ChuyenGiao" Type="Self.ChuyenGiao" Multiplicity="0..1" />
           <End Role="NhanVienGH" Type="Self.NhanVienGH" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChuyenGiao">
@@ -1265,8 +1256,7 @@
             <End Role="NhanVien" EntitySet="NhanViens" />
             <End Role="PhieuNhapXuat" EntitySet="PhieuNhapXuats" />
           </AssociationSet>
-          <FunctionImport Name="pr_SapxepDonHang" ReturnType="Collection(QuanLyDLModel.pr_SapxepDonHang_Result)" />
-          <FunctionImport Name="sp_capnhat" />
+          <FunctionImport Name="pr_SapxepDonHang" ReturnType="Collection(QuanLyDLModel2.pr_SapxepDonHang_Result)" />
         </EntityContainer>
         <ComplexType Name="pr_SapxepDonHang_Result">
           <Property Type="String" Name="MaDH" Nullable="false" MaxLength="10" />
@@ -1287,9 +1277,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QuanLyDLModelStoreContainer" CdmEntityContainer="QuanLyDLEntities2">
+        <EntityContainerMapping StorageEntityContainer="QuanLyDLModel2StoreContainer" CdmEntityContainer="QuanLyDLEntities2">
           <EntitySetMapping Name="BaoCaos">
-            <EntityTypeMapping TypeName="QuanLyDLModel.BaoCao">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.BaoCao">
               <MappingFragment StoreEntitySet="BaoCao">
                 <ScalarProperty Name="MaBC" ColumnName="MaBC" />
                 <ScalarProperty Name="MaNV" ColumnName="MaNV" />
@@ -1300,7 +1290,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BienBangKiemKes">
-            <EntityTypeMapping TypeName="QuanLyDLModel.BienBangKiemKe">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.BienBangKiemKe">
               <MappingFragment StoreEntitySet="BienBangKiemKe">
                 <ScalarProperty Name="MaKK" ColumnName="MaKK" />
                 <ScalarProperty Name="MaKho" ColumnName="MaKho" />
@@ -1311,7 +1301,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietBienBangs">
-            <EntityTypeMapping TypeName="QuanLyDLModel.ChiTietBienBang">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.ChiTietBienBang">
               <MappingFragment StoreEntitySet="ChiTietBienBang">
                 <ScalarProperty Name="STT" ColumnName="STT" />
                 <ScalarProperty Name="MaKK" ColumnName="MaKK" />
@@ -1324,7 +1314,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietDonHangs">
-            <EntityTypeMapping TypeName="QuanLyDLModel.ChiTietDonHang">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.ChiTietDonHang">
               <MappingFragment StoreEntitySet="ChiTietDonHang">
                 <ScalarProperty Name="MaCTDH" ColumnName="MaCTDH" />
                 <ScalarProperty Name="MaDH" ColumnName="MaDH" />
@@ -1336,7 +1326,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietKhoes">
-            <EntityTypeMapping TypeName="QuanLyDLModel.ChiTietKho">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.ChiTietKho">
               <MappingFragment StoreEntitySet="ChiTietKho">
                 <ScalarProperty Name="STT" ColumnName="STT" />
                 <ScalarProperty Name="MaSP" ColumnName="MaSP" />
@@ -1349,7 +1339,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietPhieuNhapXuats">
-            <EntityTypeMapping TypeName="QuanLyDLModel.ChiTietPhieuNhapXuat">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.ChiTietPhieuNhapXuat">
               <MappingFragment StoreEntitySet="ChiTietPhieuNhapXuat">
                 <ScalarProperty Name="MaCT" ColumnName="MaCT" />
                 <ScalarProperty Name="MaSP" ColumnName="MaSP" />
@@ -1361,7 +1351,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChucVus">
-            <EntityTypeMapping TypeName="QuanLyDLModel.ChucVu">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.ChucVu">
               <MappingFragment StoreEntitySet="ChucVu">
                 <ScalarProperty Name="MaChucVu" ColumnName="MaChucVu" />
                 <ScalarProperty Name="ChucVu1" ColumnName="ChucVu" />
@@ -1370,7 +1360,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChuyenGiaos">
-            <EntityTypeMapping TypeName="QuanLyDLModel.ChuyenGiao">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.ChuyenGiao">
               <MappingFragment StoreEntitySet="ChuyenGiao">
                 <ScalarProperty Name="MaGH" ColumnName="MaGH" />
                 <ScalarProperty Name="MaNVLap" ColumnName="MaNVLap" />
@@ -1384,7 +1374,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DaiLies">
-            <EntityTypeMapping TypeName="QuanLyDLModel.DaiLy">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.DaiLy">
               <MappingFragment StoreEntitySet="DaiLy">
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
                 <ScalarProperty Name="MaLoaiDL" ColumnName="MaLoaiDL" />
@@ -1401,7 +1391,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DonHangs">
-            <EntityTypeMapping TypeName="QuanLyDLModel.DonHang">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.DonHang">
               <MappingFragment StoreEntitySet="DonHang">
                 <ScalarProperty Name="MaDH" ColumnName="MaDH" />
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
@@ -1419,7 +1409,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Khoes">
-            <EntityTypeMapping TypeName="QuanLyDLModel.Kho">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.Kho">
               <MappingFragment StoreEntitySet="Kho">
                 <ScalarProperty Name="MaKho" ColumnName="MaKho" />
                 <ScalarProperty Name="TenKho" ColumnName="TenKho" />
@@ -1428,7 +1418,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LoaiDLs">
-            <EntityTypeMapping TypeName="QuanLyDLModel.LoaiDL">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.LoaiDL">
               <MappingFragment StoreEntitySet="LoaiDL">
                 <ScalarProperty Name="MaLoaiDL" ColumnName="MaLoaiDL" />
                 <ScalarProperty Name="TenDaiLy" ColumnName="TenDaiLy" />
@@ -1437,7 +1427,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NhanViens">
-            <EntityTypeMapping TypeName="QuanLyDLModel.NhanVien">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.NhanVien">
               <MappingFragment StoreEntitySet="NhanVien">
                 <ScalarProperty Name="MaNV" ColumnName="MaNV" />
                 <ScalarProperty Name="MaChucVu" ColumnName="MaChucVu" />
@@ -1454,7 +1444,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NhanVienGHs">
-            <EntityTypeMapping TypeName="QuanLyDLModel.NhanVienGH">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.NhanVienGH">
               <MappingFragment StoreEntitySet="NhanVienGH">
                 <ScalarProperty Name="MaNV" ColumnName="MaNV" />
                 <ScalarProperty Name="TenNV" ColumnName="TenNV" />
@@ -1466,7 +1456,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PhieuCongNoes">
-            <EntityTypeMapping TypeName="QuanLyDLModel.PhieuCongNo">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.PhieuCongNo">
               <MappingFragment StoreEntitySet="PhieuCongNo">
                 <ScalarProperty Name="MaCongNo" ColumnName="MaCongNo" />
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
@@ -1478,7 +1468,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PhieuNhapXuats">
-            <EntityTypeMapping TypeName="QuanLyDLModel.PhieuNhapXuat">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.PhieuNhapXuat">
               <MappingFragment StoreEntitySet="PhieuNhapXuat">
                 <ScalarProperty Name="MaPhieu" ColumnName="MaPhieu" />
                 <ScalarProperty Name="MaKho" ColumnName="MaKho" />
@@ -1493,7 +1483,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PhuongTienGHs">
-            <EntityTypeMapping TypeName="QuanLyDLModel.PhuongTienGH">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.PhuongTienGH">
               <MappingFragment StoreEntitySet="PhuongTienGH">
                 <ScalarProperty Name="MaPT" ColumnName="MaPT" />
                 <ScalarProperty Name="TenPT" ColumnName="TenPT" />
@@ -1503,7 +1493,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SanPhams">
-            <EntityTypeMapping TypeName="QuanLyDLModel.SanPham">
+            <EntityTypeMapping TypeName="QuanLyDLModel2.SanPham">
               <MappingFragment StoreEntitySet="SanPham">
                 <ScalarProperty Name="MaSP" ColumnName="MaSP" />
                 <ScalarProperty Name="TenSP" ColumnName="TenSP" />
@@ -1516,9 +1506,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="pr_SapxepDonHang" FunctionName="QuanLyDLModel.Store.pr_SapxepDonHang">
+          <FunctionImportMapping FunctionImportName="pr_SapxepDonHang" FunctionName="QuanLyDLModel2.Store.pr_SapxepDonHang">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyDLModel.pr_SapxepDonHang_Result">
+              <ComplexTypeMapping TypeName="QuanLyDLModel2.pr_SapxepDonHang_Result">
                 <ScalarProperty Name="MaDH" ColumnName="MaDH" />
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
                 <ScalarProperty Name="MaNVLap" ColumnName="MaNVLap" />
@@ -1534,7 +1524,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_capnhat" FunctionName="QuanLyDLModel.Store.sp_capnhat" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

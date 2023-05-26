@@ -445,7 +445,7 @@ namespace Test02.Controllers
                     }
                 }
                 dh.TongTien = dh.TongTien - (dh.TongTien * ck.ChietKhau);
-                database.Entry(dh).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
 
                 TempData["messageAlert"] = "Đã thêm mới đơn hàng";
@@ -705,7 +705,7 @@ namespace Test02.Controllers
                 //    total += Convert.ToInt32(item.ThanhTien);
                 //};
                 //donHang.TongTien = total;
-                database.Entry(donHang).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                database.Entry(donHang).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
                 return RedirectToAction("QuanLyDH");
             }
@@ -745,7 +745,7 @@ namespace Test02.Controllers
             
             dh.TongTien = total - (total*ck.ChietKhau);
 
-            database.Entry(dh).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+            database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
             return RedirectToAction("QuanLyDH");
         }
@@ -884,7 +884,7 @@ namespace Test02.Controllers
                 {
                     var hac = database.SanPhams.AsNoTracking().Where(s=>s.MaSP==sanPham.MaSP).FirstOrDefault();
                     sanPham.HinhAnh = hac.HinhAnh;
-                    database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.Entry(sanPham).State = System.Data.Entity.EntityState.Modified;
                     database.SaveChanges();
                     TempData["messageAlert"] = "Đã cập nhật sản phẩm";
                     TempData["maspTT"] = sanPham.MaSP;
@@ -892,7 +892,7 @@ namespace Test02.Controllers
                 else
                 {
                     LuuAnh(sanPham, HinhAnh);
-                    database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.Entry(sanPham).State = System.Data.Entity.EntityState.Modified;
                     database.SaveChanges();
                     TempData["messageAlert"] = "Đã cập nhật sản phẩm";
                     TempData["maspTT"] = sanPham.MaSP;
