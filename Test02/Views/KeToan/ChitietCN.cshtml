@@ -155,12 +155,12 @@
             @{
                 if (interval.Days <= 0 && Model.TrangThai == "Chưa thanh toán")
                 {
-                    //Model xóa phản hồi
+                   
                     using (Html.BeginForm("SendMailCN/" + Model.MaCongNo, "KeToan", FormMethod.Post, null))
                     {
                         @Html.AntiForgeryToken();
 
-                        <input type="submit" value="Gửi Mail Hủy" class="btn btn-outline-dark btn-sm" />
+                        <input type="submit" value="Gửi Mail" class="btn btn-outline-dark btn-sm" />
                     }
 
                 }

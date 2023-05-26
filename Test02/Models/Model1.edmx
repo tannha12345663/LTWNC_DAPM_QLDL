@@ -29,19 +29,19 @@
           <Key>
             <PropertyRef Name="STT" />
           </Key>
-          <Property Name="STT" Type="int" Nullable="false" />
+          <Property Name="STT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaKK" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="MaSP" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="SLTonKho" Type="int" />
           <Property Name="SLThucTe" Type="int" />
           <Property Name="ChenhLech" Type="int" />
-          <Property Name="LyDo" Type="nvarchar" MaxLength="500" />
+          <Property Name="LyDo" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ChiTietDonHang">
           <Key>
             <PropertyRef Name="MaCTDH" />
           </Key>
-          <Property Name="MaCTDH" Type="int" Nullable="false" />
+          <Property Name="MaCTDH" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaDH" Type="varchar" MaxLength="10" />
           <Property Name="MaSP" Type="varchar" MaxLength="10" />
           <Property Name="SoLuong" Type="int" />
@@ -52,7 +52,7 @@
           <Key>
             <PropertyRef Name="STT" />
           </Key>
-          <Property Name="STT" Type="int" Nullable="false" />
+          <Property Name="STT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaSP" Type="varchar" MaxLength="10" />
           <Property Name="MaKho" Type="varchar" MaxLength="10" />
           <Property Name="NgayNhap" Type="datetime" />
@@ -69,7 +69,7 @@
           <Property Name="MaKho" Type="varchar" MaxLength="10" />
           <Property Name="SoLuongDeXuat" Type="int" />
           <Property Name="SoLuongTrongKho" Type="int" />
-          <Property Name="MaPhieu" Type="varchar" MaxLength="20" />
+          <Property Name="MaPhieu" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="ChucVu">
           <Key>
@@ -183,7 +183,7 @@
           <Key>
             <PropertyRef Name="MaPhieu" />
           </Key>
-          <Property Name="MaPhieu" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MaPhieu" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="MaKho" Type="varchar" MaxLength="10" />
           <Property Name="NgayLap" Type="datetime" />
           <Property Name="LoaiPhieu" Type="nvarchar" MaxLength="50" />
@@ -507,8 +507,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-
+        <Function Name="sp_capnhat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_CongNoDenHan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_CongnoDLy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="madl" Type="varchar" Mode="In" />
+          <Parameter Name="tienno" Type="float" Mode="In" />
+          <Parameter Name="hantra" Type="datetime" Mode="In" />
+          <Parameter Name="ngaylap" Type="datetime" Mode="In" />
+          <Parameter Name="thang" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_CountCN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="madl" Type="nvarchar" Mode="In" />
         </Function>
@@ -546,7 +553,9 @@
           <Parameter Name="madl" Type="varchar" Mode="In" />
           <Parameter Name="thang" Type="varchar" Mode="In" />
         </Function>
-
+        <Function Name="sp_XoaCN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="macn" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="QuanLyDLModelStoreContainer">
           <EntitySet Name="BaoCao" EntityType="Self.BaoCao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BienBangKiemKe" EntityType="Self.BienBangKiemKe" Schema="dbo" store:Type="Tables" />
@@ -689,7 +698,7 @@
           <Property Name="SLTonKho" Type="Int32" />
           <Property Name="SLThucTe" Type="Int32" />
           <Property Name="ChenhLech" Type="Int32" />
-          <Property Name="LyDo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LyDo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BienBangKiemKe" Relationship="Self.FK_ChiTietBienBang_BienBangKiemKe1" FromRole="ChiTietBienBang" ToRole="BienBangKiemKe" />
           <NavigationProperty Name="SanPham" Relationship="Self.FK_ChiTietBienBang_SanPham1" FromRole="ChiTietBienBang" ToRole="SanPham" />
         </EntityType>
@@ -729,7 +738,7 @@
           <Property Name="MaKho" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="SoLuongDeXuat" Type="Int32" />
           <Property Name="SoLuongTrongKho" Type="Int32" />
-          <Property Name="MaPhieu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MaPhieu" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PhieuNhapXuat" Relationship="Self.FK_ChiTietPhieuNhapXuat_PhieuNhapXuat1" FromRole="ChiTietPhieuNhapXuat" ToRole="PhieuNhapXuat" />
           <NavigationProperty Name="SanPham" Relationship="Self.FK_ChiTietPhieuNhapXuat_SanPham1" FromRole="ChiTietPhieuNhapXuat" ToRole="SanPham" />
         </EntityType>
@@ -867,7 +876,7 @@
           <Key>
             <PropertyRef Name="MaPhieu" />
           </Key>
-          <Property Name="MaPhieu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaPhieu" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MaKho" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="NgayLap" Type="DateTime" Precision="3" />
           <Property Name="LoaiPhieu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1342,6 +1351,17 @@
             <Parameter Name="thanhtoan" Mode="In" Type="String" />
             <Parameter Name="madl" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_capnhat" />
+          <FunctionImport Name="sp_CongnoDLy">
+            <Parameter Name="madl" Mode="In" Type="String" />
+            <Parameter Name="tienno" Mode="In" Type="Double" />
+            <Parameter Name="hantra" Mode="In" Type="DateTime" />
+            <Parameter Name="ngaylap" Mode="In" Type="DateTime" />
+            <Parameter Name="thang" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_XoaCN">
+          <Parameter Name="macn" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_CNDenHan_Result">
           <Property Type="Int32" Name="Column1" Nullable="true" />
@@ -1686,6 +1706,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_capnhat" FunctionName="QuanLyDLModel.Store.sp_capnhat" />
+          <FunctionImportMapping FunctionImportName="sp_CongnoDLy" FunctionName="QuanLyDLModel.Store.sp_CongnoDLy" />
+          <FunctionImportMapping FunctionImportName="sp_XoaCN" FunctionName="QuanLyDLModel.Store.sp_XoaCN" />
 
         </EntityContainerMapping>
       </Mapping>

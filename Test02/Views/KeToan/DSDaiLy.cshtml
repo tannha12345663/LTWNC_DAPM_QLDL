@@ -10,7 +10,8 @@
 }
 <link href="~/Content/KeToan/badges.css" rel="stylesheet" />
 @{
-    if (TempData["taocn"] != null)
+    string thongbao = (string)TempData["taocn"];
+    if (thongbao == "success")
     {
         <script>
             swal({
@@ -21,6 +22,21 @@
 
         </script>
 
+    }
+    else
+    {
+        if (thongbao == "loicn")
+        {
+            <script>
+                swal({
+                    title: "Lỗi  !!!!",
+                    icon: "erroe",
+                    button: "Thoát",
+                });
+
+            </script>
+
+        }
     }
     if (TempData["xoacn"] != null)
     {
@@ -77,98 +93,103 @@
 
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MaDL)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TenDL)
-                                        <br />
-                                        @{var tenldk = database.LoaiDLs.Find(item.MaLoaiDL);
-                                        }
-                                        @Html.DisplayFor(modelItem => tenldk.TenDaiLy)  @Html.DisplayFor(modelItem => item.MaLoaiDL)
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaDL)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TenDL)
+                                            <br />
+                                            @{var tenldk = database.LoaiDLs.Find(item.MaLoaiDL);
+                                            }
+                                            @Html.DisplayFor(modelItem => tenldk.TenDaiLy)  @Html.DisplayFor(modelItem => item.MaLoaiDL)
 
-                                    </td>
+                                        </td>
 
-                                    <td>
+                                        <td>
+                                            @{
+
+                                                var tiencongnno = "";
+                                                double? tn = database.sp_SumCN(item.MaDL).FirstOrDefault();
+                                                if (tn == null)
+                                                { tiencongnno = string.Format("{0:0,0 vnđ}", 0); }
+                                                else { tiencongnno = string.Format("{0:0,0 vnđ}", tn); }
+                                            }
+
+                                            @Html.DisplayFor(modelItem => tiencongnno)
+
+                                        </td>
                                         @{
-                                            double? tn = database.sp_SumCN(item.MaDL).FirstOrDefault();
-                                            var tiencongnno = string.Format("{0:0,0 vnđ}", tn);
-                                        }
-
-                                        @Html.DisplayFor(modelItem => tiencongnno)
-
-                                    </td>
-                                    @{
-                                        int? tongdonhang = database.sp_SoDHDaiLy(item.MaDL).FirstOrDefault();
-                                        int? sophieu = database.sp_CountCN(item.MaDL).FirstOrDefault();
-                                        double maxcn = 0;
+                                            int? tongdonhang = database.sp_SoDHDaiLy(item.MaDL).FirstOrDefault();
+                                            int? sophieu = database.sp_CountCN(item.MaDL).FirstOrDefault();
+                                            double maxcn = 0;
 
 
-                                        if (item.MaLoaiDL == "LDL01")
-                                        {
-                                            maxcn = 500000000;
-                                        }
-                                        else if (item.MaLoaiDL == "LDL02")
-                                        {
-                                            maxcn = 250000000;
-                                        }
-                                        else
-                                        {
-                                            maxcn = 100000000;
-
-                                        }
-                                        double dangercn = maxcn - (maxcn * 0.1);
-                                        double warningcn = maxcn - (maxcn * 0.3);
-                                    }
-                                    <td>
-
-                                        @if (tn > dangercn)
-                                        {
-                                            <span class="badge badge-danger">Nguy cơ</span>
-                                        }
-                                        else if (tn >= warningcn && tn <= dangercn)
-                                        {
-                                            <span class="badge badge-warning">Cảnh báo</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge badge-success">Bình thường</span>
-                                        }
-                                    </td>
-                                    <td>
-                                       @{ 
-                                           var doanhso = string.Format("{0:0,0 vnđ}", item.TongDoanhSo);
-                                       }
-                                        @Html.DisplayFor(modelItem =>doanhso)
-
-                                    </td>
-                                    <td style="text-align:center">
-
-                                        <a href="~/KeToan/CongnoDL/@item.MaDL" class="btn btn-outline-primary btn-sm notification" ata-toggle="tooltip" title="Danh sách đơn hàng">
-                                            <i class="fa fa-edit"></i>
-                                            @{
-                                                if (tongdonhang > 0)
-                                                {
-                                                    <span class="badge">
-                                                        @Html.DisplayFor(modelItem => tongdonhang)
-                                                    </span>
-                                                }
+                                            if (item.MaLoaiDL == "LDL01")
+                                            {
+                                                maxcn = 500000000;
                                             }
-                                        </a>
-                                        <a href="~/KeToan/DSCongnoNo/@item.MaDL" class="btn btn-outline-primary btn-sm notification" ata-toggle="tooltip" title="Chi tiết công nợ">
-                                            <i class="fa fa-receipt"></i>
-                                            @{
-                                                if (sophieu > 0)
-                                                {
-                                                    <span class="badge">
-                                                        @Html.DisplayFor(modelItem => sophieu)
-                                                    </span>
-                                                }
+                                            else if (item.MaLoaiDL == "LDL02")
+                                            {
+                                                maxcn = 250000000;
                                             }
-                                        </a>
-                                    </td>
-                                </tr>     }
+                                            else
+                                            {
+                                                maxcn = 100000000;
+
+                                            }
+                                            double dangercn = maxcn - (maxcn * 0.1);
+                                            double warningcn = maxcn - (maxcn * 0.3);
+                                        }
+                                        <td>
+
+                                            @if (tn > dangercn)
+                                            {
+                                                <span class="badge badge-danger">Nguy cơ</span>
+                                            }
+                                            else if (tn >= warningcn && tn <= dangercn)
+                                            {
+                                                <span class="badge badge-warning">Cảnh báo</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-success">Bình thường</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                var doanhso = string.Format("{0:0,0 vnđ}", item.TongDoanhSo);
+                                            }
+                                            @Html.DisplayFor(modelItem => doanhso)
+
+                                        </td>
+                                        <td style="text-align:center">
+
+                                            <a href="~/KeToan/CongnoDL/@item.MaDL" class="btn btn-outline-primary btn-sm notification" ata-toggle="tooltip" title="Danh sách đơn hàng">
+                                                <i class="fa fa-edit"></i>
+                                                @{
+                                                    if (tongdonhang > 0)
+                                                    {
+                                                        <span class="badge">
+                                                            @Html.DisplayFor(modelItem => tongdonhang)
+                                                        </span>
+                                                    }
+                                                }
+                                            </a>
+                                            <a href="~/KeToan/DSCongnoNo/@item.MaDL" class="btn btn-outline-primary btn-sm notification" ata-toggle="tooltip" title="Chi tiết công nợ">
+                                                <i class="fa fa-receipt"></i>
+                                                @{
+                                                    if (sophieu > 0)
+                                                    {
+                                                        <span class="badge">
+                                                            @Html.DisplayFor(modelItem => sophieu)
+                                                        </span>
+                                                    }
+                                                }
+                                            </a>
+                                        </td>
+                                    </tr>
+}
                             </tbody>
                         </table>
                     </div>
@@ -176,13 +197,13 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 
 <script>
     //In dữ liệu
     function printDiv(divName) {
-      
+
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
 

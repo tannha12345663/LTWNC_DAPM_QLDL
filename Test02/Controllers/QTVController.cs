@@ -14,15 +14,19 @@ namespace Test02.Controllers
     {
         QuanLyDLEntities2 database = new QuanLyDLEntities2();
         // GET: QTV
-        public ActionResult Index()
+        public ActionResult HomePage()
         {
-            return View();
+            var lstnv = database.NhanViens.Where(s => s.MaChucVu == "QTHT").ToList();
+            return View(lstnv);
         }
 
         public ActionResult QLNhanVien()
         {
             return View(database.NhanViens.ToList().OrderByDescending(s => s.MaNV));
         }
+
+
+        
         public JsonResult CheckUsernameAvailability(string userdata)
         {
             System.Threading.Thread.Sleep(200);
@@ -84,9 +88,7 @@ namespace Test02.Controllers
         
         public ActionResult ThemNV()
         {
-
             ViewBag.MaChucVu = new SelectList(database.ChucVus, "MaChucVu", "MaChucVu");
-           
             return View();
         }
 
@@ -97,19 +99,13 @@ namespace Test02.Controllers
             {
                 if (HinhAnh != null)
                 {
-                    //Lấy tên file của hình được up lên
-
                     var fileName = Path.GetFileName(HinhAnh.FileName);
-
                     //Tạo đường dẫn tới file
-
                     var path = Path.Combine(Server.MapPath("~/Data/Images"), fileName);
                     //Lưu tên
-
                     nhanVien.HinhAnh = fileName;
                     //Save vào Images Folder
                     HinhAnh.SaveAs(path);
-
                 }
                 else
                 {
@@ -118,23 +114,19 @@ namespace Test02.Controllers
                 Random rd = new Random();
                 var manv = "NV" + rd.Next(1, 1000);
                 nhanVien.MaNV = manv;
-
                 database.NhanViens.Add(nhanVien);
                 database.SaveChanges();
                 TempData["thongbao"] = "add";
                 return RedirectToAction("QLNhanVien");
             }
-            
             return View(nhanVien);
-            
-           
         }
 
-        public ActionResult ChinhsuaNV(String id,NhanVien nhanVien)
-        {
-            ViewBag.MaChucVu = new SelectList(database.ChucVus, "MaChucVu", "MaChucVu", nhanVien.MaChucVu);
-            return View(database.NhanViens.Where(s => s.MaNV == id).FirstOrDefault());
-        }
+            public ActionResult ChinhsuaNV(String id,NhanVien nhanVien)
+            {
+                ViewBag.MaChucVu = new SelectList(database.ChucVus, "MaChucVu", "MaChucVu", nhanVien.MaChucVu);
+                return View(database.NhanViens.Where(s => s.MaNV == id).FirstOrDefault());
+            }
         
             [HttpPost]
             public ActionResult ChinhsuaNV(NhanVien nv, HttpPostedFileBase HinhAnh, string imgnv)
@@ -145,7 +137,6 @@ namespace Test02.Controllers
                 {
                     var fileName = Path.GetFileName(HinhAnh.FileName);
                     var path = Path.Combine(Server.MapPath("~/Data/Images"), fileName);
-
                     nv.HinhAnh = fileName;
                     //Save vào Images Folder
                     HinhAnh.SaveAs(path);

@@ -83,33 +83,37 @@
 
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MaNV)
-                                            </td>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaNV)
+                                        </td>
 
-                                            <td>
-                                                @{var tencv = db.ChucVus.Find(item.MaChucVu);
-                                                }
-                                                @Html.DisplayFor(modelItem => tencv.ViTri) -  @Html.DisplayFor(modelItem => item.MaChucVu)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TenNV)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.UserName)
-                                            </td>
+                                        <td>
+                                            @{var tencv = db.ChucVus.Find(item.MaChucVu);
+                                            }
+                                            @Html.DisplayFor(modelItem => tencv.ViTri) -  @Html.DisplayFor(modelItem => item.MaChucVu)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TenNV)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UserName)
+                                        </td>
+                                        @{ var user = (Test02.Models.NhanVien)HttpContext.Current.Session["user"]; }
+                                        <td>
+                                            @if (item.MaNV != user.MaNV)
+                                            {
 
-                                            <td>
                                                 <a href="/QTV/ChinhsuaNV/@item.MaNV" class="btn btn-outline-dark btn-sm">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 <a href="/QTV/ChitietNV/@item.MaNV" class="btn btn-outline-dark btn-sm">
                                                     <i class="fas fa-info"></i>
                                                 </a>
+                                            }
 
-                                            </td>
-                                        </tr>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

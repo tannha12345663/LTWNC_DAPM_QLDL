@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Test02.Models.NhanVien>
+@using Test02.Models
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/QTV/Layout/LayoutQTV.cshtml";
+    ViewBag.Name = "TongQuan";
+    ViewBag.tq = "active";
+    ViewBag.hieuung1 = "bx-tada";
+    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    var tourmanagersff = db.NhanViens.ToList().Count();
+}
+
+<div class="row">
+    <div class="col-lg-3 col-xs-12"></div>
+    <!-- col-6 -->
+    <div class="col-lg-6 col-xs-12">
+        <a class="widget-small info coloured-icon @ViewBag.qlk" href="/Admin/ListOfStaff" style="text-decoration: none;">
+            <i class='icon bx bxs-user-account fa-3x'></i>
+            <div class="info">
+                <h4>Nhân viên</h4>
+                <p><b>Tổng: @tourmanagersff nhân viên </b></p>
+                
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-3 col-xs-12"></div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h2 class="text-center">Danh sách quản trị viên</h2>
+            <div class="row element-button" style="padding-left:10px">
+                <div class="col-sm-2">
+                    <a class="btn btn-success btn-sm " type="button" title="CreateStaff" href="/Admin/CreateStaff">
+                        Thêm nhân viên
+                    </a>
+                </div>
+            </div>
+            <div class="tile-body">
+                <div class="row table-responsive" style="padding: 0 10px">
+                    <table class="table" id="sampleTable">
+                        <thead>
+                            <tr>
+                                <th>Hình đại diện</th>
+                                <th>Mã nhân viên</th>
+                                <th>Họ và tên</th>
+                                <th>Vị trí</th>
+                                <th>Username</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="text-align: center">
+                                    <img src="~/Data/Images/@item.HinhAnh" width="50" height="50" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaNV)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TenNV)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ChucVu.ChucVu1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+                                @{ var user = (Test02.Models.NhanVien)HttpContext.Current.Session["user"]; }
+                            <td style="text-align: center;">
+                                @if (item.MaNV != user.MaNV)
+                                {
+                                    <a href="/QTV/ChinhsuaNV/@item.MaNV" class="btn btn-outline-dark btn-sm">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="/QTV/ChitietNV/@item.MaNV" class="btn btn-outline-dark btn-sm">
+                                        <i class="fas fa-info"></i>
+                                    </a>
+                                }
+
+                            </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
