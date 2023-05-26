@@ -1,5 +1,6 @@
 ﻿
 @using Test02.Models;
+
 @{
     ViewBag.Title = "Trang chủ kế toán";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
@@ -9,11 +10,7 @@
 
 
 }
-@{
-    int tongthanhtoan = (int)Session["tongdathanhtoan"];
-    int tongchuathanhtoan = (int)Session["tongchuathanhtoan"];
-    int tongdonno = (int)Session["tongno"];
-}
+
 <div class="tongquan">
     <div class="container">
         <div class="row">
@@ -23,9 +20,9 @@
                     <div class="stat-card">
                         <div class="stat-card__content">
                             <p class="text-uppercase mb-1 text-muted">ĐƠN HÀNG ĐẠI LÝ</p>
-                            <h4>@tongchuathanhtoan đơn chưa thanh toán</h4>
+                            <h4>@ViewBag.tongchuathanhtoan đơn chưa thanh toán</h4>
                             <div style="font-size:16px">
-                                <span class="text-success font-weight-bold ">+ @Session["sodonctt"]</span>
+                                <span class="text-success font-weight-bold ">+ @ViewBag.donchuathanhtoan</span>
                                 <span class="text-muted">đơn mới trong ngày</span>
                             </div>
                         </div>
@@ -44,9 +41,9 @@
                     <div class="stat-card">
                         <div class="stat-card__content">
                             <p class="text-uppercase mb-1 text-muted">ĐƠN HÀNG ĐẠI LÝ</p>
-                            <h4>@tongdonno đơn đang nợ</h4>
+                            <h4>@ViewBag.tongdonno đơn đang nợ</h4>
                             <div style="font-size:16px">
-                                <span class="text-success font-weight-bold ">+@Session["sodonno"]</span>
+                                <span class="text-success font-weight-bold ">+@ViewBag.donno</span>
                                 <span class="text-muted">đơn mới trong ngày</span>
                             </div>
                         </div>
@@ -64,9 +61,9 @@
                     <div class="stat-card">
                         <div class="stat-card__content">
                             <p class="text-uppercase mb-1 text-muted">ĐƠN HÀNG ĐẠI LÝ</p>
-                            <h4>@tongthanhtoan đơn đã thanh toán</h4>
+                            <h4>@ViewBag.tongdathanhtoan đơn đã thanh toán</h4>
                             <div style="font-size:16px">
-                                <span class="text-success font-weight-bold ">+@Session["sodontt"]</span>
+                                <span class="text-success font-weight-bold ">+@ViewBag.donthanhtoan</span>
                                 <span class="text-muted"> đơn mới trong ngày</span>
                             </div>
                         </div>
@@ -103,7 +100,7 @@
 
             </div>
             @{
-                List<PhieuCongNo> cnhan = Session["cndenhan"] as List<PhieuCongNo>;
+                List<sp_CongNoDenHan_Result> cnhan = Session["cndenhan"] as List<sp_CongNoDenHan_Result>;
                 int tongphieu = cnhan.Count;
             }
             <div class="col-sm-4">
@@ -175,7 +172,7 @@
 
                         </tr>
                     </thead>
-                   
+
                     <tbody>
                         @foreach (var item in cnhan)
                         {
@@ -228,8 +225,8 @@
         <div class="row">
             <div class="col-sm-12 table-responsive" style="padding-top:10px;">
                 <table class="table table-hover table-bordered js-copytextarea" role="grid">-->
-                    @*//Phần render từng dòng trong C#*@
-                    <!--<thead>
+@*//Phần render từng dòng trong C#*@
+<!--<thead>
                         <tr role="row">
                             <th>Mã đại lý</th>
                             <th>Tên đại lý</th>

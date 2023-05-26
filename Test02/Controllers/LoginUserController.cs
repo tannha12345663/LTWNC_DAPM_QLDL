@@ -47,7 +47,7 @@ namespace Test02.Controllers
                 }
                 else if (data.MaChucVu.ToString() == qtv)
                 {
-                    return RedirectToAction("QLNhanVien", "QTV");
+                    return RedirectToAction("HomePage", "QTV");
                 }
                 else if (data.MaChucVu.ToString() == gh)
                 {

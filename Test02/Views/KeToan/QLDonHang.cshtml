@@ -1,28 +1,17 @@
-﻿@model IEnumerable<Test02.Models.DonHang>
+﻿@model IEnumerable<Test02.Models.sp_LocDonHang_Result>
 @using Test02.Models;
 @{
     ViewBag.Title = "Đơn hàng ";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     ViewBag.qlhd = "active";
-    ViewBag.nd = "Danh sách đơn hàng chờ duyệt ";
+    ViewBag.nd = "Danh sách đơn hàng ";
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
  
 
 }
 
 <div>
-    <!-- Nav tabs -->
-    @*<ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#donduyet">Đơn duyệt</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " href="/KeToan/QLDonChoGiao">Đơn chờ giao</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link"  href="/KeToan/QLDonDaGiao">Đơn đã giao</a>
-        </li>
-    </ul>*@
+ 
 
     <!-- Tab panes -->
     <div class="tab-content">
@@ -64,11 +53,12 @@
                                             <tr role="row">
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã DH</th>
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Đại lý</th>
-                                                <th tabindex="0" aria-controls="sampleTable">Điểm điểm giao</th>
-                                                <th tabindex="0" aria-controls="sampleTable">Tình trạng thanh toán</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Điểm điểm giao</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Tình trạng thanh toán</th>
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Ngày lập đơn</th>
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng tiền</th>
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Tình trạng giao hàng</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Hóa đơn</th>
                                                 <th class="sorting">Chức năng</th>
 
                                             </tr>
@@ -118,6 +108,16 @@
                                                                 <span class="badge badge-success">Đã giao</span>
                                                             }
 
+                                                        </td>
+                                                        <td>
+                                                            @if (item.XuatHoaDon == true)
+                                                            {
+                                                                <span class="badge badge-success">Đã xuất HD</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-warning">Chưa xuất HD</span>
+                                                            }
                                                         </td>
                                                        
                                                         <td>

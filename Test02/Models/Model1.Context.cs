@@ -46,11 +46,7 @@ namespace Test02.Models
         public virtual DbSet<PhuongTienGH> PhuongTienGHs { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
     
-        public virtual ObjectResult<pr_SapxepDonHang_Result> pr_SapxepDonHang()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<pr_SapxepDonHang_Result>("pr_SapxepDonHang");
-        }
-    
+        public virtual ObjectResult<sp_CNDenHan_Result> sp_CNDenHan()
         public virtual int sp_capnhat()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_capnhat");
@@ -231,6 +227,63 @@ namespace Test02.Models
                 new ObjectParameter("thang", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("sp_TienDHNoDaiLy", madlParameter, thangParameter);
+        }
+    
+        public virtual ObjectResult<sp_CongNoDenHan_Result> sp_CongNoDenHan()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CongNoDenHan_Result>("sp_CongNoDenHan");
+        }
+    
+        public virtual ObjectResult<sp_LocPhieuCongNo_Result> sp_LocPhieuCongNo(string thang, string thanhtoan, string madl)
+        {
+            var thangParameter = thang != null ?
+                new ObjectParameter("thang", thang) :
+                new ObjectParameter("thang", typeof(string));
+    
+            var thanhtoanParameter = thanhtoan != null ?
+                new ObjectParameter("thanhtoan", thanhtoan) :
+                new ObjectParameter("thanhtoan", typeof(string));
+    
+            var madlParameter = madl != null ?
+                new ObjectParameter("madl", madl) :
+                new ObjectParameter("madl", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LocPhieuCongNo_Result>("sp_LocPhieuCongNo", thangParameter, thanhtoanParameter, madlParameter);
+        }
+    
+    
+        public virtual int sp_CongnoDLy(string madl, Nullable<double> tienno, Nullable<System.DateTime> hantra, Nullable<System.DateTime> ngaylap, string thang)
+        {
+            var madlParameter = madl != null ?
+                new ObjectParameter("madl", madl) :
+                new ObjectParameter("madl", typeof(string));
+    
+            var tiennoParameter = tienno.HasValue ?
+                new ObjectParameter("tienno", tienno) :
+                new ObjectParameter("tienno", typeof(double));
+    
+            var hantraParameter = hantra.HasValue ?
+                new ObjectParameter("hantra", hantra) :
+                new ObjectParameter("hantra", typeof(System.DateTime));
+    
+            var ngaylapParameter = ngaylap.HasValue ?
+                new ObjectParameter("ngaylap", ngaylap) :
+                new ObjectParameter("ngaylap", typeof(System.DateTime));
+    
+            var thangParameter = thang != null ?
+                new ObjectParameter("thang", thang) :
+                new ObjectParameter("thang", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CongnoDLy", madlParameter, tiennoParameter, hantraParameter, ngaylapParameter, thangParameter);
+        }
+    
+        public virtual int sp_XoaCN(string macn)
+        {
+            var macnParameter = macn != null ?
+                new ObjectParameter("macn", macn) :
+                new ObjectParameter("macn", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_XoaCN", macnParameter);
         }
     }
 }
