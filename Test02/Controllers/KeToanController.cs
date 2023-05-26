@@ -410,6 +410,7 @@ namespace Test02.Controllers
                 string thanglapcn = NgayLapCN.Month.ToString();
                 var tienno = database.sp_TienDHNoDaiLy(MaDL, thanglapcn).FirstOrDefault();
                 database.sp_CongnoDLy(MaDL, tienno, Hantra, NgayLapCN, thanglapcn);
+
             }
             catch
             {
