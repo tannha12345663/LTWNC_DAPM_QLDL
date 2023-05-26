@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Test02.Models;
 
+
 namespace Test02.Controllers
 {
     public class DaiLiesController : Controller
@@ -86,7 +87,7 @@ namespace Test02.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(daiLy).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                db.Entry(daiLy).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

@@ -629,6 +629,7 @@
                 }
             })
         })
+        var selectedProducts = []; // Mảng lưu trữ các sản phẩm đã chọn
         var i = 0;
         function themSP() {
             var check = $("#MaDL").val();
@@ -666,14 +667,26 @@
             $("#themdong").append(row);
             console.log(i);
             $("#SoLuongSP").attr("value", i);
-                    $('#ChonSP'+i).select2({
+                    $('#ChonSP' + i).select2({
                         dropdownParent: $('#myModal')
                     });
             //$("#btnadd").attr("action", "/KinhDoanh/ThemCTHD2/" + i);
+
+                    //$('#ChonSP2 option[value="SP1025"]').remove();
+                    //if (selectedProducts.length > 1) {
+                    //    var allOptions = $('#ChonSP' + i + ' option').clone();
+                    //    debugger;
+                    //    for (var e = 1; e <= selectedProducts.length; e++) {
+                    //        for (var k = 0; k < allOptions.length; k++) {
+                    //            if (allOptions[k] == selectedProducts[e]) {
+                    //                $('#ChonSP'+i+' option[value="' + selectedProducts[e] +'"]').remove();
+                    //            }
+                    //        }
+                    //    }
+                        
+                    //}
         };
             };
-
-
     }
     function xoaSP() {
 
@@ -718,10 +731,20 @@
                 //        });
                 //    }
                 //})
-
+               
                 for (var item = 1; item <= i; item++) {
                     var value = $("#ChonSP" + item).val();
                     if (value != null) {
+                        selectedProducts[i] = value;
+                        console.log(selectedProducts);
+
+                        //var allOptions = $('#ChonSP' + i + ' option').clone();
+                        //for (var e = 0; i < selectedProducts.length; e++) {
+                        //    allOptions = allOptions.filter(':not([value="' + selectedProducts[e] + '"])');
+                        //}
+                        //// Cập nhật danh sách sản phẩm cho dropdown list tương ứng
+                        //$('#ChonSP' + (i + 1)).html(allOptions);
+
                         var sL = $("#SoLuong" + item).val();
                         if (sL >= 0) {
                            // console.log("Bạn đã chọn sản phẩm với mã "+ value +" Với số lượng là :"+sL);
@@ -732,11 +755,8 @@
                             // console.log("Item trước khi thêm vào tổng tiền " + item + "Với tổng tiền là : " + TinhTongTien(model));
                             console.log(model);
                             TinhTongTien(model, item);
-
                         }
-
                     }
-
                 }
             });
         });

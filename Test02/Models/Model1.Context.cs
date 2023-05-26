@@ -47,8 +47,64 @@ namespace Test02.Models
         public virtual DbSet<SanPham> SanPhams { get; set; }
     
         public virtual ObjectResult<sp_CNDenHan_Result> sp_CNDenHan()
+        public virtual int sp_capnhat()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CNDenHan_Result>("sp_CNDenHan");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_capnhat");
+        }
+    
+        public virtual int sp_CapnhatDL(string maDL, string loaiDL, string user, string pass, string tenDL, string diachi, string sdt, string email, string hinhanh)
+        {
+            var maDLParameter = maDL != null ?
+                new ObjectParameter("MaDL", maDL) :
+                new ObjectParameter("MaDL", typeof(string));
+    
+            var loaiDLParameter = loaiDL != null ?
+                new ObjectParameter("LoaiDL", loaiDL) :
+                new ObjectParameter("LoaiDL", typeof(string));
+    
+            var userParameter = user != null ?
+                new ObjectParameter("user", user) :
+                new ObjectParameter("user", typeof(string));
+    
+            var passParameter = pass != null ?
+                new ObjectParameter("pass", pass) :
+                new ObjectParameter("pass", typeof(string));
+    
+            var tenDLParameter = tenDL != null ?
+                new ObjectParameter("tenDL", tenDL) :
+                new ObjectParameter("tenDL", typeof(string));
+    
+            var diachiParameter = diachi != null ?
+                new ObjectParameter("diachi", diachi) :
+                new ObjectParameter("diachi", typeof(string));
+    
+            var sdtParameter = sdt != null ?
+                new ObjectParameter("sdt", sdt) :
+                new ObjectParameter("sdt", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            var hinhanhParameter = hinhanh != null ?
+                new ObjectParameter("hinhanh", hinhanh) :
+                new ObjectParameter("hinhanh", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CapnhatDL", maDLParameter, loaiDLParameter, userParameter, passParameter, tenDLParameter, diachiParameter, sdtParameter, emailParameter, hinhanhParameter);
+        }
+    
+        public virtual int sp_XoaDL(string maDL)
+        {
+            var maDLParameter = maDL != null ?
+                new ObjectParameter("MaDL", maDL) :
+                new ObjectParameter("MaDL", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_XoaDL", maDLParameter);
+        }
+    
+        public virtual ObjectResult<sp_CongNoDenHan_Result> sp_CongNoDenHan()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CongNoDenHan_Result>("sp_CongNoDenHan");
         }
     
         public virtual ObjectResult<Nullable<int>> sp_CountCN(string madl)
@@ -98,6 +154,23 @@ namespace Test02.Models
                 new ObjectParameter("tinhtrang", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LocDonHang_Result>("sp_LocDonHang", thangParameter, thanhtoanParameter, tinhtrangParameter);
+        }
+    
+        public virtual ObjectResult<sp_LocPhieuCongNo_Result> sp_LocPhieuCongNo(string thang, string thanhtoan, string madl)
+        {
+            var thangParameter = thang != null ?
+                new ObjectParameter("thang", thang) :
+                new ObjectParameter("thang", typeof(string));
+    
+            var thanhtoanParameter = thanhtoan != null ?
+                new ObjectParameter("thanhtoan", thanhtoan) :
+                new ObjectParameter("thanhtoan", typeof(string));
+    
+            var madlParameter = madl != null ?
+                new ObjectParameter("madl", madl) :
+                new ObjectParameter("madl", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LocPhieuCongNo_Result>("sp_LocPhieuCongNo", thangParameter, thanhtoanParameter, madlParameter);
         }
     
         public virtual ObjectResult<Nullable<int>> sp_SoDHDaiLy(string madl)
@@ -178,10 +251,6 @@ namespace Test02.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LocPhieuCongNo_Result>("sp_LocPhieuCongNo", thangParameter, thanhtoanParameter, madlParameter);
         }
     
-        public virtual int sp_capnhat()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_capnhat");
-        }
     
         public virtual int sp_CongnoDLy(string madl, Nullable<double> tienno, Nullable<System.DateTime> hantra, Nullable<System.DateTime> ngaylap, string thang)
         {

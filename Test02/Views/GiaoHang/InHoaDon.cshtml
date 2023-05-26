@@ -30,9 +30,11 @@
                         <p> <strong>Ngày: </strong>@Html.DisplayFor(model => ngay)</p>
                         <p> <strong>Mã đơn hàng: </strong>@Html.DisplayFor(model => model.MaDH)</p>
                     </div>
+
+
                     <p> <strong>Tên đại lý: </strong>@Html.DisplayFor(model => daily.TenDL)</p>
                     <p> <strong>Loại đại lý: </strong>@Html.DisplayFor(model => loaidaily.MaLoaiDL)</p>
-                    <p> <strong>Địa điểm giao: </strong>@Html.DisplayFor(model => model.DiemGiao)</p>
+                    <p> <strong>Địa chỉ: </strong>@Html.DisplayFor(model => daily.DiaChi)</p>
                     <div class="row">
                         <div class="col-sm-12  table-responsive">
                             <table class="table table-hover table-bordered js-copytextarea dataTable no-footer" cellpadding="0" cellspacing="0" border="0" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
@@ -70,28 +72,63 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.SoLuong)
                                             </td>
+
+
                                             <td>
                                                 @{ total += Convert.ToInt32(item.ThanhTien);}
                                                 @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.ThanhTien);}
                                                 @Html.DisplayFor(modelItem => ThanhTien)
+
                                             </td>
+
                                         </tr>
+
                                     }
                                     <tr>
-                                        <th colspan="4">Tổng cộng tiền nợ:</th>
+                                        <th colspan="4">Tổng tiền</th>
                                         @{ var TongCong = string.Format("{0:0,0 vnđ}", total);}
                                         <td>@Html.DisplayFor(modelItem => TongCong)</td>
                                     </tr>
-                            </table>
 
+                                    <tr>
+                                        <th colspan="4">Chiết khấu</th>
+                                        @{ var ck = loaidaily.ChietKhau * 100;}
+                                        <td>@Html.DisplayFor(modelItem => ck)%</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th colspan="4">Tổng hóa đơn</th>
+                                        @{ var tongsale = total * (1 - loaidaily.ChietKhau);
+                                            var tongcuoicung = string.Format("{0:0,0 vnđ}", tongsale);}
+                                        <td>@Html.DisplayFor(modelItem => tongcuoicung)</td>
+                                    </tr>
+                            </table>
+                            <br />
+                            <br />
+                            <br />
                         </div>
 
-                        <h5 style="margin-left:82%;padding-top:20px;" id="sample1">Khách hàng</h5>
-                        <h6 style="margin-left:81%; font-style:italic;" id="sample1">(ký và ghi rõ họ tên)</h6>
-                        <br />
-                        <br />
-                        <br />
 
+                        <div class="col-md-6 text-center">
+                            <div class="form-group col-md-12" id="sample5">
+                                <h5 class="control-label">Kết toán</h5>
+                            </div>
+                            <div class="form-group col-md-12" id="sample5">
+                                <h6 id="sample1" style="font-style:italic">(ký và ghi rõ họ tên)</h6>
+                                <br />
+                                <h6 id="sample1">--------------</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <div class="form-group col-md-12" id="sample5">
+                                <h5 class="control-label" id="ThongTinKho1">Khách hàng</h5>
+                            </div>
+                            <div class="form-group col-md-12" id="sample5">
+                                <h6 id="sample1" style="font-style:italic">(ký và ghi rõ họ tên)</h6>
+                                <br />
+                                <h6 id="sample1">--------------</h6>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,7 +140,14 @@
                 <i class="fas fa-print"></i> In dữ liệu
             </a>
         </div>
+        <div class="col-sm-2">
+            @{
+                var chuyengiao = db.ChuyenGiaos.Where(s => s.MaGH == Model.MaGH).FirstOrDefault();
+                <a class="btn  btn-danger" href="/GiaoHang/ChiTietChuyenGiaoHang/@chuyengiao.MaGH">Quay lại</a>
+            }
+        </div>
     </div>
+
 
     <script>
         function printDiv(divName) {

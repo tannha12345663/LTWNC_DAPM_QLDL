@@ -407,6 +407,7 @@ namespace Test02.Controllers
                 dh.TinhTrangGH = null;
                 database.DonHangs.Add(dh);
                 database.SaveChanges();
+
                 var loaidl = database.DaiLies.Find(dh.MaDL);
                 var ck = database.LoaiDLs.Where(s => s.MaLoaiDL == loaidl.MaLoaiDL).FirstOrDefault();
 
@@ -416,17 +417,35 @@ namespace Test02.Controllers
                     ctdh.MaCTDH = rd.Next(0, 10000);
                     ctdh.MaDH = dh.MaDH;
                     ctdh.MaSP = Request["MaSP"+i];
-                    ctdh.SoLuong =Convert.ToInt32( Request["SoLuong" + i]);
-                    //ctdh.ChietKhau = ck.ChietKhau;
+                    //ctdh.SoLuong =Convert.ToInt32( Request["SoLuong" + i]);
+                    ////ctdh.ChietKhau = ck.ChietKhau;
+
                     var dg = database.SanPhams.Where(s => s.MaSP == ctdh.MaSP).FirstOrDefault();
                     if (ctdh.ChietKhau == null)
                     {
                         ctdh.ThanhTien = (dg.Gia) * (ctdh.SoLuong);
                     }
-                    //else
-                    //{
-                    //    ctdh.ThanhTien = (ctdh.SoLuong) * (dg.Gia) * (ctdh.ChietKhau);
-                    //}
+
+                    var checkdh = database.ChiTietDonHangs.Where(s => s.MaDH == dh.MaDH && s.MaSP == ctdh.MaSP).FirstOrDefault();
+                    if (checkdh != null)
+                    {
+                        ctdh = checkdh;
+                        //Nếu trùng sản phẩm
+                        ctdh.MaCTDH = checkdh.MaCTDH;
+                        ctdh.SoLuong = checkdh.SoLuong + Convert.ToInt32(Request["SoLuong" + i]);
+                        ctdh.ThanhTien = (dg.Gia) * (ctdh.SoLuong);
+                        database.Entry(ctdh).State = System.Data.Entity.EntityState.Modified;
+                        database.SaveChanges();
+                    }
+                    else
+                    {
+                        ctdh.MaCTDH = rd.Next(0, 100000);
+                        ctdh.SoLuong = Convert.ToInt32(Request["SoLuong" + i]);
+                        ctdh.ThanhTien = (dg.Gia) * (ctdh.SoLuong);
+                        database.ChiTietDonHangs.Add(ctdh);
+                        database.SaveChanges();
+                    }
+
                     //Kiểm tra số lượng sản phẩm tồn trong kho
                     var checkslp = database.SanPhams.Where(s => s.MaSP == ctdh.MaSP).FirstOrDefault();
                     if (ctdh.SoLuong > checkslp.TongTon)
@@ -463,9 +482,9 @@ namespace Test02.Controllers
                         //    }
                         //}
                     }
-                    dh.TongTien += ctdh.ThanhTien;
-                    database.ChiTietDonHangs.Add(ctdh);
-                    database.SaveChanges();
+                    //dh.TongTien += ctdh.ThanhTien;
+                    //database.ChiTietDonHangs.Add(ctdh);
+                    //database.SaveChanges();
                 }
                 dh.TongTien = dh.TongTien - (dh.TongTien * ck.ChietKhau);
                 if (ldl.MaLoaiDL == "LDL01")
@@ -806,7 +825,7 @@ namespace Test02.Controllers
                 //    total += Convert.ToInt32(item.ThanhTien);
                 //};
                 //donHang.TongTien = total;
-                database.Entry(donHang).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                database.Entry(donHang).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
                 return RedirectToAction("QuanLyDH");
             }
@@ -846,7 +865,7 @@ namespace Test02.Controllers
             
             dh.TongTien = total - (total*ck.ChietKhau);
 
-            database.Entry(dh).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+            database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
             return RedirectToAction("QuanLyDH");
         }
@@ -998,7 +1017,7 @@ namespace Test02.Controllers
                 {
                     var hac = database.SanPhams.AsNoTracking().Where(s=>s.MaSP==sanPham.MaSP).FirstOrDefault();
                     sanPham.HinhAnh = hac.HinhAnh;
-                    database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.Entry(sanPham).State = System.Data.Entity.EntityState.Modified;
                     database.SaveChanges();
                     TempData["messageAlert"] = "Đã cập nhật sản phẩm";
                     TempData["maspTT"] = sanPham.MaSP;
@@ -1006,7 +1025,7 @@ namespace Test02.Controllers
                 else
                 {
                     LuuAnh(sanPham, HinhAnh);
-                    database.Entry(sanPham).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                    database.Entry(sanPham).State = System.Data.Entity.EntityState.Modified;
                     database.SaveChanges();
                     TempData["messageAlert"] = "Đã cập nhật sản phẩm";
                     TempData["maspTT"] = sanPham.MaSP;

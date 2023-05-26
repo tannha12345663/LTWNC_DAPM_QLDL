@@ -204,14 +204,14 @@ namespace Test02.Controllers
                 double tong = tongphu + tongTienCN;
 
                 var gioHang = cart.Items.ToList();
-                foreach(var item in gioHang)
+                foreach (var item in gioHang)
                 {
-                    if (item.soLuong > item.idSP.TongTon)
+                    if (item.soLuong > item.idSP.TongTon || item.soLuong < 0)
                     {
                         TempData["ErrorSL"] = "Số lượng không hợp lệ";
                         return RedirectToAction("GioHangDL", "KhachHang");
                     }
-                }    
+                }
 
                 if (tong >= maxCN)
                 {
@@ -259,10 +259,15 @@ namespace Test02.Controllers
                 donHang.XuatHoaDon = false;
                 db.DonHangs.Add(donHang);
 
+                ChiTietDonHang chiTietDonHang = new ChiTietDonHang();
+                Random maCTDH = new Random();
                 //Thêm vào bảng chi tiết đơn hàng
                 foreach (var item in cart.Items)
                 {
-                    ChiTietDonHang chiTietDonHang = new ChiTietDonHang();
+                    
+                    var iDCTDH = maCTDH.Next(1, 10000);
+                    chiTietDonHang = new ChiTietDonHang();
+                    chiTietDonHang.MaCTDH = iDCTDH;
                     chiTietDonHang.MaDH = maDH;
                     chiTietDonHang.MaSP = item.idSP.MaSP;
                     chiTietDonHang.SoLuong = item.soLuong;
