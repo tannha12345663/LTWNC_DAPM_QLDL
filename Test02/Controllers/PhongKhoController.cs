@@ -297,50 +297,50 @@ namespace Test02.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-            [ValidateAntiForgeryToken]
-            public ActionResult EditCTKho([Bind(Include = "MaCTKho,MaSP,MaKho,NgayNhap,NgayXuat,SoLuong,TinhTrang")] ChiTietKho chiTietKho)
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCTKho([Bind(Include = "MaCTKho,MaSP,MaKho,NgayNhap,NgayXuat,SoLuong,TinhTrang")] ChiTietKho chiTietKho)
+        {
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                chiTietKho.STT = (int)Session["Mactkho"];
+                chiTietKho.MaKho = (string)Session["Makho"];
+                if (chiTietKho.SoLuong <= 100 && chiTietKho.SoLuong > 0)
                 {
-                    chiTietKho.STT = (int)Session["Mactkho"];
-                    chiTietKho.MaKho = (string)Session["Makho"];
-                    if (chiTietKho.SoLuong <= 100 && chiTietKho.SoLuong > 0)
-                    {
-                        chiTietKho.TinhTrang = "Sắp hết hàng";
-                    }
-                    else if (chiTietKho.SoLuong > 100 && chiTietKho.SoLuong < 1000)
-                    {
-                        chiTietKho.TinhTrang = "Còn hàng";
-                    }
-                    //var ktra = (System.DateTime.Now - chiTietKho.NgayXuat);
-                    else if (chiTietKho.SoLuong >= 1000)
-                    {
-                        chiTietKho.TinhTrang = "Tồn kho";
-                    }
-                    else if (chiTietKho.SoLuong == 0)
-                    {
-                        chiTietKho.TinhTrang = "Hết hàng";
-                    }
-                    else
-                    {
-                        TempData["AlertMessage"] = "check null";
-                        return RedirectToAction("EditCTKho");
-                    }
-                    database.Entry(chiTietKho).State = System.Data.Entity.EntityState.Modified;
-                    updateTongTon();
-                    database.SaveChanges();
-                    TempData["AlertMessage"] = "Đã cập nhật";
-                    TempData["MaCTKkk"] = Session["Mactkho"];
-                    return RedirectToAction("Chitietkho", new RouteValueDictionary(
-                                            new { controller = "PhongKho", action = "Chitietkho", Id = chiTietKho.MaKho }));
+                    chiTietKho.TinhTrang = "Sắp hết hàng";
                 }
-                ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", chiTietKho.MaKho);
-                ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietKho.MaSP);
-                return View(chiTietKho);
+                else if (chiTietKho.SoLuong > 100 && chiTietKho.SoLuong < 1000)
+                {
+                    chiTietKho.TinhTrang = "Còn hàng";
+                }
+                //var ktra = (System.DateTime.Now - chiTietKho.NgayXuat);
+                else if (chiTietKho.SoLuong >= 1000)
+                {
+                    chiTietKho.TinhTrang = "Tồn kho";
+                }
+                else if (chiTietKho.SoLuong == 0)
+                {
+                    chiTietKho.TinhTrang = "Hết hàng";
+                }
+                else
+                {
+                    TempData["AlertMessage"] = "check null";
+                    return RedirectToAction("EditCTKho");
+                }
+                database.Entry(chiTietKho).State = System.Data.Entity.EntityState.Modified;
+                updateTongTon();
+                database.SaveChanges();
+                TempData["AlertMessage"] = "Đã cập nhật";
+                TempData["MaCTKkk"] = Session["Mactkho"];
+                return RedirectToAction("Chitietkho", new RouteValueDictionary(
+                                        new { controller = "PhongKho", action = "Chitietkho", Id = chiTietKho.MaKho }));
             }
+            ViewBag.MaKho = new SelectList(database.Khoes, "MaKho", "TenKho", chiTietKho.MaKho);
+            ViewBag.MaSP = new SelectList(database.SanPhams, "MaSP", "TenSP", chiTietKho.MaSP);
+            return View(chiTietKho);
+        }
 
-            // GET: ChiTietKhoes/Delete/5
-            public ActionResult DeleteCTKho(int id)
+        // GET: ChiTietKhoes/Delete/5
+        public ActionResult DeleteCTKho(int id)
             {
                 var mactk = database.ChiTietKhoes.Where(s => s.STT == id).FirstOrDefault();
                 //ChiTietKho chiTietKho = database.ChiTietKhoes.Find(id);
@@ -385,7 +385,6 @@ namespace Test02.Controllers
                 return Json(0);
             }
         }
-
 
         public JsonResult CheckDiaChiAvailability(string diachi)
         {
