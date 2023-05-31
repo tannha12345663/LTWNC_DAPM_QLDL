@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Test02.App_Start;
 using Test02.Models;
+using System.Data.Entity;
+
 
 namespace Test02.Controllers
 {

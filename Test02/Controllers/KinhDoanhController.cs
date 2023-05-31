@@ -504,8 +504,10 @@ namespace Test02.Controllers
                         return RedirectToAction("QuanLyDH");
                     }
                 }
-                
-                
+                dh.TongTien = dh.TongTien - (dh.TongTien * ck.ChietKhau);
+                database.Entry(dh).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
+
                 TempData["messageAlert"] = "Đã thêm mới đơn hàng";
                 TempData["themmadh"] = dh.MaDH;
 

@@ -407,24 +407,11 @@ namespace Test02.Controllers
             return View(database.DaiLies.ToList().OrderBy(s => s.MaDL));
 
         }
-        //public List<DonHang> LayDonHang_ChuaThanhToan(string madl)
-        //{
-        //    List<DonHang> donhang = database.DonHangs.Where(s => s.MaDL == madl 
-        //    && s.TinhTrangThanhToan == "Chưa thanh toán" 
-        //    && s.TrangThai == "Đã xét duyệt" && s.TinhTrangGH == "Đã giao").ToList();
-        //    return donhang;
-        //}
-        
-        public List<DonHang> Get_DonHang(string thangs,string thanhtoan,string trangthai)
+
+        public ActionResult DSDaiLy()
         {
-            var dh = database.sp_LocDonHang(thangs, thanhtoan, trangthai).ToList();
-            List<DonHang> dsdh = new List<DonHang>();
-            foreach (var item in dh)
-            {
-                var don = database.DonHangs.Where(s => s.MaDH == item.MaDH).FirstOrDefault();
-                dsdh.Add(don);
-            }
-            return dsdh;
+            //database.sp_capnhat();
+            return View(database.DaiLies.ToList().OrderBy(s => s.MaDL));
         }
         public int KtraDH(List<DonHang> dh)
         {

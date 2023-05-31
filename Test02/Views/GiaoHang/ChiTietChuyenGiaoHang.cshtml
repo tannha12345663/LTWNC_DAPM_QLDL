@@ -5,9 +5,8 @@
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
     ViewBag.gh_cg = "active";
     ViewBag.nd = "Chi tiết chuyến giao hàng";
-
     QuanLyDLEntities2 db = new QuanLyDLEntities2();
-    List<DonHang> dh = db.DonHangs.ToList();
+
     var chuyengiao = db.ChuyenGiaos.ToList();
     var nv = db.NhanVienGHs.ToList();
 }
@@ -34,15 +33,14 @@
                                 <p style="text-align:center">
                                     <span>
                                         @{var gh = db.DonHangs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
-                                            var macg = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();
-                                          }
+                                            var macg = db.ChuyenGiaos.Where(s => s.MaGH == gh.MaGH).FirstOrDefault();}
                                     </span>
                                 </p>
 
                                 <p>
                                     <strong>Tên nhân viên giao: </strong>
                                     @{
-                                        var tendnv = db.NhanVienGHs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
+                                        var tendnv = db.NhanVienGHs.Where(s => s.MaGH == macg.MaGH).FirstOrDefault();}
                                     @Html.DisplayFor(modelItem => tendnv.TenNV) - @{var sdt = db.NhanVienGHs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();}
                                     @Html.DisplayFor(modelItem => tendnv.SDT)
                                 </p>
@@ -82,13 +80,13 @@
                                     @foreach (var item in Model)
                                     {
                                         @*<p style="text-align:center">
-                                            <span>
-                                                @{
-                                                    var macg = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
-                                                    var donhang1 = db.DonHangs.Where(s => s.MaGH == macg.MaGH).FirstOrDefault();
-                                                }
-                                            </span>
-                                        </p>*@
+                                                <span>
+                                                    @{
+                                                        //var macg = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                                                        var donhang1 = db.DonHangs.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                                                    }
+                                                </span>
+                                            </p>*@
                                         <tr>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.MaDH)
@@ -153,6 +151,7 @@
                                             </td>
                                         </tr>
                                     }
+                                    </tr>
                                 </tbody>
                                 <tr>
                                     <th colspan="6">Tổng cộng tiền thu đơn chưa thanh toán:</th>
@@ -170,14 +169,18 @@
                     <div style="margin:7px;">
                         @foreach (var item in Model)
                         {
-                            if (item.TrangThai == "Chờ giao")
+                            var cg = db.ChuyenGiaos.Where(s => s.MaGH == item.MaGH).FirstOrDefault();
+                            if (cg.TrangThai == "Chờ giao")
                             {
-
                                 <a class="btn btn-warning" type="button" title="update " href="~/GiaoHang/ChinhSuaChuyenGiao/@TempData["magh01"]"><i class=""></i>Cập nhật trạng thái</a>
                             }
-                            else if (item.TrangThai == "Đang giao")
+                            else if (cg.TrangThai == "Đang giao")
                             {
                                 <a class="btn btn-warning" type="button" title="update " href="~/GiaoHang/ChinhSuaChuyenGiao/@TempData["magh01"]"><i class=""></i>Cập nhật trạng thái</a>
+                            }
+                            else if (cg.TrangThai == "Đã giao")
+                            {
+                                @*<a class="btn btn-warning" type="button" title="update " anchor.href="javascript:void(0)"><i class=""></i>Cập nhật trạng thái</a>*@
                             }
                             break;
                         }
