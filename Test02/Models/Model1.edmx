@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="QuanLyDLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QuanLyDLproModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BaoCao">
           <Key>
             <PropertyRef Name="MaBC" />
@@ -368,7 +368,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChuyenGiao_PhuongTienGH">
-          <End Role="PhuongTienGH" Type="Self.PhuongTienGH" Multiplicity="0..1" />
+          <End Role="PhuongTienGH" Type="Self.PhuongTienGH" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ChuyenGiao" Type="Self.ChuyenGiao" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PhuongTienGH">
@@ -450,7 +452,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NhanVienGH_ChuyenGiao">
-          <End Role="ChuyenGiao" Type="Self.ChuyenGiao" Multiplicity="0..1" />
+          <End Role="ChuyenGiao" Type="Self.ChuyenGiao" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="NhanVienGH" Type="Self.NhanVienGH" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChuyenGiao">
@@ -503,6 +507,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="delete_kho" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -512,6 +517,13 @@
         </Function>
         <Function Name="sp_capnhat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_CongNoDenHan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_CongnoDLy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="madl" Type="varchar" Mode="In" />
+          <Parameter Name="tienno" Type="float" Mode="In" />
+          <Parameter Name="hantra" Type="datetime" Mode="In" />
+          <Parameter Name="ngaylap" Type="datetime" Mode="In" />
+          <Parameter Name="thang" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_CountCN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="madl" Type="nvarchar" Mode="In" />
         </Function>
@@ -573,7 +585,10 @@
           <Parameter Name="thang" Type="varchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="QuanLyDLModelStoreContainer">
+        <Function Name="sp_XoaCN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="macn" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="QuanLyDLproModelStoreContainer">
           <EntitySet Name="BaoCao" EntityType="Self.BaoCao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BienBangKiemKe" EntityType="Self.BienBangKiemKe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChiTietBienBang" EntityType="Self.ChiTietBienBang" Schema="dbo" store:Type="Tables" />
@@ -677,10 +692,11 @@
             <End Role="PhieuNhapXuat" EntitySet="PhieuNhapXuat" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="QuanLyDLModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="QuanLyDLproModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="BaoCao">
           <Key>
             <PropertyRef Name="MaBC" />
@@ -723,7 +739,7 @@
           <Key>
             <PropertyRef Name="MaCTDH" />
           </Key>
-          <Property Name="MaCTDH" Type="Int32" Nullable="false" />
+          <Property Name="MaCTDH" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaDH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MaSP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="SoLuong" Type="Int32" />
@@ -1100,7 +1116,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChuyenGiao_PhuongTienGH">
-          <End Role="PhuongTienGH" Type="Self.PhuongTienGH" Multiplicity="0..1" />
+          <End Role="PhuongTienGH" Type="Self.PhuongTienGH" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ChuyenGiao" Type="Self.ChuyenGiao" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PhuongTienGH">
@@ -1126,7 +1144,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NhanVienGH_ChuyenGiao">
-          <End Role="ChuyenGiao" Type="Self.ChuyenGiao" Multiplicity="0..1" />
+          <End Role="ChuyenGiao" Type="Self.ChuyenGiao" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="NhanVienGH" Type="Self.NhanVienGH" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChuyenGiao">
@@ -1221,7 +1241,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="QuanLyDLEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="QuanLyDLproEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BaoCaos" EntityType="Self.BaoCao" />
           <EntitySet Name="BienBangKiemKes" EntityType="Self.BienBangKiemKe" />
           <EntitySet Name="ChiTietBienBangs" EntityType="Self.ChiTietBienBang" />
@@ -1324,50 +1344,72 @@
             <End Role="NhanVien" EntitySet="NhanViens" />
             <End Role="PhieuNhapXuat" EntitySet="PhieuNhapXuats" />
           </AssociationSet>
-          <FunctionImport Name="pr_SapxepDonHang" ReturnType="Collection(QuanLyDLModel.pr_SapxepDonHang_Result)" />
+          <FunctionImport Name="delete_kho" />
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
           <FunctionImport Name="sp_capnhat" />
-          <FunctionImport Name="sp_CapnhatDL">
-            <Parameter Name="MaDL" Mode="In" Type="String" />
-            <Parameter Name="LoaiDL" Mode="In" Type="String" />
-            <Parameter Name="user" Mode="In" Type="String" />
-            <Parameter Name="pass" Mode="In" Type="String" />
-            <Parameter Name="tenDL" Mode="In" Type="String" />
-            <Parameter Name="diachi" Mode="In" Type="String" />
-            <Parameter Name="sdt" Mode="In" Type="String" />
-            <Parameter Name="email" Mode="In" Type="String" />
-            <Parameter Name="hinhanh" Mode="In" Type="String" />
+          <FunctionImport Name="sp_CongNoDenHan" ReturnType="Collection(QuanLyDLproModel.sp_CongNoDenHan_Result)" />
+          <FunctionImport Name="sp_CongnoDLy">
+            <Parameter Name="madl" Mode="In" Type="String" />
+            <Parameter Name="tienno" Mode="In" Type="Double" />
+            <Parameter Name="hantra" Mode="In" Type="DateTime" />
+            <Parameter Name="ngaylap" Mode="In" Type="DateTime" />
+            <Parameter Name="thang" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_XoaDL">
-          <Parameter Name="MaDL" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_CongNoDenHan" ReturnType="Collection(QuanLyDLModel.sp_CongNoDenHan_Result)" />
           <FunctionImport Name="sp_CountCN" ReturnType="Collection(Int32)">
-          <Parameter Name="madl" Mode="In" Type="String" />
+            <Parameter Name="madl" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_DHtheotinhtrang" ReturnType="Collection(Int32)">
-          <Parameter Name="thanhtoan" Mode="In" Type="String" />
+            <Parameter Name="thanhtoan" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_DoanhThutrongthang" ReturnType="Collection(Double)" />
           <FunctionImport Name="sp_DonHangtrongngay" ReturnType="Collection(Int32)">
-          <Parameter Name="thanhtoan" Mode="In" Type="String" />
+            <Parameter Name="thanhtoan" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_LocDonHang" ReturnType="Collection(QuanLyDLModel.sp_LocDonHang_Result)">
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(QuanLyDLproModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(QuanLyDLproModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_LocDonHang" ReturnType="Collection(QuanLyDLproModel.sp_LocDonHang_Result)">
             <Parameter Name="thang" Mode="In" Type="String" />
             <Parameter Name="thanhtoan" Mode="In" Type="String" />
             <Parameter Name="tinhtrang" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_LocPhieuCongNo" ReturnType="Collection(QuanLyDLModel.sp_LocPhieuCongNo_Result)">
+          <FunctionImport Name="sp_LocPhieuCongNo" ReturnType="Collection(QuanLyDLproModel.sp_LocPhieuCongNo_Result)">
             <Parameter Name="thang" Mode="In" Type="String" />
             <Parameter Name="thanhtoan" Mode="In" Type="String" />
             <Parameter Name="madl" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="sp_SoDHDaiLy" ReturnType="Collection(Int32)">
-          <Parameter Name="madl" Mode="In" Type="String" />
+            <Parameter Name="madl" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_SumCN" ReturnType="Collection(Double)">
-          <Parameter Name="madl" Mode="In" Type="String" />
+            <Parameter Name="madl" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_TaoCongNo" ReturnType="Collection(QuanLyDLModel.sp_TaoCongNo_Result)">
+          <FunctionImport Name="sp_TaoCongNo" ReturnType="Collection(QuanLyDLproModel.sp_TaoCongNo_Result)">
             <Parameter Name="madl" Mode="In" Type="String" />
             <Parameter Name="tienno" Mode="In" Type="Double" />
             <Parameter Name="hantra" Mode="In" Type="DateTime" />
@@ -1378,51 +1420,11 @@
             <Parameter Name="madl" Mode="In" Type="String" />
             <Parameter Name="thang" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(QuanLyDLModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(QuanLyDLModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="sp_XoaCN">
+            <Parameter Name="macn" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="pr_SapxepDonHang_Result">
-          <Property Type="String" Name="MaDH" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="MaDL" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="MaNVLap" Nullable="true" MaxLength="10" />
-          <Property Type="DateTime" Name="NgayLap" Nullable="true" Precision="23" />
-          <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="TinhTrangThanhToan" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="DiemGiao" Nullable="true" MaxLength="50" />
-          <Property Type="Double" Name="TongTien" Nullable="true" />
-          <Property Type="Boolean" Name="PhieuXuatKho" Nullable="true" />
-          <Property Type="Boolean" Name="XuatHoaDon" Nullable="true" />
-          <Property Type="String" Name="TinhTrangGH" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="MaGH" Nullable="true" MaxLength="10" />
-        </ComplexType>
         <ComplexType Name="sp_CongNoDenHan_Result">
           <Property Type="String" Name="MaCongNo" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="MaDL" Nullable="true" MaxLength="10" />
@@ -1430,6 +1432,17 @@
           <Property Type="DateTime" Name="HanTra" Nullable="true" Precision="23" />
           <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="NgayLapCN" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="sp_LocDonHang_Result">
           <Property Type="String" Name="MaDH" Nullable="false" MaxLength="10" />
@@ -1461,25 +1474,14 @@
           <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="NgayLapCN" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QuanLyDLModel2StoreContainer" CdmEntityContainer="QuanLyDLEntities2">
+        <EntityContainerMapping StorageEntityContainer="QuanLyDLproModelStoreContainer" CdmEntityContainer="QuanLyDLproEntities2">
           <EntitySetMapping Name="BaoCaos">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.BaoCao">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.BaoCao">
               <MappingFragment StoreEntitySet="BaoCao">
                 <ScalarProperty Name="MaBC" ColumnName="MaBC" />
                 <ScalarProperty Name="MaNV" ColumnName="MaNV" />
@@ -1490,7 +1492,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BienBangKiemKes">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.BienBangKiemKe">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.BienBangKiemKe">
               <MappingFragment StoreEntitySet="BienBangKiemKe">
                 <ScalarProperty Name="MaKK" ColumnName="MaKK" />
                 <ScalarProperty Name="MaKho" ColumnName="MaKho" />
@@ -1501,7 +1503,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietBienBangs">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.ChiTietBienBang">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.ChiTietBienBang">
               <MappingFragment StoreEntitySet="ChiTietBienBang">
                 <ScalarProperty Name="STT" ColumnName="STT" />
                 <ScalarProperty Name="MaKK" ColumnName="MaKK" />
@@ -1514,7 +1516,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietDonHangs">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.ChiTietDonHang">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.ChiTietDonHang">
               <MappingFragment StoreEntitySet="ChiTietDonHang">
                 <ScalarProperty Name="MaCTDH" ColumnName="MaCTDH" />
                 <ScalarProperty Name="MaDH" ColumnName="MaDH" />
@@ -1526,7 +1528,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietKhoes">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.ChiTietKho">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.ChiTietKho">
               <MappingFragment StoreEntitySet="ChiTietKho">
                 <ScalarProperty Name="STT" ColumnName="STT" />
                 <ScalarProperty Name="MaSP" ColumnName="MaSP" />
@@ -1539,7 +1541,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietPhieuNhapXuats">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.ChiTietPhieuNhapXuat">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.ChiTietPhieuNhapXuat">
               <MappingFragment StoreEntitySet="ChiTietPhieuNhapXuat">
                 <ScalarProperty Name="MaCT" ColumnName="MaCT" />
                 <ScalarProperty Name="MaSP" ColumnName="MaSP" />
@@ -1551,7 +1553,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChucVus">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.ChucVu">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.ChucVu">
               <MappingFragment StoreEntitySet="ChucVu">
                 <ScalarProperty Name="MaChucVu" ColumnName="MaChucVu" />
                 <ScalarProperty Name="ChucVu1" ColumnName="ChucVu" />
@@ -1560,7 +1562,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChuyenGiaos">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.ChuyenGiao">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.ChuyenGiao">
               <MappingFragment StoreEntitySet="ChuyenGiao">
                 <ScalarProperty Name="MaGH" ColumnName="MaGH" />
                 <ScalarProperty Name="MaNVLap" ColumnName="MaNVLap" />
@@ -1574,7 +1576,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DaiLies">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.DaiLy">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.DaiLy">
               <MappingFragment StoreEntitySet="DaiLy">
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
                 <ScalarProperty Name="MaLoaiDL" ColumnName="MaLoaiDL" />
@@ -1591,7 +1593,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DonHangs">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.DonHang">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.DonHang">
               <MappingFragment StoreEntitySet="DonHang">
                 <ScalarProperty Name="MaDH" ColumnName="MaDH" />
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
@@ -1609,7 +1611,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Khoes">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.Kho">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.Kho">
               <MappingFragment StoreEntitySet="Kho">
                 <ScalarProperty Name="MaKho" ColumnName="MaKho" />
                 <ScalarProperty Name="TenKho" ColumnName="TenKho" />
@@ -1618,7 +1620,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LoaiDLs">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.LoaiDL">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.LoaiDL">
               <MappingFragment StoreEntitySet="LoaiDL">
                 <ScalarProperty Name="MaLoaiDL" ColumnName="MaLoaiDL" />
                 <ScalarProperty Name="TenDaiLy" ColumnName="TenDaiLy" />
@@ -1627,7 +1629,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NhanViens">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.NhanVien">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.NhanVien">
               <MappingFragment StoreEntitySet="NhanVien">
                 <ScalarProperty Name="MaNV" ColumnName="MaNV" />
                 <ScalarProperty Name="MaChucVu" ColumnName="MaChucVu" />
@@ -1644,7 +1646,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NhanVienGHs">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.NhanVienGH">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.NhanVienGH">
               <MappingFragment StoreEntitySet="NhanVienGH">
                 <ScalarProperty Name="MaNV" ColumnName="MaNV" />
                 <ScalarProperty Name="TenNV" ColumnName="TenNV" />
@@ -1656,7 +1658,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PhieuCongNoes">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.PhieuCongNo">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.PhieuCongNo">
               <MappingFragment StoreEntitySet="PhieuCongNo">
                 <ScalarProperty Name="MaCongNo" ColumnName="MaCongNo" />
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
@@ -1668,7 +1670,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PhieuNhapXuats">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.PhieuNhapXuat">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.PhieuNhapXuat">
               <MappingFragment StoreEntitySet="PhieuNhapXuat">
                 <ScalarProperty Name="MaPhieu" ColumnName="MaPhieu" />
                 <ScalarProperty Name="MaKho" ColumnName="MaKho" />
@@ -1683,7 +1685,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PhuongTienGHs">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.PhuongTienGH">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.PhuongTienGH">
               <MappingFragment StoreEntitySet="PhuongTienGH">
                 <ScalarProperty Name="MaPT" ColumnName="MaPT" />
                 <ScalarProperty Name="TenPT" ColumnName="TenPT" />
@@ -1693,7 +1695,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SanPhams">
-            <EntityTypeMapping TypeName="QuanLyDLModel2.SanPham">
+            <EntityTypeMapping TypeName="QuanLyDLproModel.SanPham">
               <MappingFragment StoreEntitySet="SanPham">
                 <ScalarProperty Name="MaSP" ColumnName="MaSP" />
                 <ScalarProperty Name="TenSP" ColumnName="TenSP" />
@@ -1706,10 +1708,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_capnhat" FunctionName="QuanLyDLModel.Store.sp_capnhat" />
-          <FunctionImportMapping FunctionImportName="sp_CongNoDenHan" FunctionName="QuanLyDLModel.Store.sp_CongNoDenHan">
+          <FunctionImportMapping FunctionImportName="delete_kho" FunctionName="QuanLyDLproModel.Store.delete_kho" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="QuanLyDLproModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_capnhat" FunctionName="QuanLyDLproModel.Store.sp_capnhat" />
+          <FunctionImportMapping FunctionImportName="sp_CongNoDenHan" FunctionName="QuanLyDLproModel.Store.sp_CongNoDenHan">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyDLModel.sp_CongNoDenHan_Result">
+              <ComplexTypeMapping TypeName="QuanLyDLproModel.sp_CongNoDenHan_Result">
                 <ScalarProperty Name="MaCongNo" ColumnName="MaCongNo" />
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
                 <ScalarProperty Name="TienNo" ColumnName="TienNo" />
@@ -1719,13 +1723,35 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_CountCN" FunctionName="QuanLyDLModel.Store.sp_CountCN" />
-          <FunctionImportMapping FunctionImportName="sp_DHtheotinhtrang" FunctionName="QuanLyDLModel.Store.sp_DHtheotinhtrang" />
-          <FunctionImportMapping FunctionImportName="sp_DoanhThutrongthang" FunctionName="QuanLyDLModel.Store.sp_DoanhThutrongthang" />
-          <FunctionImportMapping FunctionImportName="sp_DonHangtrongngay" FunctionName="QuanLyDLModel.Store.sp_DonHangtrongngay" />
-          <FunctionImportMapping FunctionImportName="sp_LocDonHang" FunctionName="QuanLyDLModel.Store.sp_LocDonHang">
+          <FunctionImportMapping FunctionImportName="sp_CongnoDLy" FunctionName="QuanLyDLproModel.Store.sp_CongnoDLy" />
+          <FunctionImportMapping FunctionImportName="sp_CountCN" FunctionName="QuanLyDLproModel.Store.sp_CountCN" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="QuanLyDLproModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_DHtheotinhtrang" FunctionName="QuanLyDLproModel.Store.sp_DHtheotinhtrang" />
+          <FunctionImportMapping FunctionImportName="sp_DoanhThutrongthang" FunctionName="QuanLyDLproModel.Store.sp_DoanhThutrongthang" />
+          <FunctionImportMapping FunctionImportName="sp_DonHangtrongngay" FunctionName="QuanLyDLproModel.Store.sp_DonHangtrongngay" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="QuanLyDLproModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="QuanLyDLproModel.Store.sp_helpdiagramdefinition">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyDLModel2.pr_SapxepDonHang_Result">
+              <ComplexTypeMapping TypeName="QuanLyDLproModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="QuanLyDLproModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyDLproModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_LocDonHang" FunctionName="QuanLyDLproModel.Store.sp_LocDonHang">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyDLproModel.sp_LocDonHang_Result">
                 <ScalarProperty Name="MaDH" ColumnName="MaDH" />
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
                 <ScalarProperty Name="MaNVLap" ColumnName="MaNVLap" />
@@ -1741,9 +1767,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_LocPhieuCongNo" FunctionName="QuanLyDLModel.Store.sp_LocPhieuCongNo">
+          <FunctionImportMapping FunctionImportName="sp_LocPhieuCongNo" FunctionName="QuanLyDLproModel.Store.sp_LocPhieuCongNo">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyDLModel.sp_LocPhieuCongNo_Result">
+              <ComplexTypeMapping TypeName="QuanLyDLproModel.sp_LocPhieuCongNo_Result">
                 <ScalarProperty Name="MaCongNo" ColumnName="MaCongNo" />
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
                 <ScalarProperty Name="TienNo" ColumnName="TienNo" />
@@ -1753,11 +1779,12 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_SoDHDaiLy" FunctionName="QuanLyDLModel.Store.sp_SoDHDaiLy" />
-          <FunctionImportMapping FunctionImportName="sp_SumCN" FunctionName="QuanLyDLModel.Store.sp_SumCN" />
-          <FunctionImportMapping FunctionImportName="sp_TaoCongNo" FunctionName="QuanLyDLModel.Store.sp_TaoCongNo">
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="QuanLyDLproModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_SoDHDaiLy" FunctionName="QuanLyDLproModel.Store.sp_SoDHDaiLy" />
+          <FunctionImportMapping FunctionImportName="sp_SumCN" FunctionName="QuanLyDLproModel.Store.sp_SumCN" />
+          <FunctionImportMapping FunctionImportName="sp_TaoCongNo" FunctionName="QuanLyDLproModel.Store.sp_TaoCongNo">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyDLModel.sp_TaoCongNo_Result">
+              <ComplexTypeMapping TypeName="QuanLyDLproModel.sp_TaoCongNo_Result">
                 <ScalarProperty Name="MaCongNo" ColumnName="MaCongNo" />
                 <ScalarProperty Name="MaDL" ColumnName="MaDL" />
                 <ScalarProperty Name="TienNo" ColumnName="TienNo" />
@@ -1767,31 +1794,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_TienDHNoDaiLy" FunctionName="QuanLyDLModel.Store.sp_TienDHNoDaiLy" />
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="QuanLyDLModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="QuanLyDLModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="QuanLyDLModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="QuanLyDLModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyDLModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="QuanLyDLModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QuanLyDLModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="QuanLyDLModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="QuanLyDLModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_TienDHNoDaiLy" FunctionName="QuanLyDLproModel.Store.sp_TienDHNoDaiLy" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="QuanLyDLproModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_XoaCN" FunctionName="QuanLyDLproModel.Store.sp_XoaCN" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

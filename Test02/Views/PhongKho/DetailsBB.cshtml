@@ -5,7 +5,7 @@
     Layout = "~/Views/PhongKho/Layout/_LayoutPage1.cshtml";
     ViewBag.bc = "active";
     ViewBag.Name = "Chi tiết biên bản";
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
     var ctBBKK = db.ChiTietBienBangs.Where(s => s.MaKK == Model.MaKK).ToList();
     var BBKK = db.BienBangKiemKes.ToList();
 }

@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "TaoCongno";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
     List<DonHang> dh = db.DonHangs.ToList();
     ViewBag.cn = "active";
     ViewBag.nd = "Tạo phiếu công nợ";

@@ -1,28 +1,17 @@
-﻿@model IEnumerable<Test02.Models.DonHang>
+﻿﻿@model IEnumerable<Test02.Models.sp_LocDonHang_Result>
 @using Test02.Models;
 @{
     ViewBag.Title = "Đơn hàng ";
     Layout = "~/Views/KeToan/Layout/_LayoutPageKeToan.cshtml";
     ViewBag.qlhd = "active";
-    ViewBag.nd = "Danh sách đơn hàng chờ duyệt ";
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
- 
+    ViewBag.nd = "Danh sách đơn hàng ";
+    QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
+
 
 }
 
 <div>
-    <!-- Nav tabs -->
-    @*<ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#donduyet">Đơn duyệt</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " href="/KeToan/QLDonChoGiao">Đơn chờ giao</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link"  href="/KeToan/QLDonDaGiao">Đơn đã giao</a>
-        </li>
-    </ul>*@
+
 
     <!-- Tab panes -->
     <div class="tab-content">
@@ -40,7 +29,7 @@
                                 @using (Html.BeginForm("QLDonHang", "KeToan", FormMethod.Post, new { @clas = "" }))
                                 {
                                     <div class="row">
-                                        
+
                                         <div class="col-sm-2">
                                             @Html.DropDownList("thangs", (IEnumerable<SelectListItem>)TempData["thangs"], htmlAttributes: new { @class = "form-control-sm" })
                                         </div>
@@ -64,11 +53,12 @@
                                             <tr role="row">
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Mã DH</th>
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Đại lý</th>
-                                                <th tabindex="0" aria-controls="sampleTable">Điểm điểm giao</th>
-                                                <th tabindex="0" aria-controls="sampleTable">Tình trạng thanh toán</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Điểm điểm giao</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Tình trạng thanh toán</th>
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Ngày lập đơn</th>
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Tổng tiền</th>
                                                 <th class="sorting" tabindex="0" aria-controls="sampleTable">Tình trạng giao hàng</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable">Hóa đơn</th>
                                                 <th class="sorting">Chức năng</th>
 
                                             </tr>
@@ -76,59 +66,69 @@
                                         <tbody>
                                             @foreach (var item in Model)
                                             {
-                                                    <tr style="text-align:center">
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.MaDH)
-                                                        </td>
-                                                        <td>
-                                                            @{var tendl = db.DaiLies.Where(s => s.MaDL == item.MaDL).FirstOrDefault();
+                                                <tr style="text-align:center">
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.MaDH)
+                                                    </td>
+                                                    <td>
+                                                        @{var tendl = db.DaiLies.Where(s => s.MaDL == item.MaDL).FirstOrDefault();
 
-                                                            }
-                                                            @Html.DisplayFor(modelItem => tendl.TenDL)
-                                                        </td>
+                                                        }
+                                                        @Html.DisplayFor(modelItem => tendl.TenDL)
+                                                    </td>
 
 
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.DiemGiao)
-                                                        </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.DiemGiao)
+                                                    </td>
 
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
-                                                        </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.TinhTrangThanhToan)
+                                                    </td>
 
-                                                        <td>
-                                                            @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLap); ;}
-                                                            @Html.DisplayFor(modelItem => ngay)
-                                                        </td>
-                                                        <td>
-                                                            @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
-                                                            @Html.DisplayFor(modelItem => ThanhTien)
-                                                        </td>
-                                                        <td>
-                                                            @if (item.TinhTrangGH == null)
-                                                            {
-                                                                <span class="badge badge-danger">Chờ giao</span>
-                                                            }
-                                                            else if (item.TinhTrangGH == "Đang giao")
-                                                            {
-                                                                <span class="badge badge-warning">Đang giao</span>
-                                                            }
-                                                            else 
-                                                            {
-                                                                <span class="badge badge-success">Đã giao</span>
-                                                            }
+                                                    <td>
+                                                        @{ var ngay = String.Format("{0:d/M/yyyy}", item.NgayLap); ;}
+                                                        @Html.DisplayFor(modelItem => ngay)
+                                                    </td>
+                                                    <td>
+                                                        @{ var ThanhTien = string.Format("{0:0,0 vnđ}", item.TongTien);}
+                                                        @Html.DisplayFor(modelItem => ThanhTien)
+                                                    </td>
+                                                    <td>
+                                                        @if (item.TinhTrangGH == null)
+                                                        {
+                                                            <span class="badge badge-danger">Chờ giao</span>
+                                                        }
+                                                        else if (item.TinhTrangGH == "Đang giao")
+                                                        {
+                                                            <span class="badge badge-warning">Đang giao</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge badge-success">Đã giao</span>
+                                                        }
 
-                                                        </td>
-                                                       
-                                                        <td>
-                                                            @*<a href="/KeToan/ChinhsuaHD/@item.MaDH" id="btnedit" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Cập nhật đơn hàng">
+                                                    </td>
+                                                    <td>
+                                                        @if (item.XuatHoaDon == true)
+                                                        {
+                                                            <span class="badge badge-success">Đã xuất HD</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge badge-warning">Chưa xuất HD</span>
+                                                        }
+                                                    </td>
+
+                                                    <td>
+                                                        @*<a href="/KeToan/ChinhsuaHD/@item.MaDH" id="btnedit" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Cập nhật đơn hàng">
                                                                 <i class="fas fa-pen-square"></i>
                                                             </a>*@
-                                                            <a href="/KeToan/XuatHDBH/@item.MaDH" id="" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
-                                                                <i class="fas fa-info-circle"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                        <a href="/KeToan/XuatHDBH/@item.MaDH" id="" class="btn btn-outline-primary btn-sm" ata-toggle="tooltip" title="Xuất đơn hàng">
+                                                            <i class="fas fa-info-circle"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -141,26 +141,25 @@
                 </div>
             </div>
         </div>
-      
-                </div>
-            </div>
 
-            <script>
-                //In dữ liệu
-                function printDiv(divName) {
-                    var printContents = document.getElementById(divName).innerHTML;
-                    var originalContents = document.body.innerHTML;
+    </div>
+</div>
 
-                    document.body.innerHTML = printContents;
+<script>
+    //In dữ liệu
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
 
-                    window.print();
+        document.body.innerHTML = printContents;
 
-                    document.body.innerHTML = originalContents;
+        window.print();
 
-                }
+        document.body.innerHTML = originalContents;
 
-                
-            </script>
-         
+    }
+
+
+</script>
 
 

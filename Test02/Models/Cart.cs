@@ -13,7 +13,7 @@ namespace Test02.Models
     }
     public class Cart
     {
-        QuanLyDLEntities2 db = new QuanLyDLEntities2();
+        QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
 
         List<CartItem> items = new List<CartItem>();
         public IEnumerable<CartItem> Items

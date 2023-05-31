@@ -6,7 +6,7 @@
     ViewBag.gh_cg = "active";
     ViewBag.Name = "In phiếu xuất kho";
     ViewBag.nd = "In phiếu xuất kho";
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
     var kho = db.Khoes.ToList();
     var ctdonhang = db.ChiTietDonHangs.ToList();
     var donhang = db.DonHangs.ToList();

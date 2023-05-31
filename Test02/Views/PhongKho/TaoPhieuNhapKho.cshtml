@@ -6,7 +6,7 @@
     ViewBag.hh = "active";
     ViewBag.Name = "Tạo phiếu đề nghị nhập kho";
     ViewBag.hieuung3 = "bx-tada";
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
     var dsSP = db.SanPhams.ToList();
     var dsCTKho = db.ChiTietKhoes.ToList();
     List<string> distint = new List<string>();

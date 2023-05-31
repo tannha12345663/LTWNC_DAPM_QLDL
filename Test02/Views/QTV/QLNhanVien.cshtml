@@ -5,7 +5,7 @@
     Layout = "~/Views/QTV/Layout/LayoutQTV.cshtml";
     ViewBag.qtnv = "active";
     ViewBag.nd = "Danh sách nhân viên";
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
     List<ChucVu> cv = db.ChucVus.ToList();
 }
 @{

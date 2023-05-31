@@ -6,7 +6,7 @@
     ViewBag.nd = "Trang công nợ";
     ViewBag.cn = "active";
 
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
     var maDL = ViewBag.daiLy;
     var doanhThu = db.DonHangs.ToList().Where(s => s.MaDL == TempData["daiLy"].ToString() && s.TinhTrangThanhToan == "Đã thanh toán" && s.TinhTrangGH == "Đã giao" && s.NgayLap.Value.Month == DateTime.Now.Month);
 }

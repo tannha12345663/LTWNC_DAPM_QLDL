@@ -17,7 +17,7 @@ namespace Test02.Controllers
     
     public class PhongKhoController : Controller
     {
-        QuanLyDLEntities2 database = new QuanLyDLEntities2();
+        QuanLyDLproEntities2 database = new QuanLyDLproEntities2();
         // GET: PhongKho
         public ActionResult Test02()
         {
