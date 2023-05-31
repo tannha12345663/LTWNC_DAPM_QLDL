@@ -7,7 +7,7 @@
     ViewBag.qlk = "active";
     ViewBag.hieuung2 = "bx-tada";
 
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
     var makho = (string)Session["PPMaKho"];
     var kho = db.Khoes.Where(s => s.MaKho == makho).FirstOrDefault();
 }

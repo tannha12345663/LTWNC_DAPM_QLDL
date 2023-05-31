@@ -5,7 +5,7 @@
     Layout = "~/Views/GiaoHang/Layout/LayoutGH.cshtml";
     ViewBag.gh_dongiaohang = "active";
     ViewBag.nd = "Đơn giao hàng";
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
 }
 
 
@@ -14,7 +14,7 @@
             <div class="widget-small danger coloured-icon">
                 <img src="~/Content/Img/logictic/delivery-truck.png" style="width:25%; margin-left:10px" />
                 <div class="info">
-                    <a href="/GiaoHang/DonHangHoan" style="text-align: center; color: #060054; font-weight: 1000; margin-left: 55px">ĐƠN CHỜ GIAO</a>                    
+                    <a href="/GiaoHang/DonHangMoi" style="text-align: center; color: #060054; font-weight: 1000; margin-left: 55px">ĐƠN CHỜ GIAO</a>                    
                     <div class="info">
                         <p style="text-align:center" class="info-tong">Tổng số đơn chờ giao: <a style="font-size:15px; font-weight:bold; color:#ff0000">@TempData["TongDonChoGiao"]</a> đơn </p>
                     </div>

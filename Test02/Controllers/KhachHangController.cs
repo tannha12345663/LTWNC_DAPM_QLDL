@@ -13,7 +13,7 @@ namespace Test02.Controllers
     [AuthenticationDL]
     public class KhachHangController : Controller
     {
-        QuanLyDLEntities2 db = new QuanLyDLEntities2();
+        QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
         // GET: KhachHang
 
         public ActionResult PageSanPham(int? page, string query)

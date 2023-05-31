@@ -6,7 +6,7 @@
     ViewBag.gh_shippers = "active";
     ViewBag.nd = "Xếp chuyến giao";
 
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
     List<ChuyenGiao> ct = db.ChuyenGiaos.ToList();
     var ctcg = db.ChuyenGiaos.ToList();
     var nvgh = db.NhanVienGHs.ToList();

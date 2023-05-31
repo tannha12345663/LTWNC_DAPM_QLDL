@@ -6,7 +6,7 @@
     ViewBag.home = "active";
     ViewBag.nd = "Bảng điều khiển";
     ViewBag.hieuung1 = "bx-tada";
-    QuanLyDLEntities2 db = new QuanLyDLEntities2();
+    QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
     var nv = (NhanVien)Session["user"];
     var dsdonhang = db.DonHangs.ToList();
     var dsdl = db.DaiLies.ToList();

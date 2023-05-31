@@ -25,7 +25,7 @@ namespace Test02.App_Start
             {
                 #region 2. Check quyền : Có quyền thì cho thực hiện filterContext
                 //Ngược lại thì cho trở lại trang đăng nhập  = > Trang từ chối truy cập
-                QuanLyDLEntities2 db = new QuanLyDLEntities2();
+                QuanLyDLproEntities2 db = new QuanLyDLproEntities2();
                 var count = db.NhanViens.Count(m => m.MaChucVu == nvSession.MaChucVu && m.MaChucVu == MaChucVu);
                 if (count != 0)
                 {

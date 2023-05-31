@@ -11,7 +11,7 @@ namespace Test02.Controllers
 {
     public class LoginUserController : Controller
     {
-        QuanLyDLEntities2 database = new QuanLyDLEntities2();
+        QuanLyDLproEntities2 database = new QuanLyDLproEntities2();
         // GET: LoginUser
         public ActionResult Login()
         {

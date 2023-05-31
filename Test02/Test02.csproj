@@ -139,10 +139,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\DaiLiesController.cs" />
-    <Compile Include="Controllers\DonHangsController.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KeToanController.cs" />
     <Compile Include="Controllers\KhachHangController.cs" />
     <Compile Include="Controllers\KinhDoanhController.cs" />
@@ -219,9 +216,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PhuongTienGH.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\pr_SapxepDonHang_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SanPham.cs">
@@ -560,9 +554,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPage1.cshtml" />
     <Content Include="Views\Test01\Test02.cshtml" />
     <Content Include="Views\Test01\QuanLyDL.cshtml" />
@@ -599,11 +590,6 @@
     <Content Include="Views\KhachHang\PageSanPham.cshtml" />
     <Content Include="Views\LoginUser\Layout\QuenMatKhau.cshtml" />
     <Content Include="Views\LoginUser\QuenMK.cshtml" />
-    <Content Include="Views\DonHangs\Create.cshtml" />
-    <Content Include="Views\DonHangs\Delete.cshtml" />
-    <Content Include="Views\DonHangs\Details.cshtml" />
-    <Content Include="Views\DonHangs\Edit.cshtml" />
-    <Content Include="Views\DonHangs\Index.cshtml" />
     <Content Include="Views\KinhDoanh\ChinhSuaCTDH.cshtml" />
     <Content Include="Views\KinhDoanh\ThemCTHD_1.cshtml" />
     <Content Include="Views\KinhDoanh\ThemCTHD.cshtml" />
@@ -635,11 +621,6 @@
     <Content Include="Views\PhongKho\XoaKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuNhapKho.cshtml" />
     <Content Include="Views\PhongKho\XoaPhieuXuatKho.cshtml" />
-    <Content Include="Views\DaiLies\Create.cshtml" />
-    <Content Include="Views\DaiLies\Delete.cshtml" />
-    <Content Include="Views\DaiLies\Details.cshtml" />
-    <Content Include="Views\DaiLies\Edit.cshtml" />
-    <Content Include="Views\DaiLies\Index.cshtml" />
     <Content Include="Views\KinhDoanh\TuChoiTruyCap.cshtml" />
     <Content Include="Views\TuChoiTruyCap\Layout\Error.cshtml" />
     <Content Include="Views\TuChoiTruyCap\TuChoiTruyCap.cshtml" />

@@ -12,7 +12,7 @@ namespace Test02.Controllers
     [Authentication (MaChucVu ="QTHT")]
     public class QTVController : Controller
     {
-        QuanLyDLEntities2 database = new QuanLyDLEntities2();
+        QuanLyDLproEntities2 database = new QuanLyDLproEntities2();
         // GET: QTV
         public ActionResult Index()
         {
